@@ -1,7 +1,10 @@
-// xsbt-web-plugin 
-resolvers += "Web plugin repo" at "http://siasia.github.com/maven2"
+// xsbt-web-plugin
+resolvers ++= Seq(
+  "Web plugin repo" at "http://siasia.github.com/maven2",
+  Resolver.url("Typesafe repository", new java.net.URL("http://typesafe.artifactoryonline.com/typesafe/ivy-releases/"))(Resolver.defaultIvyPatterns)
+)
 
-libraryDependencies <+= sbtVersion("com.github.siasia" %% "xsbt-web-plugin" % _)
+libraryDependencies <+= sbtVersion(v => "com.github.siasia" %% "xsbt-web-plugin" % ("0.1.0-"+v))
 
 // sbteclipse
 resolvers += {
@@ -11,5 +14,5 @@ resolvers += {
 }
 
 libraryDependencies <<= (libraryDependencies, sbtVersion) { (deps, version) =>
-  deps :+ ("com.typesafe.sbteclipse" %% "sbteclipse" % "1.1" extra("sbtversion" -> version))
+  deps :+ ("com.typesafe.sbteclipse" %% "sbteclipse" % "1.2" extra("sbtversion" -> version))
 }

@@ -1,5 +1,6 @@
 import sbt._
 import Keys._
+import com.github.siasia.WebPlugin._
 
 object BuildSettings {
   val buildOrganization = "vaadin.scala"
@@ -14,11 +15,11 @@ object BuildSettings {
 }
 
 object Dependencies {
-	val vaadinVersion = "6.6.2"
-	val jettyVersion = "7.3.0.v20110203"
+  val vaadinVersion = "6.6.2"
+  val jettyVersion = "7.3.0.v20110203"
 	
-	val vaadin = "com.vaadin" % "vaadin" % vaadinVersion
-	val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "jetty"
+  val vaadin = "com.vaadin" % "vaadin" % vaadinVersion
+  val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "jetty"
 }
 
 
@@ -27,15 +28,15 @@ object ScalaWrappersForVaadinBuild extends Build {
   import BuildSettings._
     
   val addonSettings = buildSettings ++ Seq (
-  	name := "scala-wrappers",
-  	libraryDependencies := Seq(vaadin)
+    name := "scala-wrappers",
+    libraryDependencies := Seq(vaadin)
   )
   
-  val demoSettings = buildSettings ++ WebPlugin.webSettings ++ Seq (
-  	name := "scala-wrappers-demo",
-  	//autoScalaLibrary := true,
-  	//fullClasspath <<= (fullClasspath in Runtime).identity,
-  	libraryDependencies := Seq(jetty)
+  val demoSettings = buildSettings ++ webSettings ++ Seq (
+    name := "scala-wrappers-demo",
+    //autoScalaLibrary := true,
+    //fullClasspath <<= (fullClasspath in Runtime).identity,
+    libraryDependencies := Seq(jetty)
   )
   
   //lazy val root = Project("root", file("."), settings = buildSettings) aggregate(addon)
