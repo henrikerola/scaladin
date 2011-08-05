@@ -50,12 +50,14 @@ class FormLayout(width: String = 100 percent, height: String = null, margin: Boo
   }
 }
 
-class GridLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null) extends com.vaadin.ui.GridLayout with LayoutClickListener {
+class GridLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null, columns: Int = 1, rows: Int = 1) extends com.vaadin.ui.GridLayout with LayoutClickListener {
   setWidth(width)
   setHeight(height)
   setMargin(margin)
   setSpacing(spacing)
   setStyleName(style)
+  setColumns(columns)
+  setRows(rows)
 
   def add(component: Component = null, col: Int = -1, row: Int = -1, col2: Int = -1, row2: Int = -1, alignment: Alignment = null): GridLayout = {
     if (col >= 0 && row >= 0)
