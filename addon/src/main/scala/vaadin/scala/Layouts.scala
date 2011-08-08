@@ -12,7 +12,8 @@ trait LayoutClickListener extends LayoutClickNotifier {
   }
 }
 
-class HorizontalLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null) extends com.vaadin.ui.HorizontalLayout with LayoutClickListener {
+class HorizontalLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null)
+    extends com.vaadin.ui.HorizontalLayout with LayoutClickListener {
   setWidth(width);
   setHeight(height);
   setMargin(margin)
@@ -27,7 +28,8 @@ class HorizontalLayout(width: String = null, height: String = null, margin: Bool
   }
 }
 
-class VerticalLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null) extends com.vaadin.ui.VerticalLayout with LayoutClickListener {
+class VerticalLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null)
+    extends com.vaadin.ui.VerticalLayout with LayoutClickListener {
   setWidth(width)
   setHeight(height)
   setMargin(margin)
@@ -43,14 +45,17 @@ class VerticalLayout(width: String = 100 percent, height: String = null, margin:
 }
 
 // TODO com.vaadin.ui.FormLayout calls setMargin(true, false, true, false); in constructor
-class FormLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = true, style: String = null) extends com.vaadin.ui.FormLayout {
+class FormLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = true, style: String = null)
+    extends com.vaadin.ui.FormLayout {
   def add(component: Component): FormLayout = {
     addComponent(component);
     this
   }
 }
 
-class GridLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null, columns: Int = 1, rows: Int = 1) extends com.vaadin.ui.GridLayout with LayoutClickListener {
+class GridLayout(caption: String = null, width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null, columns: Int = 1, rows: Int = 1)
+    extends com.vaadin.ui.GridLayout with LayoutClickListener {
+  setCaption(caption)
   setWidth(width)
   setHeight(height)
   setMargin(margin)
@@ -71,7 +76,8 @@ class GridLayout(width: String = null, height: String = null, margin: Boolean = 
   }
 }
 
-class CssLayout(width: String = null, height: String = null, margin: Boolean = false, style: String = null) extends com.vaadin.ui.CssLayout with LayoutClickListener {
+class CssLayout(width: String = null, height: String = null, margin: Boolean = false, style: String = null)
+    extends com.vaadin.ui.CssLayout with LayoutClickListener {
   setWidth(width)
   setHeight(height)
   setMargin(margin)
@@ -91,7 +97,8 @@ class CssLayout(width: String = null, height: String = null, margin: Boolean = f
   }
 }
 
-class CustomLayout(width: String = 100 percent, height: String = null, template: String = null, contents: String = null, style: String = null) extends com.vaadin.ui.CustomLayout {
+class CustomLayout(width: String = 100 percent, height: String = null, template: String = null, contents: String = null, style: String = null)
+    extends com.vaadin.ui.CustomLayout {
   setWidth(width)
   setHeight(height)
   setStyleName(style)
