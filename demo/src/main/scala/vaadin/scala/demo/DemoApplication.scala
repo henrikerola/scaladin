@@ -30,9 +30,9 @@ class DemoApplication extends Application {
 
   val DATE = new Date(2009 - 1900, 6 - 1, 2)
 
-  val mainLayout = new VerticalLayout()
+  val mainLayout = new VerticalLayout() with FullSize
   val mainWindow = new Window(caption = "Vaadin Reindeer Theme", content = mainLayout)
-  val tabs = new TabSheet()
+  val tabs = new TabSheet() with FullSize
   val help = new Window("Help")
 
   override def init() = {
@@ -43,52 +43,44 @@ class DemoApplication extends Application {
   }
 
   def buildMainView() = {
-    mainLayout.setSizeFull()
-    mainLayout.addComponent(getTopMenu)
-    mainLayout.addComponent(getHeader)
 
-    val margin = new CssLayout()
+    val margin = new CssLayout() with FullSize
     margin.setMargin(false, true, true, true)
-    margin.setSizeFull()
-    tabs.setSizeFull()
-    margin.addComponent(tabs)
-    mainLayout.addComponent(margin)
-    mainLayout.setExpandRatio(margin, 1)
+    margin.add(tabs)
 
-    tabs.addComponent(buildWelcomeScreen)
-    tabs.addComponent(buildLabels)
-    tabs.addComponent(buildButtons)
-    tabs.addComponent(buildTextFields)
-    tabs.addComponent(buildSelects)
-    tabs.addComponent(buildDateFields)
-    tabs.addComponent(buildTabSheets)
-    tabs.addComponent(buildPanels)
-    tabs.addComponent(buildTables)
-    tabs.addComponent(buildWindows)
-    tabs.addComponent(buildSplitPanels)
+    mainLayout.add(getTopMenu)
+      .add(getHeader)
+      .add(component = margin, ratio = 1)
+
+    tabs.addComponent(buildWelcomeScreen())
+    tabs.addComponent(buildLabels())
+    tabs.addComponent(buildButtons())
+    tabs.addComponent(buildTextFields())
+    tabs.addComponent(buildSelects())
+    tabs.addComponent(buildDateFields())
+    tabs.addComponent(buildTabSheets())
+    tabs.addComponent(buildPanels())
+    tabs.addComponent(buildTables())
+    tabs.addComponent(buildWindows())
+    tabs.addComponent(buildSplitPanels())
   }
 
   def buildLabels(): Layout = {
-    val labelLayout = new GridLayout(columns = 2, rows = 1)
-    labelLayout.setWidth("560px")
-    labelLayout.setSpacing(true)
-    labelLayout.setMargin(true)
-    labelLayout.setCaption("Labels")
-    labelLayout.addStyleName(Reindeer.LAYOUT_WHITE)
+    val labelLayout = new GridLayout(columns = 2, rows = 1, width = 560 px, spacing = true, margin = true, caption = "Labels", style = Reindeer.LAYOUT_WHITE)
 
-    labelLayout.addComponent(new HtmlLabel("Header Style (<code>Reindeer.LABEL_H1</code>)"))
-    labelLayout.addComponent(new H1("Lorem Ipsum"))
+    labelLayout.add(new HtmlLabel("Header Style (<code>Reindeer.LABEL_H1</code>)"))
+      .add(new H1("Lorem Ipsum"))
 
-    labelLayout.addComponent(new HtmlLabel("Sub-header Style (<code>Reindeer.LABEL_H2</code>)"))
-    labelLayout.addComponent(new H2("Lorem Ipsum Dolor"))
+      .add(new HtmlLabel("Sub-header Style (<code>Reindeer.LABEL_H2</code>)"))
+      .add(new H2("Lorem Ipsum Dolor"))
 
-    labelLayout.addComponent(new HtmlLabel("Normal Label"))
-    labelLayout.addComponent(new Label(
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit."))
+      .add(new HtmlLabel("Normal Label"))
+      .add(new Label(
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit."))
 
-    labelLayout.addComponent(new HtmlLabel("Small Style (<code>Reindeer.LABEL_SMALL</code>)"))
-    labelLayout.addComponent(new SmallText(
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit."))
+      .add(new HtmlLabel("Small Style (<code>Reindeer.LABEL_SMALL</code>)"))
+      .add(new SmallText(
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit."))
 
     labelLayout
   }
