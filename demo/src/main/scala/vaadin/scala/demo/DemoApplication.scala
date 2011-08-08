@@ -48,8 +48,8 @@ class DemoApplication extends Application {
     margin.setMargin(false, true, true, true)
     margin.add(tabs)
 
-    mainLayout.add(getTopMenu)
-      .add(getHeader)
+    mainLayout.add(getTopMenu())
+      .add(getHeader())
       .add(component = margin, ratio = 1)
 
     tabs.addComponent(buildWelcomeScreen())
@@ -86,41 +86,23 @@ class DemoApplication extends Application {
   }
 
   def buildButtons(): Layout = {
-    val buttonLayout = new GridLayout(columns = 2, rows = 1)
-    buttonLayout.setCaption("Buttons")
-    buttonLayout.setMargin(true)
-    buttonLayout.setSpacing(true)
-    buttonLayout.setWidth("370px")
+    val buttonLayout = new GridLayout(columns = 2, rows = 1, caption = "Buttons", margin = true, spacing = true, width = 370 px)
     buttonLayout.setColumnExpandRatio(0, 1)
 
-    buttonLayout.addComponent(new HtmlLabel("\"Default\" Style (<code>Reindeer.BUTTON_DEFAULT</code>)"))
+    buttonLayout.add(new HtmlLabel("\"Default\" Style (<code>Reindeer.BUTTON_DEFAULT</code>)"))
+      .add(new Button(caption = "Default Button", style = Reindeer.BUTTON_DEFAULT))
+      .add(new HtmlLabel("Normal Button"))
 
-    val defaultButton = new Button("Default Button")
-    defaultButton.setStyleName(Reindeer.BUTTON_DEFAULT)
-    buttonLayout.addComponent(defaultButton)
+      .add(new Button("Normal Button"))
 
-    buttonLayout.addComponent(new HtmlLabel("Normal Button"))
+      .add(new HtmlLabel("Disabled Button (<code>Button.setEnabled(false)</code>)"))
+      .add(new Button("Disabled Button", enabled = false))
 
-    val normalButton = new Button("Normal Button")
-    buttonLayout.addComponent(normalButton)
+      .add(new HtmlLabel("Small Style (<code>Reindeer.BUTTON_SMALL</code>)"))
+      .add(new Button(caption = "Small Button", style = Reindeer.BUTTON_SMALL))
 
-    buttonLayout.addComponent(new HtmlLabel("Disabled Button (<code>Button.setEnabled(false)</code>)"))
-
-    val disabledButton = new Button("Disabled Button")
-    disabledButton.setEnabled(false)
-    buttonLayout.addComponent(disabledButton)
-
-    buttonLayout.addComponent(new HtmlLabel("Small Style (<code>Reindeer.BUTTON_SMALL</code>)"))
-
-    val smallButton = new Button("Small Button")
-    smallButton.setStyleName(Reindeer.BUTTON_SMALL)
-    buttonLayout.addComponent(smallButton)
-
-    buttonLayout.addComponent(new HtmlLabel("Link Style (<code>Reindeer.BUTTON_LINK</code>)"))
-
-    val linkButton = new Button("Link Button")
-    linkButton.setStyleName(BaseTheme.BUTTON_LINK) //no way to access inherited static members in Scala
-    buttonLayout.addComponent(linkButton)
+      .add(new HtmlLabel("Link Style (<code>Reindeer.BUTTON_LINK</code>)"))
+      .add(new Button(caption = "Link Button", style = BaseTheme.BUTTON_LINK)) //no way to access inherited static members in Scala
 
     buttonLayout
   }

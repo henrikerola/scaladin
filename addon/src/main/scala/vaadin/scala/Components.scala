@@ -9,11 +9,12 @@ class ButtonClickListener(action: com.vaadin.ui.Button#ClickEvent => Unit) exten
   def buttonClick(event: com.vaadin.ui.Button#ClickEvent) { action(event) }
 }
 
-class Button(caption: String = null, action: com.vaadin.ui.Button#ClickEvent => Unit = null, icon: Resource = null, style: String = null)
+class Button(caption: String = null, action: com.vaadin.ui.Button#ClickEvent => Unit = null, icon: Resource = null, style: String = null, enabled: Boolean = true)
     extends com.vaadin.ui.Button(caption) {
   setIcon(icon)
   setStyleName(style)
   if (action != null) addListener(new ButtonClickListener(action))
+  setEnabled(enabled)
 }
 
 class LinkButton(caption: String = null, action: com.vaadin.ui.Button#ClickEvent => Unit = null, icon: Resource = null, style: String = null)
