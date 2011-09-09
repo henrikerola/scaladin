@@ -12,8 +12,9 @@ trait LayoutClickListener extends LayoutClickNotifier {
   }
 }
 
-class HorizontalLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null)
+class HorizontalLayout(caption: String = null, width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null)
     extends com.vaadin.ui.HorizontalLayout with LayoutClickListener {
+  setCaption(caption)
   setWidth(width);
   setHeight(height);
   setMargin(margin)
@@ -28,8 +29,9 @@ class HorizontalLayout(width: String = null, height: String = null, margin: Bool
   }
 }
 
-class VerticalLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null)
+class VerticalLayout(caption: String = null, width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null)
     extends com.vaadin.ui.VerticalLayout with LayoutClickListener {
+  setCaption(caption)
   setWidth(width)
   setHeight(height)
   setMargin(margin)

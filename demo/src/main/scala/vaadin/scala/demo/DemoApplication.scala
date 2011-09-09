@@ -5,18 +5,13 @@ import com.vaadin.Application
 import com.vaadin.terminal.ExternalResource
 import com.vaadin.ui.themes.Reindeer
 import vaadin.scala._
-import com.vaadin.ui.TabSheet
 import com.vaadin.ui.Layout
 import com.vaadin.ui.themes.Reindeer
 import com.vaadin.ui.themes.BaseTheme
-import com.vaadin.ui.TextField
-import com.vaadin.ui.TextArea
 import com.vaadin.ui.ComboBox
 import com.vaadin.ui.NativeSelect
 import com.vaadin.ui.ListSelect
 import com.vaadin.ui.TwinColSelect
-import com.vaadin.ui.DateField
-import com.vaadin.ui.InlineDateField
 import com.vaadin.ui.Panel
 import com.vaadin.ui.Table
 import com.vaadin.ui.HorizontalSplitPanel
@@ -48,39 +43,38 @@ class DemoApplication extends Application {
     margin.setMargin(false, true, true, true)
     margin.add(tabs)
 
-    mainLayout.add(getTopMenu())
-      .add(getHeader())
+    mainLayout.add(getTopMenu)
+      .add(getHeader)
       .add(component = margin, ratio = 1)
 
-    tabs.addComponent(buildWelcomeScreen())
-    tabs.addComponent(buildLabels())
-    tabs.addComponent(buildButtons())
-    tabs.addComponent(buildTextFields())
-    tabs.addComponent(buildSelects())
-    tabs.addComponent(buildDateFields())
-    tabs.addComponent(buildTabSheets())
-    tabs.addComponent(buildPanels())
-    tabs.addComponent(buildTables())
-    tabs.addComponent(buildWindows())
-    tabs.addComponent(buildSplitPanels())
+    tabs.addComponent(buildWelcomeScreen)
+    tabs.addComponent(buildLabels)
+    tabs.addComponent(buildButtons)
+    tabs.addComponent(buildTextFields)
+    tabs.addComponent(buildSelects)
+    tabs.addComponent(buildDateFields)
+    tabs.addComponent(buildTabSheets)
+    tabs.addComponent(buildPanels)
+    tabs.addComponent(buildTables)
+    tabs.addComponent(buildWindows)
+    tabs.addComponent(buildSplitPanels)
   }
 
   def buildLabels(): Layout = {
     val labelLayout = new GridLayout(columns = 2, rows = 1, width = 560 px, spacing = true, margin = true, caption = "Labels", style = Reindeer.LAYOUT_WHITE)
 
-    labelLayout.add(new HtmlLabel("Header Style (<code>Reindeer.LABEL_H1</code>)"))
+    labelLayout
+      .add(new HtmlLabel("Header Style (<code>Reindeer.LABEL_H1</code>)"))
       .add(new H1("Lorem Ipsum"))
 
       .add(new HtmlLabel("Sub-header Style (<code>Reindeer.LABEL_H2</code>)"))
       .add(new H2("Lorem Ipsum Dolor"))
 
       .add(new HtmlLabel("Normal Label"))
-      .add(new Label(
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit."))
+      .add(new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit."))
 
       .add(new HtmlLabel("Small Style (<code>Reindeer.LABEL_SMALL</code>)"))
-      .add(new SmallText(
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit."))
+      .add(new SmallText("Lorem ipsum dolor sit amet, consectetur adipiscing elit."))
 
     labelLayout
   }
@@ -89,10 +83,11 @@ class DemoApplication extends Application {
     val buttonLayout = new GridLayout(columns = 2, rows = 1, caption = "Buttons", margin = true, spacing = true, width = 370 px)
     buttonLayout.setColumnExpandRatio(0, 1)
 
-    buttonLayout.add(new HtmlLabel("\"Default\" Style (<code>Reindeer.BUTTON_DEFAULT</code>)"))
+    buttonLayout
+      .add(new HtmlLabel("\"Default\" Style (<code>Reindeer.BUTTON_DEFAULT</code>)"))
       .add(new Button(caption = "Default Button", style = Reindeer.BUTTON_DEFAULT))
-      .add(new HtmlLabel("Normal Button"))
 
+      .add(new HtmlLabel("Normal Button"))
       .add(new Button("Normal Button"))
 
       .add(new HtmlLabel("Disabled Button (<code>Button.setEnabled(false)</code>)"))
@@ -108,57 +103,30 @@ class DemoApplication extends Application {
   }
 
   def buildTextFields(): Layout = {
-    val textFieldLayout = new GridLayout(columns = 2, rows = 1)
-    textFieldLayout.setCaption("Text fields")
-    textFieldLayout.setMargin(true)
-    textFieldLayout.setSpacing(true)
-    textFieldLayout.setWidth("400px")
+    val textFieldLayout = new GridLayout(columns = 2, rows = 1, caption = "Text fields", margin = true, spacing = true, width = 400 px, style = Reindeer.LAYOUT_WHITE)
     textFieldLayout.setColumnExpandRatio(0, 1)
-    textFieldLayout.addStyleName(Reindeer.LAYOUT_WHITE)
 
-    textFieldLayout.addComponent(new HtmlLabel("Normal TextField"))
-    val normalTextField = new TextField
-    normalTextField.setInputPrompt("Enter text")
-    textFieldLayout.addComponent(normalTextField)
+    textFieldLayout
+      .add(new HtmlLabel("Normal TextField"))
+      .add(new TextField(prompt = "Enter text"))
 
-    textFieldLayout.addComponent(new HtmlLabel("Small Style (<code>Reindeer.TEXTFIELD_SMALL</code>)"))
+      .add(new HtmlLabel("Small Style (<code>Reindeer.TEXTFIELD_SMALL</code>)"))
+      .add(new TextField(style = "small", prompt = "Enter text"))
 
-    val smallTextField = new TextField()
-    smallTextField.setStyleName("small")
-    smallTextField.setInputPrompt("Enter text")
-    textFieldLayout.addComponent(smallTextField)
+      .add(new HtmlLabel("Normal TextArea"))
+      .add(new TextArea(height = 5 em, prompt = "Enter text"))
 
-    textFieldLayout.addComponent(new HtmlLabel("Normal TextArea"))
-
-    val normalTextArea = new TextArea()
-    normalTextArea.setHeight("5em")
-    normalTextArea.setInputPrompt("Enter text")
-    textFieldLayout.addComponent(normalTextArea)
-
-    textFieldLayout.addComponent(new HtmlLabel("Small Style TextArea (<code>Reindeer.TEXTFIELD_SMALL</code>)"))
-
-    val smallTextArea = new TextField()
-    smallTextArea.setHeight("5em")
-    smallTextArea.setStyleName("small")
-    smallTextArea.setInputPrompt("Enter text")
-    textFieldLayout.addComponent(smallTextArea)
+      .add(new HtmlLabel("Small Style TextArea (<code>Reindeer.TEXTFIELD_SMALL</code>)"))
+      .add(new TextField(height = 5 em, style = "small", prompt = "Enter text"))
 
     textFieldLayout
   }
 
   def buildSelects(): Layout = {
-    val selectLayout = new VerticalLayout()
-    selectLayout.setCaption("Selects")
-    selectLayout.setMargin(true)
-    selectLayout.setSpacing(true)
+    val selectLayout = new VerticalLayout(caption = "Selects", margin = true, spacing = true)
 
-    selectLayout.addComponent(new Label(
-      "Selects don't currently have any additional style names, but here you can see how they behave with the different background colors."))
-
-    val hl = new HorizontalLayout()
-    hl.setSpacing(true)
+    val hl = new HorizontalLayout(spacing = true)
     hl.setMargin(true, false, false, false)
-    selectLayout.addComponent(hl)
 
     val cb = new ComboBox()
     val nat = new NativeSelect()
@@ -172,74 +140,48 @@ class DemoApplication extends Application {
       twincol.addItem("Item " + i)
     }
 
-    hl.addComponent(cb)
-    hl.addComponent(nat)
-    hl.addComponent(list)
-    hl.addComponent(twincol)
+    hl.add(cb)
+      .add(nat)
+      .add(list)
+      .add(twincol)
+
+    selectLayout.add(new Label(
+      "Selects don't currently have any additional style names, but here you can see how they behave with the different background colors."))
+      .add(hl)
 
     selectLayout
   }
 
   def buildDateFields(): Layout = {
-    val dateFieldLayout = new VerticalLayout()
-    dateFieldLayout.setCaption("Date fields")
-    dateFieldLayout.setMargin(true)
-    dateFieldLayout.setSpacing(true)
+    val dateFieldLayout = new VerticalLayout(caption = "Date fields", margin = true, spacing = true)
 
-    dateFieldLayout.addComponent(new Label(
-      "Date fields don't currently have any additional style names, but here you can see how they behave with the different background colors."))
-
-    val hl = new HorizontalLayout()
-    hl.setSpacing(true)
+    val hl = new HorizontalLayout(spacing = true)
     hl.setMargin(true, false, false, false)
-    dateFieldLayout.addComponent(hl)
 
-    val dateFieldMinutes = new DateField()
-    dateFieldMinutes.setValue(DATE)
-    dateFieldMinutes.setResolution(DateField.RESOLUTION_MIN)
-    hl.addComponent(dateFieldMinutes)
+    dateFieldLayout.add(new Label(
+      "Date fields don't currently have any additional style names, but here you can see how they behave with the different background colors."))
+      .add(hl)
 
-    val dateFieldDays = new InlineDateField()
-    dateFieldDays.setValue(DATE)
-    dateFieldDays.setResolution(DateField.RESOLUTION_DAY)
-    hl.addComponent(dateFieldDays)
-
-    val dateFieldYears = new InlineDateField()
-    dateFieldYears.setValue(DATE)
-    dateFieldYears.setResolution(DateField.RESOLUTION_YEAR)
-    hl.addComponent(dateFieldYears)
+    hl.add(new DateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_MIN))
+      .add(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_DAY))
+      .add(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_YEAR))
 
     dateFieldLayout
   }
 
   def buildTabSheets(): Layout = {
-    val tabSheetLayout = new GridLayout(columns = 2, rows = 1)
-    tabSheetLayout.setCaption("Tabs")
-    tabSheetLayout.setMargin(true)
-    tabSheetLayout.setSpacing(true)
-    tabSheetLayout.setWidth("700px")
+    val tabSheetLayout = new GridLayout(columns = 2, rows = 1, caption = "Tabs", margin = true, spacing = true, width = 700 px, style = Reindeer.LAYOUT_WHITE)
     tabSheetLayout.setColumnExpandRatio(0, 7)
     tabSheetLayout.setColumnExpandRatio(1, 4)
-    tabSheetLayout.addStyleName(Reindeer.LAYOUT_WHITE)
 
-    val checks = new HorizontalLayout()
-    checks.setSpacing(true)
+    val closable = new CheckBox(caption = "Closable tabs", immediate = true)
+    val hoverOnly = new CheckBox(caption = "Only on hover", immediate = true, enabled = false, description = "Adds style <code>Reindeer.TABSHEET_HOVER_CLOSABLE</code> to all tabs")
+    val selectedOnly = new CheckBox(caption = "Selected only", immediate = true, enabled = false, description = "Adds style <code>Reindeer.TABSHEET_SELECTED_CLOSABLE</code> to all tabs")
+    val checks = new HorizontalLayout(spacing = true)
 
-    val closable = new CheckBox("Closable tabs")
-    closable.setImmediate(true)
-    checks.addComponent(closable)
-
-    val hoverOnly = new CheckBox("Only on hover")
-    hoverOnly.setImmediate(true)
-    hoverOnly.setEnabled(false)
-    hoverOnly.setDescription("Adds style <code>Reindeer.TABSHEET_HOVER_CLOSABLE</code> to all tabs")
-    checks.addComponent(hoverOnly)
-
-    val selectedOnly = new CheckBox("Selected only")
-    selectedOnly.setImmediate(true)
-    selectedOnly.setEnabled(false)
-    selectedOnly.setDescription("Adds style <code>Reindeer.TABSHEET_SELECTED_CLOSABLE</code> to all tabs")
-    checks.addComponent(selectedOnly)
+    checks.add(closable)
+      .add(hoverOnly)
+      .add(selectedOnly)
 
     tabSheetLayout.addComponent(checks, 1, 0)
     tabSheetLayout.setCursorX(0)
@@ -247,57 +189,44 @@ class DemoApplication extends Application {
 
     tabSheetLayout.addComponent(new HtmlLabel("Normal Tabs"))
 
-    val normalTabSheet = new TabSheet()
-    normalTabSheet.setHeight("100px")
+    val normalTabSheet = new TabSheet(height = 100 px)
     tabSheetLayout.addComponent(normalTabSheet)
 
     tabSheetLayout.addComponent(new HtmlLabel("Borderless Style (<code>Reindeer.TABSHEET_BORDERLESS</code>)"))
 
-    val borderlessTabSheet = new TabSheet()
-    borderlessTabSheet.setStyleName(Reindeer.TABSHEET_BORDERLESS)
-    borderlessTabSheet.setHeight("100px")
+    val borderlessTabSheet = new TabSheet(height = 100 px, style = Reindeer.TABSHEET_BORDERLESS)
     tabSheetLayout.addComponent(borderlessTabSheet)
 
     tabSheetLayout.addComponent(new HtmlLabel("Small Style (<code>Reindeer.TABSHEET_SMALL)</code>"))
 
-    val smallTabSheet = new TabSheet()
-    smallTabSheet.setStyleName(Reindeer.TABSHEET_SMALL)
+    val smallTabSheet = new TabSheet(style = Reindeer.TABSHEET_SMALL)
     tabSheetLayout.addComponent(smallTabSheet)
 
     tabSheetLayout.addComponent(new HtmlLabel("Minimal Style (<code>Reindeer.TABSHEET_MINIMAL</code>)"))
 
-    val minimalTabSheet = new TabSheet()
-    minimalTabSheet.setStyleName(Reindeer.TABSHEET_MINIMAL)
+    val minimalTabSheet = new TabSheet(style = Reindeer.TABSHEET_MINIMAL)
     tabSheetLayout.addComponent(minimalTabSheet)
 
     for (i <- 1 until 10) {
-      normalTabSheet.addTab(new Label).setCaption("Tab " + i)
-      borderlessTabSheet.addTab(new Label).setCaption("Tab " + i)
-      smallTabSheet.addTab(new Label).setCaption("Tab " + i)
-      minimalTabSheet.addTab(new Label).setCaption("Tab " + i)
+      normalTabSheet.addTab(new Label()).setCaption("Tab " + i)
+      borderlessTabSheet.addTab(new Label()).setCaption("Tab " + i)
+      smallTabSheet.addTab(new Label()).setCaption("Tab " + i)
+      minimalTabSheet.addTab(new Label()).setCaption("Tab " + i)
     }
 
-    closable.addListener(new ButtonClickListener(event => {
+    closable.addListener(event => {
 
-      val it = normalTabSheet.getComponentIterator
-      val it2 = borderlessTabSheet.getComponentIterator
-      val it3 = smallTabSheet.getComponentIterator
-      val it4 = minimalTabSheet.getComponentIterator
-      while (it.hasNext()) {
-        var component = it.next()
-        normalTabSheet.getTab(component).setClosable(event.getButton.booleanValue)
-        component = it2.next()
-        borderlessTabSheet.getTab(component).setClosable(event.getButton.booleanValue)
-        component = it3.next()
-        smallTabSheet.getTab(component).setClosable(event.getButton.booleanValue)
-        component = it4.next()
-        minimalTabSheet.getTab(component).setClosable(event.getButton.booleanValue)
-      }
-      hoverOnly.setEnabled(event.getButton.booleanValue)
-      selectedOnly.setEnabled(event.getButton.booleanValue)
-    }))
+      val eventValue = event.getButton.booleanValue
+      normalTabSheet.getComponents.foreach(c => normalTabSheet.getTab(c).setClosable(eventValue))
+      borderlessTabSheet.getComponents.foreach(c => borderlessTabSheet.getTab(c).setClosable(eventValue))
+      smallTabSheet.getComponents.foreach(c => smallTabSheet.getTab(c).setClosable(eventValue))
+      minimalTabSheet.getComponents.foreach(c => minimalTabSheet.getTab(c).setClosable(eventValue))
 
-    hoverOnly.addListener(new ButtonClickListener(event => {
+      hoverOnly.setEnabled(eventValue)
+      selectedOnly.setEnabled(eventValue)
+    })
+
+    hoverOnly.addListener(event => {
 
       if (event.getButton.booleanValue) {
         normalTabSheet.addStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
@@ -305,14 +234,14 @@ class DemoApplication extends Application {
         smallTabSheet.addStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
         minimalTabSheet.addStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
       } else {
-        normalTabSheet removeStyleName (Reindeer.TABSHEET_HOVER_CLOSABLE)
-        borderlessTabSheet removeStyleName (Reindeer.TABSHEET_HOVER_CLOSABLE)
-        smallTabSheet removeStyleName (Reindeer.TABSHEET_HOVER_CLOSABLE)
-        minimalTabSheet removeStyleName (Reindeer.TABSHEET_HOVER_CLOSABLE)
+        normalTabSheet.removeStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
+        borderlessTabSheet.removeStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
+        smallTabSheet.removeStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
+        minimalTabSheet.removeStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
       }
-    }))
+    })
 
-    selectedOnly.addListener(new ButtonClickListener(event => {
+    selectedOnly.addListener(event => {
 
       if (event.getButton.booleanValue) {
         normalTabSheet.addStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
@@ -320,12 +249,12 @@ class DemoApplication extends Application {
         smallTabSheet.addStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
         minimalTabSheet.addStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
       } else {
-        normalTabSheet removeStyleName (Reindeer.TABSHEET_SELECTED_CLOSABLE)
-        borderlessTabSheet removeStyleName (Reindeer.TABSHEET_SELECTED_CLOSABLE)
-        smallTabSheet removeStyleName (Reindeer.TABSHEET_SELECTED_CLOSABLE)
-        minimalTabSheet removeStyleName (Reindeer.TABSHEET_SELECTED_CLOSABLE)
+        normalTabSheet.removeStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
+        borderlessTabSheet.removeStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
+        smallTabSheet.removeStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
+        minimalTabSheet.removeStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
       }
-    }))
+    })
 
     tabSheetLayout
   }
@@ -335,7 +264,7 @@ class DemoApplication extends Application {
     panelLayout.setCaption("Panels")
     panelLayout.setMargin(true)
     panelLayout.setSpacing(true)
-    panelLayout.setWidth("700px")
+    panelLayout.setWidth(700 px)
     panelLayout.setColumnExpandRatio(0, 2)
     panelLayout.setColumnExpandRatio(1, 5)
     panelLayout.addStyleName(Reindeer.LAYOUT_WHITE)
@@ -343,14 +272,14 @@ class DemoApplication extends Application {
     panelLayout.addComponent(new HtmlLabel("Normal Panel"))
 
     val normalPanel = new Panel("Normal Panel")
-    normalPanel.setHeight("100px")
+    normalPanel.setHeight(100 px)
     normalPanel.addComponent(new Label("Panel content"))
     panelLayout.addComponent(normalPanel)
 
     panelLayout.addComponent(new HtmlLabel("Light Style (<code>Reindeer.PANEL_LIGHT</code>)"))
 
     val lightPanel = new Panel("Light Style Panel")
-    lightPanel.setStyleName("light")
+    lightPanel.setStyleName(Reindeer.PANEL_LIGHT)
     lightPanel.addComponent(new Label("Panel content"))
     panelLayout.addComponent(lightPanel)
 
@@ -362,7 +291,7 @@ class DemoApplication extends Application {
     tableLayout.setCaption("Tables")
     tableLayout.setMargin(true)
     tableLayout.setSpacing(true)
-    tableLayout.setWidth("700px")
+    tableLayout.setWidth(700 px)
     tableLayout.setColumnExpandRatio(0, 3)
     tableLayout.setColumnExpandRatio(1, 5)
     tableLayout.addStyleName(Reindeer.LAYOUT_WHITE)
@@ -370,7 +299,7 @@ class DemoApplication extends Application {
     for (i <- 0 until 4) {
 
       val table = new Table()
-      table.setWidth("100%")
+      table.setWidth(100 percent)
       table.setPageLength(4)
       table.setSelectable(true)
       table.setColumnCollapsingAllowed(true)
@@ -414,60 +343,59 @@ class DemoApplication extends Application {
     windowLayout.setCaption("Windows")
 
     val normalWindow = new Window("Normal window")
-    normalWindow.setWidth("280px")
-    normalWindow.setHeight("180px")
-    normalWindow setPositionX (40)
-    normalWindow setPositionY (160)
+    normalWindow.setWidth(280 px)
+    normalWindow.setHeight(180 px)
+    normalWindow.setPositionX(40)
+    normalWindow.setPositionY(160)
 
     val notResizableWindow = new Window("Window, no resize")
     notResizableWindow setResizable (false)
-    notResizableWindow.setWidth("280px")
+    notResizableWindow.setWidth(280 px)
     notResizableWindow.setHeight("180px")
     notResizableWindow setPositionX (350)
     notResizableWindow setPositionY (160)
     notResizableWindow.addComponent(new HtmlLabel("<code>Window.setResizable(false)</code>"))
 
     val lightWindow = new Window("Light window")
-    lightWindow.setWidth("280px")
-    lightWindow.setHeight("230px")
+    lightWindow.setWidth(280 px)
+    lightWindow.setHeight(230 px)
     lightWindow.setStyleName("light")
     lightWindow.setPositionX(40)
     lightWindow.setPositionY(370)
     lightWindow.addComponent(new HtmlLabel("<code>Reindeer.WINDOW_LIGHT</code>"))
 
     val blackWindow = new Window("Black window")
-    blackWindow.setWidth("280px")
-    blackWindow.setHeight("230px")
+    blackWindow.setWidth(280 px)
+    blackWindow.setHeight(230 px)
     blackWindow.setStyleName("black")
     blackWindow.setPositionX(350)
     blackWindow.setPositionY(370)
     blackWindow.addComponent(new HtmlLabel("<code>Reindeer.WINDOW_BLACK</code>"))
 
-    tabs.addListener(new TabSheet.SelectedTabChangeListener() {
-      override def selectedTabChange(event: TabSheet#SelectedTabChangeEvent) {
-        val mainWindow = getMainWindow
+    tabs.addListener(event => {
+      val mainWindow = getMainWindow
 
-        if (event.getTabSheet().getSelectedTab() == windowLayout) {
-          mainWindow.addWindow(normalWindow)
-          mainWindow.addWindow(notResizableWindow)
-          mainWindow.addWindow(lightWindow)
-          mainWindow.addWindow(blackWindow)
-        } else {
-          if (normalWindow.getParent() == mainWindow) {
-            mainWindow.removeWindow(normalWindow)
-          }
+      if (event.getTabSheet.getSelectedTab == windowLayout) {
+        mainWindow.addWindow(normalWindow)
+        mainWindow.addWindow(notResizableWindow)
+        mainWindow.addWindow(lightWindow)
+        mainWindow.addWindow(blackWindow)
 
-          if (notResizableWindow.getParent() == mainWindow) {
-            mainWindow.removeWindow(notResizableWindow)
-          }
+      } else {
+        if (normalWindow.getParent == mainWindow) {
+          mainWindow.removeWindow(normalWindow)
+        }
 
-          if (lightWindow.getParent() == mainWindow) {
-            mainWindow.removeWindow(lightWindow)
-          }
+        if (notResizableWindow.getParent == mainWindow) {
+          mainWindow.removeWindow(notResizableWindow)
+        }
 
-          if (blackWindow.getParent() == mainWindow) {
-            mainWindow.removeWindow(blackWindow)
-          }
+        if (lightWindow.getParent == mainWindow) {
+          mainWindow.removeWindow(lightWindow)
+        }
+
+        if (blackWindow.getParent == mainWindow) {
+          mainWindow.removeWindow(blackWindow)
         }
       }
     })
@@ -487,16 +415,16 @@ class DemoApplication extends Application {
     splitPanelLayout.addComponent(new HtmlLabel("Normal SplitPanel"))
 
     val horizontalSplitPanel = new HorizontalSplitPanel()
-    horizontalSplitPanel.setWidth("100px")
-    horizontalSplitPanel.setHeight("200px")
+    horizontalSplitPanel.setWidth(100 px)
+    horizontalSplitPanel.setHeight(200 px)
     splitPanelLayout.addComponent(horizontalSplitPanel)
 
     splitPanelLayout.addComponent(new HtmlLabel("Small Style (<code>Reindeer.SPLITPANEL_SMALL</code>)"))
 
     val smallHorizontalSplitPanel = new HorizontalSplitPanel()
     smallHorizontalSplitPanel.setStyleName("small")
-    smallHorizontalSplitPanel.setWidth("100px")
-    smallHorizontalSplitPanel.setHeight("200px")
+    smallHorizontalSplitPanel.setWidth(100 px)
+    smallHorizontalSplitPanel.setHeight(200 px)
     splitPanelLayout.addComponent(smallHorizontalSplitPanel)
 
     splitPanelLayout
@@ -509,7 +437,7 @@ class DemoApplication extends Application {
     l.setCaption("Welcome")
     l.setStyleName(Reindeer.LAYOUT_WHITE)
 
-    val margin = new CssLayout(margin = true, width = "100%")
+    val margin = new CssLayout(margin = true, width = 100 percent)
     l.addComponent(margin)
 
     val title = new H1("Guide to the Reindeer Theme")
@@ -519,7 +447,7 @@ class DemoApplication extends Application {
 
     val texts = new HorizontalLayout()
     texts.setSpacing(true)
-    texts.setWidth("100%")
+    texts.setWidth(100 percent)
     texts.setMargin(false, false, true, false)
     margin.addComponent(texts)
 
@@ -536,7 +464,7 @@ class DemoApplication extends Application {
     val stylesHeading = new H2("One Theme &ndash; Three Styles")
     stylesHeading.setContentMode(com.vaadin.ui.Label.CONTENT_XHTML)
 
-    val colors = new HorizontalLayout(width = "100%", height = "250px")
+    val colors = new HorizontalLayout(width = 100 percent, height = 250 px)
 
     margin.add(stylesHeading)
       .add(new Ruler())
@@ -570,7 +498,7 @@ class DemoApplication extends Application {
 
   def getTopMenu(): MenuBar = {
     val menubar = new MenuBar()
-    menubar.setWidth("100%")
+    menubar.setWidth(100 percent)
     val file = menubar.addItem("File", null)
     val newItem = file.addItem("New", null)
     file.addItem("Open file...", null)
@@ -627,7 +555,7 @@ class DemoApplication extends Application {
   }
 
   def getHeader(): Layout = {
-    val header = new HorizontalLayout(width = "100%", margin = true, spacing = true)
+    val header = new HorizontalLayout(width = 100 percent, margin = true, spacing = true)
 
     val titleLayout = new CssLayout()
     val title = new H2("Vaadin Reindeer Theme")
@@ -714,7 +642,7 @@ class DemoApplication extends Application {
       help.setCloseShortcut(KeyCode.ESCAPE)
 
       help.center()
-      help.setWidth("400px")
+      help.setWidth(400 px)
       help.setResizable(false)
 
       val helpText = new HtmlLabel("<strong>How To Use This Application</strong><p>Click around, explore. The purpose of this app is to show you what is possible to achieve with the Reindeer theme and its different styles.</p><p>Most of the UI controls that are visible in this application don't actually do anything. They are purely for show, like the menu items and the components that demostrate the different style names assosiated with the components.</p><strong>So, What Then?</strong><p>Go and use the styles you see here in your own application and make them beautiful!")
@@ -733,7 +661,7 @@ class DemoApplication extends Application {
 
     logout.setModal(true)
     logout.setStyleName(Reindeer.WINDOW_BLACK)
-    logout.setWidth("260px")
+    logout.setWidth(260 px)
     logout.setResizable(false)
     logout.setClosable(false)
     logout.setDraggable(false)
@@ -771,5 +699,5 @@ class DemoApplication extends Application {
 
   class Ruler extends HtmlLabel("<hr />")
 
-  class Spacer extends Label(width = "20px")
+  class Spacer extends Label(width = 20 px)
 }
