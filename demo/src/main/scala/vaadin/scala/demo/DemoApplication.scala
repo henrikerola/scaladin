@@ -12,7 +12,6 @@ import com.vaadin.ui.ComboBox
 import com.vaadin.ui.NativeSelect
 import com.vaadin.ui.ListSelect
 import com.vaadin.ui.TwinColSelect
-import com.vaadin.ui.Panel
 import com.vaadin.ui.Table
 import com.vaadin.ui.HorizontalSplitPanel
 import com.vaadin.ui.MenuBar
@@ -25,9 +24,9 @@ class DemoApplication extends Application {
 
   val DATE = new Date(2009 - 1900, 6 - 1, 2)
 
-  val mainLayout = new VerticalLayout() with FullSize
+  val mainLayout = new VerticalLayout(width = 100 percent, height = 100 percent)
   val mainWindow = new Window(caption = "Vaadin Reindeer Theme", content = mainLayout)
-  val tabs = new TabSheet() with FullSize
+  val tabs = new TabSheet(width = 100 percent, height = 100 percent)
   val help = new Window("Help")
 
   override def init() = {
@@ -39,7 +38,7 @@ class DemoApplication extends Application {
 
   def buildMainView() = {
 
-    val margin = new CssLayout() with FullSize
+    val margin = new CssLayout(width = 100 percent, height = 100 percent)
     margin.setMargin(false, true, true, true)
     margin.add(tabs)
 
@@ -271,15 +270,13 @@ class DemoApplication extends Application {
 
     panelLayout.addComponent(new HtmlLabel("Normal Panel"))
 
-    val normalPanel = new Panel("Normal Panel")
-    normalPanel.setHeight(100 px)
+    val normalPanel = new Panel("Normal Panel", height = 100 px)
     normalPanel.addComponent(new Label("Panel content"))
     panelLayout.addComponent(normalPanel)
 
     panelLayout.addComponent(new HtmlLabel("Light Style (<code>Reindeer.PANEL_LIGHT</code>)"))
 
-    val lightPanel = new Panel("Light Style Panel")
-    lightPanel.setStyleName(Reindeer.PANEL_LIGHT)
+    val lightPanel = new Panel("Light Style Panel", style = Reindeer.PANEL_LIGHT)
     lightPanel.addComponent(new Label("Panel content"))
     panelLayout.addComponent(lightPanel)
 
