@@ -10,9 +10,18 @@ class WindowCloseListener(action: com.vaadin.ui.Window#CloseEvent => Unit) exten
 }
 
 class Window(caption: String = null, width: String = null, height: String = null, content: ComponentContainer = null, modal: Boolean = false, icon: Resource = null, style: String = null) extends com.vaadin.ui.Window(caption, content) {
-  setWidth(width);
-  setHeight(height);
-  setModal(modal);
+  setWidth(width)
+  setHeight(height)
+  setModal(modal)
+  setIcon(icon)
+  setStyleName(style)
+
+  def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
+}
+
+class Panel(caption: String = null, width: String = null, height: String = null, content: ComponentContainer = null, icon: Resource = null, style: String = null) extends com.vaadin.ui.Panel(caption, content) {
+  setWidth(width)
+  setHeight(height)
   setIcon(icon)
   setStyleName(style)
 

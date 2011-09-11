@@ -4,14 +4,6 @@ import com.vaadin.ui.Component
 
 package object scala {
 
-  trait FullSize extends Component {
-    setSizeFull
-  }
-
-  trait UndefinedSize extends Component {
-    setSizeUndefined
-  }
-
   class UnitExtent(value: Number) {
     def px: String = value + "px"
     def percent: String = value + "%"
