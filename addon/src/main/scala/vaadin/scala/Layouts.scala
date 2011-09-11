@@ -78,12 +78,13 @@ class GridLayout(caption: String = null, width: String = null, height: String = 
   }
 }
 
-class CssLayout(width: String = null, height: String = null, margin: Boolean = false, style: String = null)
+class CssLayout(width: String = null, height: String = null, margin: Boolean = false, style: String = null, caption: String = null)
     extends com.vaadin.ui.CssLayout with LayoutClickListener {
   setWidth(width)
   setHeight(height)
   setMargin(margin)
   setStyleName(style)
+  setCaption(caption)
 
   // TODO remove css from map when component is removed from the layout
   val cssMap = Map[Component, String]()

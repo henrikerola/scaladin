@@ -86,3 +86,17 @@ class InlineDateField(caption: String = null, width: String = null, height: Stri
   setStyleName(style)
   setResolution(resolution)
 }
+
+class MenuBar(caption: String = null, width: String = null, height: String = null, style: String = null)
+    extends com.vaadin.ui.MenuBar {
+  setWidth(width)
+  setHeight(height)
+  setStyleName(style)
+}
+
+class MenuBarCommand(action: com.vaadin.ui.MenuBar#MenuItem => Unit) extends com.vaadin.ui.MenuBar.Command {
+  override def menuSelected(selectedItem: com.vaadin.ui.MenuBar#MenuItem) = {
+    action(selectedItem)
+  }
+}
+

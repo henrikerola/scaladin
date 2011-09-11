@@ -9,12 +9,8 @@ import com.vaadin.ui.Layout
 import com.vaadin.ui.themes.Reindeer
 import com.vaadin.ui.themes.BaseTheme
 import com.vaadin.ui.ComboBox
-import com.vaadin.ui.NativeSelect
 import com.vaadin.ui.ListSelect
 import com.vaadin.ui.TwinColSelect
-import com.vaadin.ui.Table
-import com.vaadin.ui.HorizontalSplitPanel
-import com.vaadin.ui.MenuBar
 import com.vaadin.data.Property.ValueChangeListener
 import com.vaadin.data.Property.ValueChangeEvent
 import com.vaadin.ui.Alignment
@@ -24,9 +20,9 @@ class DemoApplication extends Application {
 
   val DATE = new Date(2009 - 1900, 6 - 1, 2)
 
-  val mainLayout = new VerticalLayout(width = 100 percent, height = 100 percent)
+  val mainLayout = new VerticalLayout(width = 100 px, height = 100 px) 
   val mainWindow = new Window(caption = "Vaadin Reindeer Theme", content = mainLayout)
-  val tabs = new TabSheet(width = 100 percent, height = 100 percent)
+  val tabs = new TabSheet(width = 100 px, height = 100 px)
   val help = new Window("Help")
 
   override def init() = {
@@ -38,7 +34,7 @@ class DemoApplication extends Application {
 
   def buildMainView() = {
 
-    val margin = new CssLayout(width = 100 percent, height = 100 percent)
+    val margin = new CssLayout() with FullSize
     margin.setMargin(false, true, true, true)
     margin.add(tabs)
 
@@ -259,50 +255,38 @@ class DemoApplication extends Application {
   }
 
   def buildPanels(): Layout = {
-    val panelLayout = new GridLayout(columns = 2, rows = 1)
-    panelLayout.setCaption("Panels")
-    panelLayout.setMargin(true)
-    panelLayout.setSpacing(true)
-    panelLayout.setWidth(700 px)
+    val panelLayout = new GridLayout(columns = 2, rows = 1, caption = "Panels", margin = true, spacing = true, width = 700 px, style = Reindeer.LAYOUT_WHITE)
     panelLayout.setColumnExpandRatio(0, 2)
     panelLayout.setColumnExpandRatio(1, 5)
-    panelLayout.addStyleName(Reindeer.LAYOUT_WHITE)
 
-    panelLayout.addComponent(new HtmlLabel("Normal Panel"))
+    val normalPanel = new Panel(caption = "Normal Panel", height = 100 px)
+    normalPanel.add(new Label("Panel content"))
 
-    val normalPanel = new Panel("Normal Panel", height = 100 px)
-    normalPanel.addComponent(new Label("Panel content"))
-    panelLayout.addComponent(normalPanel)
+    val lightPanel = new Panel(caption = "Light Style Panel", style = Reindeer.PANEL_LIGHT)
+    lightPanel.add(new Label("Panel content"))
 
-    panelLayout.addComponent(new HtmlLabel("Light Style (<code>Reindeer.PANEL_LIGHT</code>)"))
-
-    val lightPanel = new Panel("Light Style Panel", style = Reindeer.PANEL_LIGHT)
-    lightPanel.addComponent(new Label("Panel content"))
-    panelLayout.addComponent(lightPanel)
-
+    panelLayout.add(new HtmlLabel("Normal Panel"))
+      .add(normalPanel)
+      .add(new HtmlLabel("Light Style (<code>Reindeer.PANEL_LIGHT</code>)"))
+      .add(lightPanel)
     panelLayout
   }
 
   def buildTables(): Layout = {
-    val tableLayout = new GridLayout(columns = 2, rows = 1)
-    tableLayout.setCaption("Tables")
-    tableLayout.setMargin(true)
-    tableLayout.setSpacing(true)
-    tableLayout.setWidth(700 px)
+    val tableLayout = new GridLayout(columns = 2, rows = 1, caption = "Tables", margin = true, spacing = true, width = 700 px, style = Reindeer.LAYOUT_WHITE)
     tableLayout.setColumnExpandRatio(0, 3)
     tableLayout.setColumnExpandRatio(1, 5)
-    tableLayout.addStyleName(Reindeer.LAYOUT_WHITE)
 
     for (i <- 0 until 4) {
-
-      val table = new Table()
-      table.setWidth(100 percent)
+      val table = new Table(width = 100 percent)
       table.setPageLength(4)
       table.setSelectable(true)
       table.setColumnCollapsingAllowed(true)
       table.setColumnReorderingAllowed(true)
 
       i match {
+
+        case 0 => tableLayout.addComponent(new HtmlLabel("Normal Table"))
 
         case 1 =>
           table.setStyleName("strong")
@@ -315,8 +299,6 @@ class DemoApplication extends Application {
         case 3 =>
           table.setStyleName("borderless strong")
           tableLayout.addComponent(new Label("Borderless & Strong Combined"))
-
-        case _ => tableLayout.addComponent(new HtmlLabel("Normal Table"))
 
       }
 
@@ -336,35 +318,23 @@ class DemoApplication extends Application {
   }
 
   def buildWindows(): Layout = {
-    val windowLayout = new CssLayout()
-    windowLayout.setCaption("Windows")
+    val windowLayout = new CssLayout(caption = "Windows")
 
-    val normalWindow = new Window("Normal window")
-    normalWindow.setWidth(280 px)
-    normalWindow.setHeight(180 px)
+    val normalWindow = new Window(caption = "Normal window", width = 280 px, height = 180 px)
     normalWindow.setPositionX(40)
     normalWindow.setPositionY(160)
 
-    val notResizableWindow = new Window("Window, no resize")
-    notResizableWindow setResizable (false)
-    notResizableWindow.setWidth(280 px)
-    notResizableWindow.setHeight("180px")
-    notResizableWindow setPositionX (350)
-    notResizableWindow setPositionY (160)
+    val notResizableWindow = new Window(caption = "Window, no resize", width = 280 px, height = 180 px, resizable = false)
+    notResizableWindow.setPositionX(350)
+    notResizableWindow.setPositionY(160)
     notResizableWindow.addComponent(new HtmlLabel("<code>Window.setResizable(false)</code>"))
 
-    val lightWindow = new Window("Light window")
-    lightWindow.setWidth(280 px)
-    lightWindow.setHeight(230 px)
-    lightWindow.setStyleName("light")
+    val lightWindow = new Window(caption = " Light window", width = 280 px, height = 230 px, style = Reindeer.WINDOW_LIGHT)
     lightWindow.setPositionX(40)
     lightWindow.setPositionY(370)
     lightWindow.addComponent(new HtmlLabel("<code>Reindeer.WINDOW_LIGHT</code>"))
 
-    val blackWindow = new Window("Black window")
-    blackWindow.setWidth(280 px)
-    blackWindow.setHeight(230 px)
-    blackWindow.setStyleName("black")
+    val blackWindow = new Window(caption = "Black window", width = 280 px, height = 230 px, style = Reindeer.WINDOW_BLACK)
     blackWindow.setPositionX(350)
     blackWindow.setPositionY(370)
     blackWindow.addComponent(new HtmlLabel("<code>Reindeer.WINDOW_BLACK</code>"))
@@ -401,52 +371,29 @@ class DemoApplication extends Application {
   }
 
   def buildSplitPanels(): Layout = {
-    val splitPanelLayout = new GridLayout(columns = 2, rows = 1)
-    splitPanelLayout.setCaption("Split panels")
-    splitPanelLayout.setMargin(true)
-    splitPanelLayout.setSpacing(true)
-    splitPanelLayout.setWidth("400px")
-    splitPanelLayout.addStyleName(Reindeer.LAYOUT_WHITE)
+    val splitPanelLayout = new GridLayout(columns = 2, rows = 1, caption = "Split panels", margin = true, spacing = true, width = 400 px, style = Reindeer.LAYOUT_WHITE)
     splitPanelLayout.setColumnExpandRatio(0, 1)
 
-    splitPanelLayout.addComponent(new HtmlLabel("Normal SplitPanel"))
+    val horizontalSplitPanel = new HorizontalSplitPanel(width = 100 px, height = 200 px)
 
-    val horizontalSplitPanel = new HorizontalSplitPanel()
-    horizontalSplitPanel.setWidth(100 px)
-    horizontalSplitPanel.setHeight(200 px)
-    splitPanelLayout.addComponent(horizontalSplitPanel)
+    val smallHorizontalSplitPanel = new HorizontalSplitPanel(width = 100 px, height = 200 px, style = Reindeer.SPLITPANEL_SMALL)
 
-    splitPanelLayout.addComponent(new HtmlLabel("Small Style (<code>Reindeer.SPLITPANEL_SMALL</code>)"))
-
-    val smallHorizontalSplitPanel = new HorizontalSplitPanel()
-    smallHorizontalSplitPanel.setStyleName("small")
-    smallHorizontalSplitPanel.setWidth(100 px)
-    smallHorizontalSplitPanel.setHeight(200 px)
-    splitPanelLayout.addComponent(smallHorizontalSplitPanel)
+    splitPanelLayout.add(new HtmlLabel("Normal SplitPanel"))
+      .add(horizontalSplitPanel)
+      .add(new HtmlLabel("Small Style (<code>Reindeer.SPLITPANEL_SMALL</code>)"))
+      .add(smallHorizontalSplitPanel)
 
     splitPanelLayout
   }
 
   def buildWelcomeScreen(): Layout = {
-    val l = new VerticalLayout()
-    l.setMargin(true)
-    l.setSpacing(true)
-    l.setCaption("Welcome")
-    l.setStyleName(Reindeer.LAYOUT_WHITE)
+    val l = new VerticalLayout(margin = true, spacing = true, caption = "Welcome", style = Reindeer.LAYOUT_WHITE)
 
     val margin = new CssLayout(margin = true, width = 100 percent)
     l.addComponent(margin)
 
-    val title = new H1("Guide to the Reindeer Theme")
-    margin.addComponent(title)
-
-    margin.addComponent(new Ruler())
-
-    val texts = new HorizontalLayout()
-    texts.setSpacing(true)
-    texts.setWidth(100 percent)
+    val texts = new HorizontalLayout(spacing = true, width = 100 percent)
     texts.setMargin(false, false, true, false)
-    margin.addComponent(texts)
 
     val welcomeText1 = "<h4>A Complete Theme</h4><p>The Reindeer theme is a complete, general purpose theme suitable for almost all types of applications.<p>While a general purpose theme should not try to cater for every possible need, the Reindeer theme provides a set of useful styles that you can use to make the interface a bit more lively and interesing, emphasizing different parts of the application.</p>"
     val welcomeText2 = "<h4>Everything You Need Is Here</h4><p>Everything you see inside this application, all the different styles, are provided by the Reindeer theme, out-of-the-box. That means you don't necessarily need to create any custom CSS for your application: you can build a cohesive result writing plain Java code.</p><p>A little creativity, good organization and careful typography carries a long way."
@@ -462,11 +409,6 @@ class DemoApplication extends Application {
     stylesHeading.setContentMode(com.vaadin.ui.Label.CONTENT_XHTML)
 
     val colors = new HorizontalLayout(width = 100 percent, height = 250 px)
-
-    margin.add(stylesHeading)
-      .add(new Ruler())
-      .add(new HtmlLabel("<p>You can easily change the feel of some parts of your application by using the three layout styles provided by Reindeer: white, blue and black. The colored area contains the margins of the layout. All contained components will switch their style if an alternative style is available for that color.</p>"))
-      .add(colors)
 
     val whiteLayout = new CssLayout(style = Reindeer.LAYOUT_WHITE, margin = true)
     whiteLayout.setSizeFull()
@@ -488,14 +430,21 @@ class DemoApplication extends Application {
     colors.addComponent(blackLayout)
 
     val note = new HtmlLabel("<p>Note, that you cannot nest the layout styles infinitely inside each other. After a couple levels, the result will be undefined, due to limitations in CSS (which are in fact caused by Internet Explorer 6).</p>")
-    margin.addComponent(note)
+
+    margin.add(new H1("Guide to the Reindeer Theme"))
+      .add(new Ruler())
+      .add(texts)
+      .add(stylesHeading)
+      .add(new Ruler())
+      .add(new HtmlLabel("<p>You can easily change the feel of some parts of your application by using the three layout styles provided by Reindeer: white, blue and black. The colored area contains the margins of the layout. All contained components will switch their style if an alternative style is available for that color.</p>"))
+      .add(colors)
+      .addComponent(note)
 
     return l
   }
 
   def getTopMenu(): MenuBar = {
-    val menubar = new MenuBar()
-    menubar.setWidth(100 percent)
+    val menubar = new MenuBar(width = 100 percent)
     val file = menubar.addItem("File", null)
     val newItem = file.addItem("New", null)
     file.addItem("Open file...", null)
@@ -525,13 +474,7 @@ class DemoApplication extends Application {
 
     val find = edit.addItem("Find/Replace", null)
 
-    find.addItem("Google Search", new MenuBar.Command() {
-
-      override def menuSelected(selectedItem: MenuBar#MenuItem) = {
-        getMainWindow.open(new ExternalResource("http://www.google.com"))
-      }
-    })
-
+    find.addItem("Google Search", new MenuBarCommand(_ => getMainWindow.open(new ExternalResource("http://www.google.com"))))
     find.addSeparator()
     find.addItem("Find/Replace...", null)
     find.addItem("Find Next", null)
@@ -539,10 +482,10 @@ class DemoApplication extends Application {
 
     val view = menubar.addItem("View", null)
     val statusBarItem = view.addItem("Show/Hide Status Bar", null)
-    statusBarItem setCheckable (true)
-    statusBarItem setChecked (true)
+    statusBarItem.setCheckable(true)
+    statusBarItem.setChecked(true)
     view.addItem("Customize Toolbar...", null)
-    view addSeparator
+    view.addSeparator()
 
     view.addItem("Actual Size", null)
     view.addItem("Zoom In", null)
@@ -556,13 +499,11 @@ class DemoApplication extends Application {
 
     val titleLayout = new CssLayout()
     val title = new H2("Vaadin Reindeer Theme")
-    titleLayout.addComponent(title)
     val description = new SmallText(
       "Documentation and Examples of Available Styles")
     description.setSizeUndefined()
-    titleLayout.addComponent(description)
-
-    header.addComponent(titleLayout)
+    titleLayout.add(title)
+      .add(description)
 
     val toggles = new HorizontalLayout(spacing = true)
     val bgColor = new Label("Background color")
@@ -576,65 +517,55 @@ class DemoApplication extends Application {
     colors.addItem("Blue")
     colors.addItem("Black")
     colors.setImmediate(true)
-    colors.addListener(new ValueChangeListener() {
-      override def valueChange(event: ValueChangeEvent) {
-        mainLayout.setStyleName(event.getProperty().getValue()
-          .toString().toLowerCase())
-      }
-    })
+    colors.addListener(event => mainLayout.setStyleName(event.getProperty.getValue.toString.toLowerCase))
+
     colors.setValue("Blue")
     toggles.addComponent(colors)
-    val transparent = new CheckBox(caption = "Transparent tabs", action = event =>
+    val transparent = new CheckBox(caption = "Transparent tabs", immediate = true, action = event =>
       {
-        if (event.getButton().booleanValue) {
+        if (event.getButton.booleanValue) {
           tabs.setStyleName(Reindeer.TABSHEET_MINIMAL)
         } else {
           tabs.removeStyleName(Reindeer.TABSHEET_MINIMAL)
         }
-        val it = tabs.getComponentIterator
-        while (it.hasNext) {
-          val c = it.next()
-          if (event.getButton().booleanValue) {
+
+        tabs.getComponents.foreach(c => {
+          if (event.getButton.booleanValue) {
             c.removeStyleName(Reindeer.LAYOUT_WHITE)
           } else {
             c.addStyleName(Reindeer.LAYOUT_WHITE)
           }
-        }
+        })
         // Force refresh
-        getMainWindow().open(new ExternalResource(getURL()))
+        getMainWindow.open(new ExternalResource(getURL))
       })
-    transparent.setImmediate(true)
     transparent
       .setDescription("Set style Reindeer.TABSHEET_MINIMAL to the main tab sheet (preview components on different background colors).")
     toggles.addComponent(transparent)
-    header.addComponent(toggles)
-    header.setComponentAlignment(toggles, Alignment.MIDDLE_LEFT)
 
     val userLayout = new CssLayout()
     val user = new Label("Welcome, Guest")
     user.setSizeUndefined()
     userLayout.addComponent(user)
 
-    val buttons = new HorizontalLayout()
-    buttons.setSpacing(true)
-    val help = new Button(caption = "Help", action = _ => openHelpWindow())
-    help.setStyleName(Reindeer.BUTTON_SMALL)
-    buttons.addComponent(help)
-    buttons.setComponentAlignment(help, Alignment.MIDDLE_LEFT)
+    val buttons = new HorizontalLayout(spacing = true)
+    val help = new Button(caption = "Help", action = _ => openHelpWindow(), style = Reindeer.BUTTON_SMALL)
+    val logout = new Button(caption = "Logout", action = _ => openLogoutWindow(), style = Reindeer.BUTTON_SMALL)
 
-    val logout = new Button(caption = "Logout", action = _ => openLogoutWindow())
-    logout.setStyleName(Reindeer.BUTTON_SMALL)
-    buttons.addComponent(logout)
+    buttons.add(help, alignment = Alignment.MIDDLE_LEFT)
+      .add(logout)
+
     userLayout.addComponent(buttons)
 
-    header.addComponent(userLayout)
-    header.setComponentAlignment(userLayout, Alignment.TOP_RIGHT)
+    header.add(titleLayout)
+      .add(toggles, alignment = Alignment.MIDDLE_LEFT)
+      .add(userLayout, alignment = Alignment.TOP_RIGHT)
 
     header
   }
 
   def openHelpWindow() {
-    if (!"initialized".equals(help.getData)) {
+    if ("initialized" != help.getData) {
       help.setData("initialized")
       help.setCloseShortcut(KeyCode.ESCAPE)
 
@@ -644,7 +575,6 @@ class DemoApplication extends Application {
 
       val helpText = new HtmlLabel("<strong>How To Use This Application</strong><p>Click around, explore. The purpose of this app is to show you what is possible to achieve with the Reindeer theme and its different styles.</p><p>Most of the UI controls that are visible in this application don't actually do anything. They are purely for show, like the menu items and the components that demostrate the different style names assosiated with the components.</p><strong>So, What Then?</strong><p>Go and use the styles you see here in your own application and make them beautiful!")
       help.addComponent(helpText)
-
     }
     if (!getMainWindow.getChildWindows.contains(help)) {
       getMainWindow.addWindow(help)
@@ -652,20 +582,13 @@ class DemoApplication extends Application {
   }
 
   def openLogoutWindow() {
-    val logout = new Window("Logout")
     val logoutLayout = new VerticalLayout(spacing = true)
-    logout.setContent(logoutLayout)
 
-    logout.setModal(true)
-    logout.setStyleName(Reindeer.WINDOW_BLACK)
-    logout.setWidth(260 px)
-    logout.setResizable(false)
-    logout.setClosable(false)
-    logout.setDraggable(false)
+    val logout = new Window(caption = "Logout", modal = true, style = Reindeer.WINDOW_BLACK, width = 260 px, resizable = false, closable = false, draggable = false)
+    logout.setContent(logoutLayout)
     logout.setCloseShortcut(KeyCode.ESCAPE)
 
-    val helpText = new HtmlLabel("Are you sure you want to log out? You will be redirected to vaadin.com.")
-    logout.addComponent(helpText)
+    logout.addComponent(new HtmlLabel("Are you sure you want to log out? You will be redirected to vaadin.com."))
 
     val buttons = new HorizontalLayout(spacing = true)
     val yes = new Button(caption = "Logout", style = Reindeer.BUTTON_DEFAULT, action = _ => getMainWindow.open(new ExternalResource("http://vaadin.com")))
@@ -677,7 +600,7 @@ class DemoApplication extends Application {
 
     logoutLayout.add(component = buttons, alignment = Alignment.TOP_CENTER)
 
-    getMainWindow().addWindow(logout)
+    getMainWindow.addWindow(logout)
   }
 
   class H1(caption: String) extends Label(caption) {
