@@ -6,34 +6,29 @@ import com.vaadin.ui.Component
 import scala.collection.JavaConverters._
 
 trait FilterableComponentContainer extends ComponentContainer {
+
   def \(filter: Component => Boolean): List[Component] = {
     var newList = List[Component]()
-    val iterator = getComponentIterator
-    while (iterator.hasNext) {
-      val component = iterator.next()
+    getComponentIterator.asScala.foreach(component => {
       if (filter(component))
         newList = component :: newList
-    }
-
+    })
     newList
   }
 
   def \\(filter: Component => Boolean): List[Component] = {
     var newList = List[Component]()
-    val iterator = getComponentIterator
-    while (iterator.hasNext) {
-      val component = iterator.next()
+    getComponentIterator.asScala.foreach(component => {
       if (filter(component))
         newList = component :: newList
-
       if (component.isInstanceOf[ComponentContainer]) {
-        newList = component.asInstanceOf[FilterableComponentContainer] \\ (filter) ::: newList
+        newList = component.asInstanceOf[FilterableComponentContainer] \\ filter ::: newList
       }
-    }
-
+    })
     newList
   }
 }
+
 class WindowCloseListener(action: com.vaadin.ui.Window#CloseEvent => Unit) extends com.vaadin.ui.Window.CloseListener {
   def windowClose(event: com.vaadin.ui.Window#CloseEvent) { action(event) }
 }

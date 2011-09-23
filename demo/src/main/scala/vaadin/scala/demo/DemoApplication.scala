@@ -20,7 +20,7 @@ class DemoApplication extends Application {
 
   val DATE = new Date(2009 - 1900, 6 - 1, 2)
 
-  val mainLayout = new VerticalLayout(width = 100 px, height = 100 px) 
+  val mainLayout = new VerticalLayout(width = 100 px, height = 100 px)
   val mainWindow = new Window(caption = "Vaadin Reindeer Theme", content = mainLayout)
   val tabs = new TabSheet(width = 100 px, height = 100 px)
   val help = new Window("Help")
@@ -34,7 +34,7 @@ class DemoApplication extends Application {
 
   def buildMainView() = {
 
-    val margin = new CssLayout() with FullSize
+    val margin = new CssLayout(width = 100 px, height = 100 px)
     margin.setMargin(false, true, true, true)
     margin.add(tabs)
 
@@ -56,72 +56,62 @@ class DemoApplication extends Application {
   }
 
   def buildLabels(): Layout = {
-    val labelLayout = new GridLayout(columns = 2, rows = 1, width = 560 px, spacing = true, margin = true, caption = "Labels", style = Reindeer.LAYOUT_WHITE)
+    new GridLayout(columns = 2, rows = 1, width = 560 px, spacing = true, margin = true, caption = "Labels", style = Reindeer.LAYOUT_WHITE) {
 
-    labelLayout
-      .add(new HtmlLabel("Header Style (<code>Reindeer.LABEL_H1</code>)"))
-      .add(new H1("Lorem Ipsum"))
+      add(new HtmlLabel("Header Style (<code>Reindeer.LABEL_H1</code>)"))
+      add(new H1("Lorem Ipsum"))
 
-      .add(new HtmlLabel("Sub-header Style (<code>Reindeer.LABEL_H2</code>)"))
-      .add(new H2("Lorem Ipsum Dolor"))
+      add(new HtmlLabel("Sub-header Style (<code>Reindeer.LABEL_H2</code>)"))
+      add(new H2("Lorem Ipsum Dolor"))
 
-      .add(new HtmlLabel("Normal Label"))
-      .add(new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit."))
+      add(new HtmlLabel("Normal Label"))
+      add(new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit."))
 
-      .add(new HtmlLabel("Small Style (<code>Reindeer.LABEL_SMALL</code>)"))
-      .add(new SmallText("Lorem ipsum dolor sit amet, consectetur adipiscing elit."))
-
-    labelLayout
+      add(new HtmlLabel("Small Style (<code>Reindeer.LABEL_SMALL</code>)"))
+      add(new SmallText("Lorem ipsum dolor sit amet, consectetur adipiscing elit."))
+    }
   }
 
   def buildButtons(): Layout = {
-    val buttonLayout = new GridLayout(columns = 2, rows = 1, caption = "Buttons", margin = true, spacing = true, width = 370 px)
-    buttonLayout.setColumnExpandRatio(0, 1)
+    new GridLayout(columns = 2, rows = 1, caption = "Buttons", margin = true, spacing = true, width = 370 px) {
+      setColumnExpandRatio(0, 1)
 
-    buttonLayout
-      .add(new HtmlLabel("\"Default\" Style (<code>Reindeer.BUTTON_DEFAULT</code>)"))
-      .add(new Button(caption = "Default Button", style = Reindeer.BUTTON_DEFAULT))
+      add(new HtmlLabel("\"Default\" Style (<code>Reindeer.BUTTON_DEFAULT</code>)"))
+      add(new Button(caption = "Default Button", style = Reindeer.BUTTON_DEFAULT))
 
-      .add(new HtmlLabel("Normal Button"))
-      .add(new Button("Normal Button"))
+      add(new HtmlLabel("Normal Button"))
+      add(new Button("Normal Button"))
 
-      .add(new HtmlLabel("Disabled Button (<code>Button.setEnabled(false)</code>)"))
-      .add(new Button("Disabled Button", enabled = false))
+      add(new HtmlLabel("Disabled Button (<code>Button.setEnabled(false)</code>)"))
+      add(new Button("Disabled Button", enabled = false))
 
-      .add(new HtmlLabel("Small Style (<code>Reindeer.BUTTON_SMALL</code>)"))
-      .add(new Button(caption = "Small Button", style = Reindeer.BUTTON_SMALL))
+      add(new HtmlLabel("Small Style (<code>Reindeer.BUTTON_SMALL</code>)"))
+      add(new Button(caption = "Small Button", style = Reindeer.BUTTON_SMALL))
 
-      .add(new HtmlLabel("Link Style (<code>Reindeer.BUTTON_LINK</code>)"))
-      .add(new Button(caption = "Link Button", style = BaseTheme.BUTTON_LINK)) //no way to access inherited static members in Scala
-
-    buttonLayout
+      add(new HtmlLabel("Link Style (<code>Reindeer.BUTTON_LINK</code>)"))
+      add(new Button(caption = "Link Button", style = BaseTheme.BUTTON_LINK)) //no way to access inherited static members in Scala
+    }
   }
 
   def buildTextFields(): Layout = {
-    val textFieldLayout = new GridLayout(columns = 2, rows = 1, caption = "Text fields", margin = true, spacing = true, width = 400 px, style = Reindeer.LAYOUT_WHITE)
-    textFieldLayout.setColumnExpandRatio(0, 1)
+    new GridLayout(columns = 2, rows = 1, caption = "Text fields", margin = true, spacing = true, width = 400 px, style = Reindeer.LAYOUT_WHITE) {
+      setColumnExpandRatio(0, 1)
 
-    textFieldLayout
-      .add(new HtmlLabel("Normal TextField"))
-      .add(new TextField(prompt = "Enter text"))
+      add(new HtmlLabel("Normal TextField"))
+      add(new TextField(prompt = "Enter text"))
 
-      .add(new HtmlLabel("Small Style (<code>Reindeer.TEXTFIELD_SMALL</code>)"))
-      .add(new TextField(style = "small", prompt = "Enter text"))
+      add(new HtmlLabel("Small Style (<code>Reindeer.TEXTFIELD_SMALL</code>)"))
+      add(new TextField(style = "small", prompt = "Enter text"))
 
-      .add(new HtmlLabel("Normal TextArea"))
-      .add(new TextArea(height = 5 em, prompt = "Enter text"))
+      add(new HtmlLabel("Normal TextArea"))
+      add(new TextArea(height = 5 em, prompt = "Enter text"))
 
-      .add(new HtmlLabel("Small Style TextArea (<code>Reindeer.TEXTFIELD_SMALL</code>)"))
-      .add(new TextField(height = 5 em, style = "small", prompt = "Enter text"))
-
-    textFieldLayout
+      add(new HtmlLabel("Small Style TextArea (<code>Reindeer.TEXTFIELD_SMALL</code>)"))
+      add(new TextField(height = 5 em, style = "small", prompt = "Enter text"))
+    }
   }
 
   def buildSelects(): Layout = {
-    val selectLayout = new VerticalLayout(caption = "Selects", margin = true, spacing = true)
-
-    val hl = new HorizontalLayout(spacing = true)
-    hl.setMargin(true, false, false, false)
 
     val cb = new ComboBox()
     val nat = new NativeSelect()
@@ -135,33 +125,35 @@ class DemoApplication extends Application {
       twincol.addItem("Item " + i)
     }
 
-    hl.add(cb)
-      .add(nat)
-      .add(list)
-      .add(twincol)
+    val hl = new HorizontalLayout(spacing = true) {
+      setMargin(true, false, false, false)
+      add(cb)
+      add(nat)
+      add(list)
+      add(twincol)
+    }
 
-    selectLayout.add(new Label(
-      "Selects don't currently have any additional style names, but here you can see how they behave with the different background colors."))
-      .add(hl)
-
-    selectLayout
+    new VerticalLayout(caption = "Selects", margin = true, spacing = true) {
+      add(new Label(
+        "Selects don't currently have any additional style names, but here you can see how they behave with the different background colors."))
+      add(hl)
+    }
   }
 
   def buildDateFields(): Layout = {
-    val dateFieldLayout = new VerticalLayout(caption = "Date fields", margin = true, spacing = true)
 
-    val hl = new HorizontalLayout(spacing = true)
-    hl.setMargin(true, false, false, false)
+    val hl = new HorizontalLayout(spacing = true) {
+      setMargin(true, false, false, false)
+      add(new DateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_MIN))
+      add(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_DAY))
+      add(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_YEAR))
+    }
 
-    dateFieldLayout.add(new Label(
-      "Date fields don't currently have any additional style names, but here you can see how they behave with the different background colors."))
-      .add(hl)
-
-    hl.add(new DateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_MIN))
-      .add(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_DAY))
-      .add(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_YEAR))
-
-    dateFieldLayout
+    new VerticalLayout(caption = "Date fields", margin = true, spacing = true) {
+      add(new Label(
+        "Date fields don't currently have any additional style names, but here you can see how they behave with the different background colors."))
+      add(hl)
+    }
   }
 
   def buildTabSheets(): Layout = {
