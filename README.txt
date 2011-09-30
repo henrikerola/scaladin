@@ -27,6 +27,7 @@ $ sbt
 > ~jetty-run
 
 Now the application is accessible in http://localhost:8080. ~ means that jetty will redeploy the application when changes are detected.
+You may also need to increase the amount of permgen memory available to SBT. The simplest way to do this is to edit the script that launches SBT. 
 
 Packaging jar
 -------------

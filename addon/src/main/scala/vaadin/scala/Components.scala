@@ -23,7 +23,7 @@ class Button(caption: String = null, action: com.vaadin.ui.Button#ClickEvent => 
 class LinkButton(caption: String = null, action: com.vaadin.ui.Button#ClickEvent => Unit = null, icon: Resource = null, style: String = null)
     extends Button(caption, action, icon) {
   setStyleName(BaseTheme.BUTTON_LINK)
-  addStyleName(style);
+  addStyleName(style)
 }
 
 class CheckBox(caption: String = null, immediate: Boolean = false, action: com.vaadin.ui.Button#ClickEvent => Unit = null, icon: Resource = null, style: String = null, enabled: Boolean = true, description: String = null)
@@ -76,6 +76,7 @@ class DateField(caption: String = null, width: String = null, height: String = n
   if (property != null) setPropertyDataSource(property)
   setStyleName(style)
   setResolution(resolution)
+  setValue(value)
 }
 
 class InlineDateField(caption: String = null, width: String = null, height: String = null, property: Property = null, style: String = null, value: Any = null, resolution: Int = com.vaadin.ui.DateField.RESOLUTION_MSEC)
@@ -85,6 +86,7 @@ class InlineDateField(caption: String = null, width: String = null, height: Stri
   if (property != null) setPropertyDataSource(property)
   setStyleName(style)
   setResolution(resolution)
+  setValue(value)
 }
 
 class MenuBar(caption: String = null, width: String = null, height: String = null, style: String = null)

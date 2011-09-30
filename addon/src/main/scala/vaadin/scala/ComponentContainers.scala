@@ -55,7 +55,7 @@ class TabSheet(caption: String = null, width: String = 100 percent, height: Stri
     extends com.vaadin.ui.TabSheet() {
   setCaption(caption)
   setWidth(width)
-  setHeight(height);
+  setHeight(height)
   setStyleName(style)
 
   def addListener(action: com.vaadin.ui.TabSheet#SelectedTabChangeEvent => Unit): Unit = addListener(new SelectedTabChangeListener(action))
@@ -66,14 +66,14 @@ class TabSheet(caption: String = null, width: String = 100 percent, height: Stri
 class Panel(caption: String = null, width: String = 100 percent, height: String = null, style: String = null)
     extends com.vaadin.ui.Panel() {
   setCaption(caption)
-  setWidth(width);
+  setWidth(width)
   setHeight(height)
   setStyleName(style)
 
   def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
 
   def add(component: Component = null): Panel = {
-    addComponent(component);
+    addComponent(component)
     this
   }
 }
@@ -81,12 +81,12 @@ class Panel(caption: String = null, width: String = 100 percent, height: String 
 class HorizontalSplitPanel(caption: String = null, width: String = 100 percent, height: String = 100 percent, style: String = null)
     extends com.vaadin.ui.HorizontalSplitPanel() {
   setCaption(caption)
-  setWidth(width);
+  setWidth(width)
   setHeight(height)
   setStyleName(style)
 
   def add(component: Component = null): HorizontalSplitPanel = {
-    addComponent(component);
+    addComponent(component)
     this
   }
 
@@ -96,12 +96,12 @@ class HorizontalSplitPanel(caption: String = null, width: String = 100 percent, 
 class VerticalSplitPanel(caption: String = null, width: String = 100 percent, height: String = 100 percent, style: String = null)
     extends com.vaadin.ui.VerticalSplitPanel() {
   setCaption(caption)
-  setWidth(width);
+  setWidth(width)
   setHeight(height)
   setStyleName(style)
 
   def add(component: Component = null): VerticalSplitPanel = {
-    addComponent(component);
+    addComponent(component)
     this
   }
 

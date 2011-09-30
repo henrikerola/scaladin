@@ -10,11 +10,12 @@ object BuildSettings {
   val buildSettings = Defaults.defaultSettings ++ Seq(
     organization := buildOrganization,
     version := buildVersion,
-    scalaVersion := buildScalaVersion)
+    scalaVersion := buildScalaVersion,
+    autoScalaLibrary := true)
 }
 
 object Dependencies {
-  val vaadinVersion = "6.6.2"
+  val vaadinVersion = "6.6.6"
   val jettyVersion = "7.3.0.v20110203"
   val scalaTestVersion = "1.6.1"
   val junitVersion = "4.9"

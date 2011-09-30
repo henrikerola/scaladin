@@ -12,45 +12,45 @@ trait LayoutClickListener extends LayoutClickNotifier {
   }
 }
 
-class HorizontalLayout(caption: String = null, width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null)
-    extends com.vaadin.ui.HorizontalLayout with LayoutClickListener {
-  setCaption(caption)
-  setWidth(width);
-  setHeight(height);
-  setMargin(margin)
-  setSpacing(spacing);
-  setStyleName(style)
+trait ParametrizedAddComponentForOrdered extends com.vaadin.ui.AbstractOrderedLayout {
+  def add[C <: com.vaadin.ui.Component](component: C = null, ratio: Float = -1, alignment: Alignment = null, index: Int = -1): C = {
+    if (index < 0)
+      addComponent(component)
+    else
+      addComponent(component, index)
 
-  def add(component: Component = null, ratio: Float = 0, alignment: Alignment = null): HorizontalLayout = {
-    addComponent(component);
-    if (alignment != null) setComponentAlignment(component, alignment);
-    setExpandRatio(component, ratio);
-    this
+    if (alignment != null) setComponentAlignment(component, alignment)
+    if (ratio >= 0) setExpandRatio(component, ratio)
+
+    component
   }
 }
 
-class VerticalLayout(caption: String = null, width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null)
-    extends com.vaadin.ui.VerticalLayout with LayoutClickListener {
+class HorizontalLayout(caption: String = null, width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null)
+    extends com.vaadin.ui.HorizontalLayout with LayoutClickListener with ParametrizedAddComponentForOrdered {
   setCaption(caption)
   setWidth(width)
   setHeight(height)
   setMargin(margin)
   setSpacing(spacing)
   setStyleName(style)
-
-  def add(component: Component, ratio: Float = 0, alignment: Alignment = null): VerticalLayout = {
-    addComponent(component);
-    setExpandRatio(component, ratio);
-    if (alignment != null) setComponentAlignment(component, alignment);
-    this
-  }
 }
 
-// TODO com.vaadin.ui.FormLayout calls setMargin(true, false, true, false); in constructor
+class VerticalLayout(caption: String = null, width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null)
+    extends com.vaadin.ui.VerticalLayout with LayoutClickListener with ParametrizedAddComponentForOrdered {
+  setCaption(caption)
+  setWidth(width)
+  setHeight(height)
+  setMargin(margin)
+  setSpacing(spacing)
+  setStyleName(style)
+}
+
+// TODO com.vaadin.ui.FormLayout calls setMargin(true, false, true, false) in constructor
 class FormLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = true, style: String = null)
     extends com.vaadin.ui.FormLayout {
   def add(component: Component): FormLayout = {
-    addComponent(component);
+    addComponent(component)
     this
   }
 }
@@ -73,9 +73,10 @@ class GridLayout(caption: String = null, width: String = null, height: String = 
       addComponent(component, col, row, col2, row2)
     else
       addComponent(component)
-    if (alignment != null) setComponentAlignment(component, alignment);
+    if (alignment != null) setComponentAlignment(component, alignment)
     this
   }
+
 }
 
 class CssLayout(width: String = null, height: String = null, margin: Boolean = false, style: String = null, caption: String = null)
@@ -91,7 +92,7 @@ class CssLayout(width: String = null, height: String = null, margin: Boolean = f
 
   def add(component: Component, css: String = null): CssLayout = {
     addComponent(component)
-    if (css != null) cssMap(component) = css;
+    if (css != null) cssMap(component) = css
     this
   }
 

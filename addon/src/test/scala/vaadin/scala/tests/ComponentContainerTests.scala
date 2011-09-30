@@ -21,20 +21,16 @@ class ComponentContainerSpec extends AssertionsForJUnit {
 
   @Test
   def filteringComponentContainerWithMatchesReturnsResults() = {
-    val layout = new VerticalLayout with FilterableComponentContainer
-
-    val one = new Label(style = "one")
-    val two = new Label(style = "two")
-    val three = new Label(style = "three")
-
-    layout.add(one)
-      .add(two)
-      .add(three)
+    val layout = new VerticalLayout with FilterableComponentContainer {
+      val one = add(new Label(style = "one"))
+      val two = add(new Label(style = "two"))
+      val three = add(new Label(style = "three"))
+    }
 
     val result = layout \ (c => List("one", "two") contains c.getStyleName)
 
-    assert(result contains one)
-    assert(result contains two)
+    assert(result contains layout.one)
+    assert(result contains layout.two)
   }
 
   @Test
@@ -69,16 +65,10 @@ class ComponentContainerSpec extends AssertionsForJUnit {
   }
 
   def createTestLayout: VerticalLayout with FilterableComponentContainer = {
-    val layout = new VerticalLayout with FilterableComponentContainer
-
-    val one = new Label(style = "one")
-    val two = new Label(style = "two")
-    val three = new Label(style = "three")
-
-    layout.add(one)
-      .add(two)
-      .add(three)
-
-    layout
+    new VerticalLayout with FilterableComponentContainer {
+      val one = add(new Label(style = "one"))
+      val two = add(new Label(style = "two"))
+      val three = add(new Label(style = "three"))
+    }
   }
 }
