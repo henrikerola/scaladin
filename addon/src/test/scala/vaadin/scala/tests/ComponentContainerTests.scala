@@ -14,7 +14,7 @@ class ComponentContainerSpec extends AssertionsForJUnit {
 
     val layout = new VerticalLayout with FilterableComponentContainer
 
-    val result = layout \ (c => true)
+    val result = layout filter (c => true)
 
     assert(result == Nil)
   }
@@ -27,7 +27,7 @@ class ComponentContainerSpec extends AssertionsForJUnit {
       val three = add(new Label(style = "three"))
     }
 
-    val result = layout \ (c => List("one", "two") contains c.getStyleName)
+    val result = layout filter (c => List("one", "two") contains c.getStyleName)
 
     assert(result contains layout.one)
     assert(result contains layout.two)
@@ -37,7 +37,7 @@ class ComponentContainerSpec extends AssertionsForJUnit {
   def filteringComponentContainerWithNoMatchesReturnsEmptyList() = {
     val layout = createTestLayout
 
-    val result = layout \ (c => c.getStyleName == "four")
+    val result = layout filter (_.getStyleName == "four")
 
     assert(result == Nil)
   }
@@ -47,7 +47,7 @@ class ComponentContainerSpec extends AssertionsForJUnit {
     val layout = createTestLayout
     layout.add(createTestLayout)
 
-    val result = layout \\ (c => c.getStyleName == "one")
+    val result = layout filterRecursive (_.getStyleName == "one")
 
     assert(result.size == 2)
     result.foreach(c => assert(c.isInstanceOf[Label] === true))
@@ -58,7 +58,7 @@ class ComponentContainerSpec extends AssertionsForJUnit {
     val layout = new VerticalLayout with FilterableComponentContainer
     layout.add(createTestLayout)
 
-    val result = layout \\ (c => c.getStyleName == "one")
+    val result = layout filterRecursive (_.getStyleName == "one")
 
     assert(result.size == 1)
     result.foreach(c => assert(c.isInstanceOf[Label] === true))

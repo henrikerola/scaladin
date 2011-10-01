@@ -166,10 +166,6 @@ class DemoApplication extends Application {
   }
 
   def buildTabSheets(): Layout = {
-    val tabSheetLayout = new GridLayout(columns = 2, rows = 1, caption = "Tabs", margin = true, spacing = true, width = 700 px, style = Reindeer.LAYOUT_WHITE)
-    tabSheetLayout.setColumnExpandRatio(0, 7)
-    tabSheetLayout.setColumnExpandRatio(1, 4)
-
     val closable = new CheckBox(caption = "Closable tabs", immediate = true)
     val hoverOnly = new CheckBox(caption = "Only on hover", immediate = true, enabled = false, description = "Adds style <code>Reindeer.TABSHEET_HOVER_CLOSABLE</code> to all tabs")
     val selectedOnly = new CheckBox(caption = "Selected only", immediate = true, enabled = false, description = "Adds style <code>Reindeer.TABSHEET_SELECTED_CLOSABLE</code> to all tabs")
@@ -178,98 +174,76 @@ class DemoApplication extends Application {
       add(hoverOnly)
       add(selectedOnly)
     }
-    tabSheetLayout.addComponent(checks, 1, 0)
-    tabSheetLayout.setCursorX(0)
-    tabSheetLayout.setCursorY(1)
 
-    tabSheetLayout.addComponent(new HtmlLabel("Normal Tabs"))
+    val tabSheetLayout = new GridLayout(columns = 2, rows = 1, caption = "Tabs", margin = true, spacing = true, width = 700 px, style = Reindeer.LAYOUT_WHITE) with FilterableComponentContainer {
+      setColumnExpandRatio(0, 7)
+      setColumnExpandRatio(1, 4)
 
-    val normalTabSheet = new TabSheet(height = 100 px)
-    tabSheetLayout.addComponent(normalTabSheet)
+      add(component = checks, col = 1, row = 0)
+      space()
 
-    tabSheetLayout.addComponent(new HtmlLabel("Borderless Style (<code>Reindeer.TABSHEET_BORDERLESS</code>)"))
+      add(new HtmlLabel("Normal Tabs"))
+      val normalTabSheet = add(new TabSheet(height = 100 px))
 
-    val borderlessTabSheet = new TabSheet(height = 100 px, style = Reindeer.TABSHEET_BORDERLESS)
-    tabSheetLayout.addComponent(borderlessTabSheet)
+      add(new HtmlLabel("Borderless Style (<code>Reindeer.TABSHEET_BORDERLESS</code>)"))
+      val borderlessTabSheet = add(new TabSheet(height = 100 px, style = Reindeer.TABSHEET_BORDERLESS))
 
-    tabSheetLayout.addComponent(new HtmlLabel("Small Style (<code>Reindeer.TABSHEET_SMALL</code>)"))
+      add(new HtmlLabel("Small Style (<code>Reindeer.TABSHEET_SMALL</code>)"))
+      val smallTabSheet = add(new TabSheet(style = Reindeer.TABSHEET_SMALL))
 
-    val smallTabSheet = new TabSheet(style = Reindeer.TABSHEET_SMALL)
-    tabSheetLayout.addComponent(smallTabSheet)
-
-    tabSheetLayout.addComponent(new HtmlLabel("Minimal Style (<code>Reindeer.TABSHEET_MINIMAL</code>)"))
-
-    val minimalTabSheet = new TabSheet(style = Reindeer.TABSHEET_MINIMAL)
-    tabSheetLayout.addComponent(minimalTabSheet)
+      add(new HtmlLabel("Minimal Style (<code>Reindeer.TABSHEET_MINIMAL</code>)"))
+      val minimalTabSheet = add(new TabSheet(style = Reindeer.TABSHEET_MINIMAL))
+    }
 
     for (i <- 1 until 10) {
-      normalTabSheet.addTab(new Label()).setCaption("Tab " + i)
-      borderlessTabSheet.addTab(new Label()).setCaption("Tab " + i)
-      smallTabSheet.addTab(new Label()).setCaption("Tab " + i)
-      minimalTabSheet.addTab(new Label()).setCaption("Tab " + i)
+      tabSheetLayout.normalTabSheet.addTab(new Label()).setCaption("Tab " + i)
+      tabSheetLayout.borderlessTabSheet.addTab(new Label()).setCaption("Tab " + i)
+      tabSheetLayout.smallTabSheet.addTab(new Label()).setCaption("Tab " + i)
+      tabSheetLayout.minimalTabSheet.addTab(new Label()).setCaption("Tab " + i)
     }
 
     closable.addListener(event => {
 
       val eventValue = event.getButton.booleanValue
-      normalTabSheet.getComponents.foreach(c => normalTabSheet.getTab(c).setClosable(eventValue))
-      borderlessTabSheet.getComponents.foreach(c => borderlessTabSheet.getTab(c).setClosable(eventValue))
-      smallTabSheet.getComponents.foreach(c => smallTabSheet.getTab(c).setClosable(eventValue))
-      minimalTabSheet.getComponents.foreach(c => minimalTabSheet.getTab(c).setClosable(eventValue))
+      tabSheetLayout.normalTabSheet.getComponents.foreach(c => tabSheetLayout.normalTabSheet.getTab(c).setClosable(eventValue))
+      tabSheetLayout.borderlessTabSheet.getComponents.foreach(c => tabSheetLayout.borderlessTabSheet.getTab(c).setClosable(eventValue))
+      tabSheetLayout.smallTabSheet.getComponents.foreach(c => tabSheetLayout.smallTabSheet.getTab(c).setClosable(eventValue))
+      tabSheetLayout.minimalTabSheet.getComponents.foreach(c => tabSheetLayout.minimalTabSheet.getTab(c).setClosable(eventValue))
 
       hoverOnly.setEnabled(eventValue)
       selectedOnly.setEnabled(eventValue)
     })
 
     hoverOnly.addListener(event => {
-
-      if (event.getButton.booleanValue) {
-        normalTabSheet.addStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
-        borderlessTabSheet.addStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
-        smallTabSheet.addStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
-        minimalTabSheet.addStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
-      } else {
-        normalTabSheet.removeStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
-        borderlessTabSheet.removeStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
-        smallTabSheet.removeStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
-        minimalTabSheet.removeStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE)
-      }
+      if (event.getButton.booleanValue)
+        tabSheetLayout filter (_.isInstanceOf[TabSheet]) foreach (_.addStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE))
+      else
+        tabSheetLayout filter (_.isInstanceOf[TabSheet]) foreach (_.removeStyleName(Reindeer.TABSHEET_HOVER_CLOSABLE))
     })
 
     selectedOnly.addListener(event => {
-
-      if (event.getButton.booleanValue) {
-        normalTabSheet.addStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
-        borderlessTabSheet.addStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
-        smallTabSheet.addStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
-        minimalTabSheet.addStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
-      } else {
-        normalTabSheet.removeStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
-        borderlessTabSheet.removeStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
-        smallTabSheet.removeStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
-        minimalTabSheet.removeStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE)
-      }
+      if (event.getButton.booleanValue)
+        tabSheetLayout filter (_.isInstanceOf[TabSheet]) foreach (_.addStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE))
+      else
+        tabSheetLayout filter (_.isInstanceOf[TabSheet]) foreach (_.removeStyleName(Reindeer.TABSHEET_SELECTED_CLOSABLE))
     })
 
     tabSheetLayout
   }
 
   def buildPanels(): Layout = {
-    val panelLayout = new GridLayout(columns = 2, rows = 1, caption = "Panels", margin = true, spacing = true, width = 700 px, style = Reindeer.LAYOUT_WHITE)
-    panelLayout.setColumnExpandRatio(0, 2)
-    panelLayout.setColumnExpandRatio(1, 5)
+    new GridLayout(columns = 2, rows = 1, caption = "Panels", margin = true, spacing = true, width = 700 px, style = Reindeer.LAYOUT_WHITE) {
+      setColumnExpandRatio(0, 2)
+      setColumnExpandRatio(1, 5)
 
-    val normalPanel = new Panel(caption = "Normal Panel", height = 100 px)
-    normalPanel.add(new Label("Panel content"))
+      add(new HtmlLabel("Normal Panel"))
+      val normalPanel = add(new Panel(caption = "Normal Panel", height = 100 px))
+      normalPanel.add(new Label("Panel content"))
 
-    val lightPanel = new Panel(caption = "Light Style Panel", style = Reindeer.PANEL_LIGHT)
-    lightPanel.add(new Label("Panel content"))
-
-    panelLayout.add(new HtmlLabel("Normal Panel"))
-      .add(normalPanel)
-      .add(new HtmlLabel("Light Style (<code>Reindeer.PANEL_LIGHT</code>)"))
-      .add(lightPanel)
-    panelLayout
+      add(new HtmlLabel("Light Style (<code>Reindeer.PANEL_LIGHT</code>)"))
+      val lightPanel = add(new Panel(caption = "Light Style Panel", style = Reindeer.PANEL_LIGHT))
+      lightPanel.add(new Label("Panel content"))
+    }
   }
 
   def buildTables(): Layout = {
@@ -371,19 +345,16 @@ class DemoApplication extends Application {
   }
 
   def buildSplitPanels(): Layout = {
-    val splitPanelLayout = new GridLayout(columns = 2, rows = 1, caption = "Split panels", margin = true, spacing = true, width = 400 px, style = Reindeer.LAYOUT_WHITE)
-    splitPanelLayout.setColumnExpandRatio(0, 1)
+    new GridLayout(columns = 2, rows = 1, caption = "Split panels", margin = true, spacing = true, width = 400 px, style = Reindeer.LAYOUT_WHITE) {
+      setColumnExpandRatio(0, 1)
 
-    val horizontalSplitPanel = new HorizontalSplitPanel(width = 100 px, height = 200 px)
+      add(new HtmlLabel("Normal SplitPanel"))
+      add(new HorizontalSplitPanel(width = 100 px, height = 200 px))
 
-    val smallHorizontalSplitPanel = new HorizontalSplitPanel(width = 100 px, height = 200 px, style = Reindeer.SPLITPANEL_SMALL)
+      add(new HtmlLabel("Small Style (<code>Reindeer.SPLITPANEL_SMALL</code>)"))
+      add(new HorizontalSplitPanel(width = 100 px, height = 200 px, style = Reindeer.SPLITPANEL_SMALL))
 
-    splitPanelLayout.add(new HtmlLabel("Normal SplitPanel"))
-      .add(horizontalSplitPanel)
-      .add(new HtmlLabel("Small Style (<code>Reindeer.SPLITPANEL_SMALL</code>)"))
-      .add(smallHorizontalSplitPanel)
-
-    splitPanelLayout
+    }
   }
 
   def buildWelcomeScreen(): Layout = {

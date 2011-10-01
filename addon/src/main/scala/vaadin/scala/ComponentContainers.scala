@@ -7,24 +7,24 @@ import scala.collection.JavaConverters._
 
 trait FilterableComponentContainer extends ComponentContainer {
 
-  def \(filter: Component => Boolean): List[Component] = {
-    var newList = List[Component]()
-    getComponentIterator.asScala.foreach(component => {
-      if (filter(component))
-        newList = component :: newList
-    })
-    newList
+  def filter(filterFunction: Component => Boolean): List[Component] = {
+    def filtered = for {
+      component <- getComponentIterator.asScala
+      if filterFunction(component)
+    } yield component
+
+    filtered.toList
   }
 
-  def \\(filter: Component => Boolean): List[Component] = {
-    var newList = List[Component]()
-    getComponentIterator.asScala.foreach(component => {
-      if (filter(component))
+  def filterRecursive(filterFunction: Component => Boolean): List[Component] = {
+    var newList: List[Component] = Nil
+    for (component <- getComponentIterator.asScala) {
+      if (filterFunction(component))
         newList = component :: newList
       if (component.isInstanceOf[ComponentContainer]) {
-        newList = component.asInstanceOf[FilterableComponentContainer] \\ filter ::: newList
+        newList = component.asInstanceOf[FilterableComponentContainer].filterRecursive(filterFunction) ::: newList
       }
-    })
+    }
     newList
   }
 }

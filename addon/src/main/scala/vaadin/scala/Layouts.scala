@@ -66,7 +66,7 @@ class GridLayout(caption: String = null, width: String = null, height: String = 
   setColumns(columns)
   setRows(rows)
 
-  def add(component: Component = null, col: Int = -1, row: Int = -1, col2: Int = -1, row2: Int = -1, alignment: Alignment = null): GridLayout = {
+  def add[C <: com.vaadin.ui.Component](component: C = null, col: Int = -1, row: Int = -1, col2: Int = -1, row2: Int = -1, alignment: Alignment = null): C = {
     if (col >= 0 && row >= 0)
       addComponent(component, col, row)
     else if (col >= 0 && row >= 0 && col2 >= 0 && row2 >= 0)
@@ -74,7 +74,7 @@ class GridLayout(caption: String = null, width: String = null, height: String = 
     else
       addComponent(component)
     if (alignment != null) setComponentAlignment(component, alignment)
-    this
+    component
   }
 
 }
