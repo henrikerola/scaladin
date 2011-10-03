@@ -26,23 +26,23 @@ trait ParametrizedAddComponentForOrdered extends com.vaadin.ui.AbstractOrderedLa
   }
 }
 
-class HorizontalLayout(caption: String = null, width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null)
+class HorizontalLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null)
     extends com.vaadin.ui.HorizontalLayout with LayoutClickListener with ParametrizedAddComponentForOrdered {
-  setCaption(caption)
   setWidth(width)
   setHeight(height)
   setMargin(margin)
   setSpacing(spacing)
+  setCaption(caption)
   setStyleName(style)
 }
 
-class VerticalLayout(caption: String = null, width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null)
+class VerticalLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null)
     extends com.vaadin.ui.VerticalLayout with LayoutClickListener with ParametrizedAddComponentForOrdered {
-  setCaption(caption)
   setWidth(width)
   setHeight(height)
   setMargin(margin)
   setSpacing(spacing)
+  setCaption(caption)
   setStyleName(style)
 }
 
@@ -55,14 +55,14 @@ class FormLayout(width: String = 100 percent, height: String = null, margin: Boo
   }
 }
 
-class GridLayout(caption: String = null, width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, style: String = null, columns: Int = 1, rows: Int = 1)
+class GridLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, columns: Int = 1, rows: Int = 1)
     extends com.vaadin.ui.GridLayout with LayoutClickListener {
-  setCaption(caption)
   setWidth(width)
   setHeight(height)
   setMargin(margin)
   setSpacing(spacing)
   setStyleName(style)
+  setCaption(caption)
   setColumns(columns)
   setRows(rows)
 
@@ -101,10 +101,11 @@ class CssLayout(width: String = null, height: String = null, margin: Boolean = f
   }
 }
 
-class CustomLayout(width: String = 100 percent, height: String = null, template: String = null, contents: String = null, style: String = null)
+class CustomLayout(width: String = 100 percent, height: String = null, template: String = null, contents: String = null, caption: String = null, style: String = null)
     extends com.vaadin.ui.CustomLayout {
   setWidth(width)
   setHeight(height)
+  setCaption(caption)
   setStyleName(style)
 
   if (template != null)
