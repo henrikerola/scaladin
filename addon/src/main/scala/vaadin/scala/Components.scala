@@ -39,6 +39,9 @@ class CheckBox(caption: String = null, immediate: Boolean = false, action: com.v
   def addListener(action: com.vaadin.ui.Button#ClickEvent => Unit): Unit = addListener(new ButtonClickListener(action))
 }
 
+class Link(caption: String = null, resource: Resource = null, targetName: String = null, width: Int = -1, height: Int = -1, border: Int = com.vaadin.ui.Link.TARGET_BORDER_DEFAULT)
+    extends com.vaadin.ui.Link(caption, resource, targetName, width, height, border)
+
 // icon, caption as constructor parameters?
 class Label(content: String = null, width: String = 100 percent, height: String = null, property: Property = null, contentMode: Integer = com.vaadin.ui.Label.CONTENT_DEFAULT, style: String = null)
     extends com.vaadin.ui.Label(content, contentMode) {
