@@ -35,9 +35,9 @@ class DemoApplication extends Application {
 
   def buildMainView(): VerticalLayout = {
 
-    val tabs = new TabSheet(width = 100 percent, height = 100 percent)
+    val tabs = new TabSheet(100 percent, 100 percent)
 
-    val margin = new CssLayout(width = 100 percent, height = 100 percent)
+    val margin = new CssLayout(100 percent, 100 percent)
 
     margin.setMargin(false, true, true, true)
     margin.add(tabs)
@@ -54,7 +54,7 @@ class DemoApplication extends Application {
     tabs.addComponent(buildWindows(tabs))
     tabs.addComponent(buildSplitPanels)
 
-    val mainLayout = new VerticalLayout(width = 100 percent, height = 100 percent) {
+    val mainLayout = new VerticalLayout(100 percent, 100 percent) {
       add(getTopMenu)
       add(getHeader(this, tabs))
       add(component = margin, ratio = 1)
@@ -379,7 +379,7 @@ class DemoApplication extends Application {
     val stylesHeading = new H2("One Theme &ndash; Three Styles")
     stylesHeading.setContentMode(com.vaadin.ui.Label.CONTENT_XHTML)
 
-    val colors = new HorizontalLayout(width = 100 percent, height = 250 px)
+    val colors = new HorizontalLayout(100 percent, 250 px)
 
     val whiteLayout = new CssLayout(style = Reindeer.LAYOUT_WHITE, margin = true)
     whiteLayout.setSizeFull()
