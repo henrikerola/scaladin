@@ -3,7 +3,7 @@ Needed Tools
 
 * Eclipse
 * Scala IDE for Eclipse (http://www.scala-ide.org/)
-* SBT 0.10 (https://github.com/harrah/xsbt/wiki)
+* SBT 0.11 (https://github.com/harrah/xsbt/wiki)
 
 Generating Eclipse project files
 --------------------------------
@@ -36,7 +36,7 @@ $ sbt package
 
 
 Packaging war
-_____________
+-------------
 
 $ sbt "project demo" package-war
 
