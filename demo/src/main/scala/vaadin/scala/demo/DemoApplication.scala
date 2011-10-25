@@ -9,9 +9,6 @@ import vaadin.scala._
 import com.vaadin.ui.Layout
 import com.vaadin.ui.themes.Reindeer
 import com.vaadin.ui.themes.BaseTheme
-import com.vaadin.ui.ComboBox
-import com.vaadin.ui.ListSelect
-import com.vaadin.ui.TwinColSelect
 import com.vaadin.data.Property.ValueChangeListener
 import com.vaadin.data.Property.ValueChangeEvent
 import com.vaadin.ui.Alignment
