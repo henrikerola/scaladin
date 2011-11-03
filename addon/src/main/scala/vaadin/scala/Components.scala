@@ -4,6 +4,7 @@ import com.vaadin.terminal.Resource
 import com.vaadin.ui.themes.BaseTheme
 import com.vaadin.ui._
 import com.vaadin.data.Property
+import com.vaadin.data.Item
 
 class ButtonClickListener(action: com.vaadin.ui.Button#ClickEvent => Unit) extends com.vaadin.ui.Button.ClickListener {
   def buttonClick(event: com.vaadin.ui.Button#ClickEvent) = action(event)
@@ -105,3 +106,7 @@ class MenuBarCommand(action: com.vaadin.ui.MenuBar#MenuItem => Unit) extends com
   }
 }
 
+class Form(itemDataSource: Item = null, layout: Layout = null, fieldFactory: FormFieldFactory = DefaultFieldFactory.get())
+    extends com.vaadin.ui.Form(layout, fieldFactory) {
+  if (itemDataSource != null) setItemDataSource(itemDataSource)
+}
