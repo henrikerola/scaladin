@@ -73,6 +73,14 @@ class TextArea(caption: String = null, width: String = null, height: String = nu
   setInputPrompt(prompt)
 }
 
+class RichTextArea(caption: String = null, width: String = null, height: String = null, property: Property = null, style: String = null) 
+    extends com.vaadin.ui.RichTextArea(caption) {
+  setWidth(width)
+  setHeight(height)
+  if (property != null) setPropertyDataSource(property)
+  setStyleName(style)
+}
+
 class DateField(caption: String = null, width: String = null, height: String = null, property: Property = null, style: String = null, value: Any = null, resolution: Int = com.vaadin.ui.DateField.RESOLUTION_MSEC)
     extends com.vaadin.ui.DateField(caption) {
   setWidth(width)
