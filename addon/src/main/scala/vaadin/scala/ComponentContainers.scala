@@ -43,6 +43,11 @@ class Window(caption: String = null, width: String = null, height: String = null
   setResizable(resizable)
   setClosable(closable)
   setDraggable(draggable)
+  
+  def add[C <: com.vaadin.ui.Component](component: C = null): C = {
+    addComponent(component)
+    component
+  }
 
   def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
 }
