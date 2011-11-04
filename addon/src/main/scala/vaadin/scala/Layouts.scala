@@ -49,9 +49,9 @@ class VerticalLayout(width: String = 100 percent, height: String = null, margin:
 // TODO com.vaadin.ui.FormLayout calls setMargin(true, false, true, false) in constructor
 class FormLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = true, style: String = null)
     extends com.vaadin.ui.FormLayout {
-  def add(component: Component): FormLayout = {
+  def add[C <: com.vaadin.ui.Component](component: C): C = {
     addComponent(component)
-    this
+    component
   }
 }
 
@@ -90,10 +90,10 @@ class CssLayout(width: String = null, height: String = null, margin: Boolean = f
   // TODO remove css from map when component is removed from the layout
   val cssMap = Map[Component, String]()
 
-  def add(component: Component, css: String = null): CssLayout = {
+  def add[C <: com.vaadin.ui.Component](component: C, css: String = null): C = {
     addComponent(component)
     if (css != null) cssMap(component) = css
-    this
+    component
   }
 
   override def getCss(c: Component): String = {
@@ -113,8 +113,8 @@ class CustomLayout(width: String = 100 percent, height: String = null, template:
   else if (contents != null)
     setTemplateContents(contents)
 
-  def add(component: Component, location: String): CustomLayout = {
+  def add[C <: com.vaadin.ui.Component](component: C, location: String): C = {
     addComponent(component, location)
-    this
+    component
   }
 }

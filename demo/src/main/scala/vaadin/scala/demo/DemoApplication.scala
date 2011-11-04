@@ -357,9 +357,6 @@ class DemoApplication extends Application {
   def buildWelcomeScreen(): Layout = {
     val l = new VerticalLayout(margin = true, spacing = true, caption = "Welcome", style = Reindeer.LAYOUT_WHITE)
 
-    val margin = new CssLayout(margin = true, width = 100 percent)
-    l.addComponent(margin)
-
     val welcomeText1 = "<h4>A Complete Theme</h4><p>The Reindeer theme is a complete, general purpose theme suitable for almost all types of applications.<p>While a general purpose theme should not try to cater for every possible need, the Reindeer theme provides a set of useful styles that you can use to make the interface a bit more lively and interesing, emphasizing different parts of the application.</p>"
     val welcomeText2 = "<h4>Everything You Need Is Here</h4><p>Everything you see inside this application, all the different styles, are provided by the Reindeer theme, out-of-the-box. That means you don't necessarily need to create any custom CSS for your application: you can build a cohesive result writing plain Java code.</p><p>A little creativity, good organization and careful typography carries a long way."
     val welcomeText3 = "<h4>The Names of The Styles</h4><p>Look for a class named <code>Reindeer</code> inside the Vaadin JAR (<code>com.vaadin.ui.themes.Reindeer</code>). All the available style names are documented and available there as constants, prefixed by component names, e.g. <code>Reindeer.BUTTON_SMALL</code>."
@@ -378,20 +375,20 @@ class DemoApplication extends Application {
 
     val colors = new HorizontalLayout(100 percent, 250 px)
 
-    val whiteLayout = new CssLayout(style = Reindeer.LAYOUT_WHITE, margin = true)
-    whiteLayout.setSizeFull()
-    whiteLayout.add(new H1("White"))
-      .add(new HtmlLabel("<p><strong><code>Reindeer.LAYOUT_WHITE</code></strong></p><p>Changes the background to white. Has no other effect on contained components, they all behave like on the default gray background."))
+    val whiteLayout = new CssLayout(100 percent, 100 percent, style = Reindeer.LAYOUT_WHITE, margin = true) {
+      add(new H1("White"))
+      add(new HtmlLabel("<p><strong><code>Reindeer.LAYOUT_WHITE</code></strong></p><p>Changes the background to white. Has no other effect on contained components, they all behave like on the default gray background."))
+    }
 
-    val blueLayout = new CssLayout(style = Reindeer.LAYOUT_BLUE, margin = true)
-    blueLayout.setSizeFull()
-    blueLayout.add(new H1("Blue"))
-      .add(new HtmlLabel("<p><strong><code>Reindeer.LAYOUT_BLUE</code></strong></p><p>Changes the background to a shade of blue. A very few components have any difference here compared to the white style."))
+    val blueLayout = new CssLayout(100 percent, 100 percent, style = Reindeer.LAYOUT_BLUE, margin = true) {
+      add(new H1("Blue"))
+      add(new HtmlLabel("<p><strong><code>Reindeer.LAYOUT_BLUE</code></strong></p><p>Changes the background to a shade of blue. A very few components have any difference here compared to the white style."))
+    }
 
-    val blackLayout = new CssLayout(style = Reindeer.LAYOUT_BLACK, margin = true)
-    blackLayout.setSizeFull()
-    blackLayout.add(new H1("Black"))
-      .addComponent(new HtmlLabel("<p><strong><code>Reindeer.LAYOUT_BLACK</code></strong></p><p>Reserved for small parts of the application. Or alternatively, use for the whole application.</p><p><strong>This style is non-overridable</strong>, meaning that everything you place inside it will transform to their corresponding black styles when available, excluding Labels.</p>"))
+    val blackLayout = new CssLayout(100 percent, 100 percent, style = Reindeer.LAYOUT_BLACK, margin = true) {
+      add(new H1("Black"))
+      add(new HtmlLabel("<p><strong><code>Reindeer.LAYOUT_BLACK</code></strong></p><p>Reserved for small parts of the application. Or alternatively, use for the whole application.</p><p><strong>This style is non-overridable</strong>, meaning that everything you place inside it will transform to their corresponding black styles when available, excluding Labels.</p>"))
+    }
 
     colors.addComponent(whiteLayout)
     colors.addComponent(blueLayout)
@@ -399,14 +396,16 @@ class DemoApplication extends Application {
 
     val note = new HtmlLabel("<p>Note, that you cannot nest the layout styles infinitely inside each other. After a couple levels, the result will be undefined, due to limitations in CSS (which are in fact caused by Internet Explorer 6).</p>")
 
-    margin.add(new H1("Guide to the Reindeer Theme"))
-      .add(new Ruler())
-      .add(texts)
-      .add(stylesHeading)
-      .add(new Ruler())
-      .add(new HtmlLabel("<p>You can easily change the feel of some parts of your application by using the three layout styles provided by Reindeer: white, blue and black. The colored area contains the margins of the layout. All contained components will switch their style if an alternative style is available for that color.</p>"))
-      .add(colors)
-      .addComponent(note)
+    l.add(new CssLayout(margin = true, width = 100 percent) {
+      add(new H1("Guide to the Reindeer Theme"))
+      add(new Ruler())
+      add(texts)
+      add(stylesHeading)
+      add(new Ruler())
+      add(new HtmlLabel("<p>You can easily change the feel of some parts of your application by using the three layout styles provided by Reindeer: white, blue and black. The colored area contains the margins of the layout. All contained components will switch their style if an alternative style is available for that color.</p>"))
+      add(colors)
+      addComponent(note)
+    })
 
     return l
   }
@@ -464,13 +463,12 @@ class DemoApplication extends Application {
 
   def getHeader(mainLayout: Layout, tabs: TabSheet): Layout = {
 
-    val titleLayout = new CssLayout()
-    val title = new H2("Vaadin Reindeer Theme")
-    val description = new SmallText(
-      "Documentation and Examples of Available Styles")
-    description.setSizeUndefined()
-    titleLayout.add(title)
-      .add(description)
+    val titleLayout = new CssLayout() {
+    	add(new H2("Vaadin Reindeer Theme"))
+    	add(new SmallText("Documentation and Examples of Available Styles")).setSizeUndefined()
+    }
+    
+    
 
     val toggles = new HorizontalLayout(spacing = true)
     val bgColor = new Label("Background color")

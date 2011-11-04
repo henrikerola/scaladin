@@ -77,9 +77,9 @@ class Panel(caption: String = null, width: String = 100 percent, height: String 
 
   def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
 
-  def add(component: Component = null): Panel = {
+  def add[C <: com.vaadin.ui.Component](component: C = null): C = {
     addComponent(component)
-    this
+    component
   }
 }
 
@@ -90,9 +90,9 @@ class HorizontalSplitPanel(width: String = 100 percent, height: String = 100 per
   setCaption(caption)
   setStyleName(style)
 
-  def add(component: Component = null): HorizontalSplitPanel = {
+  def add[C <: com.vaadin.ui.Component](component: C = null): C = {
     addComponent(component)
-    this
+    component
   }
 
   def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
@@ -105,9 +105,9 @@ class VerticalSplitPanel(width: String = 100 percent, height: String = 100 perce
   setCaption(caption)
   setStyleName(style)
 
-  def add(component: Component = null): VerticalSplitPanel = {
+  def add[C <: com.vaadin.ui.Component](component: C = null): C = {
     addComponent(component)
-    this
+    component
   }
 
   def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
