@@ -55,10 +55,11 @@ class TwinColSelect(caption: String = null, width: String = null, height: String
   setNullSelectionAllowed(nullSelectionAllowed)
 }
 
-class Table(caption: String = null, width: String = null, height: String = null, property: com.vaadin.data.Property = null, style: String = null)
+class Table(caption: String = null, width: String = null, height: String = null, dataSource: Container = null, property: com.vaadin.data.Property = null, style: String = null)
     extends com.vaadin.ui.Table with ValueChangeFunction {
   setWidth(width)
   setHeight(height)
+  if (dataSource != null) setContainerDataSource(dataSource)
   if (property != null) setPropertyDataSource(property)
   setStyleName(style)
 }
