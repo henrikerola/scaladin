@@ -4,6 +4,7 @@ import com.github.siasia.WebPlugin._
 
 object BuildSettings {
   val buildOrganization = "vaadin.scala"
+  val buildName = "scala-wrappers"
   val buildVersion = "0.1-SNAPSHOT"
   val buildScalaVersion = "2.9.0-1"
 
@@ -12,6 +13,12 @@ object BuildSettings {
     version := buildVersion,
     scalaVersion := buildScalaVersion,
     autoScalaLibrary := true)
+
+  var manifestAttributes = Seq(
+    Package.ManifestAttributes("Implementation-Title" -> buildName),
+    Package.ManifestAttributes("Implementation-Version" -> buildVersion),
+    Package.ManifestAttributes("Vaadin-Package-Version" -> "1"),
+    Package.ManifestAttributes("Vaadin-License-Title" -> "Apache License 2.0"))
 }
 
 object Dependencies {
@@ -32,11 +39,14 @@ object ScalaWrappersForVaadinBuild extends Build {
   import BuildSettings._
 
   val addonSettings = buildSettings ++ Seq(
-    name := "scala-wrappers",
-    libraryDependencies := Seq(vaadin, scalaTest, junitInterface))
+    name := buildName,
+    libraryDependencies := Seq(vaadin, scalaTest, junitInterface),
+    packageConfiguration in Compile in packageBin ~= { 
+      (config: Package.Configuration) => new Package.Configuration(config.sources, config.jar, manifestAttributes) 
+    })
 
   val demoSettings = buildSettings ++ webSettings ++ Seq(
-    name := "scala-wrappers-demo",
+    name := buildName + "-demo",
     libraryDependencies := Seq(jetty))
 
   lazy val addon = Project("addon", file("addon"), settings = addonSettings)
