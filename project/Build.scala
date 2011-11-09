@@ -43,7 +43,8 @@ object ScalaWrappersForVaadinBuild extends Build {
     libraryDependencies := Seq(vaadin, scalaTest, junitInterface),
     packageConfiguration in Compile in packageBin ~= { 
       (config: Package.Configuration) => new Package.Configuration(config.sources, config.jar, manifestAttributes) 
-    })
+    },
+	unmanagedResourceDirectories in Compile <<= Seq(resourceDirectory in Compile, scalaSource in Compile).join)
 
   val demoSettings = buildSettings ++ webSettings ++ Seq(
     name := buildName + "-demo",
