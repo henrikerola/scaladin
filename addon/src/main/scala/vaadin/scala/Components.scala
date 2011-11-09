@@ -27,8 +27,8 @@ class LinkButton(caption: String = null, action: com.vaadin.ui.Button#ClickEvent
   addStyleName(style)
 }
 
-class CheckBox(caption: String = null, immediate: Boolean = false, action: com.vaadin.ui.Button#ClickEvent => Unit = null, icon: Resource = null, style: String = null, enabled: Boolean = true, description: String = null)
-    extends com.vaadin.ui.CheckBox(caption) {
+class CheckBox(caption: String = null, checked: Boolean = false, immediate: Boolean = false, action: com.vaadin.ui.Button#ClickEvent => Unit = null, icon: Resource = null, style: String = null, enabled: Boolean = true, description: String = null)
+    extends com.vaadin.ui.CheckBox(caption, checked) {
   setImmediate(immediate)
   setIcon(icon)
   setStyleName(style)
@@ -55,40 +55,44 @@ class Label(content: String = null, width: String = 100 percent, height: String 
 class HtmlLabel(content: String = null, width: String = 100 percent, height: String = null, property: Property = null, style: String = null)
   extends Label(width = width, height = height, content = content, property = property, contentMode = com.vaadin.ui.Label.CONTENT_XHTML, style = style)
 
-class TextField(caption: String = null, width: String = null, height: String = null, property: Property = null, style: String = null, prompt: String = null)
+class TextField(caption: String = null, width: String = null, height: String = null, property: Property = null, value: Any = null, style: String = null, prompt: String = null)
     extends com.vaadin.ui.TextField(caption) {
   setWidth(width)
   setHeight(height)
   if (property != null) setPropertyDataSource(property)
+  if (value != null) setValue(value)
   setStyleName(style)
   setInputPrompt(prompt)
 }
 
-class TextArea(caption: String = null, width: String = null, height: String = null, property: Property = null, style: String = null, prompt: String = null)
+class TextArea(caption: String = null, width: String = null, height: String = null, property: Property = null, value: Any = null, style: String = null, prompt: String = null)
     extends com.vaadin.ui.TextArea(caption) {
   setWidth(width)
   setHeight(height)
   if (property != null) setPropertyDataSource(property)
+  if (value != null) setValue(value)
   setStyleName(style)
   setInputPrompt(prompt)
 }
 
-class RichTextArea(caption: String = null, width: String = null, height: String = null, property: Property = null, style: String = null) 
+class RichTextArea(caption: String = null, width: String = null, height: String = null, property: Property = null, value: Any = null, style: String = null) 
     extends com.vaadin.ui.RichTextArea(caption) {
   setWidth(width)
   setHeight(height)
   if (property != null) setPropertyDataSource(property)
+  if (value != null) setValue(value)
   setStyleName(style)
 }
 
-class DateField(caption: String = null, width: String = null, height: String = null, property: Property = null, style: String = null, value: Any = null, resolution: Int = com.vaadin.ui.DateField.RESOLUTION_MSEC)
-    extends com.vaadin.ui.DateField(caption) {
+class PopupDateField(caption: String = null, width: String = null, height: String = null, property: Property = null, style: String = null, value: Any = null, resolution: Int = com.vaadin.ui.DateField.RESOLUTION_MSEC, prompt: String = null)
+    extends com.vaadin.ui.PopupDateField(caption) {
   setWidth(width)
   setHeight(height)
   if (property != null) setPropertyDataSource(property)
   setStyleName(style)
   setResolution(resolution)
-  setValue(value)
+  if (value != null) setValue(value)
+  setInputPrompt(prompt)
 }
 
 class InlineDateField(caption: String = null, width: String = null, height: String = null, property: Property = null, style: String = null, value: Any = null, resolution: Int = com.vaadin.ui.DateField.RESOLUTION_MSEC)
@@ -98,7 +102,7 @@ class InlineDateField(caption: String = null, width: String = null, height: Stri
   if (property != null) setPropertyDataSource(property)
   setStyleName(style)
   setResolution(resolution)
-  setValue(value)
+  if (value != null) setValue(value)
 }
 
 class MenuBar(caption: String = null, width: String = null, height: String = null, style: String = null)
