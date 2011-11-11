@@ -22,9 +22,13 @@ After the above commands, it's possible to import scala-wrappers and scala-wrapp
 Running the demo application
 ----------------------------
 
+$ sbt "project demo" ~container:start
+
+OR
+
 $ sbt
 > project demo
-> ~jetty-run
+> ~container:start
 
 Now the application is accessible in http://localhost:8080. ~ means that jetty will redeploy the application when changes are detected.
 You may also need to increase the amount of permgen memory available to SBT. The simplest way to do this is to edit the script that launches SBT. 

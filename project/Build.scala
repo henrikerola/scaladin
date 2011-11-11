@@ -6,7 +6,7 @@ object BuildSettings {
   val buildOrganization = "vaadin.scala"
   val buildName = "scala-wrappers"
   val buildVersion = "0.1-SNAPSHOT"
-  val buildScalaVersion = "2.9.0-1"
+  val buildScalaVersion = "2.9.1"
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
     organization := buildOrganization,
@@ -28,10 +28,9 @@ object Dependencies {
   val junitVersion = "4.9"
 
   val vaadin = "com.vaadin" % "vaadin" % vaadinVersion
-  val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "jetty"
+  val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
   val scalaTest = "org.scalatest" % "scalatest_2.9.0" % scalaTestVersion
   val junitInterface = "com.novocode" % "junit-interface" % "0.7" % "test->default"
-
 }
 
 object ScalaWrappersForVaadinBuild extends Build {
@@ -44,7 +43,7 @@ object ScalaWrappersForVaadinBuild extends Build {
     packageConfiguration in Compile in packageBin ~= { 
       (config: Package.Configuration) => new Package.Configuration(config.sources, config.jar, manifestAttributes) 
     },
-	unmanagedResourceDirectories in Compile <<= Seq(resourceDirectory in Compile, scalaSource in Compile).join)
+    unmanagedResourceDirectories in Compile <<= Seq(resourceDirectory in Compile, scalaSource in Compile).join)
 
   val demoSettings = buildSettings ++ webSettings ++ Seq(
     name := buildName + "-demo",

@@ -150,7 +150,7 @@ class DemoApplication extends Application {
   def buildDateFields(): Layout = {
     val hl = new HorizontalLayout(spacing = true) {
       setMargin(true, false, false, false)
-      add(new DateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_MIN))
+      add(new PopupDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_MIN))
       add(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_DAY))
       add(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_YEAR))
     }
