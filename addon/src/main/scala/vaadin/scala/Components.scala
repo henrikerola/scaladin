@@ -105,7 +105,7 @@ class InlineDateField(caption: String = null, width: String = null, height: Stri
   if (value != null) setValue(value)
 }
 
-class MenuBar(caption: String = null, width: String = null, height: String = null, style: String = null)
+class MenuBar(width: String = null, height: String = null, style: String = null)
     extends com.vaadin.ui.MenuBar {
   setWidth(width)
   setHeight(height)
@@ -123,4 +123,13 @@ class Form(width: String = null, height: String = 100 percent, item: Item = null
   setWidth(width)
   setHeight(height)
   if (item != null) setItemDataSource(item)
+}
+
+class Embedded(caption: String = null, width: String = null, height: String = null, source: Resource = null, objectType: Int = com.vaadin.ui.Embedded.TYPE_OBJECT, style: String = null)
+    extends com.vaadin.ui.Embedded(caption) {
+  setWidth(width)
+  setHeight(height)
+  if (source != null) setSource(source)
+  setType(objectType)
+  setStyleName(style)
 }

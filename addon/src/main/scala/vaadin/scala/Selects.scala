@@ -47,7 +47,7 @@ class OptionGroup(caption: String = null, width: String = null, height: String =
 }
 
 class TwinColSelect(caption: String = null, width: String = null, height: String = null, dataSource: Container = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)
-    extends com.vaadin.ui.TwinColSelect with ValueChangeFunction {
+    extends com.vaadin.ui.TwinColSelect(caption) with ValueChangeFunction {
   setWidth(width)
   setHeight(height)
   if (dataSource != null) setContainerDataSource(dataSource)
@@ -55,8 +55,27 @@ class TwinColSelect(caption: String = null, width: String = null, height: String
   setNullSelectionAllowed(nullSelectionAllowed)
 }
 
+trait ItemClickListener extends com.vaadin.event.ItemClickEvent.ItemClickNotifier {
+  def addItemClickListener(action: com.vaadin.event.ItemClickEvent => Unit) {
+    addListener(new com.vaadin.event.ItemClickEvent.ItemClickListener {
+      override def itemClick(event: com.vaadin.event.ItemClickEvent) = action(event)
+    })
+  }
+}
+
 class Table(caption: String = null, width: String = null, height: String = null, dataSource: Container = null, property: com.vaadin.data.Property = null, selectable: Boolean = false, immediate: Boolean = false, style: String = null)
-    extends com.vaadin.ui.Table with ValueChangeFunction {
+    extends com.vaadin.ui.Table(caption) with ValueChangeFunction with ItemClickListener {
+  setWidth(width)
+  setHeight(height)
+  if (dataSource != null) setContainerDataSource(dataSource)
+  if (property != null) setPropertyDataSource(property)
+  setSelectable(selectable)
+  setImmediate(immediate)
+  setStyleName(style)
+}
+
+class Tree(caption: String = null, width: String = null, height: String = null, dataSource: Container = null, property: com.vaadin.data.Property = null, selectable: Boolean = false, immediate: Boolean = false, style: String = null)
+    extends com.vaadin.ui.Tree with ValueChangeFunction with ItemClickListener {
   setWidth(width)
   setHeight(height)
   if (dataSource != null) setContainerDataSource(dataSource)
