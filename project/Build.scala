@@ -5,7 +5,7 @@ import com.github.siasia.WebPlugin._
 object BuildSettings {
   val buildOrganization = "vaadin.scala"
   val buildName = "scala-wrappers"
-  val buildVersion = "0.1-SNAPSHOT"
+  val buildVersion = "0.1"
   val buildScalaVersion = "2.9.1"
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
@@ -43,7 +43,8 @@ object ScalaWrappersForVaadinBuild extends Build {
     packageConfiguration in Compile in packageBin ~= { 
       (config: Package.Configuration) => new Package.Configuration(config.sources, config.jar, manifestAttributes) 
     },
-    unmanagedResourceDirectories in Compile <<= Seq(resourceDirectory in Compile, scalaSource in Compile).join)
+    unmanagedResourceDirectories in Compile <<= Seq(resourceDirectory in Compile, scalaSource in Compile).join,
+    scalacOptions ++= Seq("-deprecation", "-unchecked", "-encoding", "UTF-8"))
 
   val demoSettings = buildSettings ++ webSettings ++ Seq(
     name := buildName + "-demo",
