@@ -44,7 +44,7 @@ class Link(caption: String = null, resource: Resource = null, targetName: String
     extends com.vaadin.ui.Link(caption, resource, targetName, width, height, border)
 
 // icon, caption as constructor parameters?
-class Label(content: String = null, width: String = 100 percent, height: String = null, property: Property = null, contentMode: Integer = com.vaadin.ui.Label.CONTENT_DEFAULT, style: String = null)
+class Label(content: String = null, width: String = 100 percent, height: String = null, property: Property = null, contentMode: Int = com.vaadin.ui.Label.CONTENT_DEFAULT, style: String = null)
     extends com.vaadin.ui.Label(content, contentMode) {
   setWidth(width)
   setHeight(height)

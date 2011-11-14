@@ -7,6 +7,7 @@ package object scala {
   class UnitExtent(value: Number) {
     def px: String = value + "px"
     def percent: String = value + "%"
+    def pct: String = value + "%"
     def em: String = value + "em"
     def ex: String = value + "ex"
     def in: String = value + "in"
