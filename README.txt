@@ -1,3 +1,8 @@
+
+
+For more information about the project and a published add-on: http://vaadin.com/addon/scala-wrappers
+
+
 Needed Tools
 ------------
 
