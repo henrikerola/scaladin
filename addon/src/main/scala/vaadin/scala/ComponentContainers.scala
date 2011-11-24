@@ -7,14 +7,7 @@ import scala.collection.JavaConverters._
 
 trait FilterableComponentContainer extends ComponentContainer {
 
-  def filter(filterFunction: Component => Boolean): List[Component] = {
-    def filtered = for {
-      component <- getComponentIterator.asScala
-      if filterFunction(component)
-    } yield component
-
-    filtered.toList
-  }
+  def filter(filterFunction: Component => Boolean): List[Component] = getComponentIterator.asScala.filter(filterFunction).toList
 
   def filterRecursive(filterFunction: Component => Boolean): List[Component] = {
     var newList: List[Component] = Nil

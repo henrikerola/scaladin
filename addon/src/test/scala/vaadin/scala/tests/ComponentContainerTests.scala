@@ -1,26 +1,18 @@
 package vaadin.scala.tests
-import org.scalatest.FeatureSpec
-import org.scalatest.GivenWhenThen
-import vaadin.scala.VerticalLayout
-import vaadin.scala.FilterableComponentContainer
+import org.scalatest.FunSuite
 import vaadin.scala._
-import org.scalatest.junit.AssertionsForJUnit
-import org.junit.Test
 
-class ComponentContainerSpec extends AssertionsForJUnit {
+class ComponentContainerTests extends FunSuite {
 
-  @Test
-  def filteringEmptyContainerReturnsEmptyList() = {
-
+  test("filtering empty component container returns empty list") {
     val layout = new VerticalLayout with FilterableComponentContainer
 
     val result = layout filter (c => true)
 
-    assert(result == Nil)
+    assert(result === Nil)
   }
 
-  @Test
-  def filteringComponentContainerWithMatchesReturnsResults() = {
+  test("filtering component container with matches returns results")  {
     val layout = new VerticalLayout with FilterableComponentContainer {
       val one = add(new Label(style = "one"))
       val two = add(new Label(style = "two"))
@@ -33,34 +25,31 @@ class ComponentContainerSpec extends AssertionsForJUnit {
     assert(result contains layout.two)
   }
 
-  @Test
-  def filteringComponentContainerWithNoMatchesReturnsEmptyList() = {
+ test("filtering component container with no matches returns empty list")  {
     val layout = createTestLayout
 
     val result = layout filter (_.getStyleName == "four")
 
-    assert(result == Nil)
+    assert(result === Nil)
   }
 
-  @Test
-  def filteringComponentContainerChildrenWithMatches() = {
+  test("filtering component container children with matches returns results")  {
     val layout = createTestLayout
     layout.add(createTestLayout)
 
     val result = layout filterRecursive (_.getStyleName == "one")
 
-    assert(result.size == 2)
+    assert(result.size === 2)
     result.foreach(c => assert(c.isInstanceOf[Label] === true))
   }
 
-  @Test
-  def filterComponentContainerWithMatchesFromChildren() = {
+  test("filtering component container with matches from children returns results")  {
     val layout = new VerticalLayout with FilterableComponentContainer
     layout.add(createTestLayout)
 
     val result = layout filterRecursive (_.getStyleName == "one")
 
-    assert(result.size == 1)
+    assert(result.size === 1)
     result.foreach(c => assert(c.isInstanceOf[Label] === true))
   }
 
