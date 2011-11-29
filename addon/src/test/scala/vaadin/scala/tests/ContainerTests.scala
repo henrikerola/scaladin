@@ -26,7 +26,7 @@ class ContainerTests extends FunSuite {
     assert(classOf[String] === property.getType)
     assert("foobar" === property.getValue)
   }
-  
+
   test("item creation with three properties") {
     val result = Item('testId1 -> "foobar1", 'testId2 -> "foobar2", 'testId3 -> "foobar3")
     assert(3 === result.getItemPropertyIds.size)
@@ -36,10 +36,10 @@ class ContainerTests extends FunSuite {
       assert(true === property.getValue.asInstanceOf[String].startsWith("foobar"))
     }
   }
-  
+
   test("container creation with one item and one property") {
     val result = Container('itemId -> List('propertyId -> "foobar"))
-    
+
     assert(1 === result.size)
     val item = result.getItem('itemId)
     assert(1 === item.getItemPropertyIds.size)

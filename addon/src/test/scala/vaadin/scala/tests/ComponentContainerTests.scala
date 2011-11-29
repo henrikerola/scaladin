@@ -12,7 +12,7 @@ class ComponentContainerTests extends FunSuite {
     assert(result === Nil)
   }
 
-  test("filtering component container with matches returns results")  {
+  test("filtering component container with matches returns results") {
     val layout = new VerticalLayout with FilterableComponentContainer {
       val one = add(new Label(style = "one"))
       val two = add(new Label(style = "two"))
@@ -25,7 +25,7 @@ class ComponentContainerTests extends FunSuite {
     assert(result contains layout.two)
   }
 
- test("filtering component container with no matches returns empty list")  {
+  test("filtering component container with no matches returns empty list") {
     val layout = createTestLayout
 
     val result = layout filter (_.getStyleName == "four")
@@ -33,7 +33,7 @@ class ComponentContainerTests extends FunSuite {
     assert(result === Nil)
   }
 
-  test("filtering component container children with matches returns results")  {
+  test("filtering component container children with matches returns results") {
     val layout = createTestLayout
     layout.add(createTestLayout)
 
@@ -43,7 +43,7 @@ class ComponentContainerTests extends FunSuite {
     result.foreach(c => assert(c.isInstanceOf[Label] === true))
   }
 
-  test("filtering component container with matches from children returns results")  {
+  test("filtering component container with matches from children returns results") {
     val layout = new VerticalLayout with FilterableComponentContainer
     layout.add(createTestLayout)
 

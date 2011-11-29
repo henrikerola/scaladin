@@ -27,7 +27,7 @@ trait ParametrizedAddComponentForOrdered extends com.vaadin.ui.AbstractOrderedLa
 }
 
 class HorizontalLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null)
-    extends com.vaadin.ui.HorizontalLayout with LayoutClickListener with ParametrizedAddComponentForOrdered {
+  extends com.vaadin.ui.HorizontalLayout with LayoutClickListener with ParametrizedAddComponentForOrdered {
   setWidth(width)
   setHeight(height)
   setMargin(margin)
@@ -37,7 +37,7 @@ class HorizontalLayout(width: String = null, height: String = null, margin: Bool
 }
 
 class VerticalLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null)
-    extends com.vaadin.ui.VerticalLayout with LayoutClickListener with ParametrizedAddComponentForOrdered {
+  extends com.vaadin.ui.VerticalLayout with LayoutClickListener with ParametrizedAddComponentForOrdered {
   setWidth(width)
   setHeight(height)
   setMargin(margin)
@@ -48,7 +48,7 @@ class VerticalLayout(width: String = 100 percent, height: String = null, margin:
 
 // TODO com.vaadin.ui.FormLayout calls setMargin(true, false, true, false) in constructor
 class FormLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = true, style: String = null)
-    extends com.vaadin.ui.FormLayout {
+  extends com.vaadin.ui.FormLayout {
   def add[C <: com.vaadin.ui.Component](component: C): C = {
     addComponent(component)
     component
@@ -56,7 +56,7 @@ class FormLayout(width: String = 100 percent, height: String = null, margin: Boo
 }
 
 class GridLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, columns: Int = 1, rows: Int = 1)
-    extends com.vaadin.ui.GridLayout with LayoutClickListener {
+  extends com.vaadin.ui.GridLayout with LayoutClickListener {
   setWidth(width)
   setHeight(height)
   setMargin(margin)
@@ -80,7 +80,7 @@ class GridLayout(width: String = null, height: String = null, margin: Boolean = 
 }
 
 class CssLayout(width: String = null, height: String = null, margin: Boolean = false, style: String = null, caption: String = null)
-    extends com.vaadin.ui.CssLayout with LayoutClickListener {
+  extends com.vaadin.ui.CssLayout with LayoutClickListener {
   setWidth(width)
   setHeight(height)
   setMargin(margin)
@@ -102,7 +102,7 @@ class CssLayout(width: String = null, height: String = null, margin: Boolean = f
 }
 
 class CustomLayout(width: String = 100 percent, height: String = null, template: String = null, contents: String = null, caption: String = null, style: String = null)
-    extends com.vaadin.ui.CustomLayout {
+  extends com.vaadin.ui.CustomLayout {
   setWidth(width)
   setHeight(height)
   setCaption(caption)

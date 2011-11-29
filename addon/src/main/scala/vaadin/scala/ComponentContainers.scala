@@ -27,7 +27,7 @@ class WindowCloseListener(action: com.vaadin.ui.Window#CloseEvent => Unit) exten
 }
 
 class Window(caption: String = null, width: String = null, height: String = null, content: ComponentContainer = null, modal: Boolean = false, icon: Resource = null, style: String = null, resizable: Boolean = true, draggable: Boolean = true, closable: Boolean = true)
-    extends com.vaadin.ui.Window(caption, content) {
+  extends com.vaadin.ui.Window(caption, content) {
   setWidth(width)
   setHeight(height)
   setModal(modal)
@@ -36,7 +36,7 @@ class Window(caption: String = null, width: String = null, height: String = null
   setResizable(resizable)
   setClosable(closable)
   setDraggable(draggable)
-  
+
   def add[C <: com.vaadin.ui.Component](component: C = null): C = {
     addComponent(component)
     component
@@ -50,7 +50,7 @@ class SelectedTabChangeListener(action: com.vaadin.ui.TabSheet#SelectedTabChange
 }
 
 class TabSheet(width: String = 100 percent, height: String = null, caption: String = null, style: String = null)
-    extends com.vaadin.ui.TabSheet() {
+  extends com.vaadin.ui.TabSheet() {
   setCaption(caption)
   setWidth(width)
   setHeight(height)
@@ -62,7 +62,7 @@ class TabSheet(width: String = 100 percent, height: String = null, caption: Stri
 }
 
 class Panel(caption: String = null, width: String = 100 percent, height: String = null, style: String = null)
-    extends com.vaadin.ui.Panel() {
+  extends com.vaadin.ui.Panel() {
   setCaption(caption)
   setWidth(width)
   setHeight(height)
@@ -77,7 +77,7 @@ class Panel(caption: String = null, width: String = 100 percent, height: String 
 }
 
 class HorizontalSplitPanel(width: String = 100 percent, height: String = 100 percent, caption: String = null, style: String = null)
-    extends com.vaadin.ui.HorizontalSplitPanel() {
+  extends com.vaadin.ui.HorizontalSplitPanel() {
   setWidth(width)
   setHeight(height)
   setCaption(caption)
@@ -92,7 +92,7 @@ class HorizontalSplitPanel(width: String = 100 percent, height: String = 100 per
 }
 
 class VerticalSplitPanel(width: String = 100 percent, height: String = 100 percent, caption: String = null, style: String = null)
-    extends com.vaadin.ui.VerticalSplitPanel() {
+  extends com.vaadin.ui.VerticalSplitPanel() {
   setWidth(width)
   setHeight(height)
   setCaption(caption)
