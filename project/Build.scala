@@ -30,7 +30,7 @@ object Dependencies {
 
   val vaadin = "com.vaadin" % "vaadin" % vaadinVersion
   val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
-  val scalaTest = "org.scalatest" % "scalatest_2.9.0" % scalaTestVersion
+  val scalaTest = "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
   val junitInterface = "com.novocode" % "junit-interface" % "0.7" % "test->default"
 }
 
