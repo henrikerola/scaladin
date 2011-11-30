@@ -5,3 +5,4 @@
 .target
 target
 .scala_dependencies
+.settings
