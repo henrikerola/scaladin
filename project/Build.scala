@@ -12,6 +12,7 @@ object BuildSettings {
     organization := buildOrganization,
     version := buildVersion,
     scalaVersion := buildScalaVersion,
+    scalacOptions ++= Seq("-deprecation", "-unchecked", "-encoding", "UTF-8"),
     autoScalaLibrary := true)
 
   var manifestAttributes = Seq(
@@ -43,8 +44,7 @@ object ScalaWrappersForVaadinBuild extends Build {
     packageConfiguration in Compile in packageBin ~= { 
       (config: Package.Configuration) => new Package.Configuration(config.sources, config.jar, manifestAttributes) 
     },
-    unmanagedResourceDirectories in Compile <<= Seq(resourceDirectory in Compile, scalaSource in Compile).join,
-    scalacOptions ++= Seq("-deprecation", "-unchecked", "-encoding", "UTF-8"))
+    unmanagedResourceDirectories in Compile <<= Seq(resourceDirectory in Compile, scalaSource in Compile).join)
 
   val demoSettings = buildSettings ++ webSettings ++ Seq(
     name := buildName + "-demo",
