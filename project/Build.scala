@@ -24,6 +24,7 @@ object BuildSettings {
 
 object Dependencies {
   val vaadinVersion = "6.7.1"
+  val vaadinVersion = "6.7.2"
   val jettyVersion = "7.3.0.v20110203"
   val scalaTestVersion = "1.6.1"
   val junitVersion = "4.9"
