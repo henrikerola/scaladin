@@ -6,23 +6,24 @@ object Property {
 }
 
 object Item {
-  def apply(properties: Tuple2[Any, Any]*): com.vaadin.data.Item = {
-    val item = new com.vaadin.data.util.PropertysetItem
+  def apply(properties: Tuple2[Any, Any]*): FilterableItem = {
+    val item = new com.vaadin.data.util.PropertysetItem with FilterableItem
     properties foreach (p => item.addItemProperty(p._1, Property(p._2)))
+
     item
   }
 
   def getProperties(item: com.vaadin.data.Item) = item.getItemPropertyIds.asScala.map(item.getItemProperty)
-
+  def getProperties(item: com.vaadin.data.Item, propertyId: Any) = item.getItemPropertyIds.asScala.filter(_ == propertyId).map(item.getItemProperty)
 }
 
 object Container {
-  def apply(items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): com.vaadin.data.Container = {
-    val container = new com.vaadin.data.util.IndexedContainer
+  def apply(items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): FilterableContainer = {
+    val container = new com.vaadin.data.util.IndexedContainer with FilterableContainer
     for (item <- items) {
+      val containerItem = container.addItem(item._1)
       for (property <- item._2) {
         container.addContainerProperty(property._1, property._2.getClass, null)
-        val containerItem = container.addItem(item._1)
         containerItem.getItemProperty(property._1).setValue(property._2)
       }
     }
@@ -33,22 +34,57 @@ object Container {
 
 trait FilterableContainer extends com.vaadin.data.Container {
 
-  def \(itemFilter: Any => Boolean): ContainerFilterProduct =
+  /**
+   * Filter based on item id
+   */
+  def \(itemId: Any): ContainerFilterProduct =
+    new ContainerFilterProduct(getItemIds.asScala.filter(_ == itemId).map(getItem).toList)
+
+  /**
+   * Filter based on Item
+   */
+  def filterItems(itemFilter: com.vaadin.data.Item => Boolean): ContainerFilterProduct =
     new ContainerFilterProduct(getItemIds.asScala.map(getItem).filter(itemFilter).toList)
 
-  def \\(propertyFilter: Any => Boolean): ItemFilterProduct =
+  /**
+   * Filter based on property
+   */
+  def filterProperties(propertyFilter: com.vaadin.data.Property => Boolean): ItemFilterProduct =
     new ItemFilterProduct(getItemIds.asScala.map(getItem).flatMap(Item.getProperties).filter(propertyFilter).toList)
+
+  /**
+   * Filter based on property id
+   */
+  def \\(propertyId: Any): ItemFilterProduct =
+    new ItemFilterProduct(getItemIds.asScala.map(getItem).map(_.getItemProperty(propertyId)).toList)
 }
 
 trait FilterableItem extends com.vaadin.data.Item {
-  def \(propertyFilter: Any => Boolean): ItemFilterProduct =
+  /**
+   * Filter based on property
+   */
+  def filterProperties(propertyFilter: com.vaadin.data.Property => Boolean): ItemFilterProduct =
     new ItemFilterProduct(Item.getProperties(this).filter(propertyFilter).toList)
 
+  /**
+   * Filter based on property id
+   */
+  def \(propertyId: Any): ItemFilterProduct =
+    new ItemFilterProduct(List(getItemProperty(propertyId)))
 }
 
 class ContainerFilterProduct(val items: List[com.vaadin.data.Item]) {
-  def \(propertyFilter: Any => Boolean): ItemFilterProduct =
+  /**
+   * Filter based on property
+   */
+  def filterProperties(propertyFilter: com.vaadin.data.Property => Boolean): ItemFilterProduct =
     new ItemFilterProduct(items.flatMap(Item.getProperties).filter(propertyFilter).toList)
+
+  /**
+   * Filter based on property id
+   */
+  def \(propertyId: Any): ItemFilterProduct =
+    new ItemFilterProduct(items.map(_.getItemProperty(propertyId)))
 }
 
 class ItemFilterProduct(val properties: List[com.vaadin.data.Property]) {

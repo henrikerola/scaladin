@@ -3,8 +3,6 @@ package vaadin.scala
 import com.vaadin.terminal.Resource
 import com.vaadin.ui.themes.BaseTheme
 import com.vaadin.ui._
-import com.vaadin.data.Property
-import com.vaadin.data.Item
 
 class ButtonClickListener(action: com.vaadin.ui.Button#ClickEvent => Unit) extends com.vaadin.ui.Button.ClickListener {
   def buttonClick(event: com.vaadin.ui.Button#ClickEvent) = action(event)
@@ -44,7 +42,7 @@ class Link(caption: String = null, resource: Resource = null, targetName: String
   extends com.vaadin.ui.Link(caption, resource, targetName, width, height, border)
 
 // icon, caption as constructor parameters?
-class Label(content: String = null, width: String = 100 percent, height: String = null, property: Property = null, contentMode: Int = com.vaadin.ui.Label.CONTENT_DEFAULT, style: String = null)
+class Label(content: String = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, contentMode: Int = com.vaadin.ui.Label.CONTENT_DEFAULT, style: String = null)
   extends com.vaadin.ui.Label(content, contentMode) {
   setWidth(width)
   setHeight(height)
@@ -52,10 +50,10 @@ class Label(content: String = null, width: String = 100 percent, height: String 
   setStyleName(style)
 }
 
-class HtmlLabel(content: String = null, width: String = 100 percent, height: String = null, property: Property = null, style: String = null)
+class HtmlLabel(content: String = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, style: String = null)
   extends Label(width = width, height = height, content = content, property = property, contentMode = com.vaadin.ui.Label.CONTENT_XHTML, style = style)
 
-class TextField(caption: String = null, width: String = null, height: String = null, property: Property = null, value: Any = null, style: String = null, prompt: String = null)
+class TextField(caption: String = null, width: String = null, height: String = null, property: com.vaadin.data.Property = null, value: Any = null, style: String = null, prompt: String = null)
   extends com.vaadin.ui.TextField(caption) {
   setWidth(width)
   setHeight(height)
@@ -65,7 +63,7 @@ class TextField(caption: String = null, width: String = null, height: String = n
   setInputPrompt(prompt)
 }
 
-class TextArea(caption: String = null, width: String = null, height: String = null, property: Property = null, value: Any = null, style: String = null, prompt: String = null)
+class TextArea(caption: String = null, width: String = null, height: String = null, property: com.vaadin.data.Property = null, value: Any = null, style: String = null, prompt: String = null)
   extends com.vaadin.ui.TextArea(caption) {
   setWidth(width)
   setHeight(height)
@@ -75,7 +73,7 @@ class TextArea(caption: String = null, width: String = null, height: String = nu
   setInputPrompt(prompt)
 }
 
-class RichTextArea(caption: String = null, width: String = null, height: String = null, property: Property = null, value: Any = null, style: String = null)
+class RichTextArea(caption: String = null, width: String = null, height: String = null, property: com.vaadin.data.Property = null, value: Any = null, style: String = null)
   extends com.vaadin.ui.RichTextArea(caption) {
   setWidth(width)
   setHeight(height)
@@ -84,7 +82,7 @@ class RichTextArea(caption: String = null, width: String = null, height: String 
   setStyleName(style)
 }
 
-class PopupDateField(caption: String = null, width: String = null, height: String = null, property: Property = null, style: String = null, value: Any = null, resolution: Int = com.vaadin.ui.DateField.RESOLUTION_MSEC, prompt: String = null)
+class PopupDateField(caption: String = null, width: String = null, height: String = null, property: com.vaadin.data.Property = null, style: String = null, value: Any = null, resolution: Int = com.vaadin.ui.DateField.RESOLUTION_MSEC, prompt: String = null)
   extends com.vaadin.ui.PopupDateField(caption) {
   setWidth(width)
   setHeight(height)
@@ -95,7 +93,7 @@ class PopupDateField(caption: String = null, width: String = null, height: Strin
   setInputPrompt(prompt)
 }
 
-class InlineDateField(caption: String = null, width: String = null, height: String = null, property: Property = null, style: String = null, value: Any = null, resolution: Int = com.vaadin.ui.DateField.RESOLUTION_MSEC)
+class InlineDateField(caption: String = null, width: String = null, height: String = null, property: com.vaadin.data.Property = null, style: String = null, value: Any = null, resolution: Int = com.vaadin.ui.DateField.RESOLUTION_MSEC)
   extends com.vaadin.ui.InlineDateField(caption) {
   setWidth(width)
   setHeight(height)
@@ -118,7 +116,7 @@ class MenuBarCommand(action: com.vaadin.ui.MenuBar#MenuItem => Unit) extends com
   }
 }
 
-class Form(width: String = null, height: String = 100 percent, item: Item = null, layout: Layout = null, fieldFactory: FormFieldFactory = DefaultFieldFactory.get())
+class Form(width: String = null, height: String = 100 percent, item: com.vaadin.data.Item = null, layout: Layout = null, fieldFactory: FormFieldFactory = DefaultFieldFactory.get())
   extends com.vaadin.ui.Form(layout, fieldFactory) {
   setWidth(width)
   setHeight(height)

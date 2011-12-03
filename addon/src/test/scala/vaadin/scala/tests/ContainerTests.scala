@@ -4,6 +4,7 @@ import org.scalatest.junit.AssertionsForJUnit
 import org.scalatest.FunSuite
 import vaadin.scala._
 import scala.collection.JavaConversions._
+import com.vaadin.data.util.IndexedContainer
 
 class ContainerTests extends FunSuite {
 
@@ -46,5 +47,58 @@ class ContainerTests extends FunSuite {
     val property = item.getItemProperty('propertyId)
     assert(classOf[String] === property.getType)
     assert("foobar" === property.getValue)
+  }
+
+  test("container creation with one item") {
+    val result = Container('itemId -> List())
+    assert(1 === result.size)
+    val item = result.getItem('itemId)
+    assert(0 === item.getItemPropertyIds.size)
+  }
+
+  test("container item id filter with one item") {
+    val containerWithOneItem = Container('itemId -> List())
+    val result = containerWithOneItem.\('itemId).items
+
+    assert(1 === result.size)
+  }
+
+  test("container item filter with one item") {
+    val containerWithOneItem = Container('itemId -> List('propertyId -> "value"))
+    val result = containerWithOneItem filterItems (_.getItemPropertyIds.contains('propertyId)) items
+
+    assert(1 === result.size)
+  }
+
+  test("container property id filter with one item and property") {
+    val containerWithOneItem = Container('itemId -> List('propertyId -> "value"))
+    val result = containerWithOneItem \\ 'propertyId properties
+
+    assert(1 === result.size)
+    assert("value" === result.head.getValue)
+  }
+
+  test("container property filter with one item and property") {
+    val containerWithOneItem = Container('itemId -> List('propertyId -> "value"))
+    val result = containerWithOneItem filterProperties (_.getValue() == "value") properties
+
+    assert(1 === result.size)
+    assert("value" === result.head.getValue)
+  }
+
+  test("item property id filter with two properties") {
+    val itemWithOneProperty = Item('propertyId1 -> "value1", 'propertyId2 -> "value2")
+    val result = itemWithOneProperty \ 'propertyId1 properties
+
+    assert(1 === result.size)
+    assert("value1" === result.head.getValue)
+  }
+
+  test("item property filter with two properties") {
+    val itemWithOneProperty = Item('propertyId1 -> "value1", 'propertyId2 -> "value2")
+    val result = itemWithOneProperty filterProperties (_.getValue() == "value1") properties
+
+    assert(1 === result.size)
+    assert("value1" === result.head.getValue)
   }
 }
