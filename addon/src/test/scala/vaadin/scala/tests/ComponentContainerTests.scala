@@ -20,7 +20,6 @@ class ComponentContainerTests extends FunSuite {
     }
 
     val result = layout filter (c => List("one", "two") contains c.getStyleName)
-
     assert(result contains layout.one)
     assert(result contains layout.two)
   }

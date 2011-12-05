@@ -58,9 +58,9 @@ class ContainerTests extends FunSuite {
 
   test("container item id filter with one item") {
     val containerWithOneItem = Container('itemId -> List())
-    val result = containerWithOneItem.\('itemId).items
+    val result = containerWithOneItem \ 'itemId item
 
-    assert(1 === result.size)
+    assert(null != result)
   }
 
   test("container item filter with one item") {
@@ -88,10 +88,9 @@ class ContainerTests extends FunSuite {
 
   test("item property id filter with two properties") {
     val itemWithOneProperty = Item('propertyId1 -> "value1", 'propertyId2 -> "value2")
-    val result = itemWithOneProperty \ 'propertyId1 properties
+    val result = itemWithOneProperty \ 'propertyId1
 
-    assert(1 === result.size)
-    assert("value1" === result.head.getValue)
+    assert("value1" === result.getValue)
   }
 
   test("item property filter with two properties") {

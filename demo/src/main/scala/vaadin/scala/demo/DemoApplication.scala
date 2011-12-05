@@ -65,7 +65,7 @@ class DemoApplication extends Application {
       add(alignment = Alignment.MIDDLE_CENTER, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
         content = "This demo is implemented completely in <a href=\"http://www.scala-lang.org\">Scala</a>. "
           + "This was made possible by the scala-wrappers Vaadin addon. "
-          + "You can find the sources for both this demo and the addon <a href=\"http://dev.vaadin.com/svn/incubator/scala-wrappers\">here</a>."))
+          + "You can find more info about the add-on from the <a href="http://vaadin.com/addon/scala-wrappers">Directory page</a>."))
     }
   }
 
