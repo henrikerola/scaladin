@@ -62,10 +62,14 @@ class DemoApplication extends Application {
 
   def buildScalaWrappersAd(): Layout = {
     new VerticalLayout(width = 100 percent, style = Reindeer.LAYOUT_BLACK) {
-      add(alignment = Alignment.MIDDLE_CENTER, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
-        content = "This demo is implemented completely in <a href=\"http://www.scala-lang.org\">Scala</a>. "
-          + "This was made possible by the scala-wrappers Vaadin addon. "
-          + "You can find more info about the add-on from the <a href="http://vaadin.com/addon/scala-wrappers">Directory page</a>."))
+      add(alignment = Alignment.MIDDLE_CENTER, component = new VerticalLayout(width = 700 px, style = Reindeer.LAYOUT_BLACK, margin = true) {
+        add(alignment = Alignment.MIDDLE_CENTER, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
+          content = "This demo is implemented completely in <a href=\"http://www.scala-lang.org\">Scala</a>."))
+        add(alignment = Alignment.MIDDLE_CENTER, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
+          content = "This was made possible by the ScalaWrappers Vaadin addon."))
+        add(alignment = Alignment.MIDDLE_CENTER, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
+          content = "You can find more info about the add-on from the <a href=\"http://vaadin.com/addon/scala-wrappers\">Directory page</a>."))
+      })
     }
   }
 
@@ -464,11 +468,9 @@ class DemoApplication extends Application {
   def getHeader(mainLayout: Layout, tabs: TabSheet): Layout = {
 
     val titleLayout = new CssLayout() {
-    	add(new H2("Vaadin Reindeer Theme"))
-    	add(new SmallText("Documentation and Examples of Available Styles")).setSizeUndefined()
+      add(new H2("Vaadin Reindeer Theme"))
+      add(new SmallText("Documentation and Examples of Available Styles")).setSizeUndefined()
     }
-    
-    
 
     val toggles = new HorizontalLayout(spacing = true)
     val bgColor = new Label("Background color")
