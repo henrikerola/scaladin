@@ -3,6 +3,7 @@ package vaadin.scala
 import com.vaadin.terminal.Resource
 import com.vaadin.ui.themes.BaseTheme
 import com.vaadin.ui._
+import scala.xml.Node
 
 class ButtonClickListener(action: com.vaadin.ui.Button#ClickEvent => Unit) extends com.vaadin.ui.Button.ClickListener {
   def buttonClick(event: com.vaadin.ui.Button#ClickEvent) = action(event)
@@ -50,8 +51,8 @@ class Label(content: String = null, width: String = 100 percent, height: String 
   setStyleName(style)
 }
 
-class HtmlLabel(content: String = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, style: String = null)
-  extends Label(width = width, height = height, content = content, property = property, contentMode = com.vaadin.ui.Label.CONTENT_XHTML, style = style)
+class HtmlLabel(content: Node = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, style: String = null)
+  extends Label(width = width, height = height, content = content.toString, property = property, contentMode = com.vaadin.ui.Label.CONTENT_XHTML, style = style)
 
 class TextField(caption: String = null, width: String = null, height: String = null, property: com.vaadin.data.Property = null, value: Any = null, style: String = null, prompt: String = null)
   extends com.vaadin.ui.TextField(caption) {
