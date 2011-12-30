@@ -118,3 +118,16 @@ class CustomLayout(width: String = 100 percent, height: String = null, template:
     component
   }
 }
+
+class AbsoluteLayout(width: String = 100 percent, height: String = 100 percent, caption: String = null, style: String = null)
+  extends com.vaadin.ui.AbsoluteLayout with LayoutClickListener {
+  setWidth(width)
+  setHeight(height)
+  setCaption(caption)
+  setStyleName(style)
+  
+  def add[C <: com.vaadin.ui.Component](component: C, location: String): C = {
+    addComponent(component, location)
+    component
+  }
+}
