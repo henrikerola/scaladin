@@ -5,7 +5,7 @@ import com.github.siasia.WebPlugin._
 object BuildSettings {
   val buildOrganization = "vaadin.scala"
   val buildName = "scala-wrappers"
-  val buildVersion = "0.2.0"
+  val buildVersion = "0.3.0-SNAPSHOT"
   val buildScalaVersion = "2.9.1"
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
