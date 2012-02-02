@@ -2,7 +2,7 @@ Scala-wrappes tries to make easier to use [Vaadin Framework](https://vaadin.com)
 
 ## How to use it?
 
-Take a look at the [wiki](https://github.com/henrikerola/scala-wrappers/wiki/).
+Take a look at the [wiki](https://github.com/henrikerola/scala-wrappers/wiki).
 
 ## Authors
 
