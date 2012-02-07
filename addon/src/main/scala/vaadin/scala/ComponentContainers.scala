@@ -61,6 +61,19 @@ class TabSheet(width: String = 100 percent, height: String = null, caption: Stri
   def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
 }
 
+class Accordion(width: String = 100 percent, height: String = null, caption: String = null, style: String = null) 
+  extends com.vaadin.ui.Accordion() {
+  setCaption(caption)
+  setWidth(width)
+  setHeight(height)
+  setStyleName(style)
+  
+  def addListener(action: com.vaadin.ui.TabSheet#SelectedTabChangeEvent => Unit): Unit = addListener(new SelectedTabChangeListener(action))
+
+  def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
+  
+}
+
 class Panel(caption: String = null, width: String = 100 percent, height: String = null, style: String = null)
   extends com.vaadin.ui.Panel() {
   setCaption(caption)
