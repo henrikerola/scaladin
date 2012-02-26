@@ -14,7 +14,7 @@ object Item {
   }
 
   def getProperties(item: com.vaadin.data.Item) = item.getItemPropertyIds.asScala.map(item.getItemProperty)
-  def getProperties(item: com.vaadin.data.Item, propertyId: Any) = item.getItemPropertyIds.asScala.filter(_ == propertyId).map(item.getItemProperty)
+  //def getProperties(item: com.vaadin.data.Item, propertyId: Any) = item.getItemPropertyIds.asScala.filter(_ == propertyId).map(item.getItemProperty)
 }
 
 object Container {
@@ -115,4 +115,20 @@ class FilterableItemWrap(wrapped: com.vaadin.data.Item) extends ItemWrap(wrapped
 
 class PropertyListWrap(wrapped: List[com.vaadin.data.Property]) {
   def values = wrapped.map(_.getValue)
+}
+
+class FunctionProperty[T](getter: () => T, setter: T => Unit = null) extends com.vaadin.data.Property {
+  def getValue = getter().asInstanceOf[AnyRef]
+  
+  def setValue(value: Any) = {
+	  setter(value.asInstanceOf[T])
+  }
+  
+  def getType = getter.getClass //dirty tricks
+  
+  def isReadOnly = setter != null
+  
+  def setReadOnly(readOnly: Boolean): Unit = {
+    //NOOP
+  }
 }

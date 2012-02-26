@@ -49,11 +49,16 @@ class SelectedTabChangeListener(action: com.vaadin.ui.TabSheet#SelectedTabChange
   def selectedTabChange(event: com.vaadin.ui.TabSheet#SelectedTabChangeEvent) = action(event)
 }
 
-class TabSheet(width: String = 100 percent, height: String = null, caption: String = null, style: String = null)
+class TabSheet(width: String = 100 percent, height: String = null, caption: String = null, style: String = null, size: Tuple2[String, String] = null)
   extends com.vaadin.ui.TabSheet() {
   setCaption(caption)
-  setWidth(width)
-  setHeight(height)
+  if (size != null) {
+    setWidth(size._1)
+    setHeight(size._2)
+  } else {
+    setWidth(width)
+    setHeight(height)
+  }
   setStyleName(style)
 
   def addListener(action: com.vaadin.ui.TabSheet#SelectedTabChangeEvent => Unit): Unit = addListener(new SelectedTabChangeListener(action))

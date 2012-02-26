@@ -36,10 +36,15 @@ class HorizontalLayout(width: String = null, height: String = null, margin: Bool
   setStyleName(style)
 }
 
-class VerticalLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null)
+class VerticalLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, size: Tuple2[String, String] = null)
   extends com.vaadin.ui.VerticalLayout with LayoutClickListener with ParametrizedAddComponentForOrdered {
-  setWidth(width)
-  setHeight(height)
+  if (size != null) {
+    setWidth(size._1)
+    setHeight(size._2)
+  } else {
+    setWidth(width)
+    setHeight(height)
+  }
   setMargin(margin)
   setSpacing(spacing)
   setCaption(caption)
@@ -79,10 +84,15 @@ class GridLayout(width: String = null, height: String = null, margin: Boolean = 
 
 }
 
-class CssLayout(width: String = null, height: String = null, margin: Boolean = false, style: String = null, caption: String = null)
+class CssLayout(width: String = null, height: String = null, margin: Boolean = false, style: String = null, caption: String = null, size: Tuple2[String, String] = null)
   extends com.vaadin.ui.CssLayout with LayoutClickListener {
-  setWidth(width)
-  setHeight(height)
+    if (size != null) {
+    setWidth(size._1)
+    setHeight(size._2)
+  } else {
+    setWidth(width)
+    setHeight(height)
+  }
   setMargin(margin)
   setStyleName(style)
   setCaption(caption)

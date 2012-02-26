@@ -14,59 +14,46 @@ import com.vaadin.data.Property.ValueChangeEvent
 import com.vaadin.ui.Alignment
 import com.vaadin.event.ShortcutAction.KeyCode
 
-class DemoApplication extends Application {
+class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme", theme = "reindeer") {
 
-  val DATE = new Date(2009 - 1900, 6 - 1, 2)
+  val DATE = new Date()
 
   val help = new Window("Help")
 
-  override def init() = {
-    setTheme("reindeer")
-    val mainWindow = new Window(caption = "Vaadin Reindeer Theme")
-    setMainWindow(mainWindow)
+  override def main: com.vaadin.ui.ComponentContainer = {
 
-    val mainView = buildMainView
-    mainView.add(index = 0, component = buildScalaWrappersAd)
-    mainWindow.setContent(mainView)
-  }
+    new VerticalLayout(size = Full) {
+      val tabs = new TabSheet(size = Full)
 
-  def buildMainView(): VerticalLayout = {
-
-    val tabs = new TabSheet(100 percent, 100 percent)
-
-    val margin = new CssLayout(100 percent, 100 percent)
-
-    margin.setMargin(false, true, true, true)
-    margin.add(tabs)
-
-    tabs.addComponent(buildWelcomeScreen)
-    tabs.addComponent(buildLabels)
-    tabs.addComponent(buildButtons)
-    tabs.addComponent(buildTextFields)
-    tabs.addComponent(buildSelects)
-    tabs.addComponent(buildDateFields)
-    tabs.addComponent(buildTabSheets)
-    tabs.addComponent(buildPanels)
-    tabs.addComponent(buildTables)
-    tabs.addComponent(buildWindows(tabs))
-    tabs.addComponent(buildSplitPanels)
-
-    val mainLayout = new VerticalLayout(100 percent, 100 percent) {
+      add(buildScalaWrappersAd)
       add(getTopMenu)
       add(getHeader(this, tabs))
-      add(component = margin, ratio = 1)
-    }
+      add(ratio = 1, component = new CssLayout(size = Full) {
+        setMargin(false, true, true, true)
+        add(tabs)
+      })
 
-    mainLayout
+      tabs.addComponent(buildWelcomeScreen)
+      tabs.addComponent(buildLabels)
+      tabs.addComponent(buildButtons)
+      tabs.addComponent(buildTextFields)
+      tabs.addComponent(buildSelects)
+      tabs.addComponent(buildDateFields)
+      tabs.addComponent(buildTabSheets)
+      tabs.addComponent(buildPanels)
+      tabs.addComponent(buildTables)
+      tabs.addComponent(buildWindows(tabs))
+      tabs.addComponent(buildSplitPanels)
+    }
   }
 
   def buildScalaWrappersAd(): Layout = {
     new VerticalLayout(width = 100 percent, style = Reindeer.LAYOUT_BLACK) {
       add(alignment = Alignment.MIDDLE_CENTER, component = new VerticalLayout(width = 700 px, style = Reindeer.LAYOUT_BLACK, margin = true) {
         add(alignment = Alignment.MIDDLE_CENTER, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
-          content = <span>This demo is implemented completely in <a href="http://www.scala-lang.org">Scala</a>.</span>))
+          content = <span>This demo is implemented completely in <a href="http://www.scala-lang.org">Scala</a>,</span>))
         add(alignment = Alignment.MIDDLE_CENTER, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
-          content = <span>This was made possible by the ScalaWrappers Vaadin addon.</span>))
+          content = <span>with the help of the ScalaWrappers Vaadin addon.</span>))
         add(alignment = Alignment.MIDDLE_CENTER, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
           content = <span>You can find more info about the add-on from the <a href="http://vaadin.com/addon/scala-wrappers">Directory page</a>.</span>))
       })
@@ -379,17 +366,17 @@ class DemoApplication extends Application {
 
     val colors = new HorizontalLayout(100 percent, 250 px)
 
-    val whiteLayout = new CssLayout(100 percent, 100 percent, style = Reindeer.LAYOUT_WHITE, margin = true) {
+    val whiteLayout = new CssLayout(size = Full, style = Reindeer.LAYOUT_WHITE, margin = true) {
       add(new H1("White"))
       add(new HtmlLabel(<span><p><strong><code>Reindeer.LAYOUT_WHITE</code></strong></p><p>Changes the background to white. Has no other effect on contained components, they all behave like on the default gray background.</p></span>))
     }
 
-    val blueLayout = new CssLayout(100 percent, 100 percent, style = Reindeer.LAYOUT_BLUE, margin = true) {
+    val blueLayout = new CssLayout(size = Full, style = Reindeer.LAYOUT_BLUE, margin = true) {
       add(new H1("Blue"))
       add(new HtmlLabel(<span><p><strong><code>Reindeer.LAYOUT_BLUE</code></strong></p><p>Changes the background to a shade of blue. A very few components have any difference here compared to the white style.</p></span>))
     }
 
-    val blackLayout = new CssLayout(100 percent, 100 percent, style = Reindeer.LAYOUT_BLACK, margin = true) {
+    val blackLayout = new CssLayout(size = Full, style = Reindeer.LAYOUT_BLACK, margin = true) {
       add(new H1("Black"))
       add(new HtmlLabel(<span><p><strong><code>Reindeer.LAYOUT_BLACK</code></strong></p><p>Reserved for small parts of the application. Or alternatively, use for the whole application.</p><p><strong>This style is non-overridable</strong>, meaning that everything you place inside it will transform to their corresponding black styles when available, excluding Labels.</p></span>))
     }

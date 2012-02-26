@@ -113,4 +113,18 @@ class ContainerTests extends FunSuite {
     assert("value1" === propertyValues.head)
     assert("value2" === propertyValues.tail.head)
   }
+
+  test("data filter return types") {
+    val property = Property("propertyValue")
+    val item = Item('propertyId1 -> "value1", 'propertyId2 -> "value2")
+    val container = Container('itemId1 -> List('propertyId1 -> "value1", 'propertyId2 -> "value2"), 'itemId2 -> List())
+
+    val itemProperty: com.vaadin.data.Property = item \ 'propertyId1
+    val itemProperties: List[com.vaadin.data.Property] = item filterProperties (_.getValue.asInstanceOf[String].startsWith("value"))
+    val property2: com.vaadin.data.Property = container \ 'itemId1 \ 'propertyId1
+    val containerProperties: List[com.vaadin.data.Property] = container \\ 'propertyId1
+
+    val itemPropertyValues: List[Any] = item filterProperties (_.getValue.asInstanceOf[String].startsWith("value")) values
+    val containerPropertyValues: List[Any] = container \\ 'propertyId1 values
+  }
 }
