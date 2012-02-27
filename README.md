@@ -2,7 +2,7 @@ Scaladin (formerly known as scala-wrappers) tries to make easier to use [Vaadin 
 
 ## How to use it?
 
-Take a look at the [wiki](https://github.com/henrikerola/scala-wrappers/wiki).
+Take a look at the [wiki](https://github.com/henrikerola/scaladin/wiki).
 
 ## Authors
 
@@ -14,4 +14,4 @@ Scaladin is licensed under the [Apache 2.0 License](http://www.apache.org/licens
 
 ## Developing the library
 
-Wiki has a page about [Developing the Library](https://github.com/henrikerola/scala-wrappers/wiki/Developing-the-Library).
+Wiki has a page about [Developing the Library](https://github.com/henrikerola/scaladin/wiki/Developing-the-Library).
