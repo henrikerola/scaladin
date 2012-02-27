@@ -1,4 +1,4 @@
-Scaladin (formerly known as scala-wrappers) tries to make easier to use [Vaadin Framework](https://vaadin.com) with [Scala](http://www.scala-lang.org/) programming language. The JAR file and a Maven dependency can be found from the Vaadin Directory: [http://vaadin.com/addon/scala-wrappers](http://vaadin.com/addon/scala-wrappers)
+Scaladin (formerly known as scala-wrappers) tries to make easier to use [Vaadin Framework](https://vaadin.com) with [Scala](http://www.scala-lang.org/) programming language. The JAR file and a Maven dependency can be found from the [Vaadin Directory](http://vaadin.com/addon/scaladin).
 
 ## How to use it?
 
