@@ -3,7 +3,6 @@ package vaadin.scala
 import com.vaadin.terminal.Resource
 import com.vaadin.ui.themes.BaseTheme
 import com.vaadin.ui._
-import scala.xml.Node
 
 class ButtonClickListener(action: com.vaadin.ui.Button#ClickEvent => Unit) extends com.vaadin.ui.Button.ClickListener {
   def buttonClick(event: com.vaadin.ui.Button#ClickEvent) = action(event)
@@ -41,20 +40,6 @@ class CheckBox(caption: String = null, checked: Boolean = false, immediate: Bool
 
 class Link(caption: String = null, resource: Resource = null, targetName: String = null, width: Int = -1, height: Int = -1, border: Int = com.vaadin.ui.Link.TARGET_BORDER_DEFAULT)
   extends com.vaadin.ui.Link(caption, resource, targetName, width, height, border)
-
-// icon, caption as constructor parameters?
-class Label(content: String = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, contentMode: Int = com.vaadin.ui.Label.CONTENT_DEFAULT, style: String = null)
-  extends com.vaadin.ui.Label {
-  setWidth(width)
-  setHeight(height)
-  if (property != null) setPropertyDataSource(property)
-  if (content != null) setValue(content)
-  setContentMode(contentMode)
-  setStyleName(style)
-}
-
-class HtmlLabel(content: Node = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, style: String = null)
-  extends Label(width = width, height = height, content = if (content != null) content.toString else null, property = property, contentMode = com.vaadin.ui.Label.CONTENT_XHTML, style = style)
 
 class TextField(caption: String = null, width: String = null, height: String = null, property: com.vaadin.data.Property = null, value: Any = null, style: String = null, prompt: String = null)
   extends com.vaadin.ui.TextField(caption) {

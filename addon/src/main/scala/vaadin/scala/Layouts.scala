@@ -1,7 +1,7 @@
 package vaadin.scala
 
 import scala.collection.mutable.Map
-import com.vaadin.ui.{ Alignment, Component }
+import com.vaadin.ui.{ Alignment, Component => VaadinComponent }
 import com.vaadin.event.LayoutEvents.LayoutClickNotifier
 
 trait LayoutClickListener extends LayoutClickNotifier {
@@ -13,7 +13,7 @@ trait LayoutClickListener extends LayoutClickNotifier {
 }
 
 trait ParametrizedAddComponentForOrdered extends com.vaadin.ui.AbstractOrderedLayout {
-  def add[C <: com.vaadin.ui.Component](component: C = null, ratio: Float = -1, alignment: Alignment = null, index: Int = -1): C = {
+  def add[C <: VaadinComponent](component: C = null, ratio: Float = -1, alignment: Alignment = null, index: Int = -1): C = {
     if (index < 0)
       addComponent(component)
     else
@@ -98,7 +98,7 @@ class CssLayout(width: String = null, height: String = null, margin: Boolean = f
   setCaption(caption)
 
   // TODO remove css from map when component is removed from the layout
-  val cssMap = Map[Component, String]()
+  val cssMap = Map[VaadinComponent, String]()
 
   def add[C <: com.vaadin.ui.Component](component: C, css: String = null): C = {
     addComponent(component)
@@ -106,7 +106,7 @@ class CssLayout(width: String = null, height: String = null, margin: Boolean = f
     component
   }
 
-  override def getCss(c: Component): String = {
+  override def getCss(c: VaadinComponent): String = {
     if (cssMap contains c) cssMap(c) else null
   }
 }

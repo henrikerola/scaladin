@@ -2,15 +2,15 @@ package vaadin.scala
 
 import com.vaadin.terminal.Resource
 import com.vaadin.ui.ComponentContainer
-import com.vaadin.ui.Component
+import com.vaadin.ui.{ Component => VaadinComponent }
 import scala.collection.JavaConverters._
 
 trait FilterableComponentContainer extends ComponentContainer {
 
-  def filter(filterFunction: Component => Boolean): List[Component] = getComponentIterator.asScala.filter(filterFunction).toList
+  def filter(filterFunction: VaadinComponent => Boolean): List[VaadinComponent] = getComponentIterator.asScala.filter(filterFunction).toList
 
-  def filterRecursive(filterFunction: Component => Boolean): List[Component] = {
-    var newList: List[Component] = Nil
+  def filterRecursive(filterFunction: VaadinComponent => Boolean): List[VaadinComponent] = {
+    var newList: List[VaadinComponent] = Nil
     for (component <- getComponentIterator.asScala) {
       if (filterFunction(component))
         newList = component :: newList
@@ -37,12 +37,12 @@ class Window(caption: String = null, width: String = null, height: String = null
   setClosable(closable)
   setDraggable(draggable)
 
-  def add[C <: com.vaadin.ui.Component](component: C = null): C = {
+  def add[C <: VaadinComponent](component: C = null): C = {
     addComponent(component)
     component
   }
 
-  def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
+  def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
 }
 
 class SelectedTabChangeListener(action: com.vaadin.ui.TabSheet#SelectedTabChangeEvent => Unit) extends com.vaadin.ui.TabSheet.SelectedTabChangeListener {
@@ -63,20 +63,20 @@ class TabSheet(width: String = 100 percent, height: String = null, caption: Stri
 
   def addListener(action: com.vaadin.ui.TabSheet#SelectedTabChangeEvent => Unit): Unit = addListener(new SelectedTabChangeListener(action))
 
-  def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
+  def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
 }
 
-class Accordion(width: String = 100 percent, height: String = null, caption: String = null, style: String = null) 
+class Accordion(width: String = 100 percent, height: String = null, caption: String = null, style: String = null)
   extends com.vaadin.ui.Accordion() {
   setCaption(caption)
   setWidth(width)
   setHeight(height)
   setStyleName(style)
-  
+
   def addListener(action: com.vaadin.ui.TabSheet#SelectedTabChangeEvent => Unit): Unit = addListener(new SelectedTabChangeListener(action))
 
-  def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
-  
+  def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
+
 }
 
 class Panel(caption: String = null, width: String = 100 percent, height: String = null, style: String = null)
@@ -86,9 +86,9 @@ class Panel(caption: String = null, width: String = 100 percent, height: String 
   setHeight(height)
   setStyleName(style)
 
-  def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
+  def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
 
-  def add[C <: com.vaadin.ui.Component](component: C = null): C = {
+  def add[C <: VaadinComponent](component: C = null): C = {
     addComponent(component)
     component
   }
@@ -101,12 +101,12 @@ class HorizontalSplitPanel(width: String = 100 percent, height: String = 100 per
   setCaption(caption)
   setStyleName(style)
 
-  def add[C <: com.vaadin.ui.Component](component: C = null): C = {
+  def add[C <: VaadinComponent](component: C = null): C = {
     addComponent(component)
     component
   }
 
-  def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
+  def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
 }
 
 class VerticalSplitPanel(width: String = 100 percent, height: String = 100 percent, caption: String = null, style: String = null)
@@ -116,10 +116,10 @@ class VerticalSplitPanel(width: String = 100 percent, height: String = 100 perce
   setCaption(caption)
   setStyleName(style)
 
-  def add[C <: com.vaadin.ui.Component](component: C = null): C = {
+  def add[C <: VaadinComponent](component: C = null): C = {
     addComponent(component)
     component
   }
 
-  def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
+  def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
 }
