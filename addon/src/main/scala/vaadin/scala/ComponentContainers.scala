@@ -1,21 +1,21 @@
 package vaadin.scala
 
 import com.vaadin.terminal.Resource
-import com.vaadin.ui.ComponentContainer
+import com.vaadin.ui.{ ComponentContainer => VaadinComponentContainer }
 import com.vaadin.ui.{ Component => VaadinComponent }
 import scala.collection.JavaConverters._
 
-trait FilterableComponentContainer extends ComponentContainer {
+trait FilterableComponentContainer[C <: ComponentContainer] extends ComponentContainer {
 
-  def filter(filterFunction: VaadinComponent => Boolean): List[VaadinComponent] = getComponentIterator.asScala.filter(filterFunction).toList
+  def filter(filterFunction: VaadinComponent => Boolean): List[VaadinComponent] = p.getComponentIterator.asScala.filter(filterFunction).toList
 
   def filterRecursive(filterFunction: VaadinComponent => Boolean): List[VaadinComponent] = {
     var newList: List[VaadinComponent] = Nil
-    for (component <- getComponentIterator.asScala) {
+    for (component <- p.getComponentIterator.asScala) {
       if (filterFunction(component))
         newList = component :: newList
-      if (component.isInstanceOf[ComponentContainer]) {
-        newList = component.asInstanceOf[FilterableComponentContainer].filterRecursive(filterFunction) ::: newList
+      if (component.isInstanceOf[VaadinComponentContainer]) {
+        newList = component.asInstanceOf[FilterableComponentContainer[_]].filterRecursive(filterFunction) ::: newList
       }
     }
     newList
@@ -26,7 +26,7 @@ class WindowCloseListener(action: com.vaadin.ui.Window#CloseEvent => Unit) exten
   def windowClose(event: com.vaadin.ui.Window#CloseEvent) { action(event) }
 }
 
-class Window(caption: String = null, width: String = null, height: String = null, content: ComponentContainer = null, modal: Boolean = false, icon: Resource = null, style: String = null, resizable: Boolean = true, draggable: Boolean = true, closable: Boolean = true)
+class Window(caption: String = null, width: String = null, height: String = null, content: VaadinComponentContainer = null, modal: Boolean = false, icon: Resource = null, style: String = null, resizable: Boolean = true, draggable: Boolean = true, closable: Boolean = true)
   extends com.vaadin.ui.Window(caption, content) {
   setWidth(width)
   setHeight(height)

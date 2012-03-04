@@ -1,7 +1,7 @@
 package vaadin.scala
 
 import scala.collection.mutable.Map
-import com.vaadin.ui.{ Alignment, Component => VaadinComponent }
+import com.vaadin.ui.{ Alignment => VaadinAlignment, Component => VaadinComponent }
 import com.vaadin.event.LayoutEvents.LayoutClickNotifier
 
 trait LayoutClickListener extends LayoutClickNotifier {
@@ -13,7 +13,7 @@ trait LayoutClickListener extends LayoutClickNotifier {
 }
 
 trait ParametrizedAddComponentForOrdered extends com.vaadin.ui.AbstractOrderedLayout {
-  def add[C <: VaadinComponent](component: C = null, ratio: Float = -1, alignment: Alignment = null, index: Int = -1): C = {
+  def add[C <: VaadinComponent](component: C = null, ratio: Float = -1, alignment: VaadinAlignment = null, index: Int = -1): C = {
     if (index < 0)
       addComponent(component)
     else
@@ -30,21 +30,6 @@ class HorizontalLayout(width: String = null, height: String = null, margin: Bool
   extends com.vaadin.ui.HorizontalLayout with LayoutClickListener with ParametrizedAddComponentForOrdered {
   setWidth(width)
   setHeight(height)
-  setMargin(margin)
-  setSpacing(spacing)
-  setCaption(caption)
-  setStyleName(style)
-}
-
-class VerticalLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, size: Tuple2[String, String] = null)
-  extends com.vaadin.ui.VerticalLayout with LayoutClickListener with ParametrizedAddComponentForOrdered {
-  if (size != null) {
-    setWidth(size._1)
-    setHeight(size._2)
-  } else {
-    setWidth(width)
-    setHeight(height)
-  }
   setMargin(margin)
   setSpacing(spacing)
   setCaption(caption)
@@ -71,7 +56,7 @@ class GridLayout(width: String = null, height: String = null, margin: Boolean = 
   setColumns(columns)
   setRows(rows)
 
-  def add[C <: com.vaadin.ui.Component](component: C = null, col: Int = -1, row: Int = -1, col2: Int = -1, row2: Int = -1, alignment: Alignment = null): C = {
+  def add[C <: com.vaadin.ui.Component](component: C = null, col: Int = -1, row: Int = -1, col2: Int = -1, row2: Int = -1, alignment: VaadinAlignment = null): C = {
     if (col >= 0 && row >= 0)
       addComponent(component, col, row)
     else if (col >= 0 && row >= 0 && col2 >= 0 && row2 >= 0)

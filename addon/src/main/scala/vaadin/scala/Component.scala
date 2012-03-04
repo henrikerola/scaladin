@@ -1,7 +1,7 @@
 package vaadin.scala
 
-trait Component[C <: com.vaadin.ui.Component] {
-  def p: C
+trait Component {
+  def p: com.vaadin.ui.Component
 
   // TODO: style name related methods...
 
@@ -25,20 +25,26 @@ trait Component[C <: com.vaadin.ui.Component] {
   // TODO: ..
 }
 
-trait Sizeable[C <: com.vaadin.ui.Component] extends Component[C] {
+trait Sizeable extends Component {
 
-  //def width(width: UnitExtent) = component.setWidth(width)
+  // TODO: use UnitExtent instead of String?
+  // TODO: width and height getters
+  def width(width: String) = p.setWidth(width)
+  def height(height: String) = p.setHeight(height)
 
   def sizeFull() = p.setSizeFull
   def sizeUndefined() = p.setSizeUndefined
 }
 
-trait AbstractComponent[C <: com.vaadin.ui.AbstractComponent] extends Component[C] with Sizeable[C] {
+trait AbstractComponent extends Component with Sizeable {
+  
+  override def p: com.vaadin.ui.AbstractComponent
+  
   def description = Option(p.getDescription)
   def description_=(description: Option[String]) = p.setDescription(description.getOrElse(null))
   def description_=(description: String) = p.setDescription(description)
 }
 
-trait AbstractField[C <: com.vaadin.ui.AbstractField] extends AbstractComponent[C] {
+trait AbstractField extends AbstractComponent {
 
 }

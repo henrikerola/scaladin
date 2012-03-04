@@ -4,58 +4,58 @@ import org.scalatest.FunSuite
 import vaadin.scala._
 import com.vaadin.terminal.Sizeable
 import com.vaadin.ui.Layout.MarginInfo
-import com.vaadin.ui.Alignment
 
 class LayoutTests extends FunSuite {
 
   test("VerticalLayout, constructor with all params but without names") {
     val layout = new VerticalLayout(10 px, 100 em, true, true, "Caption", "Style")
-    assert(layout.getWidth === 10)
-    assert(layout.getWidthUnits === Sizeable.UNITS_PIXELS)
-    assert(layout.getHeight === 100)
-    assert(layout.getHeightUnits === Sizeable.UNITS_EM)
-    assert(layout.getMargin === new MarginInfo(true, true, true, true))
-    assert(layout.isSpacing === true)
-    assert(layout.getCaption === "Caption")
-    assert(layout.getStyleName === "Style")
+    assert(layout.p.getWidth === 10)
+    assert(layout.p.getWidthUnits === Sizeable.UNITS_PIXELS)
+    assert(layout.p.getHeight === 100)
+    assert(layout.p.getHeightUnits === Sizeable.UNITS_EM)
+    assert(layout.p.getMargin === new MarginInfo(true, true, true, true))
+    assert(layout.p.isSpacing === true)
+    assert(layout.caption.get === "Caption")
+    assert(layout.p.getStyleName === "Style")
 
   }
 
   test("VerticalLayout, default constructor") {
     val layout = new VerticalLayout()
-    assert(layout.getWidth === 100)
-    assert(layout.getWidthUnits === Sizeable.UNITS_PERCENTAGE)
-    assert(layout.getHeight === -1)
-    assert(layout.getHeightUnits === Sizeable.UNITS_PIXELS)
-    assert(layout.getMargin === new MarginInfo(false, false, false, false))
-    assert(layout.isSpacing === false)
-    assert(layout.getCaption === null)
-    assert(layout.getStyleName === "")
+    assert(layout.p.getWidth === 100)
+    assert(layout.p.getWidthUnits === Sizeable.UNITS_PERCENTAGE)
+    assert(layout.p.getHeight === -1)
+    assert(layout.p.getHeightUnits === Sizeable.UNITS_PIXELS)
+    assert(layout.p.getMargin === new MarginInfo(false, false, false, false))
+    assert(layout.p.isSpacing === false)
+    assert(layout.p.getCaption === null)
+    assert(layout.p.getStyleName === "")
   }
   
   test("VerticalLayout, add") {
     val layout = new VerticalLayout
     
-    val button = new Button
-    layout.add(button, 2, Alignment.BOTTOM_CENTER)
+    val label = new Label
+    layout.add(label, 2, Alignment.bottomCenter)
     
-    assert(layout.getComponent(0) === button)
-    assert(layout.getExpandRatio(button) === 2)
-    assert(layout.getComponentAlignment(button) === Alignment.BOTTOM_CENTER)
+    assert(layout.p.getComponent(0) === label.p)
+    assert(layout.p.getExpandRatio(label.p) === 2)
+    assert(layout.alignment(label) === Alignment.bottomCenter)
+    assert(layout.p.getComponentAlignment(label.p) === com.vaadin.ui.Alignment.BOTTOM_CENTER)
 
-    assert(layout.getComponentIndex(button) === 0)
+    assert(layout.p.getComponentIndex(label.p) === 0)
   }
   
   test("VerticalLayout, add with index") {
     val layout = new VerticalLayout
-    layout.add(new Label)
-    layout.add(new Label)
-    layout.add(new Label)
+    layout.add(new Label())
+    layout.add(new Label())
+    layout.add(new Label())
     
     val button = new Button
-    layout.add(button, index = 2)
+    layout.addComponent(button, index = 2)
 
-    assert(layout.getComponentIndex(button) === 2)
+    assert(layout.p.getComponentIndex(button) === 2)
   }
 
 }

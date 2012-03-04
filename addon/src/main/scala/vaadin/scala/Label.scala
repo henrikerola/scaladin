@@ -15,7 +15,7 @@ object Label {
 }
 
 // TODO: implement interfaces
-class Label extends AbstractComponent[com.vaadin.ui.Label] {
+class Label extends AbstractComponent {
 
   override val p = new com.vaadin.ui.Label;
 

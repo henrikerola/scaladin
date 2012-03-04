@@ -104,7 +104,7 @@ class MenuBarCommand(action: com.vaadin.ui.MenuBar#MenuItem => Unit) extends com
   }
 }
 
-class Form(width: String = null, height: String = 100 percent, item: com.vaadin.data.Item = null, layout: Layout = null, fieldFactory: FormFieldFactory = DefaultFieldFactory.get())
+class Form(width: String = null, height: String = 100 percent, item: com.vaadin.data.Item = null, layout: com.vaadin.ui.Layout = null, fieldFactory: FormFieldFactory = DefaultFieldFactory.get())
   extends com.vaadin.ui.Form(layout, fieldFactory) {
   setWidth(width)
   setHeight(height)

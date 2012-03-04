@@ -6,12 +6,11 @@ import com.vaadin.Application
 import com.vaadin.terminal.ExternalResource
 import com.vaadin.ui.themes.Reindeer
 import vaadin.scala._
-import com.vaadin.ui.Layout
 import com.vaadin.ui.themes.Reindeer
 import com.vaadin.ui.themes.BaseTheme
 import com.vaadin.data.Property.ValueChangeListener
 import com.vaadin.data.Property.ValueChangeEvent
-import com.vaadin.ui.Alignment
+import com.vaadin.ui.{ Alignment => VaadinAlignment }
 import com.vaadin.event.ShortcutAction.KeyCode
 
 class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme", theme = "reindeer") {
@@ -25,42 +24,42 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     new VerticalLayout(size = Full) {
       val tabs = new TabSheet(size = Full)
 
-      add(buildScalaWrappersAd)
-      add(getTopMenu)
-      add(getHeader(this, tabs))
-      add(ratio = 1, component = new CssLayout(size = Full) {
+      addComponent(buildScalaWrappersAd)
+      addComponent(getTopMenu)
+      addComponent(getHeader(this, tabs))
+      addComponent(ratio = 1, component = new CssLayout(size = Full) {
         setMargin(false, true, true, true)
         add(tabs)
       })
 
-      tabs.addComponent(buildWelcomeScreen)
+      tabs.addComponent(buildWelcomeScreen.p)
       tabs.addComponent(buildLabels)
       tabs.addComponent(buildButtons)
       tabs.addComponent(buildTextFields)
-      tabs.addComponent(buildSelects)
-      tabs.addComponent(buildDateFields)
-      tabs.addComponent(buildTabSheets)
+      tabs.addComponent(buildSelects.p)
+      tabs.addComponent(buildDateFields.p)
+      //tabs.addComponent(buildTabSheets) // FIXME
       tabs.addComponent(buildPanels)
       tabs.addComponent(buildTables)
       tabs.addComponent(buildWindows(tabs))
       tabs.addComponent(buildSplitPanels)
-    }
+    }.p
   }
 
   def buildScalaWrappersAd(): Layout = {
     new VerticalLayout(width = 100 percent, style = Reindeer.LAYOUT_BLACK) {
-      add(alignment = Alignment.MIDDLE_CENTER, component = new VerticalLayout(width = 700 px, style = Reindeer.LAYOUT_BLACK, margin = true) {
-        add(alignment = Alignment.MIDDLE_CENTER, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
-          content = <span>This demo is implemented completely in <a href="http://www.scala-lang.org">Scala</a>,</span>).p)
-        add(alignment = Alignment.MIDDLE_CENTER, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
-          content = <span>with the help of the ScalaWrappers Vaadin addon.</span>).p)
-        add(alignment = Alignment.MIDDLE_CENTER, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
-          content = <span>You can find more info about the add-on from the <a href="http://vaadin.com/addon/scala-wrappers">Directory page</a>.</span>).p)
+      add(alignment = Alignment.middleCenter, component = new VerticalLayout(width = 700 px, style = Reindeer.LAYOUT_BLACK, margin = true) {
+        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
+          content = <span>This demo is implemented completely in <a href="http://www.scala-lang.org">Scala</a>,</span>))
+        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
+          content = <span>with the help of the ScalaWrappers Vaadin addon.</span>))
+        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
+          content = <span>You can find more info about the add-on from the <a href="http://vaadin.com/addon/scala-wrappers">Directory page</a>.</span>))
       })
     }
   }
 
-  def buildLabels(): Layout = {
+  def buildLabels(): com.vaadin.ui.Layout = {
     new GridLayout(columns = 2, rows = 1, width = 560 px, spacing = true, margin = true, caption = "Labels", style = Reindeer.LAYOUT_WHITE) {
       add(new HtmlLabel(<span>Header Style (<code>Reindeer.LABEL_H1</code>)</span>).p)
       add(new H1("Lorem Ipsum").p)
@@ -76,7 +75,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     }
   }
 
-  def buildButtons(): Layout = {
+  def buildButtons(): com.vaadin.ui.Layout = {
     new GridLayout(columns = 2, rows = 1, caption = "Buttons", margin = true, spacing = true, width = 370 px) {
       setColumnExpandRatio(0, 1)
 
@@ -97,7 +96,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     }
   }
 
-  def buildTextFields(): Layout = {
+  def buildTextFields(): com.vaadin.ui.Layout = {
     new GridLayout(columns = 2, rows = 1, caption = "Text fields", margin = true, spacing = true, width = 400 px, style = Reindeer.LAYOUT_WHITE) {
       setColumnExpandRatio(0, 1)
 
@@ -133,8 +132,8 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
 
     new VerticalLayout(caption = "Selects", margin = true, spacing = true) {
       add(new Label(
-        "Selects don't currently have any additional style names, but here you can see how they behave with the different background colors.").p)
-      add(selectsLayout)
+        "Selects don't currently have any additional style names, but here you can see how they behave with the different background colors."))
+      addComponent(selectsLayout)
     }
   }
 
@@ -148,11 +147,12 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
 
     new VerticalLayout(caption = "Date fields", margin = true, spacing = true) {
       add(new Label(
-        "Date fields don't currently have any additional style names, but here you can see how they behave with the different background colors.").p)
-      add(hl)
+        "Date fields don't currently have any additional style names, but here you can see how they behave with the different background colors."))
+      addComponent(hl)
     }
   }
 
+  /*- FIXME FilterableComponentContainer
   def buildTabSheets(): Layout = {
     val closable = new CheckBox(caption = "Closable tabs", immediate = true)
     val hoverOnly = new CheckBox(caption = "Only on hover", immediate = true, enabled = false, description = "Adds style <code>Reindeer.TABSHEET_HOVER_CLOSABLE</code> to all tabs")
@@ -162,7 +162,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
       add(hoverOnly)
       add(selectedOnly)
     }
-
+    
     val tabSheetLayout = new GridLayout(columns = 2, rows = 1, caption = "Tabs", margin = true, spacing = true, width = 700 px, style = Reindeer.LAYOUT_WHITE) with FilterableComponentContainer {
       setColumnExpandRatio(0, 7)
       setColumnExpandRatio(1, 4)
@@ -217,9 +217,9 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     })
 
     tabSheetLayout
-  }
+  }*/
 
-  def buildPanels(): Layout = {
+  def buildPanels(): com.vaadin.ui.Layout = {
     new GridLayout(columns = 2, rows = 1, caption = "Panels", margin = true, spacing = true, width = 700 px, style = Reindeer.LAYOUT_WHITE) {
       setColumnExpandRatio(0, 2)
       setColumnExpandRatio(1, 5)
@@ -234,7 +234,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     }
   }
 
-  def buildTables(): Layout = {
+  def buildTables(): com.vaadin.ui.Layout = {
     val tableLayout = new GridLayout(columns = 2, rows = 1, caption = "Tables", margin = true, spacing = true, width = 700 px, style = Reindeer.LAYOUT_WHITE)
     tableLayout.setColumnExpandRatio(0, 3)
     tableLayout.setColumnExpandRatio(1, 5)
@@ -279,7 +279,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     tableLayout
   }
 
-  def buildWindows(tabs: TabSheet): Layout = {
+  def buildWindows(tabs: TabSheet): com.vaadin.ui.Layout = {
     val windowLayout = new CssLayout(caption = "Windows")
 
     val normalWindow = new Window(caption = "Normal window", width = 280 px, height = 180 px)
@@ -332,7 +332,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     windowLayout
   }
 
-  def buildSplitPanels(): Layout = {
+  def buildSplitPanels(): com.vaadin.ui.Layout = {
     new GridLayout(columns = 2, rows = 1, caption = "Split panels", margin = true, spacing = true, width = 400 px, style = Reindeer.LAYOUT_WHITE) {
       setColumnExpandRatio(0, 1)
 
@@ -387,7 +387,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
 
     val note = new HtmlLabel(<span><p>Note, that you cannot nest the layout styles infinitely inside each other. After a couple levels, the result will be undefined, due to limitations in CSS (which are in fact caused by Internet Explorer 6).</p></span>)
 
-    l.add(new CssLayout(margin = true, width = 100 percent) {
+    l.addComponent(new CssLayout(margin = true, width = 100 percent) {
       add(new H1("Guide to the Reindeer Theme").p)
       add(new Ruler().p)
       add(texts)
@@ -452,7 +452,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     menubar
   }
 
-  def getHeader(mainLayout: Layout, tabs: TabSheet): Layout = {
+  def getHeader(mainLayout: Layout, tabs: TabSheet): com.vaadin.ui.Layout = {
 
     val titleLayout = new CssLayout() {
       add(new H2("Vaadin Reindeer Theme").p)
@@ -471,7 +471,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     colors.addItem("Blue")
     colors.addItem("Black")
     colors.setImmediate(true)
-    colors.addListener(event => mainLayout.setStyleName(event.getProperty.getValue.toString.toLowerCase))
+    colors.addListener(event => mainLayout.p.setStyleName(event.getProperty.getValue.toString.toLowerCase))
 
     colors.setValue("Blue")
     toggles.addComponent(colors)
@@ -506,15 +506,15 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     val logout = new Button(caption = "Logout", action = _ => openLogoutWindow(), style = Reindeer.BUTTON_SMALL)
 
     val buttons = new HorizontalLayout(spacing = true) {
-      add(component = help, alignment = Alignment.MIDDLE_LEFT)
+      add(component = help, alignment = VaadinAlignment.MIDDLE_LEFT)
       add(logout)
     }
     userLayout.addComponent(buttons)
 
     new HorizontalLayout(width = 100 percent, margin = true, spacing = true) {
       add(titleLayout)
-      add(component = toggles, alignment = Alignment.MIDDLE_LEFT)
-      add(component = userLayout, alignment = Alignment.TOP_RIGHT)
+      add(component = toggles, alignment = VaadinAlignment.MIDDLE_LEFT)
+      add(component = userLayout, alignment = VaadinAlignment.TOP_RIGHT)
     }
   }
 
@@ -539,7 +539,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     val logoutLayout = new VerticalLayout(spacing = true)
 
     val logout = new Window(caption = "Logout", modal = true, style = Reindeer.WINDOW_BLACK, width = 260 px, resizable = false, closable = false, draggable = false)
-    logout.setContent(logoutLayout)
+    logout.setContent(logoutLayout.p)
     logout.setCloseShortcut(KeyCode.ESCAPE)
 
     logout.addComponent(new HtmlLabel(<span>Are you sure you want to log out? You will be redirected to vaadin.com.</span>).p)
@@ -550,7 +550,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     }
     buttons.yes.focus()
 
-    logoutLayout.add(component = buttons, alignment = Alignment.TOP_CENTER)
+    logoutLayout.addComponent(component = buttons, alignment = Alignment.topCenter)
 
     getMainWindow.addWindow(logout)
   }

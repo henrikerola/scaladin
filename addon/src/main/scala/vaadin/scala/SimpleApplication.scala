@@ -11,7 +11,7 @@ abstract class SimpleApplication(title: String = "", theme: String = com.vaadin.
     mainWindow.setContent(main)
   }
 
-  def main: com.vaadin.ui.ComponentContainer = new VerticalLayout(margin = true) { add(new Label("Replace me").p) }
+  def main: com.vaadin.ui.ComponentContainer = new VerticalLayout(margin = true) { add(new Label("Replace me")) }.p
   
   def main(windowName: String) :com.vaadin.ui.ComponentContainer = main
   
