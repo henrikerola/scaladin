@@ -24,6 +24,7 @@ class ComboBox(caption: String = null, width: String = null, height: String = nu
   setWidth(width)
   setHeight(height)
   if (dataSource != null) setContainerDataSource(dataSource)
+  if (value != null) setValue(value)
   setStyleName(style)
   setInputPrompt(prompt)
   setNullSelectionAllowed(nullSelectionAllowed)
