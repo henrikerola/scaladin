@@ -12,28 +12,18 @@ trait LayoutClickListener extends LayoutClickNotifier {
   }
 }
 
-trait ParametrizedAddComponentForOrdered extends com.vaadin.ui.AbstractOrderedLayout {
-  def add[C <: VaadinComponent](component: C = null, ratio: Float = -1, alignment: VaadinAlignment = null, index: Int = -1): C = {
-    if (index < 0)
-      addComponent(component)
-    else
-      addComponent(component, index)
-
-    if (alignment != null) setComponentAlignment(component, alignment)
-    if (ratio >= 0) setExpandRatio(component, ratio)
-
-    component
-  }
-}
-
 class HorizontalLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null)
-  extends com.vaadin.ui.HorizontalLayout with LayoutClickListener with ParametrizedAddComponentForOrdered {
-  setWidth(width)
-  setHeight(height)
-  setMargin(margin)
-  setSpacing(spacing)
-  setCaption(caption)
-  setStyleName(style)
+  extends AbstractOrderedLayout /*with LayoutClickListener*/ {
+  
+  override val p = new com.vaadin.ui.HorizontalLayout
+  WrapperRegistry.put(this)
+  
+  p.setWidth(width)
+  p.setHeight(height)
+  p.setMargin(margin)
+  p.setSpacing(spacing)
+  p.setCaption(caption)
+  p.setStyleName(style)
 }
 
 // TODO com.vaadin.ui.FormLayout calls setMargin(true, false, true, false) in constructor
@@ -70,30 +60,42 @@ class GridLayout(width: String = null, height: String = null, margin: Boolean = 
 }
 
 class CssLayout(width: String = null, height: String = null, margin: Boolean = false, style: String = null, caption: String = null, size: Tuple2[String, String] = null)
-  extends com.vaadin.ui.CssLayout with LayoutClickListener {
-    if (size != null) {
-    setWidth(size._1)
-    setHeight(size._2)
-  } else {
-    setWidth(width)
-    setHeight(height)
+  extends AbstractLayout /*with LayoutClickListener*/ {
+
+  override val p = new com.vaadin.ui.CssLayout {
+    override def getCss(c: VaadinComponent): String = {
+      cssMap.getOrElse(c, null)
+    }
   }
-  setMargin(margin)
-  setStyleName(style)
-  setCaption(caption)
+  WrapperRegistry.put(this)
+
+  if (size != null) {
+    p.setWidth(size._1)
+    p.setHeight(size._2)
+  } else {
+    p.setWidth(width)
+    p.setHeight(height)
+  }
+  p.setMargin(margin)
+  p.setStyleName(style)
+  p.setCaption(caption)
 
   // TODO remove css from map when component is removed from the layout
   val cssMap = Map[VaadinComponent, String]()
 
-  def add[C <: com.vaadin.ui.Component](component: C, css: String = null): C = {
+  def add[C <: Component](component: C, css: String = null): C = {
     addComponent(component)
-    if (css != null) cssMap(component) = css
+    if (css != null) cssMap(component.p) = css
     component
   }
 
-  override def getCss(c: VaadinComponent): String = {
-    if (cssMap contains c) cssMap(c) else null
-  }
+  // TODO: addComponentAsFirst?
+  // TODO: listeners
+  
+  // TODO:
+  //  def css(c: Component): String = {
+  //	  p.getCss(c.p)
+  //  }
 }
 
 class CustomLayout(width: String = 100 percent, height: String = null, template: String = null, contents: String = null, caption: String = null, style: String = null)
@@ -120,7 +122,7 @@ class AbsoluteLayout(width: String = 100 percent, height: String = 100 percent, 
   setHeight(height)
   setCaption(caption)
   setStyleName(style)
-  
+
   def add[C <: com.vaadin.ui.Component](component: C, location: String): C = {
     addComponent(component, location)
     component

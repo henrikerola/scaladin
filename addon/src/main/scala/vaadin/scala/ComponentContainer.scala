@@ -31,7 +31,7 @@ trait ComponentContainer extends Component {
     p.moveComponentsFrom(source.p)
   }
 
-  def components(): mutable.Set[Component] = new mutable.Set[Component] {
+  def components: mutable.Set[Component] = new mutable.Set[Component] {
     import scala.collection.JavaConversions.asScalaIterator
     def contains(key: Component) = {
       p.getComponentIterator.contains(key.p)
