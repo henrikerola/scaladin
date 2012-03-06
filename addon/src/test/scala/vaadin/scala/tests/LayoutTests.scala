@@ -14,7 +14,7 @@ class LayoutTests extends FunSuite {
     assert(layout.p.getHeight === 100)
     assert(layout.p.getHeightUnits === Sizeable.UNITS_EM)
     assert(layout.p.getMargin === new MarginInfo(true, true, true, true))
-    assert(layout.p.isSpacing === true)
+    assert(layout.spacing === true)
     assert(layout.caption.get === "Caption")
     assert(layout.p.getStyleName === "Style")
 
@@ -27,8 +27,8 @@ class LayoutTests extends FunSuite {
     assert(layout.p.getHeight === -1)
     assert(layout.p.getHeightUnits === Sizeable.UNITS_PIXELS)
     assert(layout.p.getMargin === new MarginInfo(false, false, false, false))
-    assert(layout.p.isSpacing === false)
-    assert(layout.p.getCaption === null)
+    assert(layout.spacing === false)
+    assert(layout.caption === None)
     assert(layout.p.getStyleName === "")
   }
   

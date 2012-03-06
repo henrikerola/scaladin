@@ -18,6 +18,7 @@ object Label {
 class Label extends AbstractComponent {
 
   override val p = new com.vaadin.ui.Label;
+  WrapperRegistry.put(this)
 
   // icon, caption as constructor parameters?
   def this(content: String = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, contentMode: Label.ContentMode.Value = Label.ContentMode(com.vaadin.ui.Label.CONTENT_DEFAULT), style: String = null) = {

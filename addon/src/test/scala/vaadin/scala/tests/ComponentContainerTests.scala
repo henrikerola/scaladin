@@ -4,6 +4,38 @@ import vaadin.scala._
 import com.vaadin.terminal.Sizeable
 
 class ComponentContainerTests extends FunSuite {
+  
+  test("ComponentContainer.components.contains returns true for added Component") {
+    val layout = new VerticalLayout
+    
+    val label = new Label
+    layout.components += label
+    
+    assert(layout.components.contains(label))
+  }
+  
+  test("ComponentContainer.components.contains return false for non-added Component") {
+    val layout = new VerticalLayout
+    
+    layout.components += new Label
+    
+    assert(!layout.components.contains(new Label))
+  }
+  
+  test("ComponentContainer.components.iterator returns added components") {
+    val layout = new VerticalLayout
+
+    val label1 = new Label
+    layout.components += label1
+    val label2 = new Label
+    layout add label2
+    
+    
+    val iter = layout.components.iterator
+    assert(iter.next() == label1)
+    assert(iter.next() == label2)
+    assert(!iter.hasNext)
+  }
 
   test("filtering empty component container returns empty list") {
     val layout = new VerticalLayout with FilterableComponentContainer[VerticalLayout]
