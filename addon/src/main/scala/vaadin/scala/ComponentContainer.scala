@@ -1,6 +1,7 @@
 package vaadin.scala
 
 import scala.collection.mutable
+import com.vaadin.ui.Layout.MarginHandler
 
 trait ComponentContainer extends Component {
 
@@ -53,12 +54,21 @@ trait AbstractComponentContainer extends AbstractComponent with ComponentContain
 }
 
 trait Layout extends ComponentContainer {
-  // TODO
+
+  override def p: com.vaadin.ui.Layout
+
+  def margin_=(margin: Boolean) = p.setMargin(margin)
+  def margin_=(margin: (Boolean, Boolean, Boolean, Boolean)) = p.setMargin(margin._1, margin._2, margin._3, margin._4)
+
 }
 
-// TODO implement MarginHandler
 trait AbstractLayout extends AbstractComponentContainer with Layout {
+  override def p: com.vaadin.ui.AbstractLayout
 
+  def margin: (Boolean, Boolean, Boolean, Boolean) = {
+    val margin = p.getMargin()
+    (margin.hasTop, margin.hasRight, margin.hasBottom, margin.hasLeft)
+  }
 }
 
 trait SpacingHandler {
