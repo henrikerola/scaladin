@@ -57,5 +57,62 @@ class LayoutTests extends FunSuite {
 
     assert(layout.p.getComponentIndex(button) === 2)
   }
+  
+   test("HorizontalLayout, constructor with all params but without names") {
+    val layout = new HorizontalLayout(10 px, 100 em, true, true, "Caption", "Style")
+    assert(layout.getWidth === 10)
+    assert(layout.getWidthUnits === Sizeable.UNITS_PIXELS)
+    assert(layout.getHeight === 100)
+    assert(layout.getHeightUnits === Sizeable.UNITS_EM)
+    assert(layout.getMargin === new MarginInfo(true, true, true, true))
+    assert(layout.isSpacing === true)
+    assert(layout.getCaption === "Caption")
+    assert(layout.getStyleName === "Style")
+
+  }
+
+  test("HorizontalLayout, default constructor") {
+    val layout = new HorizontalLayout()
+    assert(layout.getWidth === -1)
+    assert(layout.getWidthUnits === Sizeable.UNITS_PIXELS)
+    assert(layout.getHeight === -1)
+    assert(layout.getHeightUnits === Sizeable.UNITS_PIXELS)
+    assert(layout.getMargin === new MarginInfo(false, false, false, false))
+    assert(layout.isSpacing === false)
+    assert(layout.getCaption === null)
+    assert(layout.getStyleName === "")
+  }
+  
+  test("CssLayout, constructor with all params but without names") {
+    val layout = new CssLayout(10 px, 100 em, true, "Style", "Caption")
+    assert(layout.getWidth === 10)
+    assert(layout.getWidthUnits === Sizeable.UNITS_PIXELS)
+    assert(layout.getHeight === 100)
+    assert(layout.getHeightUnits === Sizeable.UNITS_EM)
+    assert(layout.getMargin === new MarginInfo(true, true, true, true))
+    assert(layout.getCaption === "Caption")
+    assert(layout.getStyleName === "Style")
+  }
+  
+  test("CssLayout, default constructor") {
+    val layout = new CssLayout()
+    assert(layout.getWidth === -1)
+    assert(layout.getWidthUnits === Sizeable.UNITS_PIXELS)
+    assert(layout.getHeight === -1)
+    assert(layout.getHeightUnits === Sizeable.UNITS_PIXELS)
+    assert(layout.getMargin === new MarginInfo(false, false, false, false))
+    assert(layout.getCaption === null)
+    assert(layout.getStyleName === "")
+  }
+  
+  test("CssLayout, add") {
+    val layout = new CssLayout()
+    val label = new Label
+    layout.add(label, "my invalid css")
+    assert(layout.getComponentIterator().next() === label)
+    assert(layout.getCss(label) === "my invalid css")
+  }
+  
+  
 
 }
