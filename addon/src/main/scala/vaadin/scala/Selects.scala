@@ -10,6 +10,14 @@ class PropertyValueChangeListener(action: com.vaadin.data.Property.ValueChangeEv
   override def valueChange(event: com.vaadin.data.Property.ValueChangeEvent) = action(event)
 }
 
+trait AbstractSelect extends AbstractField {
+  
+}
+
+trait Select extends AbstractSelect {
+  
+}
+
 class NativeSelect(caption: String = null, width: String = null, height: String = null, value: Any = null, style: String = null, nullSelectionAllowed: Boolean = true)
   extends com.vaadin.ui.NativeSelect(caption) with ValueChangeFunction {
   setWidth(width)
@@ -20,14 +28,27 @@ class NativeSelect(caption: String = null, width: String = null, height: String 
 }
 
 class ComboBox(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)
-  extends com.vaadin.ui.ComboBox(caption) with ValueChangeFunction {
-  setWidth(width)
-  setHeight(height)
-  if (dataSource != null) setContainerDataSource(dataSource)
-  if (value != null) setValue(value)
-  setStyleName(style)
-  setInputPrompt(prompt)
-  setNullSelectionAllowed(nullSelectionAllowed)
+  extends Select /*with ValueChangeFunction*/ {
+  
+  override val p = new com.vaadin.ui.ComboBox(caption);
+  WrapperRegistry.put(this)
+  
+  p.setWidth(width)
+  p.setHeight(height)
+  if (dataSource != null) p.setContainerDataSource(dataSource)
+  if (value != null) p.setValue(value)
+  p.setStyleName(style)
+  p.setInputPrompt(prompt)
+  p.setNullSelectionAllowed(nullSelectionAllowed)
+  
+  
+  // TODO: Is there difference between null and "" so we could return "" when input prompt is null and avoid Option?
+  def inputPrompt: Option[String] = Option(p.getInputPrompt)
+  def inputPrompt_=(inputPrompt: Option[String]) = p.setInputPrompt(inputPrompt.getOrElse(null))
+  def inputPrompt_=(inputPrompt: String) = p.setInputPrompt(inputPrompt)
+  
+  def textInputAllowed = p.isTextInputAllowed()
+  def textInputAllowed_=(textInputAllowed: Boolean) = p.setTextInputAllowed(textInputAllowed)
 }
 
 class ListSelect(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, nullSelectionAllowed: Boolean = true)

@@ -117,14 +117,14 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
   def buildSelects(): Layout = {
     val selectsLayout = new HorizontalLayout(spacing = true) {
       margin = (true, false, false, false)
-      val comboBox = addComponent(new ComboBox())
+      val comboBox = add(new ComboBox())
       val nativeSelect = addComponent(new NativeSelect())
       val listSelect = addComponent(new ListSelect())
       val twinColSelect = addComponent(new TwinColSelect())
     }
 
     for (i <- 0 until 25) {
-      selectsLayout.comboBox.addItem("Item " + i)
+      selectsLayout.comboBox.p.addItem("Item " + i)
       selectsLayout.nativeSelect.addItem("Item " + i)
       selectsLayout.listSelect.addItem("Item " + i)
       selectsLayout.twinColSelect.addItem("Item " + i)
