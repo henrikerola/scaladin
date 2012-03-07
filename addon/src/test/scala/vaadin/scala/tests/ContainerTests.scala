@@ -9,7 +9,7 @@ import scala.collection.JavaConversions._
 import com.vaadin.data.util.IndexedContainer
 
 class ContainerTests extends FunSuite {
-
+  
   test("property creation with a string") {
     val result = Property("foobar")
     assert(classOf[String] === result.getType)

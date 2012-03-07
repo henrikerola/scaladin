@@ -1,6 +1,5 @@
 package vaadin.scala
 
-import com.vaadin.terminal.Resource
 import com.vaadin.ui.{ ComponentContainer => VaadinComponentContainer }
 import com.vaadin.ui.{ Component => VaadinComponent }
 import scala.collection.JavaConverters._
@@ -31,7 +30,7 @@ class Window(caption: String = null, width: String = null, height: String = null
   setWidth(width)
   setHeight(height)
   setModal(modal)
-  setIcon(icon)
+  if (icon == null) setIcon(null) else setIcon(icon.p)
   setStyleName(style)
   setResizable(resizable)
   setClosable(closable)

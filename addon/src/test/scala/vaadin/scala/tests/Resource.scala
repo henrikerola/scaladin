@@ -1,7 +1,7 @@
 package vaadin.scala.tests
 
 import org.scalatest.FunSuite
-import vaadin.scala.terminal._
+import vaadin.scala._
 
 class Resource extends FunSuite {
   

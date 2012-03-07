@@ -1,6 +1,6 @@
-package vaadin.scala.terminal
+package vaadin.scala
 
-trait Resource {
+trait Resource extends Wrapper {
   
   def p: com.vaadin.terminal.Resource
   

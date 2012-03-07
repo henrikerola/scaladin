@@ -1,6 +1,5 @@
 package vaadin.scala
 
-import com.vaadin.terminal.Resource
 import com.vaadin.ui.themes.BaseTheme
 import com.vaadin.ui._
 
@@ -10,7 +9,7 @@ class ButtonClickListener(action: com.vaadin.ui.Button#ClickEvent => Unit) exten
 
 class Button(caption: String = null, action: com.vaadin.ui.Button#ClickEvent => Unit = null, icon: Resource = null, style: String = null, enabled: Boolean = true)
   extends com.vaadin.ui.Button(caption) {
-  setIcon(icon)
+  if (icon == null) setIcon(null) else setIcon(icon.p)
   setStyleName(style)
   setEnabled(enabled)
 
@@ -28,7 +27,7 @@ class LinkButton(caption: String = null, action: com.vaadin.ui.Button#ClickEvent
 class CheckBox(caption: String = null, checked: Boolean = false, immediate: Boolean = false, action: com.vaadin.ui.Button#ClickEvent => Unit = null, icon: Resource = null, style: String = null, enabled: Boolean = true, description: String = null)
   extends com.vaadin.ui.CheckBox(caption, checked) {
   setImmediate(immediate)
-  setIcon(icon)
+  if (icon == null) setIcon(null) else setIcon(icon.p)
   setStyleName(style)
   setEnabled(enabled)
   setDescription(description)
@@ -39,7 +38,7 @@ class CheckBox(caption: String = null, checked: Boolean = false, immediate: Bool
 }
 
 class Link(caption: String = null, resource: Resource = null, targetName: String = null, width: Int = -1, height: Int = -1, border: Int = com.vaadin.ui.Link.TARGET_BORDER_DEFAULT)
-  extends com.vaadin.ui.Link(caption, resource, targetName, width, height, border)
+  extends com.vaadin.ui.Link(caption, if (resource == null) null else resource.p , targetName, width, height, border)
 
 class TextField(caption: String = null, width: String = null, height: String = null, property: com.vaadin.data.Property = null, value: Any = null, style: String = null, prompt: String = null)
   extends com.vaadin.ui.TextField(caption) {
@@ -115,7 +114,7 @@ class Embedded(caption: String = null, width: String = null, height: String = nu
   extends com.vaadin.ui.Embedded(caption) {
   setWidth(width)
   setHeight(height)
-  if (source != null) setSource(source)
+  if (source != null) setSource(source.p)
   setType(objectType)
   setStyleName(style)
 }
