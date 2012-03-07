@@ -53,21 +53,24 @@ trait AbstractComponentContainer extends AbstractComponent with ComponentContain
 
 }
 
+case class Margin(top: Boolean = false, right: Boolean = false, bottom: Boolean = false, left: Boolean = false)
+
 trait Layout extends ComponentContainer {
 
   override def p: com.vaadin.ui.Layout
 
   def margin_=(margin: Boolean) = p.setMargin(margin)
-  def margin_=(margin: (Boolean, Boolean, Boolean, Boolean)) = p.setMargin(margin._1, margin._2, margin._3, margin._4)
+  def margin_=(margin: Margin) = p.setMargin(margin.top, margin.right, margin.bottom, margin.left)
+  def margin(top: Boolean = false, right: Boolean = false, bottom: Boolean = false, left: Boolean = false) = p.setMargin(top, right, bottom, left)
 
 }
 
 trait AbstractLayout extends AbstractComponentContainer with Layout {
   override def p: com.vaadin.ui.AbstractLayout
 
-  def margin: (Boolean, Boolean, Boolean, Boolean) = {
+  def margin: Margin = {
     val margin = p.getMargin()
-    (margin.hasTop, margin.hasRight, margin.hasBottom, margin.hasLeft)
+    Margin(margin.hasTop, margin.hasRight, margin.hasBottom, margin.hasLeft)
   }
 }
 

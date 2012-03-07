@@ -3,7 +3,6 @@ package vaadin.scala.tests
 import org.scalatest.FunSuite
 import vaadin.scala._
 import com.vaadin.terminal.Sizeable
-import com.vaadin.ui.Layout.MarginInfo
 
 class LayoutTests extends FunSuite {
 
@@ -13,7 +12,7 @@ class LayoutTests extends FunSuite {
     assert(layout.p.getWidthUnits === Sizeable.UNITS_PIXELS)
     assert(layout.p.getHeight === 100)
     assert(layout.p.getHeightUnits === Sizeable.UNITS_EM)
-    assert(layout.margin === (true, true, true, true))
+    assert(layout.margin === Margin(true, true, true, true))
     assert(layout.spacing === true)
     assert(layout.caption.get === "Caption")
     assert(layout.p.getStyleName === "Style")
@@ -26,7 +25,7 @@ class LayoutTests extends FunSuite {
     assert(layout.p.getWidthUnits === Sizeable.UNITS_PERCENTAGE)
     assert(layout.p.getHeight === -1)
     assert(layout.p.getHeightUnits === Sizeable.UNITS_PIXELS)
-    assert(layout.margin === (false, false, false, false))
+    assert(layout.margin === Margin(false, false, false, false))
     assert(layout.spacing === false)
     assert(layout.caption === None)
     assert(layout.p.getStyleName === "")
@@ -64,7 +63,7 @@ class LayoutTests extends FunSuite {
     assert(layout.p.getWidthUnits === Sizeable.UNITS_PIXELS)
     assert(layout.p.getHeight === 100)
     assert(layout.p.getHeightUnits === Sizeable.UNITS_EM)
-    assert(layout.margin === (true, true, true, true))
+    assert(layout.margin === Margin(true, true, true, true))
     assert(layout.spacing === true)
     assert(layout.caption.get === "Caption")
     assert(layout.p.getStyleName === "Style")
@@ -77,7 +76,7 @@ class LayoutTests extends FunSuite {
     assert(layout.p.getWidthUnits === Sizeable.UNITS_PIXELS)
     assert(layout.p.getHeight === -1)
     assert(layout.p.getHeightUnits === Sizeable.UNITS_PIXELS)
-    assert(layout.margin === (false, false, false, false))
+    assert(layout.margin === Margin(false, false, false, false))
     assert(layout.spacing === false)
     assert(layout.caption === None)
     assert(layout.p.getStyleName === "")
@@ -89,7 +88,7 @@ class LayoutTests extends FunSuite {
     assert(layout.p.getWidthUnits === Sizeable.UNITS_PIXELS)
     assert(layout.p.getHeight === 100)
     assert(layout.p.getHeightUnits === Sizeable.UNITS_EM)
-    assert(layout.margin === (true, true, true, true))
+    assert(layout.margin === Margin(true, true, true, true))
     assert(layout.caption.get === "Caption")
     assert(layout.p.getStyleName === "Style")
   }
@@ -100,7 +99,7 @@ class LayoutTests extends FunSuite {
     assert(layout.p.getWidthUnits === Sizeable.UNITS_PIXELS)
     assert(layout.p.getHeight === -1)
     assert(layout.p.getHeightUnits === Sizeable.UNITS_PIXELS)
-    assert(layout.margin === (false, false, false, false))
+    assert(layout.margin === Margin(false, false, false, false))
     assert(layout.caption === None)
     assert(layout.p.getStyleName === "")
   }

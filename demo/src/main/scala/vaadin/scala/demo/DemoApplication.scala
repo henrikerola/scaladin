@@ -28,7 +28,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
       addComponent(getTopMenu)
       addComponent(getHeader(this, tabs))
       add(ratio = 1, component = new CssLayout(size = Full) {
-        margin = (false, true, true, true)
+        margin(false, true, true, true)
         p.addComponent(tabs)
       })
 
@@ -116,7 +116,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
 
   def buildSelects(): Layout = {
     val selectsLayout = new HorizontalLayout(spacing = true) {
-      margin = (true, false, false, false)
+      margin(top = true)
       val comboBox = add(new ComboBox())
       val nativeSelect = addComponent(new NativeSelect())
       val listSelect = addComponent(new ListSelect())
@@ -139,7 +139,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
 
   def buildDateFields(): Layout = {
     val hl = new HorizontalLayout(spacing = true) {
-      margin = (true, false, false, false)
+      margin(top = true)
       addComponent(new PopupDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_MIN))
       addComponent(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_DAY))
       addComponent(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_YEAR))
@@ -353,7 +353,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     val welcomeText3 = <span><h4>The Names of The Styles</h4><p>Look for a class named <code>Reindeer</code> inside the Vaadin JAR (<code>com.vaadin.ui.themes.Reindeer</code>). All the available style names are documented and available there as constants, prefixed by component names, e.g. <code>Reindeer.BUTTON_SMALL</code>.</p></span>
 
     val texts = new HorizontalLayout(spacing = true, width = 100 percent) {
-      margin = (false, false, true, false)
+      margin = Margin(bottom = true)
       add(new HtmlLabel(welcomeText1), 1)
       add(new Spacer())
       add(new HtmlLabel(welcomeText2), 1)
