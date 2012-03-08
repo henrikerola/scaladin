@@ -33,6 +33,12 @@ trait Component extends Wrapper {
   def icon: Option[Resource] = if (p.getIcon == null) None else Option(WrapperRegistry.get[Resource](p.getIcon))
   def icon_=(icon: Option[Resource]) = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
   def icon_=(icon: Resource) = if (icon == null) p.setIcon(null) else p.setIcon(icon.p)
+  
+  // TODO return wrapped window and use Option?
+  def window = p.getWindow()
+  
+  //TODO return wrapped application and use Option?
+  def application = p.getApplication()
 
   override def toString = p.toString
 
@@ -60,5 +66,9 @@ trait AbstractComponent extends Component with Sizeable {
 }
 
 trait AbstractField extends AbstractComponent {
+  
+  override def p: com.vaadin.ui.AbstractField
+  
+  def focus() = p.focus()
 
 }

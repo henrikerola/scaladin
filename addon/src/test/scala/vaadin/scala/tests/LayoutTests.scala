@@ -52,9 +52,9 @@ class LayoutTests extends FunSuite {
     layout.add(new Label())
 
     val button = new Button
-    layout.addComponent(button, index = 2)
+    layout.add(button, index = 2)
 
-    assert(layout.p.getComponentIndex(button) === 2)
+    assert(layout.p.getComponentIndex(button.p) === 2)
   }
 
   test("HorizontalLayout, constructor with all params but without names") {

@@ -80,19 +80,19 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
       setColumnExpandRatio(0, 1)
 
       add(new HtmlLabel(<span>"Default" Style (<code>Reindeer.BUTTON_DEFAULT</code>)</span>).p)
-      add(new Button(caption = "Default Button", style = Reindeer.BUTTON_DEFAULT))
+      add(new Button(caption = "Default Button", style = Reindeer.BUTTON_DEFAULT).p)
 
       add(new HtmlLabel(<span>Normal Button</span>).p)
-      add(new Button("Normal Button"))
+      add(new Button("Normal Button").p)
 
       add(new HtmlLabel(<span>Disabled Button (<code>Button.setEnabled(false)</code>)</span>).p)
-      add(new Button("Disabled Button", enabled = false))
+      add(new Button("Disabled Button", enabled = false).p)
 
       add(new HtmlLabel(<span>Small Style (<code>Reindeer.BUTTON_SMALL</code>)</span>).p)
-      add(new Button(caption = "Small Button", style = Reindeer.BUTTON_SMALL))
+      add(new Button(caption = "Small Button", style = Reindeer.BUTTON_SMALL).p)
 
       add(new HtmlLabel(<span>Link Style (<code>Reindeer.BUTTON_LINK</code>)</span>).p)
-      add(new Button(caption = "Link Button", style = BaseTheme.BUTTON_LINK)) //no way to access inherited static members in Scala
+      add(new Button(caption = "Link Button", style = BaseTheme.BUTTON_LINK).p) //no way to access inherited static members in Scala
     }
   }
 
@@ -506,8 +506,8 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     val logout = new Button(caption = "Logout", action = _ => openLogoutWindow(), style = Reindeer.BUTTON_SMALL)
 
     val buttons = new HorizontalLayout(spacing = true) {
-      addComponent(component = help, alignment = Alignment.middleLeft)
-      addComponent(logout)
+      add(component = help, alignment = Alignment.middleLeft)
+      add(logout)
     }
     userLayout.addComponent(buttons)
 
@@ -545,8 +545,8 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     logout.addComponent(new HtmlLabel(<span>Are you sure you want to log out? You will be redirected to vaadin.com.</span>).p)
 
     val buttons = new HorizontalLayout(spacing = true) {
-      val yes = addComponent(new Button(caption = "Logout", style = Reindeer.BUTTON_DEFAULT, action = _ => getMainWindow.open(new ExternalResource("http://vaadin.com"))))
-      val no = addComponent(new Button("Cancel", action = event => getMainWindow.removeWindow(event.getButton.getWindow)))
+      val yes = add(new Button(caption = "Logout", style = Reindeer.BUTTON_DEFAULT, action = _ => getMainWindow.open(new ExternalResource("http://vaadin.com"))))
+      val no = add(new Button("Cancel", action = event => getMainWindow.removeWindow(event.button.window)))
     }
     buttons.yes.focus()
 
