@@ -6,10 +6,10 @@ import com.vaadin.terminal.Sizeable
 import com.vaadin.terminal.ExternalResource
 
 class ComponentTests extends FunSuite {
-  
+
   test("Link, constructor with all params but without names") {
     val resource = new ExternalResource("http://www.example.com")
-    
+
     val link = new Link("Caption", resource, "targetname", 200, 300, com.vaadin.ui.Link.TARGET_BORDER_NONE)
     assert(link.getCaption === "Caption")
     assert(link.getResource === resource)
@@ -18,7 +18,7 @@ class ComponentTests extends FunSuite {
     assert(link.getTargetHeight === 300)
     assert(link.getTargetBorder === com.vaadin.ui.Link.TARGET_BORDER_NONE)
   }
-  
+
   test("Link, default constructor") {
     val link = new Link
     assert(link.getCaption === null)
@@ -28,7 +28,7 @@ class ComponentTests extends FunSuite {
     assert(link.getTargetHeight === -1)
     assert(link.getTargetBorder === com.vaadin.ui.Link.TARGET_BORDER_DEFAULT)
   }
-  
+
   test("Label, constructor with all params but without names") {
     val property = Property("Test");
     val label = new Label("Content", 10 px, 100 em, property, com.vaadin.ui.Label.CONTENT_PREFORMATTED, "Style")
@@ -41,7 +41,7 @@ class ComponentTests extends FunSuite {
     assert(label.getContentMode == com.vaadin.ui.Label.CONTENT_PREFORMATTED)
     assert(label.getStyleName == "Style")
   }
-  
+
   test("Label, default constructor") {
     val label = new Label
     assert(label.getValue == "")
@@ -53,7 +53,7 @@ class ComponentTests extends FunSuite {
     assert(label.getContentMode == com.vaadin.ui.Label.CONTENT_DEFAULT)
     assert(label.getStyleName == "")
   }
-  
+
   test("HtmlLabel, constructor with all params but without names") {
     val property = Property("Test");
     val label = new HtmlLabel(<span>Content</span>, 10 px, 100 em, property, "Style")
@@ -66,7 +66,7 @@ class ComponentTests extends FunSuite {
     assert(label.getContentMode == com.vaadin.ui.Label.CONTENT_XHTML)
     assert(label.getStyleName == "Style")
   }
-  
+
   test("HtmlLabel, default constructor") {
     val label = new HtmlLabel
     assert(label.getValue == "")
@@ -145,4 +145,26 @@ class ComponentTests extends FunSuite {
     assert(slider.getStyleName == "")
   }
 
+  test("TextField, default constructor") {
+    val textField = new TextField
+    assert(textField.getCaption === null)
+    assert(textField.getWidth === -1)
+    assert(textField.getHeight === -1)
+    assert(textField.getPropertyDataSource === null)
+    assert(textField.getValue === "")
+    assert(textField.getStyleName === "")
+    assert(textField.getInputPrompt === null)
+  }
+
+  test("TextField, constructor with all params") {
+    val property = Property("value1");
+    val textField = new TextField(caption = "caption", width = 55 px, height = 22 px, property = property, value = "value2", style = "style", prompt = "prompt")
+    assert(textField.getCaption === "caption")
+    assert(textField.getWidth === 55)
+    assert(textField.getHeight === 22)
+    assert(textField.getPropertyDataSource === property)
+    assert(textField.getValue === "value2")
+    assert(textField.getStyleName === "style")
+    assert(textField.getInputPrompt === "prompt")
+  }
 }
