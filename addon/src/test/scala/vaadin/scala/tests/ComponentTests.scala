@@ -195,24 +195,24 @@ class ComponentTests extends FunSuite {
 
   test("TextField, default constructor") {
     val textField = new TextField
-    assert(textField.getCaption === null)
-    assert(textField.getWidth === -1)
-    assert(textField.getHeight === -1)
-    assert(textField.getPropertyDataSource === null)
-    assert(textField.getValue === "")
-    assert(textField.getStyleName === "")
-    assert(textField.getInputPrompt === null)
+    assert(textField.caption === None)
+    //    assert(textField.getWidth === -1)
+    //    assert(textField.getHeight === -1)
+    assert(textField.property === None)
+    assert(textField.value === Some(""))
+    assert(textField.styles.mkString === "")
+    assert(textField.prompt === None)
   }
 
   test("TextField, constructor with all params") {
     val property = Property("value1");
     val textField = new TextField(caption = "caption", width = 55 px, height = 22 px, property = property, value = "value2", style = "style", prompt = "prompt")
-    assert(textField.getCaption === "caption")
-    assert(textField.getWidth === 55)
-    assert(textField.getHeight === 22)
-    assert(textField.getPropertyDataSource === property)
-    assert(textField.getValue === "value2")
-    assert(textField.getStyleName === "style")
-    assert(textField.getInputPrompt === "prompt")
+    assert(textField.caption === Some("caption"))
+    //    assert(textField.getWidth === 55)
+    //    assert(textField.getHeight === 22)
+    assert(textField.property === Some(property))
+    assert(textField.value === Some("value2"))
+    assert(textField.styles.mkString === "style")
+    assert(textField.prompt === Some("prompt"))
   }
 }
