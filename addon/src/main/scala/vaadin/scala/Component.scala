@@ -83,4 +83,15 @@ trait AbstractField extends AbstractComponent {
   def value: Option[String] = Option(if (p.getValue() != null) p.getValue().toString else null)
   def value_=(value: Option[String]): Unit = p.setValue(value.getOrElse(null))
   def value_=(value: String): Unit = p.setValue(value)
+
+  def invalidCommitted = p.isInvalidCommitted
+  def invalidCommitted_=(invalidCommitted: Boolean) = p.setInvalidCommitted(invalidCommitted)
+
+  def writeThrough = p.isWriteThrough
+  def writeThrough_=(writeThrough: Boolean) = p.setWriteThrough(writeThrough)
+
+  def readThrough = p.isReadThrough
+  def readThrough_=(readThrough: Boolean) = p.setReadThrough(readThrough)
+
+  //TODO
 }
