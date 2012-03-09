@@ -337,10 +337,10 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
       setColumnExpandRatio(0, 1)
 
       add(new HtmlLabel(<span>Normal SplitPanel</span>).p)
-      add(new HorizontalSplitPanel(width = 100 px, height = 200 px))
+      add(new HorizontalSplitPanel(width = 100 px, height = 200 px).p)
 
       add(new HtmlLabel(<span>Small Style (<code>Reindeer.SPLITPANEL_SMALL</code>)</span>).p)
-      add(new HorizontalSplitPanel(width = 100 px, height = 200 px, style = Reindeer.SPLITPANEL_SMALL))
+      add(new HorizontalSplitPanel(width = 100 px, height = 200 px, style = Reindeer.SPLITPANEL_SMALL).p)
 
     }
   }
