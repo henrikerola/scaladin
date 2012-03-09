@@ -10,6 +10,7 @@ trait Resource extends Wrapper {
 class ExternalResource(sourceUrl: String, mimeType: String = null) extends Resource {
   
   override val p = new com.vaadin.terminal.ExternalResource(sourceUrl, mimeType)
+  WrapperRegistry.put(this)
   
   def url = p.getURL
 }
@@ -17,4 +18,5 @@ class ExternalResource(sourceUrl: String, mimeType: String = null) extends Resou
 class ThemeResource(resourceId: String) extends Resource {
   
   override val p = new com.vaadin.terminal.ThemeResource(resourceId)
+  WrapperRegistry.put(this)
 }

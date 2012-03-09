@@ -3,7 +3,6 @@ package vaadin.scala.tests
 import org.scalatest.FunSuite
 
 import com.vaadin.terminal.Sizeable
-import com.vaadin.terminal.ExternalResource
 
 import vaadin.scala._
 
@@ -12,23 +11,23 @@ class ComponentTests extends FunSuite {
   test("Link, constructor with all params but without names") {
     val resource = new ExternalResource("http://www.example.com")
 
-    val link = new Link("Caption", resource, "targetname", 200, 300, com.vaadin.ui.Link.TARGET_BORDER_NONE)
-    assert(link.getCaption === "Caption")
-    assert(link.getResource === resource)
-    assert(link.getTargetName === "targetname")
-    assert(link.getTargetWidth === 200)
-    assert(link.getTargetHeight === 300)
-    assert(link.getTargetBorder === com.vaadin.ui.Link.TARGET_BORDER_NONE)
+    val link = new Link("Caption", resource, "targetname", 200, 300, Link.TargetBorder.none)
+    assert(link.caption.get === "Caption")
+    assert(link.resource.get === resource)
+    assert(link.targetName === "targetname")
+    assert(link.targetWidth === 200)
+    assert(link.targetHeight === 300)
+    assert(link.targetBorder === Link.TargetBorder.none)
   }
 
   test("Link, default constructor") {
     val link = new Link
-    assert(link.getCaption === null)
-    assert(link.getResource === null)
-    assert(link.getTargetName === null)
-    assert(link.getTargetWidth === -1)
-    assert(link.getTargetHeight === -1)
-    assert(link.getTargetBorder === com.vaadin.ui.Link.TARGET_BORDER_DEFAULT)
+    assert(link.caption === None)
+    assert(link.resource === None)
+    assert(link.targetName === "")
+    assert(link.targetWidth === -1)
+    assert(link.targetHeight === -1)
+    assert(link.targetBorder === Link.TargetBorder.default)
   }
 
   test("Component.styles.contains") {
