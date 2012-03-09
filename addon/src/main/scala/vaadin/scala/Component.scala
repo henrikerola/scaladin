@@ -21,7 +21,7 @@ trait Component extends Wrapper {
   def visible_=(visible: Boolean) = p.setVisible(visible)
 
   // TODO parent setter?
-  def parent: Option[Component] = if (p.getParent() == null) None else Option(WrapperRegistry.get[Component](p.getParent()))
+  def parent: Option[Component] = WrapperRegistry.get[Component](p.getParent())
 
   def readOnly = p.isReadOnly
   def readOnly_=(readOnly: Boolean) = p.setReadOnly(readOnly)
@@ -30,7 +30,7 @@ trait Component extends Wrapper {
   def caption_=(caption: Option[String]) = p.setCaption(caption.getOrElse(null))
   def caption_=(caption: String) = p.setCaption(caption)
 
-  def icon: Option[Resource] = if (p.getIcon == null) None else Option(WrapperRegistry.get[Resource](p.getIcon))
+  def icon: Option[Resource] = WrapperRegistry.get[Resource](p.getIcon)
   def icon_=(icon: Option[Resource]) = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
   def icon_=(icon: Resource) = if (icon == null) p.setIcon(null) else p.setIcon(icon.p)
   

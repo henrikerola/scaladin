@@ -12,7 +12,7 @@ package object event {
 case class ButtonClickEvent(button: Button, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends Event
 
 class ButtonClickListener(val action: ButtonClickEventListener) extends com.vaadin.ui.Button.ClickListener {
-  def buttonClick(e: com.vaadin.ui.Button#ClickEvent) = action(ButtonClickEvent(WrapperRegistry.get[Button](e.getButton()), e.getClientX(), e.getClientY(), e.getRelativeX(), e.getRelativeY(), e.isAltKey(), e.isCtrlKey(), e.isMetaKey(), e.isShiftKey()))
+  def buttonClick(e: com.vaadin.ui.Button#ClickEvent) = action(ButtonClickEvent(WrapperRegistry.get[Button](e.getButton()).get, e.getClientX(), e.getClientY(), e.getRelativeX(), e.getRelativeY(), e.isAltKey(), e.isCtrlKey(), e.isMetaKey(), e.isShiftKey()))
 }
 
 class Button(caption: String = null, action: ButtonClickEventListener = null, icon: Resource = null, style: String = null, enabled: Boolean = true)

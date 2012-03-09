@@ -20,10 +20,13 @@ object WrapperRegistry {
     map.update(wrapper.p, m -> wrapper)
   }
 
-  def get[T](key: Any)(implicit m: Manifest[T]): T = {
+  def get[T](key: Any)(implicit m: Manifest[T]): Option[T] = {
+    if (key == null) {
+    	return None
+    }
     val v = map get key flatMap {
       case (om, s) => if (om <:< m) Some(s.asInstanceOf[T]) else None
     }
-    v.getOrElse(throw new IllegalStateException("Cannot find wrapper for " + key))
+    if (v.isDefined) v else throw new IllegalStateException("Cannot find wrapper for " + key) 
   }
 }
