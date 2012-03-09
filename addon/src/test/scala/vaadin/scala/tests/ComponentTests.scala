@@ -51,7 +51,20 @@ class ComponentTests extends FunSuite {
     assert(!iter.hasNext)
   }
 
-  test("Component.styles +=") {
+  test("Label, constructor with all params but without names") {
+    val property = Property("Test");
+    val label = new Label("Content", 10 px, 100 em, property, Label.ContentMode.preformatted, "Style")
+    assert(label.value === Some("Content"))
+    //    assert(label.getWidth == 10)
+    //    assert(label.getWidthUnits == Sizeable.UNITS_PIXELS)
+    //    assert(label.getHeight == 100)
+    //    assert(label.getHeightUnits == Sizeable.UNITS_EM)
+    assert(label.property === Some(property))
+    assert(label.contentMode === Label.ContentMode.preformatted)
+    assert(label.styles.mkString == "Style")
+  }
+
+  test("Label, default constructor") {
     val label = new Label
     label.styles += "style1"
     label.styles += "styleName2"
@@ -180,4 +193,26 @@ class ComponentTests extends FunSuite {
     assert(slider.getStyleName == "")
   }
 
+  test("TextField, default constructor") {
+    val textField = new TextField
+    assert(textField.getCaption === null)
+    assert(textField.getWidth === -1)
+    assert(textField.getHeight === -1)
+    assert(textField.getPropertyDataSource === null)
+    assert(textField.getValue === "")
+    assert(textField.getStyleName === "")
+    assert(textField.getInputPrompt === null)
+  }
+
+  test("TextField, constructor with all params") {
+    val property = Property("value1");
+    val textField = new TextField(caption = "caption", width = 55 px, height = 22 px, property = property, value = "value2", style = "style", prompt = "prompt")
+    assert(textField.getCaption === "caption")
+    assert(textField.getWidth === 55)
+    assert(textField.getHeight === 22)
+    assert(textField.getPropertyDataSource === property)
+    assert(textField.getValue === "value2")
+    assert(textField.getStyleName === "style")
+    assert(textField.getInputPrompt === "prompt")
+  }
 }
