@@ -101,10 +101,10 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
       setColumnExpandRatio(0, 1)
 
       add(new HtmlLabel(<span>Normal TextField</span>).p)
-      add(new TextField(prompt = "Enter text"))
+      //      add(new TextField(prompt = "Enter text"))
 
       add(new HtmlLabel(<span>Small Style (<code>Reindeer.TEXTFIELD_SMALL</code>)</span>).p)
-      add(new TextField(style = Reindeer.TEXTFIELD_SMALL, prompt = "Enter text"))
+      //      add(new TextField(style = Reindeer.TEXTFIELD_SMALL, prompt = "Enter text"))
 
       add(new HtmlLabel(<span>Normal TextArea</span>).p)
       add(new TextArea(height = 5 em, prompt = "Enter text"))
