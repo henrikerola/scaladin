@@ -14,7 +14,7 @@ class ComponentTests extends FunSuite {
     val link = new Link("Caption", resource, "targetname", 200, 300, Link.TargetBorder.none)
     assert(link.caption.get === "Caption")
     assert(link.resource.get === resource)
-    assert(link.targetName === "targetname")
+    assert(link.targetName.get === "targetname")
     assert(link.targetWidth === 200)
     assert(link.targetHeight === 300)
     assert(link.targetBorder === Link.TargetBorder.none)
@@ -24,7 +24,7 @@ class ComponentTests extends FunSuite {
     val link = new Link
     assert(link.caption === None)
     assert(link.resource === None)
-    assert(link.targetName === "")
+    assert(link.targetName === None)
     assert(link.targetWidth === -1)
     assert(link.targetHeight === -1)
     assert(link.targetBorder === Link.TargetBorder.default)

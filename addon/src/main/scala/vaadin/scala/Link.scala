@@ -25,7 +25,7 @@ class Link extends AbstractComponent {
     p.setTargetBorder(targetBorder.id)
   }
   
-  def targetName = if (p.getTargetName == null) "" else p.getTargetName
+  def targetName = Option(p.getTargetName)
   def targetName_=(targetName: Option[String]) = p.setTargetName(caption.getOrElse(null))
   def targetName_=(targetName: String) = p.setTargetName(targetName)
   
