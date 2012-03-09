@@ -45,6 +45,11 @@ trait Component extends Wrapper {
   // TODO: ..
 }
 
+trait ScaladinWrapper extends com.vaadin.ui.Component with Component {
+  def p: this.type = this
+  WrapperRegistry.put(this)
+}
+
 trait Sizeable extends Component {
 
   // TODO: use UnitExtent instead of String?
