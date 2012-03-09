@@ -4,6 +4,7 @@ import scala.collection.mutable
 
 trait Component extends Wrapper {
   def p: com.vaadin.ui.Component
+  def wr: WrapperRegistry
 
   // TODO: add methods styleName, addStyleName, removeStyleName?
 
@@ -21,7 +22,7 @@ trait Component extends Wrapper {
   def visible_=(visible: Boolean) = p.setVisible(visible)
 
   // TODO parent setter?
-  def parent: Option[Component] = WrapperRegistry.get[Component](p.getParent())
+  def parent: Option[Component] = wr.get[Component](p.getParent())
 
   def readOnly = p.isReadOnly
   def readOnly_=(readOnly: Boolean) = p.setReadOnly(readOnly)
@@ -30,7 +31,7 @@ trait Component extends Wrapper {
   def caption_=(caption: Option[String]) = p.setCaption(caption.getOrElse(null))
   def caption_=(caption: String) = p.setCaption(caption)
 
-  def icon: Option[Resource] = WrapperRegistry.get[Resource](p.getIcon)
+  def icon: Option[Resource] = wr.get[Resource](p.getIcon)
   def icon_=(icon: Option[Resource]) = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
   def icon_=(icon: Resource) = if (icon == null) p.setIcon(null) else p.setIcon(icon.p)
 
@@ -47,7 +48,7 @@ trait Component extends Wrapper {
 
 trait ScaladinWrapper extends com.vaadin.ui.Component with Component {
   def p: this.type = this
-  WrapperRegistry.put(this)
+  //  WrapperRegistry.put(this)
 }
 
 trait Sizeable extends Component {
@@ -61,7 +62,7 @@ trait Sizeable extends Component {
   def sizeUndefined() = p.setSizeUndefined
 }
 
-trait AbstractComponent extends Component with Sizeable {
+abstract class AbstractComponent extends Component with Sizeable {
 
   override def p: com.vaadin.ui.AbstractComponent
 

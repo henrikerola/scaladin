@@ -6,6 +6,8 @@ import com.vaadin.terminal.Sizeable
 
 class LayoutTests extends FunSuite {
 
+  implicit val wr = new WrapperRegistry
+
   test("VerticalLayout, constructor with all params but without names") {
     val layout = new VerticalLayout(10 px, 100 em, true, true, "Caption", "Style")
     assert(layout.p.getWidth === 10)

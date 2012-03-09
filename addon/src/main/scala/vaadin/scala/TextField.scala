@@ -1,12 +1,12 @@
 package vaadin.scala
 
-class TextField
+class TextField(implicit val wr: WrapperRegistry)
     extends AbstractTextField {
 
   override val p = new com.vaadin.ui.TextField
-  WrapperRegistry.put(this)
+  wr.put(this)
 
-  def this(caption: String = null, width: String = null, height: String = null, property: com.vaadin.data.Property = null, value: Any = null, style: String = null, prompt: String = null) {
+  def this(caption: String = null, width: String = null, height: String = null, property: com.vaadin.data.Property = null, value: Any = null, style: String = null, prompt: String = null)(implicit wr: WrapperRegistry) {
     this()
 
     p.setCaption(caption)

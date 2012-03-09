@@ -3,7 +3,7 @@ package vaadin.scala
 trait AbstractOrderedLayout extends AbstractLayout with SpacingHandler with AlignmentHandler {
 
   override def p: com.vaadin.ui.AbstractOrderedLayout
-  
+
   def add[C <: Component](component: C = null, ratio: Float = -1, alignment: Alignment.Value = null, index: Int = -1): C = {
     if (index < 0)
       p.addComponent(component.p)
@@ -28,19 +28,19 @@ trait AbstractOrderedLayout extends AbstractLayout with SpacingHandler with Alig
 
     component
   }
-  
+
   def expandRatio(component: Component) = p.getExpandRatio(component.p)
   def expandRatio(component: Component, ratio: Float) = p.setExpandRatio(component.p, ratio)
-  
+
   // TODO: add addComponentAsFirst ?, listeners
 }
 
-class VerticalLayout extends AbstractOrderedLayout /*with LayoutClickListener*/ {
+class VerticalLayout(implicit val wr: WrapperRegistry) extends AbstractOrderedLayout /*with LayoutClickListener*/ {
 
   override val p = new com.vaadin.ui.VerticalLayout
-  WrapperRegistry.put(this)
+  wr.put(this)
 
-  def this(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, size: Tuple2[String, String] = null) {
+  def this(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, size: Tuple2[String, String] = null)(implicit wr: WrapperRegistry) {
     this()
 
     if (size != null) {

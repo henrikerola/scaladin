@@ -8,6 +8,8 @@ import vaadin.scala._
 
 class ComponentTests extends FunSuite {
 
+  implicit val wr = new WrapperRegistry
+
   test("Link, constructor with all params but without names") {
     val resource = new ExternalResource("http://www.example.com")
 

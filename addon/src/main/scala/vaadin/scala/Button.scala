@@ -11,16 +11,16 @@ package object event {
 
 case class ButtonClickEvent(button: Button, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends Event
 
-class ButtonClickListener(val action: ButtonClickEventListener) extends com.vaadin.ui.Button.ClickListener {
-  def buttonClick(e: com.vaadin.ui.Button#ClickEvent) = action(ButtonClickEvent(WrapperRegistry.get[Button](e.getButton()).get, e.getClientX(), e.getClientY(), e.getRelativeX(), e.getRelativeY(), e.isAltKey(), e.isCtrlKey(), e.isMetaKey(), e.isShiftKey()))
+class ButtonClickListener(val action: ButtonClickEventListener)(implicit wr: WrapperRegistry) extends com.vaadin.ui.Button.ClickListener {
+  def buttonClick(e: com.vaadin.ui.Button#ClickEvent) = action(ButtonClickEvent(wr.get[Button](e.getButton()).get, e.getClientX(), e.getClientY(), e.getRelativeX(), e.getRelativeY(), e.isAltKey(), e.isCtrlKey(), e.isMetaKey(), e.isShiftKey()))
 }
 
-class Button(caption: String = null, action: ButtonClickEventListener = null, icon: Resource = null, style: String = null, enabled: Boolean = true)
-  extends AbstractField {
-  
+class Button(caption: String = null, action: ButtonClickEventListener = null, icon: Resource = null, style: String = null, enabled: Boolean = true)(implicit val wr: WrapperRegistry)
+    extends AbstractField {
+
   override val p = new com.vaadin.ui.Button(caption)
-  WrapperRegistry.put(this)
-  
+  wr.put(this)
+
   if (icon == null) p.setIcon(null) else p.setIcon(icon.p)
   p.setStyleName(style)
   p.setEnabled(enabled)
@@ -54,8 +54,8 @@ class Button(caption: String = null, action: ButtonClickEventListener = null, ic
   }
 }
 
-class LinkButton(caption: String = null, action: ButtonClickEventListener = null, icon: Resource = null, style: String = null)
-  extends Button(caption, action, icon) {
+class LinkButton(caption: String = null, action: ButtonClickEventListener = null, icon: Resource = null, style: String = null)(implicit override val wr: WrapperRegistry)
+    extends Button(caption, action, icon) {
   p.setStyleName(BaseTheme.BUTTON_LINK)
   p.addStyleName(style)
 }

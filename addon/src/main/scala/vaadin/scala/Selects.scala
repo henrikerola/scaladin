@@ -6,20 +6,20 @@ trait ValueChangeFunction extends com.vaadin.data.Property.ValueChangeNotifier {
 }
 
 class PropertyValueChangeListener(action: com.vaadin.data.Property.ValueChangeEvent => Unit)
-  extends com.vaadin.data.Property.ValueChangeListener {
+    extends com.vaadin.data.Property.ValueChangeListener {
   override def valueChange(event: com.vaadin.data.Property.ValueChangeEvent) = action(event)
 }
 
 trait AbstractSelect extends AbstractField {
-  
+
 }
 
 trait Select extends AbstractSelect {
-  
+
 }
 
 class NativeSelect(caption: String = null, width: String = null, height: String = null, value: Any = null, style: String = null, nullSelectionAllowed: Boolean = true)
-  extends com.vaadin.ui.NativeSelect(caption) with ValueChangeFunction {
+    extends com.vaadin.ui.NativeSelect(caption) with ValueChangeFunction {
   setWidth(width)
   setHeight(height)
   if (value != null) setValue(value)
@@ -27,12 +27,12 @@ class NativeSelect(caption: String = null, width: String = null, height: String 
   setNullSelectionAllowed(nullSelectionAllowed)
 }
 
-class ComboBox(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)
-  extends Select /*with ValueChangeFunction*/ {
-  
+class ComboBox(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)(implicit val wr: WrapperRegistry)
+    extends Select /*with ValueChangeFunction*/ {
+
   override val p = new com.vaadin.ui.ComboBox(caption);
-  WrapperRegistry.put(this)
-  
+  wr.put(this)
+
   p.setWidth(width)
   p.setHeight(height)
   if (dataSource != null) p.setContainerDataSource(dataSource)
@@ -40,19 +40,18 @@ class ComboBox(caption: String = null, width: String = null, height: String = nu
   p.setStyleName(style)
   p.setInputPrompt(prompt)
   p.setNullSelectionAllowed(nullSelectionAllowed)
-  
-  
+
   // TODO: Is there difference between null and "" so we could return "" when input prompt is null and avoid Option?
   def inputPrompt: Option[String] = Option(p.getInputPrompt)
   def inputPrompt_=(inputPrompt: Option[String]) = p.setInputPrompt(inputPrompt.getOrElse(null))
   def inputPrompt_=(inputPrompt: String) = p.setInputPrompt(inputPrompt)
-  
+
   def textInputAllowed = p.isTextInputAllowed()
   def textInputAllowed_=(textInputAllowed: Boolean) = p.setTextInputAllowed(textInputAllowed)
 }
 
 class ListSelect(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, nullSelectionAllowed: Boolean = true)
-  extends com.vaadin.ui.ListSelect(caption) with ValueChangeFunction {
+    extends com.vaadin.ui.ListSelect(caption) with ValueChangeFunction {
   setWidth(width)
   setHeight(height)
   if (dataSource != null) setContainerDataSource(dataSource)
@@ -62,7 +61,7 @@ class ListSelect(caption: String = null, width: String = null, height: String = 
 }
 
 class OptionGroup(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)
-  extends com.vaadin.ui.OptionGroup(caption) with ValueChangeFunction {
+    extends com.vaadin.ui.OptionGroup(caption) with ValueChangeFunction {
   setWidth(width)
   setHeight(height)
   if (dataSource != null) setContainerDataSource(dataSource)
@@ -72,7 +71,7 @@ class OptionGroup(caption: String = null, width: String = null, height: String =
 }
 
 class TwinColSelect(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)
-  extends com.vaadin.ui.TwinColSelect(caption) with ValueChangeFunction {
+    extends com.vaadin.ui.TwinColSelect(caption) with ValueChangeFunction {
   setWidth(width)
   setHeight(height)
   if (dataSource != null) setContainerDataSource(dataSource)
@@ -93,7 +92,7 @@ trait TableColumnGenerator extends com.vaadin.ui.Table {
   def addGeneratedColumn(id: Any, generate: (com.vaadin.ui.Table, AnyRef, AnyRef) => AnyRef): Unit = {
     addGeneratedColumn(id, new ColumnGenerator {
       def generateCell(table: com.vaadin.ui.Table, itemId: AnyRef,
-        columnId: AnyRef): AnyRef = {
+                       columnId: AnyRef): AnyRef = {
         generate(table, itemId, columnId)
       }
     })
@@ -101,7 +100,7 @@ trait TableColumnGenerator extends com.vaadin.ui.Table {
 }
 
 class Table(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, property: com.vaadin.data.Property = null, value: Any = null, selectable: Boolean = false, immediate: Boolean = false, style: String = null)
-  extends com.vaadin.ui.Table(caption) with ValueChangeFunction with ItemClickListener with TableColumnGenerator {
+    extends com.vaadin.ui.Table(caption) with ValueChangeFunction with ItemClickListener with TableColumnGenerator {
   setWidth(width)
   setHeight(height)
   if (dataSource != null) setContainerDataSource(dataSource)
@@ -113,7 +112,7 @@ class Table(caption: String = null, width: String = null, height: String = null,
 }
 
 class TreeTable(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, property: com.vaadin.data.Property = null, value: Any = null, selectable: Boolean = false, immediate: Boolean = false, style: String = null)
-  extends com.vaadin.ui.TreeTable(caption) with ValueChangeFunction with TableColumnGenerator {
+    extends com.vaadin.ui.TreeTable(caption) with ValueChangeFunction with TableColumnGenerator {
   setWidth(width)
   setHeight(height)
   if (dataSource != null) setContainerDataSource(dataSource)
@@ -125,7 +124,7 @@ class TreeTable(caption: String = null, width: String = null, height: String = n
 }
 
 class Tree(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, property: com.vaadin.data.Property = null, value: Any = null, selectable: Boolean = false, nullSelectionAllowed: Boolean = true, immediate: Boolean = false, style: String = null)
-  extends com.vaadin.ui.Tree with ValueChangeFunction with ItemClickListener {
+    extends com.vaadin.ui.Tree with ValueChangeFunction with ItemClickListener {
   setWidth(width)
   setHeight(height)
   if (dataSource != null) setContainerDataSource(dataSource)

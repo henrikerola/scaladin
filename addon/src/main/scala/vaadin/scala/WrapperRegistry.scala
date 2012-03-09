@@ -6,7 +6,7 @@ trait Wrapper extends Serializable {
   def p: Any
 }
 
-object WrapperRegistry {
+class WrapperRegistry {
 
   private var map = mutable.WeakHashMap.empty[Any, (Manifest[_], Any)]
 
@@ -22,11 +22,11 @@ object WrapperRegistry {
 
   def get[T](key: Any)(implicit m: Manifest[T]): Option[T] = {
     if (key == null) {
-    	return None
+      return None
     }
     val v = map get key flatMap {
       case (om, s) => if (om <:< m) Some(s.asInstanceOf[T]) else None
     }
-    if (v.isDefined) v else throw new IllegalStateException("Cannot find wrapper for " + key) 
+    if (v.isDefined) v else throw new IllegalStateException("Cannot find wrapper for " + key)
   }
 }

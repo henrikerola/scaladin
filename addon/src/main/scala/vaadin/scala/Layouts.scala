@@ -12,12 +12,12 @@ trait LayoutClickListener extends LayoutClickNotifier {
   }
 }
 
-class HorizontalLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null)
-  extends AbstractOrderedLayout /*with LayoutClickListener*/ {
-  
+class HorizontalLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null)(implicit val wr: WrapperRegistry)
+    extends AbstractOrderedLayout /*with LayoutClickListener*/ {
+
   override val p = new com.vaadin.ui.HorizontalLayout
-  WrapperRegistry.put(this)
-  
+  wr.put(this)
+
   p.setWidth(width)
   p.setHeight(height)
   p.setMargin(margin)
@@ -28,7 +28,7 @@ class HorizontalLayout(width: String = null, height: String = null, margin: Bool
 
 // TODO com.vaadin.ui.FormLayout calls setMargin(true, false, true, false) in constructor
 class FormLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = true, style: String = null)
-  extends com.vaadin.ui.FormLayout {
+    extends com.vaadin.ui.FormLayout {
   def add[C <: com.vaadin.ui.Component](component: C): C = {
     addComponent(component)
     component
@@ -36,7 +36,7 @@ class FormLayout(width: String = 100 percent, height: String = null, margin: Boo
 }
 
 class GridLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, columns: Int = 1, rows: Int = 1)
-  extends com.vaadin.ui.GridLayout with LayoutClickListener {
+    extends com.vaadin.ui.GridLayout with LayoutClickListener {
   setWidth(width)
   setHeight(height)
   setMargin(margin)
@@ -59,15 +59,15 @@ class GridLayout(width: String = null, height: String = null, margin: Boolean = 
 
 }
 
-class CssLayout(width: String = null, height: String = null, margin: Boolean = false, style: String = null, caption: String = null, size: Tuple2[String, String] = null)
-  extends AbstractLayout /*with LayoutClickListener*/ {
+class CssLayout(width: String = null, height: String = null, margin: Boolean = false, style: String = null, caption: String = null, size: Tuple2[String, String] = null)(implicit val wr: WrapperRegistry)
+    extends AbstractLayout /*with LayoutClickListener*/ {
 
   override val p = new com.vaadin.ui.CssLayout {
     override def getCss(c: VaadinComponent): String = {
       cssMap.getOrElse(c, null)
     }
   }
-  WrapperRegistry.put(this)
+  wr.put(this)
 
   if (size != null) {
     p.setWidth(size._1)
@@ -91,7 +91,7 @@ class CssLayout(width: String = null, height: String = null, margin: Boolean = f
 
   // TODO: addComponentAsFirst?
   // TODO: listeners
-  
+
   // TODO:
   //  def css(c: Component): String = {
   //	  p.getCss(c.p)
@@ -99,7 +99,7 @@ class CssLayout(width: String = null, height: String = null, margin: Boolean = f
 }
 
 class CustomLayout(width: String = 100 percent, height: String = null, template: String = null, contents: String = null, caption: String = null, style: String = null)
-  extends com.vaadin.ui.CustomLayout {
+    extends com.vaadin.ui.CustomLayout {
   setWidth(width)
   setHeight(height)
   setCaption(caption)
@@ -117,7 +117,7 @@ class CustomLayout(width: String = 100 percent, height: String = null, template:
 }
 
 class AbsoluteLayout(width: String = 100 percent, height: String = 100 percent, caption: String = null, style: String = null)
-  extends com.vaadin.ui.AbsoluteLayout with LayoutClickListener {
+    extends com.vaadin.ui.AbsoluteLayout with LayoutClickListener {
   setWidth(width)
   setHeight(height)
   setCaption(caption)

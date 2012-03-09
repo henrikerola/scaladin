@@ -3,19 +3,19 @@ package vaadin.scala
 object Link {
   object TargetBorder extends Enumeration {
     import com.vaadin.ui.Link._
-    
+
     val none = Value(TARGET_BORDER_NONE)
     val minimal = Value(TARGET_BORDER_MINIMAL)
     val default = Value(TARGET_BORDER_DEFAULT)
   }
 }
 
-class Link extends AbstractComponent {
+class Link(implicit val wr: WrapperRegistry) extends AbstractComponent {
 
   override val p = new com.vaadin.ui.Link()
-  WrapperRegistry.put(this)
+  wr.put(this)
 
-  def this(caption: String = null, resource: Resource = null, targetName: String = null, targetWidth: Int = -1, targetHeight: Int = -1, targetBorder: Link.TargetBorder.Value = Link.TargetBorder.default) = {
+  def this(caption: String = null, resource: Resource = null, targetName: String = null, targetWidth: Int = -1, targetHeight: Int = -1, targetBorder: Link.TargetBorder.Value = Link.TargetBorder.default)(implicit wr: WrapperRegistry) = {
     this()
     p.setCaption(caption)
     if (resource != null) p.setResource(resource.p)
@@ -24,11 +24,11 @@ class Link extends AbstractComponent {
     p.setTargetHeight(targetHeight)
     p.setTargetBorder(targetBorder.id)
   }
-  
+
   def targetName = Option(p.getTargetName)
   def targetName_=(targetName: Option[String]) = p.setTargetName(caption.getOrElse(null))
   def targetName_=(targetName: String) = p.setTargetName(targetName)
-  
+
   def targetBorder = Link.TargetBorder(p.getTargetBorder)
   def targetBorder_=(targetBorder: Link.TargetBorder.Value) = p.setTargetBorder(targetBorder.id)
 
@@ -37,8 +37,8 @@ class Link extends AbstractComponent {
 
   def targetHeight = p.getTargetHeight()
   def targetHeight_=(targetHeight: Int) = p.setTargetHeight(targetHeight)
-  
-  def resource: Option[Resource] = WrapperRegistry.get[Resource](p.getResource)
+
+  def resource: Option[Resource] = wr.get[Resource](p.getResource)
   def resource_=(resource: Option[Resource]) = if (resource.isDefined) p.setResource(resource.get.p) else p.setResource(null)
   def resource_=(resource: Resource) = if (resource == null) p.setResource(null) else p.setResource(resource.p)
 }

@@ -5,6 +5,8 @@ import org.scalatest.FunSuite
 
 class ButtonTests extends FunSuite {
 
+  implicit val wr = new WrapperRegistry
+
   val listener1 = (e: ButtonClickEvent) => println("1")
   val listener2 = (e: ButtonClickEvent) => println(e)
 
@@ -15,14 +17,14 @@ class ButtonTests extends FunSuite {
 
     assert(button.clickListeners.size === 1)
   }
-  
+
   test("clickListener remove a clicklistener") {
     val button = new Button
 
     button.clickListeners += listener1
-    
+
     button.clickListeners -= listener1
-    
+
     assert(button.clickListeners.size === 0)
   }
 
@@ -37,20 +39,19 @@ class ButtonTests extends FunSuite {
     assert(iter.next() === listener2)
     assert(!iter.hasNext)
   }
-  
+
   test("clickListeners.contains returns true for added listener") {
     val button = new Button
 
     button.clickListeners += (listener1)
-    
+
     assert(button.clickListeners.contains(listener1))
   }
-  
+
   test("clickListeners.contains returns false for non-added listener") {
     val button = new Button
 
     assert(!button.clickListeners.contains(listener2))
   }
-  
 
 }

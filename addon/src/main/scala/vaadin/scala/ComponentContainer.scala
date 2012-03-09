@@ -38,7 +38,7 @@ trait ComponentContainer extends Component {
       p.getComponentIterator.contains(key.p)
     }
     def iterator: Iterator[Component] = {
-      p.getComponentIterator.map(WrapperRegistry.get[Component](_).get)
+      p.getComponentIterator.map(wr.get[Component](_).get)
     }
     def +=(elem: Component) = { p.addComponent(elem.p); this }
     def -=(elem: Component) = { p.removeComponent(elem.p); this }

@@ -4,6 +4,8 @@ import com.vaadin.Application
 
 abstract class SimpleApplication(title: String = "", theme: String = com.vaadin.ui.themes.Reindeer.THEME_NAME) extends Application {
 
+  implicit val wr = new WrapperRegistry
+
   def init(): Unit = {
     val mainWindow = new Window(title)
     setMainWindow(mainWindow)
@@ -12,11 +14,11 @@ abstract class SimpleApplication(title: String = "", theme: String = com.vaadin.
   }
 
   def main: com.vaadin.ui.ComponentContainer = new VerticalLayout(margin = true) { add(new Label("Replace me")) }.p
-  
-  def main(windowName: String) :com.vaadin.ui.ComponentContainer = main
-  
-  override def getWindow(windowName : String) = {
+
+  def main(windowName: String): com.vaadin.ui.ComponentContainer = main
+
+  override def getWindow(windowName: String) = {
     super.getWindow(windowName)
-    
+
   }
 }

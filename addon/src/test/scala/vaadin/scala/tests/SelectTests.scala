@@ -6,7 +6,9 @@ import com.vaadin.terminal.Sizeable
 import com.vaadin.data.util.IndexedContainer
 
 class SelectTests extends FunSuite {
-  
+
+  implicit val wr = new WrapperRegistry
+
   test("ComboBox, constructor with all params but without names") {
     val container = new IndexedContainer;
     container.addItem("Value")
@@ -23,7 +25,7 @@ class SelectTests extends FunSuite {
     assert(comboBox.p.getInputPrompt === "input prompt")
     assert(!comboBox.p.isNullSelectionAllowed)
   }
-  
+
   test("ComboBox, default constructor") {
     val comboBox = new ComboBox
     assert(comboBox.caption === None)

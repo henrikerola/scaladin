@@ -15,13 +15,13 @@ object Label {
 }
 
 // TODO: implement interfaces
-class Label extends AbstractComponent {
+class Label(implicit val wr: WrapperRegistry) extends AbstractComponent {
 
   override val p = new com.vaadin.ui.Label;
-  WrapperRegistry.put(this)
+  wr.put(this)
 
   // icon, caption as constructor parameters?
-  def this(content: String = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, contentMode: Label.ContentMode.Value = Label.ContentMode(com.vaadin.ui.Label.CONTENT_DEFAULT), style: String = null) = {
+  def this(content: String = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, contentMode: Label.ContentMode.Value = Label.ContentMode(com.vaadin.ui.Label.CONTENT_DEFAULT), style: String = null)(implicit wr: WrapperRegistry) = {
     this()
 
     p.setWidth(width)
@@ -39,14 +39,14 @@ class Label extends AbstractComponent {
 
   def contentMode = Label.ContentMode(p.getContentMode)
   def contentMode_=(contentMode: Label.ContentMode.Value) = p.setContentMode(contentMode.id)
-  
+
   def property: Option[com.vaadin.data.Property] = Option(p.getPropertyDataSource())
   def property_=(property: Option[com.vaadin.data.Property]) = p.setPropertyDataSource(property.getOrElse(null))
   def property_=(property: com.vaadin.data.Property) = p.setPropertyDataSource(property)
-  
+
   // TODO: valuechangelistener
   // TODO: getType
 }
 
-class HtmlLabel(content: Node = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, style: String = null)
+class HtmlLabel(content: Node = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, style: String = null)(implicit wr: WrapperRegistry)
   extends Label(width = width, height = height, content = if (content != null) content.toString else null, property = property, contentMode = Label.ContentMode.xhtml, style = style)

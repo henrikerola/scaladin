@@ -4,24 +4,26 @@ import vaadin.scala._
 import com.vaadin.terminal.Sizeable
 
 class ComponentContainerTests extends FunSuite {
-  
+
+  implicit val wr = new WrapperRegistry
+
   test("ComponentContainer.components.contains returns true for added Component") {
     val layout = new VerticalLayout
-    
+
     val label = new Label
     layout.components += label
-    
+
     assert(layout.components.contains(label))
   }
-  
+
   test("ComponentContainer.components.contains return false for non-added Component") {
     val layout = new VerticalLayout
-    
+
     layout.components += new Label
-    
+
     assert(!layout.components.contains(new Label))
   }
-  
+
   test("ComponentContainer.components.iterator returns added components") {
     val layout = new VerticalLayout
 
@@ -29,8 +31,7 @@ class ComponentContainerTests extends FunSuite {
     layout.components += label1
     val label2 = new Label
     layout add label2
-    
-    
+
     val iter = layout.components.iterator
     assert(iter.next() == label1)
     assert(iter.next() == label2)
@@ -102,20 +103,18 @@ class ComponentContainerTests extends FunSuite {
     assert(accordion.getCaption == "Caption")
     assert(accordion.getStyleName == "Style")
   }
-  
+
   test("Accordion, test SelectedTabChangeListener") {
     val accordion = new Accordion() {
       def fireSelectedTabChangeEvent() = {
         fireSelectedTabChange;
       }
     }
-    
+
     var cnt = 0;
     accordion.addListener(_ => cnt = cnt + 1)
     accordion.fireSelectedTabChangeEvent
     assert(cnt == 1)
   }
-  
-  
-  
+
 }
