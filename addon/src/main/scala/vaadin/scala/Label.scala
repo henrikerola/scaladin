@@ -49,4 +49,4 @@ class Label(implicit val wr: WrapperRegistry) extends AbstractComponent {
 }
 
 class HtmlLabel(content: Node = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, style: String = null)(implicit wr: WrapperRegistry)
-  extends Label(width = width, height = height, content = if (content != null) content.toString else null, property = property, contentMode = Label.ContentMode.xhtml, style = style)
+  extends Label(width = width, height = height, content = if (content != null) content.toString else null, property = property, contentMode = Label.ContentMode.xhtml, style = style)(wr)
