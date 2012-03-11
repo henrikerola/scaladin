@@ -12,14 +12,14 @@ trait LayoutClickListener extends LayoutClickNotifier {
   }
 }
 
-class HorizontalLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null)
+class HorizontalLayout(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null)
   extends AbstractOrderedLayout /*with LayoutClickListener*/ {
-  
+
   override val p = new com.vaadin.ui.HorizontalLayout
   WrapperRegistry.put(this)
-  
-  p.setWidth(width)
-  p.setHeight(height)
+
+  p.setWidth(if (width.isDefined) width.get.toString else null)
+  p.setHeight(if (height.isDefined) height.get.toString else null)
   p.setMargin(margin)
   p.setSpacing(spacing)
   p.setCaption(caption)
@@ -27,7 +27,7 @@ class HorizontalLayout(width: String = null, height: String = null, margin: Bool
 }
 
 // TODO com.vaadin.ui.FormLayout calls setMargin(true, false, true, false) in constructor
-class FormLayout(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = true, style: String = null)
+class FormLayout(width: Option[Measure] = 100 percent, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = true, style: String = null)
   extends com.vaadin.ui.FormLayout {
   def add[C <: com.vaadin.ui.Component](component: C): C = {
     addComponent(component)
@@ -35,10 +35,10 @@ class FormLayout(width: String = 100 percent, height: String = null, margin: Boo
   }
 }
 
-class GridLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, columns: Int = 1, rows: Int = 1)
+class GridLayout(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, columns: Int = 1, rows: Int = 1)
   extends com.vaadin.ui.GridLayout with LayoutClickListener {
-  setWidth(width)
-  setHeight(height)
+  setWidth(if (width.isDefined) width.get.toString else null)
+  setHeight(if (height.isDefined) height.get.toString else null)
   setMargin(margin)
   setSpacing(spacing)
   setStyleName(style)
@@ -59,7 +59,7 @@ class GridLayout(width: String = null, height: String = null, margin: Boolean = 
 
 }
 
-class CssLayout(width: String = null, height: String = null, margin: Boolean = false, style: String = null, caption: String = null, size: Tuple2[String, String] = null)
+class CssLayout(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, style: String = null, caption: String = null, size: Tuple2[String, String] = null)
   extends AbstractLayout /*with LayoutClickListener*/ {
 
   override val p = new com.vaadin.ui.CssLayout {
@@ -73,8 +73,8 @@ class CssLayout(width: String = null, height: String = null, margin: Boolean = f
     p.setWidth(size._1)
     p.setHeight(size._2)
   } else {
-    p.setWidth(width)
-    p.setHeight(height)
+    p.setWidth(if (width.isDefined) width.get.toString else null)
+    p.setHeight(if (height.isDefined) height.get.toString else null)
   }
   p.setMargin(margin)
   p.setStyleName(style)
@@ -91,17 +91,17 @@ class CssLayout(width: String = null, height: String = null, margin: Boolean = f
 
   // TODO: addComponentAsFirst?
   // TODO: listeners
-  
+
   // TODO:
   //  def css(c: Component): String = {
   //	  p.getCss(c.p)
   //  }
 }
 
-class CustomLayout(width: String = 100 percent, height: String = null, template: String = null, contents: String = null, caption: String = null, style: String = null)
+class CustomLayout(width: Option[Measure] = 100 percent, height: Option[Measure] = None, template: String = null, contents: String = null, caption: String = null, style: String = null)
   extends com.vaadin.ui.CustomLayout {
-  setWidth(width)
-  setHeight(height)
+  setWidth(if (width.isDefined) width.get.toString else null)
+  setHeight(if (height.isDefined) height.get.toString else null)
   setCaption(caption)
   setStyleName(style)
 
@@ -116,10 +116,10 @@ class CustomLayout(width: String = 100 percent, height: String = null, template:
   }
 }
 
-class AbsoluteLayout(width: String = 100 percent, height: String = 100 percent, caption: String = null, style: String = null)
+class AbsoluteLayout(width: Option[Measure] = 100 percent, height: Option[Measure] = 100 percent, caption: String = null, style: String = null)
   extends com.vaadin.ui.AbsoluteLayout with LayoutClickListener {
-  setWidth(width)
-  setHeight(height)
+  setWidth(if (width.isDefined) width.get.toString else null)
+  setHeight(if (height.isDefined) height.get.toString else null)
   setCaption(caption)
   setStyleName(style)
 

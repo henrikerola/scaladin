@@ -52,10 +52,13 @@ trait ScaladinWrapper extends com.vaadin.ui.Component with Component {
 
 trait Sizeable extends Component {
 
-  // TODO: use UnitExtent instead of String?
-  // TODO: width and height getters
-  def width(width: String) = p.setWidth(width)
-  def height(height: String) = p.setHeight(height)
+  def width: Option[Measure] = if (p.getWidth < 0) None else Option(new Measure(p.getWidth, Units(p.getWidthUnits)))
+  def width_=(width: Option[Measure]) = p.setWidth(if(width.isDefined) width.get.toString else null)
+  def width_=(width: Measure) = p.setWidth(if (width != null) width.toString else null)
+  
+  def height: Option[Measure] = if (p.getHeight() < 0) None else Option(new Measure(p.getHeight(), Units(p.getHeightUnits)))
+  def height_=(height: Option[Measure]) = p.setHeight(if(height.isDefined) height.get.toString else null)
+  def height_=(height: Measure) = p.setHeight(if (height != null) height.toString else null)
 
   def sizeFull() = p.setSizeFull
   def sizeUndefined() = p.setSizeUndefined

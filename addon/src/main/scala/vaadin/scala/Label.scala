@@ -21,11 +21,11 @@ class Label extends AbstractComponent {
   WrapperRegistry.put(this)
 
   // icon, caption as constructor parameters?
-  def this(content: String = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, contentMode: Label.ContentMode.Value = Label.ContentMode(com.vaadin.ui.Label.CONTENT_DEFAULT), style: String = null) = {
+  def this(content: String = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, property: com.vaadin.data.Property = null, contentMode: Label.ContentMode.Value = Label.ContentMode(com.vaadin.ui.Label.CONTENT_DEFAULT), style: String = null) = {
     this()
 
-    p.setWidth(width)
-    p.setHeight(height)
+    this.width = width
+    this.height = height
     if (property != null) p.setPropertyDataSource(property)
     if (content != null) p.setValue(content)
     p.setContentMode(contentMode.id)
@@ -48,5 +48,5 @@ class Label extends AbstractComponent {
   // TODO: getType
 }
 
-class HtmlLabel(content: Node = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, style: String = null)
+class HtmlLabel(content: Node = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, property: com.vaadin.data.Property = null, style: String = null)
   extends Label(width = width, height = height, content = if (content != null) content.toString else null, property = property, contentMode = Label.ContentMode.xhtml, style = style)

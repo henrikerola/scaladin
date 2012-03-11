@@ -49,11 +49,11 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
   def buildScalaWrappersAd(): Layout = {
     new VerticalLayout(width = 100 percent, style = Reindeer.LAYOUT_BLACK) {
       add(alignment = Alignment.middleCenter, component = new VerticalLayout(width = 700 px, style = Reindeer.LAYOUT_BLACK, margin = true) {
-        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
+        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
           content = <span>This demo is implemented completely in <a href="http://www.scala-lang.org">Scala</a>,</span>))
-        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
+        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
           content = <span>with the help of the ScalaWrappers Vaadin addon.</span>))
-        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
+        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
           content = <span>You can find more info about the add-on from the <a href="http://vaadin.com/addon/scala-wrappers">Directory page</a>.</span>))
       })
     }
@@ -524,7 +524,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
       help.setCloseShortcut(KeyCode.ESCAPE)
 
       help.center()
-      help.setWidth(400 px)
+      help.setWidth("400px")
       help.setResizable(false)
 
       val helpText = new HtmlLabel(<span><strong>How To Use This Application</strong><p>Click around, explore. The purpose of this app is to show you what is possible to achieve with the Reindeer theme and its different styles.</p><p>Most of the UI controls that are visible in this application don't actually do anything. They are purely for show, like the menu items and the components that demostrate the different style names assosiated with the components.</p><strong>So, What Then?</strong><p>Go and use the styles you see here in your own application and make them beautiful!</p></span>)

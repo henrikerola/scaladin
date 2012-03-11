@@ -215,4 +215,43 @@ class ComponentTests extends FunSuite {
     assert(textField.styles.mkString === "style")
     assert(textField.prompt === Some("prompt"))
   }
+  
+  test("width, defined size") {
+    val label = new Label()
+    label.width = 25 px;
+    assert(label.width.get === Measure(25, Units.px))
+  }
+  
+  test("width, undefined size") {
+    val label = new Label()
+    label.width = None;
+    assert(label.width === None)
+  }
+  
+  test("height, defined size") {
+    val label = new Label()
+    label.height = 25 px;
+    assert(label.height.get === Measure(25, Units.px))
+  }
+  
+  test("height, undefined size") {
+    val label = new Label()
+    label.height = None;
+    assert(label.height === None)
+  }
+  
+  test("sizeFull()") {
+    val label = new Label
+    label.sizeFull()
+    assert(label.width.get === Measure(100, Units.pct))
+    assert(label.height.get === Measure(100, Units.pct))
+  }
+  
+  test("sizeUndefined()") {
+    val label = new Label
+    label.sizeUndefined()
+    assert(label.width === None)
+    assert(label.height === None)
+  }
+  
 }

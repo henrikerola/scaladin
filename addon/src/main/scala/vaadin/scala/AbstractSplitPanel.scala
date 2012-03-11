@@ -21,16 +21,18 @@ trait AbstractSplitPanel extends AbstractLayout {
 
 }
 
-class HorizontalSplitPanel(width: String = 100 percent, height: String = 100 percent, caption: String = null, style: String = null)
-  extends AbstractSplitPanel {
+class HorizontalSplitPanel extends AbstractSplitPanel {
 
   override val p = new com.vaadin.ui.HorizontalSplitPanel()
   WrapperRegistry.put(this)
 
-  p.setWidth(width)
-  p.setHeight(height)
-  p.setCaption(caption)
-  p.setStyleName(style)
+  def this(width: Option[Measure] = 100 percent, height: Option[Measure] = 100 percent, caption: String = null, style: String = null) = {
+	  this()
+	  this.width = width;
+	  this.height = height;
+	  this.caption = caption;
+	  p.setStyleName(style)
+  }
 
   //  def add[C <: VaadinComponent](component: C = null): C = {
   //    addComponent(component)
@@ -40,16 +42,18 @@ class HorizontalSplitPanel(width: String = 100 percent, height: String = 100 per
   //def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
 }
 
-class VerticalSplitPanel(width: String = 100 percent, height: String = 100 percent, caption: String = null, style: String = null)
-  extends AbstractSplitPanel {
+class VerticalSplitPanel extends AbstractSplitPanel {
 
   override val p = new com.vaadin.ui.VerticalSplitPanel()
   WrapperRegistry.put(this)
 
-  p.setWidth(width)
-  p.setHeight(height)
-  p.setCaption(caption)
-  p.setStyleName(style)
+  def this(width: Option[Measure] = 100 percent, height: Option[Measure] = 100 percent, caption: String = null, style: String = null) = {
+	  this()
+	  this.width = width;
+	  this.height = height;
+	  this.caption = caption;
+	  p.setStyleName(style)
+  }
 
   //  def add[C <: VaadinComponent](component: C = null): C = {
   //    addComponent(component)
