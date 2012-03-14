@@ -14,7 +14,13 @@ trait AbstractSplitPanel extends AbstractLayout {
 
   // TODO: methods for first and second component that return the added component?
 
-  // TODO: methods for setting split position
+  var reserved = false
+
+  def splitPosition = new Measure(p.getSplitPosition(), Units(p.getSplitPositionUnit()))
+  def splitPosition_=(position: Option[Measure]) = position match {
+    case None => p.setSplitPosition(50, Units.pct.id, reserved)
+    case _ => p.setSplitPosition(position.get.value.intValue, position.get.unit.id, reserved)
+  }
 
   def locked = p.isLocked();
   def locked_=(locked: Boolean) = p.setLocked(locked)
@@ -27,11 +33,11 @@ class HorizontalSplitPanel extends AbstractSplitPanel {
   WrapperRegistry.put(this)
 
   def this(width: Option[Measure] = 100 percent, height: Option[Measure] = 100 percent, caption: String = null, style: String = null) = {
-	  this()
-	  this.width = width;
-	  this.height = height;
-	  this.caption = caption;
-	  p.setStyleName(style)
+    this()
+    this.width = width;
+    this.height = height;
+    this.caption = caption;
+    p.setStyleName(style)
   }
 
   //  def add[C <: VaadinComponent](component: C = null): C = {
@@ -48,11 +54,11 @@ class VerticalSplitPanel extends AbstractSplitPanel {
   WrapperRegistry.put(this)
 
   def this(width: Option[Measure] = 100 percent, height: Option[Measure] = 100 percent, caption: String = null, style: String = null) = {
-	  this()
-	  this.width = width;
-	  this.height = height;
-	  this.caption = caption;
-	  p.setStyleName(style)
+    this()
+    this.width = width;
+    this.height = height;
+    this.caption = caption;
+    p.setStyleName(style)
   }
 
   //  def add[C <: VaadinComponent](component: C = null): C = {
