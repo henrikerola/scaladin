@@ -77,38 +77,3 @@ class Form(width: Option[Measure] = None, height: Option[Measure] = 100 percent,
   setHeight(if (height.isDefined) height.get.toString else null)
   if (item != null) setItemDataSource(item)
 }
-
-class Embedded(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, source: Resource = null, objectType: Int = com.vaadin.ui.Embedded.TYPE_OBJECT, style: String = null)
-  extends com.vaadin.ui.Embedded(caption) {
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  if (source != null) setSource(source.p)
-  setType(objectType)
-  setStyleName(style)
-}
-
-class HorizontalSlider(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, property: com.vaadin.data.Property = null, value: Any = null, min: Double = 0, max: Double = 100, resolution: Int = 0, style: String = null)
-  extends com.vaadin.ui.Slider(caption) {
-  setOrientation(com.vaadin.ui.Slider.ORIENTATION_HORIZONTAL)
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  if (property != null) setPropertyDataSource(property)
-  if (value != null) setValue(value)
-  setMin(min)
-  setMax(max)
-  setResolution(resolution)
-  setStyleName(style)
-}
-
-class VerticalSlider(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, property: com.vaadin.data.Property = null, value: Any = null, min: Double = 0, max: Double = 100, resolution: Int = 0, style: String = null)
-  extends com.vaadin.ui.Slider(caption) {
-  setOrientation(com.vaadin.ui.Slider.ORIENTATION_VERTICAL)
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  if (property != null) setPropertyDataSource(property)
-  if (value != null) setValue(value)
-  setMin(min)
-  setMax(max)
-  setResolution(resolution)
-  setStyleName(style)
-}
