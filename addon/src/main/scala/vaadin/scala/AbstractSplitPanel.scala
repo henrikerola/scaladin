@@ -1,5 +1,13 @@
 package vaadin.scala
 
+
+// TODO extend MouseClickEvents.ClickEvent
+case class SplitterClickEvent(component: Component) extends Event
+
+class SplitterClickListener(val action: SplitterClickEvent => Unit) extends com.vaadin.ui.AbstractSplitPanel.SplitterClickListener with Listener {
+  def splitterClick(e: com.vaadin.ui.AbstractSplitPanel#SplitterClickEvent) = action(SplitterClickEvent(WrapperRegistry.get[AbstractSplitPanel](e.getComponent()).get))
+}
+
 trait AbstractSplitPanel extends AbstractLayout {
 
   override def p: com.vaadin.ui.AbstractSplitPanel
@@ -19,11 +27,17 @@ trait AbstractSplitPanel extends AbstractLayout {
   def splitPosition = new Measure(p.getSplitPosition(), Units(p.getSplitPositionUnit()))
   def splitPosition_=(position: Option[Measure]) = position match {
     case None => p.setSplitPosition(50, Units.pct.id, reserved)
-    case _ => p.setSplitPosition(position.get.value.intValue, position.get.unit.id, reserved)
+    case Some(position) => p.setSplitPosition(position.value.intValue, position.unit.id, reserved)
   }
 
   def locked = p.isLocked();
   def locked_=(locked: Boolean) = p.setLocked(locked)
+  
+  def splitterClickListeners = new ListenersTrait[SplitterClickEvent => Unit, SplitterClickListener] {
+    override def listeners = p.getListeners(classOf[com.vaadin.ui.AbstractSplitPanel#SplitterClickEvent])
+    override def addListener(elem: SplitterClickEvent => Unit) = p.addListener(new SplitterClickListener(elem))
+    override def removeListener(elem: SplitterClickListener) = p.removeListener(elem)
+  }
 
 }
 
