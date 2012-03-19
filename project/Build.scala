@@ -7,7 +7,7 @@ import JacocoPlugin._
 object BuildSettings {
   val buildOrganization = "vaadin.scala"
   val buildName = "Scaladin"
-  val buildVersion = "1.0.0"
+  val buildVersion = "2.0.0-SNAPSHOT"
   val buildScalaVersion = "2.9.1"
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
