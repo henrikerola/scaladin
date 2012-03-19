@@ -71,6 +71,9 @@ trait AbstractComponent extends Component with Sizeable {
   def description = Option(p.getDescription)
   def description_=(description: Option[String]) = p.setDescription(description.getOrElse(null))
   def description_=(description: String) = p.setDescription(description)
+  
+  def immediate = p.isImmediate();
+  def immediate_=(immediate: Boolean) = p.setImmediate(immediate);
 }
 
 trait AbstractField extends AbstractComponent {
@@ -83,9 +86,9 @@ trait AbstractField extends AbstractComponent {
   def property_=(property: Option[com.vaadin.data.Property]) = p.setPropertyDataSource(property.getOrElse(null))
   def property_=(property: com.vaadin.data.Property) = p.setPropertyDataSource(property)
 
-  def value: Option[String] = Option(if (p.getValue() != null) p.getValue().toString else null)
-  def value_=(value: Option[String]): Unit = p.setValue(value.getOrElse(null))
-  def value_=(value: String): Unit = p.setValue(value)
+  def value: Option[Any] = Option(p.getValue())
+  def value_=(value: Option[Any]): Unit = p.setValue(value.getOrElse(null))
+  def value_=(value: Any): Unit = p.setValue(value)
 
   def invalidCommitted = p.isInvalidCommitted
   def invalidCommitted_=(invalidCommitted: Boolean) = p.setInvalidCommitted(invalidCommitted)

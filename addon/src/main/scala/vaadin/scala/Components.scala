@@ -3,21 +3,6 @@ package vaadin.scala
 import com.vaadin.ui.themes.BaseTheme
 import com.vaadin.ui._
 
-class CheckBox(caption: String = null, checked: Boolean = false, immediate: Boolean = false, action: com.vaadin.ui.Button#ClickEvent => Unit = null, icon: Resource = null, style: String = null, enabled: Boolean = true, description: String = null)
-  extends com.vaadin.ui.CheckBox(caption, checked) {
-  setImmediate(immediate)
-  if (icon == null) setIcon(null) else setIcon(icon.p)
-  setStyleName(style)
-  setEnabled(enabled)
-  setDescription(description)
-
-  // FIXME
-  //if (action != null) addListener(action)
-
-  // FIXME
-  //def addListener(action: com.vaadin.ui.Button#ClickEvent => Unit): Unit = addListener(new ButtonClickListener(action))
-}
-
 class TextArea(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, property: com.vaadin.data.Property = null, value: Any = null, style: String = null, prompt: String = null)
   extends com.vaadin.ui.TextArea(caption) {
   setWidth(if (width.isDefined) width.get.toString else null)
