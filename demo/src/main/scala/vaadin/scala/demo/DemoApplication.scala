@@ -241,39 +241,39 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
 
     for (i <- 0 until 4) {
       val table = new Table(width = 100 percent)
-      table.setPageLength(4)
-      table.setSelectable(true)
-      table.setColumnCollapsingAllowed(true)
-      table.setColumnReorderingAllowed(true)
+      table.pageLength = 4
+      table.p.setSelectable(true)
+      table.columnCollapsingAllowed = true
+      table.columnReorderingAllowed = true
 
       i match {
 
         case 0 => tableLayout.addComponent(new HtmlLabel(<span>Normal Table</span>).p)
 
         case 1 =>
-          table.setStyleName("strong")
+          table.p.setStyleName("strong")
           tableLayout.addComponent(new HtmlLabel(<span>Strong Style (<code>Reindeer.TABLE_STRONG</code>)</span>).p)
 
         case 2 =>
-          table.setStyleName("borderless")
+          table.p.setStyleName("borderless")
           tableLayout.addComponent(new HtmlLabel(<span>Borderless Style (<code>Reindeer.TABLE_BORDERLESS</code>)</span>).p)
 
         case 3 =>
-          table.setStyleName("borderless strong")
+          table.p.setStyleName("borderless strong")
           tableLayout.addComponent(new Label("Borderless & Strong Combined").p)
 
       }
 
-      table addContainerProperty ("First", classOf[String], null)
-      table addContainerProperty ("Second", classOf[String], null)
-      table addContainerProperty ("Third", classOf[String], null)
+      table.p.addContainerProperty ("First", classOf[String], null)
+      table.p.addContainerProperty ("Second", classOf[String], null)
+      table.p.addContainerProperty ("Third", classOf[String], null)
 
       for (j <- 0 until 100) {
-        table.addItem(Array("Foo " + j, "Bar value " + j,
+        table.p.addItem(Array("Foo " + j, "Bar value " + j,
           "Last column value " + j), j)
       }
 
-      tableLayout.addComponent(table)
+      tableLayout.addComponent(table.p)
     }
 
     tableLayout
@@ -493,8 +493,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
         // Force refresh
         getMainWindow.open(new ExternalResource(getURL))
       })
-    transparent
-      .setDescription("Set style Reindeer.TABSHEET_MINIMAL to the main tab sheet (preview components on different background colors).")
+    transparent.description = "Set style Reindeer.TABSHEET_MINIMAL to the main tab sheet (preview components on different background colors)."
     toggles.addComponent(transparent)
 
     val userLayout = new CssLayout()
