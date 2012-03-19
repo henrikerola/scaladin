@@ -1,6 +1,8 @@
 import sbt._
 import Keys._
 import com.github.siasia.WebPlugin._
+import de.johoop.jacoco4sbt._
+import JacocoPlugin._
 
 object BuildSettings {
   val buildOrganization = "vaadin.scala"
@@ -38,7 +40,7 @@ object ScalaWrappersForVaadinBuild extends Build {
   import Dependencies._
   import BuildSettings._
 
-  val addonSettings = buildSettings ++ Seq(
+  val addonSettings = buildSettings ++ jacoco.settings ++ Seq(
     name := buildName,
     libraryDependencies := Seq(vaadin, scalaTest, junitInterface),
     packageConfiguration in Compile in packageBin ~= { 
