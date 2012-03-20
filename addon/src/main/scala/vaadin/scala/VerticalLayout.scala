@@ -35,12 +35,14 @@ trait AbstractOrderedLayout extends AbstractLayout with SpacingHandler with Alig
   // TODO: add addComponentAsFirst ?, listeners
 }
 
-class VerticalLayout(implicit val wr: WrapperRegistry) extends AbstractOrderedLayout /*with LayoutClickListener*/ {
+class VerticalLayout(implicit wrapper: WrapperRegistry) extends AbstractOrderedLayout /*with LayoutClickListener*/ {
 
+  override val wr = wrapper
+  
   override val p = new com.vaadin.ui.VerticalLayout
   wr.put(this)
 
-  def this(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, size: Tuple2[String, String] = null)(implicit wr: WrapperRegistry) {
+  def this(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, size: Tuple2[String, String] = null)(implicit wrapper: WrapperRegistry) {
     this()
 
     if (size != null) {

@@ -12,9 +12,11 @@ trait LayoutClickListener extends LayoutClickNotifier {
   }
 }
 
-class HorizontalLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null)(implicit val wr: WrapperRegistry)
+class HorizontalLayout(width: String = null, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null)(implicit wrapper: WrapperRegistry)
     extends AbstractOrderedLayout /*with LayoutClickListener*/ {
 
+  override val wr = wrapper
+  
   override val p = new com.vaadin.ui.HorizontalLayout
   wr.put(this)
 
@@ -59,9 +61,11 @@ class GridLayout(width: String = null, height: String = null, margin: Boolean = 
 
 }
 
-class CssLayout(width: String = null, height: String = null, margin: Boolean = false, style: String = null, caption: String = null, size: Tuple2[String, String] = null)(implicit val wr: WrapperRegistry)
+class CssLayout(width: String = null, height: String = null, margin: Boolean = false, style: String = null, caption: String = null, size: Tuple2[String, String] = null)(implicit wrapper: WrapperRegistry)
     extends AbstractLayout /*with LayoutClickListener*/ {
 
+  override val wr = wrapper
+  
   override val p = new com.vaadin.ui.CssLayout {
     override def getCss(c: VaadinComponent): String = {
       cssMap.getOrElse(c, null)

@@ -54,7 +54,7 @@ class Button(caption: String = null, action: ButtonClickEventListener = null, ic
   }
 }
 
-class LinkButton(caption: String = null, action: ButtonClickEventListener = null, icon: Resource = null, style: String = null)(implicit override val wr: WrapperRegistry)
+class LinkButton(caption: String = null, action: ButtonClickEventListener = null, icon: Resource = null, style: String = null)(implicit wr: WrapperRegistry)
     extends Button(caption, action, icon) {
   p.setStyleName(BaseTheme.BUTTON_LINK)
   p.addStyleName(style)

@@ -15,13 +15,14 @@ object Label {
 }
 
 // TODO: implement interfaces
-class Label(implicit val wr: WrapperRegistry) extends AbstractComponent {
+class Label(implicit wrapper: WrapperRegistry) extends AbstractComponent {
 
+  override val wr = wrapper
   override val p = new com.vaadin.ui.Label;
   wr.put(this)
 
   // icon, caption as constructor parameters?
-  def this(content: String = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, contentMode: Label.ContentMode.Value = Label.ContentMode(com.vaadin.ui.Label.CONTENT_DEFAULT), style: String = null)(implicit wr: WrapperRegistry) = {
+  def this(content: String = null, width: String = 100 percent, height: String = null, property: com.vaadin.data.Property = null, contentMode: Label.ContentMode.Value = Label.ContentMode(com.vaadin.ui.Label.CONTENT_DEFAULT), style: String = null)(implicit wrapper: WrapperRegistry) = {
     this()
 
     p.setWidth(width)
