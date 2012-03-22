@@ -46,8 +46,8 @@ class TableTests extends FunSuite {
 
     assert(!table.editable)
 
-    table.sortable = true
-    assert(table.sortable)
+    table.editable = true
+    assert(table.editable)
   }
 
   test("sortable") {
@@ -92,39 +92,39 @@ class TableTests extends FunSuite {
   }
 
   test("ColumnHeaderModes") {
-    assert(Table.ColumnHeaderMode.hidden.id === com.vaadin.ui.Table.COLUMN_HEADER_MODE_HIDDEN)
-    assert(Table.ColumnHeaderMode.id.id === com.vaadin.ui.Table.COLUMN_HEADER_MODE_ID)
-    assert(Table.ColumnHeaderMode.explicit.id === com.vaadin.ui.Table.COLUMN_HEADER_MODE_EXPLICIT)
-    assert(Table.ColumnHeaderMode.explicitDefaultsId.id === com.vaadin.ui.Table.COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
+    assert(Table.ColumnHeaderMode.Hidden.id === com.vaadin.ui.Table.COLUMN_HEADER_MODE_HIDDEN)
+    assert(Table.ColumnHeaderMode.Id.id === com.vaadin.ui.Table.COLUMN_HEADER_MODE_ID)
+    assert(Table.ColumnHeaderMode.Explicit.id === com.vaadin.ui.Table.COLUMN_HEADER_MODE_EXPLICIT)
+    assert(Table.ColumnHeaderMode.ExplicitDefaultsId.id === com.vaadin.ui.Table.COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
   }
 
   test("columnHeaderMode") {
     val table = new Table
 
-    assert(table.columnHeaderMode === Table.ColumnHeaderMode.explicitDefaultsId)
+    assert(table.columnHeaderMode === Table.ColumnHeaderMode.ExplicitDefaultsId)
 
-    table.columnHeaderMode = Table.ColumnHeaderMode.explicit
-    assert(table.columnHeaderMode === Table.ColumnHeaderMode.explicit)
+    table.columnHeaderMode = Table.ColumnHeaderMode.Explicit
+    assert(table.columnHeaderMode === Table.ColumnHeaderMode.Explicit)
   }
 
   test("RowHeaderModes") {
-    assert(Table.RowHeaderMode.hidden.id === com.vaadin.ui.Table.ROW_HEADER_MODE_HIDDEN)
-    assert(Table.RowHeaderMode.id.id === com.vaadin.ui.Table.ROW_HEADER_MODE_ID)
-    assert(Table.RowHeaderMode.item.id === com.vaadin.ui.Table.ROW_HEADER_MODE_ITEM)
-    assert(Table.RowHeaderMode.index.id === com.vaadin.ui.Table.ROW_HEADER_MODE_INDEX)
-    assert(Table.RowHeaderMode.explicit.id === com.vaadin.ui.Table.ROW_HEADER_MODE_EXPLICIT)
-    assert(Table.RowHeaderMode.property.id === com.vaadin.ui.Table.ROW_HEADER_MODE_PROPERTY)
-    assert(Table.RowHeaderMode.iconOnly.id === com.vaadin.ui.Table.ROW_HEADER_MODE_ICON_ONLY)
-    assert(Table.RowHeaderMode.explicitDefaultsId.id === com.vaadin.ui.Table.ROW_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
+    assert(Table.RowHeaderMode.Hidden.id === com.vaadin.ui.Table.ROW_HEADER_MODE_HIDDEN)
+    assert(Table.RowHeaderMode.Id.id === com.vaadin.ui.Table.ROW_HEADER_MODE_ID)
+    assert(Table.RowHeaderMode.Item.id === com.vaadin.ui.Table.ROW_HEADER_MODE_ITEM)
+    assert(Table.RowHeaderMode.Index.id === com.vaadin.ui.Table.ROW_HEADER_MODE_INDEX)
+    assert(Table.RowHeaderMode.Explicit.id === com.vaadin.ui.Table.ROW_HEADER_MODE_EXPLICIT)
+    assert(Table.RowHeaderMode.Property.id === com.vaadin.ui.Table.ROW_HEADER_MODE_PROPERTY)
+    assert(Table.RowHeaderMode.IconOnly.id === com.vaadin.ui.Table.ROW_HEADER_MODE_ICON_ONLY)
+    assert(Table.RowHeaderMode.ExplicitDefaultsId.id === com.vaadin.ui.Table.ROW_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
   }
 
   test("rowHeaderMode") {
     val table = new Table
 
-    assert(table.rowHeaderMode === Table.RowHeaderMode.hidden)
+    assert(table.rowHeaderMode === Table.RowHeaderMode.Hidden)
 
-    table.rowHeaderMode = Table.RowHeaderMode.iconOnly
-    assert(table.rowHeaderMode === Table.RowHeaderMode.iconOnly)
+    table.rowHeaderMode = Table.RowHeaderMode.IconOnly
+    assert(table.rowHeaderMode === Table.RowHeaderMode.IconOnly)
   }
 
   test("footerVisible") {
