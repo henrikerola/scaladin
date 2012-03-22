@@ -24,10 +24,7 @@ object Table {
   }
 
   object SelectionMode extends Enumeration {
-    val disabled = Value
-    val single = Value
-    val multi = Value(DEFAULT.ordinal)
-    val multiSimple = Value(SIMPLE.ordinal)
+    val None, Single, Multi, MultiSimple = Value
   }
 }
 
@@ -78,7 +75,32 @@ class Table extends AbstractSelect {
   def sortable = !p.isSortDisabled
   def sortable_=(sortable: Boolean) = p.setSortDisabled(!sortable)
 
-  // selectable
+  def selectionMode = {
+    if (!p.isSelectable)
+      Table.SelectionMode.None
+    else if (p.isMultiSelect && p.getMultiSelectMode == SIMPLE)
+      Table.SelectionMode.MultiSimple
+    else if (p.isMultiSelect())
+      Table.SelectionMode.Multi
+    else
+      Table.SelectionMode.Single
+  }
+
+  def selectionMode_=(selectionMode: Table.SelectionMode.Value) = selectionMode match {
+    case Table.SelectionMode.None =>
+      p.setSelectable(false)
+    case Table.SelectionMode.Single =>
+      p.setSelectable(true)
+      p.setMultiSelect(false)
+    case Table.SelectionMode.Multi =>
+      p.setSelectable(true)
+      p.setMultiSelect(true)
+      p.setMultiSelectMode(DEFAULT)
+    case Table.SelectionMode.MultiSimple =>
+      p.setSelectable(true)
+      p.setMultiSelect(true)
+      p.setMultiSelectMode(SIMPLE)
+  }
 
   def columnHeaderMode = Table.ColumnHeaderMode(p.getColumnHeaderMode)
   def columnHeaderMode_=(columnHeaderMode: Table.ColumnHeaderMode.Value) = p.setColumnHeaderMode(columnHeaderMode.id)
