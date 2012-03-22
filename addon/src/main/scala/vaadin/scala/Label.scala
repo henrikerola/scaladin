@@ -5,12 +5,12 @@ import scala.xml.Node
 object Label {
   object ContentMode extends Enumeration {
     import com.vaadin.ui.Label._
-    val text = Value(CONTENT_TEXT, "text")
-    val preformatted = Value(CONTENT_PREFORMATTED, "preformatted")
+    val Text = Value(CONTENT_TEXT, "text")
+    val Preformatted = Value(CONTENT_PREFORMATTED, "preformatted")
     // Note, CONTENT_UIDL is deprecated in com.vaadin.ui.Label so not added here
-    val xhtml = Value(CONTENT_XHTML, "xhtml")
-    val xml = Value(CONTENT_XML, "xml")
-    val raw = Value(CONTENT_RAW, "raw")
+    val Xhtml = Value(CONTENT_XHTML, "xhtml")
+    val Xml = Value(CONTENT_XML, "xml")
+    val Raw = Value(CONTENT_RAW, "raw")
   }
 }
 
@@ -45,4 +45,4 @@ class Label extends AbstractComponent with PropertyViewer {
 }
 
 class HtmlLabel(content: Node = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, property: com.vaadin.data.Property = null, style: String = null)
-  extends Label(width = width, height = height, content = if (content != null) content.toString else null, property = property, contentMode = Label.ContentMode.xhtml, style = style)
+  extends Label(width = width, height = height, content = if (content != null) content.toString else null, property = property, contentMode = Label.ContentMode.Xhtml, style = style)

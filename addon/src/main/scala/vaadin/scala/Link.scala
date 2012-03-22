@@ -4,9 +4,9 @@ object Link {
   object TargetBorder extends Enumeration {
     import com.vaadin.ui.Link._
     
-    val none = Value(TARGET_BORDER_NONE)
-    val minimal = Value(TARGET_BORDER_MINIMAL)
-    val default = Value(TARGET_BORDER_DEFAULT)
+    val None = Value(TARGET_BORDER_NONE)
+    val Minimal = Value(TARGET_BORDER_MINIMAL)
+    val Default = Value(TARGET_BORDER_DEFAULT)
   }
 }
 
@@ -15,7 +15,7 @@ class Link extends AbstractComponent {
   override val p = new com.vaadin.ui.Link()
   WrapperRegistry.put(this)
 
-  def this(caption: String = null, resource: Resource = null, targetName: String = null, targetWidth: Int = -1, targetHeight: Int = -1, targetBorder: Link.TargetBorder.Value = Link.TargetBorder.default) = {
+  def this(caption: String = null, resource: Resource = null, targetName: String = null, targetWidth: Int = -1, targetHeight: Int = -1, targetBorder: Link.TargetBorder.Value = Link.TargetBorder.Default) = {
     this()
     p.setCaption(caption)
     if (resource != null) p.setResource(resource.p)

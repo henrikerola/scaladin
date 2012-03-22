@@ -14,7 +14,7 @@ class LayoutTests extends FunSuite {
     assert(layout.p.getHeightUnits === Sizeable.UNITS_EM)
     assert(layout.margin === Margin(true, true, true, true))
     assert(layout.spacing === true)
-    assert(layout.caption.get === "Caption")
+    assert(layout.caption === Some("Caption"))
     assert(layout.p.getStyleName === "Style")
 
   }
@@ -35,11 +35,11 @@ class LayoutTests extends FunSuite {
     val layout = new VerticalLayout
 
     val label = new Label
-    layout.add(label, 2, Alignment.bottomCenter)
+    layout.add(label, 2, Alignment.BottomCenter)
 
     assert(layout.p.getComponent(0) === label.p)
     assert(layout.p.getExpandRatio(label.p) === 2)
-    assert(layout.alignment(label) === Alignment.bottomCenter)
+    assert(layout.alignment(label) === Alignment.BottomCenter)
     assert(layout.p.getComponentAlignment(label.p) === com.vaadin.ui.Alignment.BOTTOM_CENTER)
 
     assert(layout.p.getComponentIndex(label.p) === 0)
@@ -65,7 +65,7 @@ class LayoutTests extends FunSuite {
     assert(layout.p.getHeightUnits === Sizeable.UNITS_EM)
     assert(layout.margin === Margin(true, true, true, true))
     assert(layout.spacing === true)
-    assert(layout.caption.get === "Caption")
+    assert(layout.caption === Some("Caption"))
     assert(layout.p.getStyleName === "Style")
 
   }
@@ -89,7 +89,7 @@ class LayoutTests extends FunSuite {
     assert(layout.p.getHeight === 100)
     assert(layout.p.getHeightUnits === Sizeable.UNITS_EM)
     assert(layout.margin === Margin(true, true, true, true))
-    assert(layout.caption.get === "Caption")
+    assert(layout.caption === Some("Caption"))
     assert(layout.p.getStyleName === "Style")
   }
 

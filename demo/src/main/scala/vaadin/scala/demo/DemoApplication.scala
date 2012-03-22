@@ -48,12 +48,12 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
 
   def buildScalaWrappersAd(): Layout = {
     new VerticalLayout(width = 100 percent, style = Reindeer.LAYOUT_BLACK) {
-      add(alignment = Alignment.middleCenter, component = new VerticalLayout(width = 700 px, style = Reindeer.LAYOUT_BLACK, margin = true) {
-        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
+      add(alignment = Alignment.MiddleCenter, component = new VerticalLayout(width = 700 px, style = Reindeer.LAYOUT_BLACK, margin = true) {
+        add(alignment = Alignment.MiddleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
           content = <span>This demo is implemented completely in <a href="http://www.scala-lang.org">Scala</a>,</span>))
-        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
+        add(alignment = Alignment.MiddleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
           content = <span>with the help of the ScalaWrappers Vaadin addon.</span>))
-        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
+        add(alignment = Alignment.MiddleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
           content = <span>You can find more info about the add-on from the <a href="http://vaadin.com/addon/scala-wrappers">Directory page</a>.</span>))
       })
     }
@@ -362,7 +362,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     }
 
     val stylesHeading = new H2("One Theme &ndash; Three Styles")
-    stylesHeading.contentMode = Label.ContentMode.xhtml
+    stylesHeading.contentMode = Label.ContentMode.Xhtml
 
     val colors = new HorizontalLayout(100 percent, 250 px)
 
@@ -505,15 +505,15 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     val logout = new Button(caption = "Logout", action = _ => openLogoutWindow(), style = Reindeer.BUTTON_SMALL)
 
     val buttons = new HorizontalLayout(spacing = true) {
-      add(component = help, alignment = Alignment.middleLeft)
+      add(component = help, alignment = Alignment.MiddleLeft)
       add(logout)
     }
     userLayout.addComponent(buttons)
 
     new HorizontalLayout(width = 100 percent, margin = true, spacing = true) {
       add(titleLayout)
-      add(component = toggles, alignment = Alignment.middleLeft)
-      add(component = userLayout, alignment = Alignment.topRight)
+      add(component = toggles, alignment = Alignment.MiddleLeft)
+      add(component = userLayout, alignment = Alignment.TopRight)
     }
   }
 
@@ -549,7 +549,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     }
     buttons.yes.focus()
 
-    logoutLayout.add(component = buttons, alignment = Alignment.topCenter)
+    logoutLayout.add(component = buttons, alignment = Alignment.TopCenter)
 
     getMainWindow.addWindow(logout)
   }

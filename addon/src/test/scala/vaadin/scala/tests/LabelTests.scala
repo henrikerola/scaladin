@@ -9,21 +9,21 @@ import com.vaadin.data.util.ObjectProperty
 class LabelTests extends FunSuite {
 
   test("ContentModes") {
-	assert(Label.ContentMode.text.id === com.vaadin.ui.Label.CONTENT_TEXT)
-    assert(Label.ContentMode.preformatted.id === com.vaadin.ui.Label.CONTENT_PREFORMATTED)
-    assert(Label.ContentMode.xhtml.id === com.vaadin.ui.Label.CONTENT_XHTML)
-    assert(Label.ContentMode.xml.id === com.vaadin.ui.Label.CONTENT_XML)
-    assert(Label.ContentMode.raw.id === com.vaadin.ui.Label.CONTENT_RAW)
+	assert(Label.ContentMode.Text.id === com.vaadin.ui.Label.CONTENT_TEXT)
+    assert(Label.ContentMode.Preformatted.id === com.vaadin.ui.Label.CONTENT_PREFORMATTED)
+    assert(Label.ContentMode.Xhtml.id === com.vaadin.ui.Label.CONTENT_XHTML)
+    assert(Label.ContentMode.Xml.id === com.vaadin.ui.Label.CONTENT_XML)
+    assert(Label.ContentMode.Raw.id === com.vaadin.ui.Label.CONTENT_RAW)
   }
   
   test("constructor: with all params but without names") {
     val property = Property("Test")
-    val label = new Label("Content", 10 px, 100 em, property, Label.ContentMode.preformatted, "Style")
+    val label = new Label("Content", 10 px, 100 em, property, Label.ContentMode.Preformatted, "Style")
     assert(label.value === Some("Content"))
     assert(label.width === (10 px))
     assert(label.height === (100 em))
     assert(label.property === Some(property))
-    assert(label.contentMode === Label.ContentMode.preformatted)
+    assert(label.contentMode === Label.ContentMode.Preformatted)
     assert(label.p.getStyleName === "Style")
   }
 
@@ -33,7 +33,7 @@ class LabelTests extends FunSuite {
     assert(label.width === (100 pct))
     assert(label.height === None)
     assert(label.property != None)
-    assert(label.contentMode === Label.ContentMode.text)
+    assert(label.contentMode === Label.ContentMode.Text)
     assert(label.p.getStyleName === "")
   }
 
@@ -64,8 +64,8 @@ class LabelTests extends FunSuite {
   
   test("contentMode: getter should return set content mode") {
     val label = new Label
-    label.contentMode = Label.ContentMode.xml
-    assert(label.contentMode === Label.ContentMode.xml)
+    label.contentMode = Label.ContentMode.Xml
+    assert(label.contentMode === Label.ContentMode.Xml)
   }
   
   test("property: None") {
