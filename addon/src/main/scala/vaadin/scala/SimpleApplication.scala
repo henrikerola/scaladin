@@ -4,7 +4,7 @@ import com.vaadin.Application
 
 abstract class SimpleApplication(title: String = "", theme: String = com.vaadin.ui.themes.Reindeer.THEME_NAME) extends Application {
 
-  implicit val wr = new WrapperRegistry
+  implicit val wrapperRegistry = new WrapperRegistry
 
   def init(): Unit = {
     val mainWindow = new Window(title)

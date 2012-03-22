@@ -1,6 +1,14 @@
 package vaadin.scala
 
-trait AbstractSplitPanel extends AbstractLayout {
+
+// TODO extend MouseClickEvents.ClickEvent
+case class SplitterClickEvent(component: Component) extends Event
+
+class SplitterClickListener(val action: SplitterClickEvent => Unit)(implicit wrapper: WrapperRegistry) extends com.vaadin.ui.AbstractSplitPanel.SplitterClickListener with Listener {
+  def splitterClick(e: com.vaadin.ui.AbstractSplitPanel#SplitterClickEvent) = action(SplitterClickEvent(wrapper.get[AbstractSplitPanel](e.getComponent()).get))
+}
+
+abstract class AbstractSplitPanel(implicit wrapper: WrapperRegistry) extends AbstractLayout {
 
   override def p: com.vaadin.ui.AbstractSplitPanel
 
@@ -14,23 +22,37 @@ trait AbstractSplitPanel extends AbstractLayout {
 
   // TODO: methods for first and second component that return the added component?
 
-  // TODO: methods for setting split position
+  var reserved = false
+
+  def splitPosition = new Measure(p.getSplitPosition(), Units(p.getSplitPositionUnit()))
+  def splitPosition_=(position: Option[Measure]) = position match {
+    case None => p.setSplitPosition(50, Units.pct.id, reserved)
+    case Some(position) => p.setSplitPosition(position.value.intValue, position.unit.id, reserved)
+  }
 
   def locked = p.isLocked();
   def locked_=(locked: Boolean) = p.setLocked(locked)
+  
+  def splitterClickListeners = new ListenersTrait[SplitterClickEvent => Unit, SplitterClickListener] {
+    override def listeners = p.getListeners(classOf[com.vaadin.ui.AbstractSplitPanel#SplitterClickEvent])
+    override def addListener(elem: SplitterClickEvent => Unit) = p.addListener(new SplitterClickListener(elem))
+    override def removeListener(elem: SplitterClickListener) = p.removeListener(elem)
+  }
 
 }
 
-class HorizontalSplitPanel(width: String = 100 percent, height: String = 100 percent, caption: String = null, style: String = null)(implicit val wr: WrapperRegistry)
-    extends AbstractSplitPanel {
+class HorizontalSplitPanel(implicit wrapper: WrapperRegistry) extends AbstractSplitPanel {
 
   override val p = new com.vaadin.ui.HorizontalSplitPanel()
   wr.put(this)
 
-  p.setWidth(width)
-  p.setHeight(height)
-  p.setCaption(caption)
-  p.setStyleName(style)
+  def this(width: Option[Measure] = 100 percent, height: Option[Measure] = 100 percent, caption: String = null, style: String = null)(implicit wrapper: WrapperRegistry) = {
+    this()
+    this.width = width;
+    this.height = height;
+    this.caption = caption;
+    p.setStyleName(style)
+  }
 
   //  def add[C <: VaadinComponent](component: C = null): C = {
   //    addComponent(component)
@@ -40,16 +62,18 @@ class HorizontalSplitPanel(width: String = 100 percent, height: String = 100 per
   //def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
 }
 
-class VerticalSplitPanel(width: String = 100 percent, height: String = 100 percent, caption: String = null, style: String = null)(implicit val wr: WrapperRegistry)
-    extends AbstractSplitPanel {
+class VerticalSplitPanel(implicit wrapper: WrapperRegistry) extends AbstractSplitPanel {
 
   override val p = new com.vaadin.ui.VerticalSplitPanel()
   wr.put(this)
 
-  p.setWidth(width)
-  p.setHeight(height)
-  p.setCaption(caption)
-  p.setStyleName(style)
+  def this(width: Option[Measure] = 100 percent, height: Option[Measure] = 100 percent, caption: String = null, style: String = null)(implicit wrapper: WrapperRegistry) = {
+    this()
+    this.width = width;
+    this.height = height;
+    this.caption = caption;
+    p.setStyleName(style)
+  }
 
   //  def add[C <: VaadinComponent](component: C = null): C = {
   //    addComponent(component)

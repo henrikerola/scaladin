@@ -5,7 +5,7 @@ import org.scalatest.FunSuite
 
 class ButtonTests extends FunSuite {
 
-  implicit val wr = new WrapperRegistry
+  implicit val testWr = new WrapperRegistry
 
   val listener1 = (e: ButtonClickEvent) => println("1")
   val listener2 = (e: ButtonClickEvent) => println(e)
@@ -53,5 +53,51 @@ class ButtonTests extends FunSuite {
 
     assert(!button.clickListeners.contains(listener2))
   }
+  
+  test("focusListeners, add a listener") {
+    val button = new Button
 
+    button.focusListeners += (println(_))
+
+    assert(button.focusListeners.size === 1)
+  }
+  
+  val focusListener = (e: FocusEvent) => println("1")
+  val focusListener2 = (e: FocusEvent) => println(e)
+  
+  test("focusListeners, remove a listener") {
+    val button = new Button
+
+    button.focusListeners += focusListener
+    
+    button.focusListeners -= focusListener
+    
+    assert(button.clickListeners.size === 0)
+  }
+  
+  test("focusListeners.iterator returns added listeners") {
+    val button = new Button
+
+    button.focusListeners += focusListener
+    button.focusListeners += focusListener2
+
+    val iter = button.focusListeners.iterator
+    assert(iter.next() === focusListener)
+    assert(iter.next() === focusListener2)
+    assert(!iter.hasNext)
+  }
+  
+  test("focusListeners.contains returns true for added listener") {
+    val button = new Button
+
+    button.focusListeners.add(focusListener)
+    
+    assert(button.focusListeners.contains(focusListener))
+  }
+  
+  test("focusListeners.contains returns false for non-added listener") {
+    val button = new Button
+
+    assert(!button.focusListeners.contains(focusListener))
+  }
 }

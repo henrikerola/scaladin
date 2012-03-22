@@ -1,6 +1,6 @@
 package vaadin.scala
 
-abstract class AbstractTextField extends AbstractField {
+abstract class AbstractTextField(implicit wrapper: WrapperRegistry) extends AbstractField {
 
   override def p: com.vaadin.ui.AbstractTextField
 

@@ -47,10 +47,9 @@ trait ComponentContainer extends Component {
   // TODO: listeners
 }
 
-trait AbstractComponentContainer extends AbstractComponent with ComponentContainer {
+abstract class AbstractComponentContainer(implicit wrapper: WrapperRegistry) extends AbstractComponent with ComponentContainer {
 
   override def p: com.vaadin.ui.AbstractComponentContainer
-
 }
 
 case class Margin(top: Boolean = false, right: Boolean = false, bottom: Boolean = false, left: Boolean = false)
@@ -65,7 +64,7 @@ trait Layout extends ComponentContainer {
 
 }
 
-trait AbstractLayout extends AbstractComponentContainer with Layout {
+abstract class AbstractLayout(implicit wrapper: WrapperRegistry) extends AbstractComponentContainer with Layout {
   override def p: com.vaadin.ui.AbstractLayout
 
   def margin: Margin = {

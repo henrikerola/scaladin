@@ -53,25 +53,32 @@ trait ScaladinWrapper extends com.vaadin.ui.Component with Component {
 
 trait Sizeable extends Component {
 
-  // TODO: use UnitExtent instead of String?
-  // TODO: width and height getters
-  def width(width: String) = p.setWidth(width)
-  def height(height: String) = p.setHeight(height)
+  def width: Option[Measure] = if (p.getWidth < 0) None else Option(new Measure(p.getWidth, Units(p.getWidthUnits)))
+  def width_=(width: Option[Measure]) = p.setWidth(if(width.isDefined) width.get.toString else null)
+  def width_=(width: Measure) = p.setWidth(if (width != null) width.toString else null)
+  
+  def height: Option[Measure] = if (p.getHeight() < 0) None else Option(new Measure(p.getHeight(), Units(p.getHeightUnits)))
+  def height_=(height: Option[Measure]) = p.setHeight(if(height.isDefined) height.get.toString else null)
+  def height_=(height: Measure) = p.setHeight(if (height != null) height.toString else null)
 
   def sizeFull() = p.setSizeFull
   def sizeUndefined() = p.setSizeUndefined
 }
 
-abstract class AbstractComponent extends Component with Sizeable {
+abstract class AbstractComponent(implicit wrapper: WrapperRegistry) extends Component with Sizeable {
 
+  override val wr = wrapper
   override def p: com.vaadin.ui.AbstractComponent
 
   def description = Option(p.getDescription)
   def description_=(description: Option[String]) = p.setDescription(description.getOrElse(null))
   def description_=(description: String) = p.setDescription(description)
+  
+  def immediate = p.isImmediate();
+  def immediate_=(immediate: Boolean) = p.setImmediate(immediate);
 }
 
-trait AbstractField extends AbstractComponent {
+abstract class AbstractField(implicit wrapper: WrapperRegistry) extends AbstractComponent {
 
   override def p: com.vaadin.ui.AbstractField
 
@@ -81,9 +88,9 @@ trait AbstractField extends AbstractComponent {
   def property_=(property: Option[com.vaadin.data.Property]) = p.setPropertyDataSource(property.getOrElse(null))
   def property_=(property: com.vaadin.data.Property) = p.setPropertyDataSource(property)
 
-  def value: Option[String] = Option(if (p.getValue() != null) p.getValue().toString else null)
-  def value_=(value: Option[String]): Unit = p.setValue(value.getOrElse(null))
-  def value_=(value: String): Unit = p.setValue(value)
+  def value: Option[Any] = Option(p.getValue())
+  def value_=(value: Option[Any]): Unit = p.setValue(value.getOrElse(null))
+  def value_=(value: Any): Unit = p.setValue(value)
 
   def invalidCommitted = p.isInvalidCommitted
   def invalidCommitted_=(invalidCommitted: Boolean) = p.setInvalidCommitted(invalidCommitted)

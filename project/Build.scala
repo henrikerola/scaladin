@@ -1,11 +1,13 @@
 import sbt._
 import Keys._
 import com.github.siasia.WebPlugin._
+import de.johoop.jacoco4sbt._
+import JacocoPlugin._
 
 object BuildSettings {
   val buildOrganization = "vaadin.scala"
   val buildName = "Scaladin"
-  val buildVersion = "1.0.0"
+  val buildVersion = "2.0.0-SNAPSHOT"
   val buildScalaVersion = "2.9.1"
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
@@ -23,7 +25,7 @@ object BuildSettings {
 }
 
 object Dependencies {
-  val vaadinVersion = "6.7.5"
+  val vaadinVersion = "6.7.6"
   val jettyVersion = "7.3.0.v20110203"
   val scalaTestVersion = "1.6.1"
   val junitVersion = "4.9"
@@ -38,7 +40,7 @@ object ScalaWrappersForVaadinBuild extends Build {
   import Dependencies._
   import BuildSettings._
 
-  val addonSettings = buildSettings ++ Seq(
+  val addonSettings = buildSettings ++ jacoco.settings ++ Seq(
     name := buildName,
     libraryDependencies := Seq(vaadin, scalaTest, junitInterface),
     packageConfiguration in Compile in packageBin ~= { 

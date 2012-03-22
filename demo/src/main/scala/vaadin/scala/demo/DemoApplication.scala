@@ -49,11 +49,11 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
   def buildScalaWrappersAd(): Layout = {
     new VerticalLayout(width = 100 percent, style = Reindeer.LAYOUT_BLACK) {
       add(alignment = Alignment.middleCenter, component = new VerticalLayout(width = 700 px, style = Reindeer.LAYOUT_BLACK, margin = true) {
-        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
+        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
           content = <span>This demo is implemented completely in <a href="http://www.scala-lang.org">Scala</a>,</span>))
-        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
+        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
           content = <span>with the help of the ScalaWrappers Vaadin addon.</span>))
-        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = null, style = Reindeer.LABEL_H2,
+        add(alignment = Alignment.middleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
           content = <span>You can find more info about the add-on from the <a href="http://vaadin.com/addon/scala-wrappers">Directory page</a>.</span>))
       })
     }
@@ -241,39 +241,39 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
 
     for (i <- 0 until 4) {
       val table = new Table(width = 100 percent)
-      table.setPageLength(4)
-      table.setSelectable(true)
-      table.setColumnCollapsingAllowed(true)
-      table.setColumnReorderingAllowed(true)
+      table.pageLength = 4
+      table.p.setSelectable(true)
+      table.columnCollapsingAllowed = true
+      table.columnReorderingAllowed = true
 
       i match {
 
         case 0 => tableLayout.addComponent(new HtmlLabel(<span>Normal Table</span>).p)
 
         case 1 =>
-          table.setStyleName("strong")
+          table.p.setStyleName("strong")
           tableLayout.addComponent(new HtmlLabel(<span>Strong Style (<code>Reindeer.TABLE_STRONG</code>)</span>).p)
 
         case 2 =>
-          table.setStyleName("borderless")
+          table.p.setStyleName("borderless")
           tableLayout.addComponent(new HtmlLabel(<span>Borderless Style (<code>Reindeer.TABLE_BORDERLESS</code>)</span>).p)
 
         case 3 =>
-          table.setStyleName("borderless strong")
+          table.p.setStyleName("borderless strong")
           tableLayout.addComponent(new Label("Borderless & Strong Combined").p)
 
       }
 
-      table addContainerProperty ("First", classOf[String], null)
-      table addContainerProperty ("Second", classOf[String], null)
-      table addContainerProperty ("Third", classOf[String], null)
+      table.p.addContainerProperty("First", classOf[String], null)
+      table.p.addContainerProperty("Second", classOf[String], null)
+      table.p.addContainerProperty("Third", classOf[String], null)
 
       for (j <- 0 until 100) {
-        table.addItem(Array("Foo " + j, "Bar value " + j,
+        table.p.addItem(Array("Foo " + j, "Bar value " + j,
           "Last column value " + j), j)
       }
 
-      tableLayout.addComponent(table)
+      tableLayout.addComponent(table.p)
     }
 
     tableLayout
@@ -493,8 +493,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
         // Force refresh
         getMainWindow.open(new ExternalResource(getURL))
       })
-    transparent
-      .setDescription("Set style Reindeer.TABSHEET_MINIMAL to the main tab sheet (preview components on different background colors).")
+    transparent.description = "Set style Reindeer.TABSHEET_MINIMAL to the main tab sheet (preview components on different background colors)."
     toggles.addComponent(transparent)
 
     val userLayout = new CssLayout()
@@ -524,7 +523,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
       help.setCloseShortcut(KeyCode.ESCAPE)
 
       help.center()
-      help.setWidth(400 px)
+      help.setWidth("400px")
       help.setResizable(false)
 
       val helpText = new HtmlLabel(<span><strong>How To Use This Application</strong><p>Click around, explore. The purpose of this app is to show you what is possible to achieve with the Reindeer theme and its different styles.</p><p>Most of the UI controls that are visible in this application don't actually do anything. They are purely for show, like the menu items and the components that demostrate the different style names assosiated with the components.</p><strong>So, What Then?</strong><p>Go and use the styles you see here in your own application and make them beautiful!</p></span>)

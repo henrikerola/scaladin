@@ -18,23 +18,23 @@ trait Select extends AbstractSelect {
 
 }
 
-class NativeSelect(caption: String = null, width: String = null, height: String = null, value: Any = null, style: String = null, nullSelectionAllowed: Boolean = true)
-    extends com.vaadin.ui.NativeSelect(caption) with ValueChangeFunction {
-  setWidth(width)
-  setHeight(height)
+class NativeSelect(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, value: Any = null, style: String = null, nullSelectionAllowed: Boolean = true)
+  extends com.vaadin.ui.NativeSelect(caption) with ValueChangeFunction {
+  setWidth(if (width.isDefined) width.get.toString else null)
+  setHeight(if (height.isDefined) height.get.toString else null)
   if (value != null) setValue(value)
   setStyleName(style)
   setNullSelectionAllowed(nullSelectionAllowed)
 }
 
-class ComboBox(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)(implicit val wr: WrapperRegistry)
-    extends Select /*with ValueChangeFunction*/ {
+class ComboBox(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)(implicit wrapper: WrapperRegistry)
+  extends Select /*with ValueChangeFunction*/ {
 
   override val p = new com.vaadin.ui.ComboBox(caption);
   wr.put(this)
 
-  p.setWidth(width)
-  p.setHeight(height)
+  p.setWidth(if (width.isDefined) width.get.toString else null)
+  p.setHeight(if (height.isDefined) height.get.toString else null)
   if (dataSource != null) p.setContainerDataSource(dataSource)
   if (value != null) p.setValue(value)
   p.setStyleName(style)
@@ -50,30 +50,31 @@ class ComboBox(caption: String = null, width: String = null, height: String = nu
   def textInputAllowed_=(textInputAllowed: Boolean) = p.setTextInputAllowed(textInputAllowed)
 }
 
-class ListSelect(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, nullSelectionAllowed: Boolean = true)
-    extends com.vaadin.ui.ListSelect(caption) with ValueChangeFunction {
-  setWidth(width)
-  setHeight(height)
+class ListSelect(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, nullSelectionAllowed: Boolean = true)(implicit wrapper: WrapperRegistry)
+  extends com.vaadin.ui.ListSelect(caption) with ValueChangeFunction {
+
+  setWidth(if (width.isDefined) width.get.toString else null)
+  setHeight(if (height.isDefined) height.get.toString else null)
   if (dataSource != null) setContainerDataSource(dataSource)
   if (value != null) setValue(value)
   setStyleName(style)
   setNullSelectionAllowed(nullSelectionAllowed)
 }
 
-class OptionGroup(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)
-    extends com.vaadin.ui.OptionGroup(caption) with ValueChangeFunction {
-  setWidth(width)
-  setHeight(height)
+class OptionGroup(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)
+  extends com.vaadin.ui.OptionGroup(caption) with ValueChangeFunction {
+  setWidth(if (width.isDefined) width.get.toString else null)
+  setHeight(if (height.isDefined) height.get.toString else null)
   if (dataSource != null) setContainerDataSource(dataSource)
   if (value != null) setValue(value)
   setStyleName(style)
   setNullSelectionAllowed(nullSelectionAllowed)
 }
 
-class TwinColSelect(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)
-    extends com.vaadin.ui.TwinColSelect(caption) with ValueChangeFunction {
-  setWidth(width)
-  setHeight(height)
+class TwinColSelect(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)
+  extends com.vaadin.ui.TwinColSelect(caption) with ValueChangeFunction {
+  setWidth(if (width.isDefined) width.get.toString else null)
+  setHeight(if (height.isDefined) height.get.toString else null)
   if (dataSource != null) setContainerDataSource(dataSource)
   if (value != null) setValue(value)
   setStyleName(style)
@@ -99,10 +100,10 @@ trait TableColumnGenerator extends com.vaadin.ui.Table {
   }
 }
 
-class Table(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, property: com.vaadin.data.Property = null, value: Any = null, selectable: Boolean = false, immediate: Boolean = false, style: String = null)
-    extends com.vaadin.ui.Table(caption) with ValueChangeFunction with ItemClickListener with TableColumnGenerator {
-  setWidth(width)
-  setHeight(height)
+class TreeTable(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, property: com.vaadin.data.Property = null, value: Any = null, selectable: Boolean = false, immediate: Boolean = false, style: String = null)
+  extends com.vaadin.ui.TreeTable(caption) with ValueChangeFunction with TableColumnGenerator {
+  setWidth(if (width.isDefined) width.get.toString else null)
+  setHeight(if (height.isDefined) height.get.toString else null)
   if (dataSource != null) setContainerDataSource(dataSource)
   if (property != null) setPropertyDataSource(property)
   if (value != null) setValue(value)
@@ -111,22 +112,10 @@ class Table(caption: String = null, width: String = null, height: String = null,
   setStyleName(style)
 }
 
-class TreeTable(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, property: com.vaadin.data.Property = null, value: Any = null, selectable: Boolean = false, immediate: Boolean = false, style: String = null)
-    extends com.vaadin.ui.TreeTable(caption) with ValueChangeFunction with TableColumnGenerator {
-  setWidth(width)
-  setHeight(height)
-  if (dataSource != null) setContainerDataSource(dataSource)
-  if (property != null) setPropertyDataSource(property)
-  if (value != null) setValue(value)
-  setSelectable(selectable)
-  setImmediate(immediate)
-  setStyleName(style)
-}
-
-class Tree(caption: String = null, width: String = null, height: String = null, dataSource: com.vaadin.data.Container = null, property: com.vaadin.data.Property = null, value: Any = null, selectable: Boolean = false, nullSelectionAllowed: Boolean = true, immediate: Boolean = false, style: String = null)
-    extends com.vaadin.ui.Tree with ValueChangeFunction with ItemClickListener {
-  setWidth(width)
-  setHeight(height)
+class Tree(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, property: com.vaadin.data.Property = null, value: Any = null, selectable: Boolean = false, nullSelectionAllowed: Boolean = true, immediate: Boolean = false, style: String = null)
+  extends com.vaadin.ui.Tree with ValueChangeFunction with ItemClickListener {
+  setWidth(if (width.isDefined) width.get.toString else null)
+  setHeight(if (height.isDefined) height.get.toString else null)
   if (dataSource != null) setContainerDataSource(dataSource)
   if (property != null) setPropertyDataSource(property)
   if (value != null) setValue(value)

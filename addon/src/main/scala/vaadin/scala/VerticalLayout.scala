@@ -1,6 +1,6 @@
 package vaadin.scala
 
-trait AbstractOrderedLayout extends AbstractLayout with SpacingHandler with AlignmentHandler {
+abstract class AbstractOrderedLayout(implicit wrapper: WrapperRegistry) extends AbstractLayout with SpacingHandler with AlignmentHandler {
 
   override def p: com.vaadin.ui.AbstractOrderedLayout
 
@@ -37,20 +37,18 @@ trait AbstractOrderedLayout extends AbstractLayout with SpacingHandler with Alig
 
 class VerticalLayout(implicit wrapper: WrapperRegistry) extends AbstractOrderedLayout /*with LayoutClickListener*/ {
 
-  override val wr = wrapper
-  
   override val p = new com.vaadin.ui.VerticalLayout
   wr.put(this)
 
-  def this(width: String = 100 percent, height: String = null, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, size: Tuple2[String, String] = null)(implicit wrapper: WrapperRegistry) {
+  def this(width: Option[Measure] = 100 percent, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, size: Tuple2[String, String] = null)(implicit wrapper: WrapperRegistry) {
     this()
 
     if (size != null) {
       p.setWidth(size._1)
       p.setHeight(size._2)
     } else {
-      p.setWidth(width)
-      p.setHeight(height)
+      this.width = width
+      this.height = height
     }
     p.setMargin(margin)
     p.setSpacing(spacing)

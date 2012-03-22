@@ -3,16 +3,15 @@ package vaadin.scala
 class TextField(implicit wrapper: WrapperRegistry)
     extends AbstractTextField {
 
-  override val wr = wrapper
   override val p = new com.vaadin.ui.TextField
   wr.put(this)
 
-  def this(caption: String = null, width: String = null, height: String = null, property: com.vaadin.data.Property = null, value: Any = null, style: String = null, prompt: String = null)(implicit wr: WrapperRegistry) {
+  def this(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, property: com.vaadin.data.Property = null, value: Any = null, style: String = null, prompt: String = null)(implicit wrapper: WrapperRegistry) {
     this()
 
-    p.setCaption(caption)
-    p.setWidth(width)
-    p.setHeight(height)
+    this.caption = caption
+    this.width = width
+    this.height = height
     if (property != null) p.setPropertyDataSource(property)
     if (value != null) p.setValue(value)
     p.setStyleName(style)

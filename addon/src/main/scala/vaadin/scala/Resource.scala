@@ -7,10 +7,10 @@ trait Resource extends Wrapper {
   def mimeType = p.getMIMEType
 }
 
-class ExternalResource(sourceUrl: String, mimeType: String = null)(implicit wr: WrapperRegistry) extends Resource {
+class ExternalResource(sourceUrl: String, mimeType: String = null)(implicit wrapper: WrapperRegistry) extends Resource {
 
   override val p = new com.vaadin.terminal.ExternalResource(sourceUrl, mimeType)
-  wr.put(this)
+  wrapper.put(this)
 
   def url = p.getURL
 }

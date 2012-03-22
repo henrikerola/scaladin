@@ -12,7 +12,6 @@ object Link {
 
 class Link(implicit wrapper: WrapperRegistry) extends AbstractComponent {
 
-  override val wr = wrapper
   override val p = new com.vaadin.ui.Link()
   wr.put(this)
 

@@ -129,72 +129,6 @@ class ComponentTests extends FunSuite {
     assert(label.p.getStyleName == "")
   }
 
-  test("VerticalSlider, constructor with all params but without names") {
-    val property = Property(1);
-    val slider = new VerticalSlider("Caption", 10 px, 100 em, property, 5, -10, 10, 1, "Style")
-    assert(slider.getOrientation() == com.vaadin.ui.Slider.ORIENTATION_VERTICAL)
-    assert(slider.getCaption == "Caption")
-    assert(slider.getWidth == 10)
-    assert(slider.getWidthUnits == Sizeable.UNITS_PIXELS)
-    assert(slider.getHeight == 100)
-    assert(slider.getHeightUnits == Sizeable.UNITS_EM)
-    assert(slider.getPropertyDataSource == property)
-    assert(slider.getValue == 5)
-    assert(slider.getMin == -10)
-    assert(slider.getMax == 10)
-    assert(slider.getResolution == 1)
-    assert(slider.getStyleName == "Style")
-  }
-
-  test("VerticalSlider, default constructor") {
-    val slider = new VerticalSlider()
-    assert(slider.getOrientation() == com.vaadin.ui.Slider.ORIENTATION_VERTICAL)
-    assert(slider.getCaption == null)
-    assert(slider.getWidth == -1)
-    assert(slider.getWidthUnits == Sizeable.UNITS_PIXELS)
-    assert(slider.getHeight == -1)
-    assert(slider.getHeightUnits == Sizeable.UNITS_PIXELS)
-    assert(slider.getPropertyDataSource == null)
-    assert(slider.getValue == 0)
-    assert(slider.getMin == 0)
-    assert(slider.getMax == 100)
-    assert(slider.getResolution == 0)
-    assert(slider.getStyleName == "")
-  }
-
-  test("HorizontalSlider, constructor with all params but without names") {
-    val property = Property(1);
-    val slider = new HorizontalSlider("Caption", 10 px, 100 em, property, 5, -10, 10, 1, "Style")
-    assert(slider.getOrientation() == com.vaadin.ui.Slider.ORIENTATION_HORIZONTAL)
-    assert(slider.getCaption == "Caption")
-    assert(slider.getWidth == 10)
-    assert(slider.getWidthUnits == Sizeable.UNITS_PIXELS)
-    assert(slider.getHeight == 100)
-    assert(slider.getHeightUnits == Sizeable.UNITS_EM)
-    assert(slider.getPropertyDataSource == property)
-    assert(slider.getValue == 5)
-    assert(slider.getMin == -10)
-    assert(slider.getMax == 10)
-    assert(slider.getResolution() == 1)
-    assert(slider.getStyleName == "Style")
-  }
-
-  test("HorizontalSlider, default constructor") {
-    val slider = new HorizontalSlider()
-    assert(slider.getOrientation() == com.vaadin.ui.Slider.ORIENTATION_HORIZONTAL)
-    assert(slider.getCaption == null)
-    assert(slider.getWidth == -1)
-    assert(slider.getWidthUnits == Sizeable.UNITS_PIXELS)
-    assert(slider.getHeight == -1)
-    assert(slider.getHeightUnits == Sizeable.UNITS_PIXELS)
-    assert(slider.getPropertyDataSource == null)
-    assert(slider.getValue == 0)
-    assert(slider.getMin == 0)
-    assert(slider.getMax == 100)
-    assert(slider.getResolution == 0)
-    assert(slider.getStyleName == "")
-  }
-
   test("TextField, default constructor") {
     val textField = new TextField
     assert(textField.caption === None)
@@ -217,4 +151,43 @@ class ComponentTests extends FunSuite {
     assert(textField.styles.mkString === "style")
     assert(textField.prompt === Some("prompt"))
   }
+  
+  test("width, defined size") {
+    val label = new Label()
+    label.width = 25 px;
+    assert(label.width.get === Measure(25, Units.px))
+  }
+  
+  test("width, undefined size") {
+    val label = new Label()
+    label.width = None;
+    assert(label.width === None)
+  }
+  
+  test("height, defined size") {
+    val label = new Label()
+    label.height = 25 px;
+    assert(label.height.get === Measure(25, Units.px))
+  }
+  
+  test("height, undefined size") {
+    val label = new Label()
+    label.height = None;
+    assert(label.height === None)
+  }
+  
+  test("sizeFull()") {
+    val label = new Label
+    label.sizeFull()
+    assert(label.width.get === Measure(100, Units.pct))
+    assert(label.height.get === Measure(100, Units.pct))
+  }
+  
+  test("sizeUndefined()") {
+    val label = new Label
+    label.sizeUndefined()
+    assert(label.width === None)
+    assert(label.height === None)
+  }
+  
 }
