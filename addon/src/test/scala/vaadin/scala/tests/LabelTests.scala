@@ -19,28 +19,24 @@ class LabelTests extends FunSuite {
   }
 
   test("constructor: with all params but without names") {
-    val property = Property("Test");
+    val property = Property("Test")
     val label = new Label("Content", 10 px, 100 em, property, Label.ContentMode.preformatted, "Style")
-    assert(label.value.get == "Content")
-    assert(label.p.getWidth == 10)
-    assert(label.p.getWidthUnits == Sizeable.UNITS_PIXELS)
-    assert(label.p.getHeight == 100)
-    assert(label.p.getHeightUnits == Sizeable.UNITS_EM)
-    assert(label.p.getPropertyDataSource == property)
-    assert(label.contentMode == Label.ContentMode.preformatted)
-    assert(label.p.getStyleName == "Style")
+    assert(label.value === Some("Content"))
+    assert(label.width === (10 px))
+    assert(label.height === (100 em))
+    assert(label.property === Some(property))
+    assert(label.contentMode === Label.ContentMode.preformatted)
+    assert(label.p.getStyleName === "Style")
   }
 
   test("constructor: constructor") {
     val label = new Label
-    assert(label.value.get == "")
-    assert(label.p.getWidth == 100)
-    assert(label.p.getWidthUnits == Sizeable.UNITS_PERCENTAGE)
-    assert(label.p.getHeight == -1)
-    assert(label.p.getHeightUnits == Sizeable.UNITS_PIXELS)
-    assert(label.p.getPropertyDataSource != null)
-    assert(label.contentMode == Label.ContentMode.text)
-    assert(label.p.getStyleName == "")
+    assert(label.value === Some(""))
+    assert(label.width === (100 pct))
+    assert(label.height === None)
+    assert(label.property != None)
+    assert(label.contentMode === Label.ContentMode.text)
+    assert(label.p.getStyleName === "")
   }
 
   test("value: None") {
@@ -52,13 +48,13 @@ class LabelTests extends FunSuite {
   test("value: String") {
     val label = new Label
     label.value = "test value"
-    assert(label.value.get === "test value")
+    assert(label.value === Some("test value"))
   }
 
   test("value: Some") {
     val label = new Label
     label.value = Some("test value")
-    assert(label.value.get === "test value")
+    assert(label.value === Some("test value"))
   }
 
   test("contentMode: null content mode throws exception") {
@@ -84,7 +80,7 @@ class LabelTests extends FunSuite {
     val property = new ObjectProperty("test")
     val label = new Label
     label.property = property
-    assert(label.property.get === property)
+    assert(label.property === Some(property))
   }
 
   test("property: Some") {

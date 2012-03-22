@@ -15,7 +15,7 @@ object Label {
 }
 
 // TODO: implement interfaces
-class Label(implicit wrapper: WrapperRegistry) extends AbstractComponent {
+class Label(implicit wrapper: WrapperRegistry) extends AbstractComponent  with PropertyViewer {
 
   override val p = new com.vaadin.ui.Label;
   wr.put(this)
@@ -39,10 +39,6 @@ class Label(implicit wrapper: WrapperRegistry) extends AbstractComponent {
 
   def contentMode = Label.ContentMode(p.getContentMode)
   def contentMode_=(contentMode: Label.ContentMode.Value) = p.setContentMode(contentMode.id)
-
-  def property: Option[com.vaadin.data.Property] = Option(p.getPropertyDataSource())
-  def property_=(property: Option[com.vaadin.data.Property]) = p.setPropertyDataSource(property.getOrElse(null))
-  def property_=(property: com.vaadin.data.Property) = p.setPropertyDataSource(property)
 
   // TODO: valuechangelistener
   // TODO: getType

@@ -10,11 +10,11 @@ class PropertyValueChangeListener(action: com.vaadin.data.Property.ValueChangeEv
   override def valueChange(event: com.vaadin.data.Property.ValueChangeEvent) = action(event)
 }
 
-trait AbstractSelect extends AbstractField {
+abstract class AbstractSelect(implicit wrapper: WrapperRegistry) extends AbstractField {
 
 }
 
-trait Select extends AbstractSelect {
+abstract class Select(implicit wrapper: WrapperRegistry) extends AbstractSelect {
 
 }
 

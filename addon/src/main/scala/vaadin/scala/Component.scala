@@ -54,11 +54,11 @@ trait ScaladinWrapper extends com.vaadin.ui.Component with Component {
 trait Sizeable extends Component {
 
   def width: Option[Measure] = if (p.getWidth < 0) None else Option(new Measure(p.getWidth, Units(p.getWidthUnits)))
-  def width_=(width: Option[Measure]) = p.setWidth(if(width.isDefined) width.get.toString else null)
+  def width_=(width: Option[Measure]) = p.setWidth(if (width.isDefined) width.get.toString else null)
   def width_=(width: Measure) = p.setWidth(if (width != null) width.toString else null)
-  
+
   def height: Option[Measure] = if (p.getHeight() < 0) None else Option(new Measure(p.getHeight(), Units(p.getHeightUnits)))
-  def height_=(height: Option[Measure]) = p.setHeight(if(height.isDefined) height.get.toString else null)
+  def height_=(height: Option[Measure]) = p.setHeight(if (height.isDefined) height.get.toString else null)
   def height_=(height: Measure) = p.setHeight(if (height != null) height.toString else null)
 
   def sizeFull() = p.setSizeFull
@@ -73,20 +73,16 @@ abstract class AbstractComponent(implicit wrapper: WrapperRegistry) extends Comp
   def description = Option(p.getDescription)
   def description_=(description: Option[String]) = p.setDescription(description.getOrElse(null))
   def description_=(description: String) = p.setDescription(description)
-  
+
   def immediate = p.isImmediate();
   def immediate_=(immediate: Boolean) = p.setImmediate(immediate);
 }
 
-abstract class AbstractField(implicit wrapper: WrapperRegistry) extends AbstractComponent {
+abstract class AbstractField(implicit wrapper: WrapperRegistry) extends AbstractComponent with PropertyViewer{
 
   override def p: com.vaadin.ui.AbstractField
 
   def focus() = p.focus()
-
-  def property: Option[com.vaadin.data.Property] = Option(p.getPropertyDataSource())
-  def property_=(property: Option[com.vaadin.data.Property]) = p.setPropertyDataSource(property.getOrElse(null))
-  def property_=(property: com.vaadin.data.Property) = p.setPropertyDataSource(property)
 
   def value: Option[Any] = Option(p.getValue())
   def value_=(value: Option[Any]): Unit = p.setValue(value.getOrElse(null))
@@ -102,4 +98,13 @@ abstract class AbstractField(implicit wrapper: WrapperRegistry) extends Abstract
   def readThrough_=(readThrough: Boolean) = p.setReadThrough(readThrough)
 
   //TODO
+}
+
+trait PropertyViewer {
+
+  def p: com.vaadin.data.Property.Viewer
+
+  def property: Option[com.vaadin.data.Property] = Option(p.getPropertyDataSource())
+  def property_=(property: Option[com.vaadin.data.Property]) = p.setPropertyDataSource(property.getOrElse(null))
+  def property_=(property: com.vaadin.data.Property) = p.setPropertyDataSource(property)
 }

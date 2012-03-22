@@ -61,6 +61,38 @@ class TableTests extends FunSuite {
     assert(!table.sortable)
   }
 
+  test("selectionMode, default should be None") {
+    val table = new Table
+    assert(table.selectionMode === Table.SelectionMode.None)
+
+  }
+
+  test("selectionMode, None") {
+    import Table.SelectionMode._
+    val table = new Table
+    table.selectionMode = None
+    assert(table.selectionMode === None)
+  }
+
+  test("selectionMode, Single") {
+    import Table.SelectionMode._
+    val table = new Table
+    table.selectionMode = Single
+    assert(table.selectionMode === Single)
+  }
+
+  test("selectionMode, Multi") {
+    val table = new Table
+    table.selectionMode = Table.SelectionMode.Multi
+    assert(table.selectionMode === Table.SelectionMode.Multi)
+  }
+
+  test("selectionMode, MultiSimple") {
+    val table = new Table
+    table.selectionMode = Table.SelectionMode.MultiSimple
+    assert(table.selectionMode === Table.SelectionMode.MultiSimple)
+  }
+
   test("ColumnHeaderModes") {
     assert(Table.ColumnHeaderMode.hidden.id === com.vaadin.ui.Table.COLUMN_HEADER_MODE_HIDDEN)
     assert(Table.ColumnHeaderMode.id.id === com.vaadin.ui.Table.COLUMN_HEADER_MODE_ID)
