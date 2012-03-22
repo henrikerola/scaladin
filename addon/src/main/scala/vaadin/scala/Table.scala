@@ -5,22 +5,22 @@ import com.vaadin.ui.AbstractSelect.MultiSelectMode._
 object Table {
   object ColumnHeaderMode extends Enumeration {
     import com.vaadin.ui.Table._
-    val hidden = Value(COLUMN_HEADER_MODE_HIDDEN)
-    val id = Value(COLUMN_HEADER_MODE_ID)
-    val explicit = Value(COLUMN_HEADER_MODE_EXPLICIT)
-    val explicitDefaultsId = Value(COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
+    val Hidden = Value(COLUMN_HEADER_MODE_HIDDEN)
+    val Id = Value(COLUMN_HEADER_MODE_ID)
+    val Explicit = Value(COLUMN_HEADER_MODE_EXPLICIT)
+    val ExplicitDefaultsId = Value(COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
   }
 
   object RowHeaderMode extends Enumeration {
     import com.vaadin.ui.Table._
-    val hidden = Value(ROW_HEADER_MODE_HIDDEN)
-    val id = Value(ROW_HEADER_MODE_ID)
-    val item = Value(ROW_HEADER_MODE_ITEM)
-    val index = Value(ROW_HEADER_MODE_INDEX)
-    val explicit = Value(ROW_HEADER_MODE_EXPLICIT)
-    val property = Value(ROW_HEADER_MODE_PROPERTY)
-    val iconOnly = Value(ROW_HEADER_MODE_ICON_ONLY)
-    val explicitDefaultsId = Value(ROW_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
+    val Hidden = Value(ROW_HEADER_MODE_HIDDEN)
+    val Id = Value(ROW_HEADER_MODE_ID)
+    val Item = Value(ROW_HEADER_MODE_ITEM)
+    val Index = Value(ROW_HEADER_MODE_INDEX)
+    val Explicit = Value(ROW_HEADER_MODE_EXPLICIT)
+    val Property = Value(ROW_HEADER_MODE_PROPERTY)
+    val IconOnly = Value(ROW_HEADER_MODE_ICON_ONLY)
+    val ExplicitDefaultsId = Value(ROW_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
   }
 
   object SelectionMode extends Enumeration {
@@ -80,7 +80,7 @@ class Table(implicit wrapper: WrapperRegistry) extends AbstractSelect {
       Table.SelectionMode.None
     else if (p.isMultiSelect && p.getMultiSelectMode == SIMPLE)
       Table.SelectionMode.MultiSimple
-    else if (p.isMultiSelect())
+    else if (p.isMultiSelect)
       Table.SelectionMode.Multi
     else
       Table.SelectionMode.Single
@@ -145,13 +145,13 @@ class Table(implicit wrapper: WrapperRegistry) extends AbstractSelect {
 case class HeaderClickEvent(component: Component, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends ClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
 
 class HeaderClickListener(val action: HeaderClickEvent => Unit)(implicit wrapper: WrapperRegistry) extends com.vaadin.ui.Table.HeaderClickListener with Listener {
-  def headerClick(e: com.vaadin.ui.Table.HeaderClickEvent) = action(HeaderClickEvent(wrapper.get[Table](e.getComponent).get, e.getPropertyId, e.getButton, e.getClientX(), e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
+  def headerClick(e: com.vaadin.ui.Table.HeaderClickEvent) = action(HeaderClickEvent(wrapper.get[Table](e.getComponent).get, e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
 }
 
 case class FooterClickEvent(component: Component, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends ClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
 
 class FooterClickListener(val action: FooterClickEvent => Unit)(implicit wrapper: WrapperRegistry) extends com.vaadin.ui.Table.FooterClickListener with Listener {
-  def footerClick(e: com.vaadin.ui.Table.FooterClickEvent) = action(FooterClickEvent(wrapper.get[Table](e.getComponent).get, e.getPropertyId, e.getButton, e.getClientX(), e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
+  def footerClick(e: com.vaadin.ui.Table.FooterClickEvent) = action(FooterClickEvent(wrapper.get[Table](e.getComponent).get, e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
 }
 
 case class ColumnResizeEvent(component: Component, propertyId: Any, previousWidth: Int, currentWidth: Int) extends Event

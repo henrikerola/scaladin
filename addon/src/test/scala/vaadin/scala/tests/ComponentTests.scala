@@ -13,13 +13,13 @@ class ComponentTests extends FunSuite {
   test("Link, constructor with all params but without names") {
     val resource = new ExternalResource("http://www.example.com")
 
-    val link = new Link("Caption", resource, "targetname", 200, 300, Link.TargetBorder.none)
-    assert(link.caption.get === "Caption")
-    assert(link.resource.get === resource)
-    assert(link.targetName.get === "targetname")
+    val link = new Link("Caption", resource, "targetname", 200, 300, Link.TargetBorder.None)
+    assert(link.caption === Some("Caption"))
+    assert(link.resource === Some(resource))
+    assert(link.targetName === Some("targetname"))
     assert(link.targetWidth === 200)
     assert(link.targetHeight === 300)
-    assert(link.targetBorder === Link.TargetBorder.none)
+    assert(link.targetBorder === Link.TargetBorder.None)
   }
 
   test("Link, default constructor") {
@@ -29,7 +29,7 @@ class ComponentTests extends FunSuite {
     assert(link.targetName === None)
     assert(link.targetWidth === -1)
     assert(link.targetHeight === -1)
-    assert(link.targetBorder === Link.TargetBorder.default)
+    assert(link.targetBorder === Link.TargetBorder.Default)
   }
 
   test("Component.styles.contains") {
@@ -55,14 +55,14 @@ class ComponentTests extends FunSuite {
 
   test("Label, constructor with all params but without names") {
     val property = Property("Test");
-    val label = new Label("Content", 10 px, 100 em, property, Label.ContentMode.preformatted, "Style")
+    val label = new Label("Content", 10 px, 100 em, property, Label.ContentMode.Preformatted, "Style")
     assert(label.value === Some("Content"))
     //    assert(label.getWidth == 10)
     //    assert(label.getWidthUnits == Sizeable.UNITS_PIXELS)
     //    assert(label.getHeight == 100)
     //    assert(label.getHeightUnits == Sizeable.UNITS_EM)
     assert(label.property === Some(property))
-    assert(label.contentMode === Label.ContentMode.preformatted)
+    assert(label.contentMode === Label.ContentMode.Preformatted)
     assert(label.styles.mkString == "Style")
   }
 
@@ -107,25 +107,25 @@ class ComponentTests extends FunSuite {
   test("HtmlLabel, constructor with all params but without names") {
     val property = Property("Test");
     val label = new HtmlLabel(<span>Content</span>, 10 px, 100 em, property, "Style")
-    assert(label.value.get == "<span>Content</span>")
+    assert(label.value === Some("<span>Content</span>"))
     assert(label.p.getWidth == 10)
     assert(label.p.getWidthUnits == Sizeable.UNITS_PIXELS)
     assert(label.p.getHeight == 100)
     assert(label.p.getHeightUnits == Sizeable.UNITS_EM)
-    assert(label.p.getPropertyDataSource == property)
-    assert(label.contentMode == Label.ContentMode.xhtml)
+    assert(label.property === Some(property))
+    assert(label.contentMode == Label.ContentMode.Xhtml)
     assert(label.p.getStyleName == "Style")
   }
 
   test("HtmlLabel, default constructor") {
     val label = new HtmlLabel
-    assert(label.value.get == "")
+    assert(label.value === Some(""))
     assert(label.p.getWidth == 100)
     assert(label.p.getWidthUnits == Sizeable.UNITS_PERCENTAGE)
     assert(label.p.getHeight == -1)
     assert(label.p.getHeightUnits == Sizeable.UNITS_PIXELS)
     assert(label.p.getPropertyDataSource != null)
-    assert(label.contentMode == Label.ContentMode.xhtml)
+    assert(label.contentMode == Label.ContentMode.Xhtml)
     assert(label.p.getStyleName == "")
   }
 
