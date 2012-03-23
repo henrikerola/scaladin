@@ -84,6 +84,31 @@ class ComponentContainerTests extends FunSuite {
     assert(cnt == 1)
   }
   
+  test("CustomComponent, default constructor") {
+    val customComponent = new CustomComponent() {
+      def compositionRoot = {
+        getCompositionRoot
+      }
+    }
+    assert(customComponent.compositionRoot === null)
+    assert(customComponent.getWidth === 100)
+    assert(customComponent.getWidthUnits == Sizeable.UNITS_PERCENTAGE)
+    assert(customComponent.getHeight === -1)
+    assert(customComponent.getHeightUnits === Sizeable.UNITS_PIXELS)
+  }
   
+  test("CustomComponent, constructor with all params but without names") {
+    val label = new Label
+    val customComponent = new CustomComponent(200 px, 50 em, label) {
+      def compositionRoot = {
+        getCompositionRoot
+      }
+    }
+    assert(customComponent.compositionRoot === label)
+    assert(customComponent.getWidth === 200)
+    assert(customComponent.getWidthUnits == Sizeable.UNITS_PIXELS)
+    assert(customComponent.getHeight === 50)
+    assert(customComponent.getHeightUnits === Sizeable.UNITS_EM)
+  }
   
 }

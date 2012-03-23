@@ -124,7 +124,7 @@ class VerticalSplitPanel(width: String = 100 percent, height: String = 100 perce
   def getComponents(): TraversableOnce[Component] = getComponentIterator.asScala.toSeq
 }
 
-class CustomComponent(width: String = 100 percent, height: String = null, compositionRoot: com.vaadin.ui.Component)
+class CustomComponent(width: String = 100 percent, height: String = null, compositionRoot: com.vaadin.ui.Component = null)
   extends com.vaadin.ui.CustomComponent(compositionRoot) {
   setWidth(width)
   setHeight(height)
