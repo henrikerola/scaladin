@@ -3,6 +3,11 @@ import scala.collection.JavaConverters._
 
 object Property {
   def apply[T](value: T): com.vaadin.data.Property = new com.vaadin.data.util.ObjectProperty[T](value)
+
+  def unapply(property: com.vaadin.data.Property): Option[Any] = {
+    if (property != null) Some(property.getValue)
+    else None
+  }
 }
 
 object Item {
@@ -13,8 +18,13 @@ object Item {
     item
   }
 
+  def unapplySeq(item: com.vaadin.data.Item): Option[Seq[com.vaadin.data.Property]] = {
+    if(item != null) Some(item.getItemPropertyIds.asScala.map(item.getItemProperty(_)).toSeq) 
+    else None
+  }
+  
+
   def getProperties(item: com.vaadin.data.Item) = item.getItemPropertyIds.asScala.map(item.getItemProperty)
-  //def getProperties(item: com.vaadin.data.Item, propertyId: Any) = item.getItemPropertyIds.asScala.filter(_ == propertyId).map(item.getItemProperty)
 }
 
 object Container {
