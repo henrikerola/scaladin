@@ -40,7 +40,7 @@ trait Component extends Wrapper {
   //TODO return wrapped application and use Option?
   def application = p.getApplication()
 
-  override def toString = p.toString
+  //override def toString = p.toString
 
   // TODO: ..
 }

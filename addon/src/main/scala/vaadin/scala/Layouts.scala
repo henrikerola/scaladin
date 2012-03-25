@@ -35,30 +35,6 @@ class FormLayout(width: Option[Measure] = 100 percent, height: Option[Measure] =
   }
 }
 
-class GridLayout(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, columns: Int = 1, rows: Int = 1)
-  extends com.vaadin.ui.GridLayout with LayoutClickListener {
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  setMargin(margin)
-  setSpacing(spacing)
-  setStyleName(style)
-  setCaption(caption)
-  setColumns(columns)
-  setRows(rows)
-
-  def add[C <: com.vaadin.ui.Component](component: C = null, col: Int = -1, row: Int = -1, col2: Int = -1, row2: Int = -1, alignment: VaadinAlignment = null): C = {
-    if (col >= 0 && row >= 0)
-      addComponent(component, col, row)
-    else if (col >= 0 && row >= 0 && col2 >= 0 && row2 >= 0)
-      addComponent(component, col, row, col2, row2)
-    else
-      addComponent(component)
-    if (alignment != null) setComponentAlignment(component, alignment)
-    component
-  }
-
-}
-
 class CssLayout(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, style: String = null, caption: String = null, size: Tuple2[String, String] = null)
   extends AbstractLayout /*with LayoutClickListener*/ {
 
