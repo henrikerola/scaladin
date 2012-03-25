@@ -73,3 +73,19 @@ class HorizontalLayout extends AbstractOrderedLayout /*with LayoutClickListener*
     p.setStyleName(style)
   }
 }
+
+// TODO com.vaadin.ui.FormLayout calls setMargin(true, false, true, false) in constructor
+class FormLayout extends AbstractOrderedLayout {
+
+  override val p = new com.vaadin.ui.FormLayout
+  WrapperRegistry.put(this)
+
+  def this(width: Option[Measure] = 100 percent, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = true, style: String = null) = {
+    this()
+    this.width = width
+    this.height = height
+    this.margin = margin
+    this.spacing = spacing
+    p.setStyleName(style)
+  }
+}

@@ -12,15 +12,6 @@ trait LayoutClickListener extends LayoutClickNotifier {
   }
 }
 
-// TODO com.vaadin.ui.FormLayout calls setMargin(true, false, true, false) in constructor
-class FormLayout(width: Option[Measure] = 100 percent, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = true, style: String = null)
-  extends com.vaadin.ui.FormLayout {
-  def add[C <: com.vaadin.ui.Component](component: C): C = {
-    addComponent(component)
-    component
-  }
-}
-
 class CssLayout(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, style: String = null, caption: String = null, size: Tuple2[String, String] = null)
   extends AbstractLayout /*with LayoutClickListener*/ {
 
