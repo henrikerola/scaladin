@@ -24,6 +24,9 @@ class WrapperRegistry {
     if (key == null) {
       return None
     }
+    if(key.isInstanceOf[Wrapper]) {
+      return Some(key.asInstanceOf[T])
+    }
     val v = map get key flatMap {
       case (om, s) => if (om <:< m) Some(s.asInstanceOf[T]) else None
     }

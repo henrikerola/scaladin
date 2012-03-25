@@ -41,14 +41,25 @@ trait Component extends Wrapper {
   //TODO return wrapped application and use Option?
   def application = p.getApplication()
 
-  override def toString = p.toString
+  //override def toString = p.toString
 
   // TODO: ..
 }
 
+/**
+ * Wrapper trait for existing Vaadin components. 
+ */
 trait ScaladinWrapper extends com.vaadin.ui.Component with Component {
+  var _wrapper: Option[WrapperRegistry] = None
+  
   def p: this.type = this
-  //  WrapperRegistry.put(this)
+  
+  def init(implicit wrapper: WrapperRegistry): Unit = _wrapper = Some(wrapper) 
+  
+  def wr: WrapperRegistry = _wrapper match { 
+    case Some(wr :WrapperRegistry) => wr
+    case _ => throw new IllegalStateException("Wrappers must be inited before use")
+    }
 }
 
 trait Sizeable extends Component {
@@ -78,7 +89,7 @@ abstract class AbstractComponent(implicit wrapper: WrapperRegistry) extends Comp
   def immediate_=(immediate: Boolean) = p.setImmediate(immediate);
 }
 
-abstract class AbstractField(implicit wrapper: WrapperRegistry) extends AbstractComponent with PropertyViewer{
+abstract class AbstractField(implicit wrapper: WrapperRegistry) extends AbstractComponent with PropertyViewer {
 
   override def p: com.vaadin.ui.AbstractField
 
