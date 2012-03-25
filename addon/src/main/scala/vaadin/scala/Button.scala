@@ -41,19 +41,19 @@ class Button extends AbstractField {
 
   def addListener(action: ButtonClickEvent => Unit): Unit = p.addListener(new ButtonClickListener(action))
 
-  val clickListeners = new ListenersTrait[ButtonClickEvent => Unit, ButtonClickListener] {
+  lazy val clickListeners = new ListenersTrait[ButtonClickEvent => Unit, ButtonClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Button#ClickEvent])
     override def addListener(elem: ButtonClickEvent => Unit) = p.addListener(new ButtonClickListener(elem))
     override def removeListener(elem: ButtonClickListener) = p.removeListener(elem)
   }
 
-  def blurListeners = new ListenersTrait[BlurEvent => Unit, BlurListener] {
+  lazy val blurListeners = new ListenersTrait[BlurEvent => Unit, BlurListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.event.FieldEvents.BlurEvent])
     override def addListener(elem: BlurEvent => Unit) = p.addListener(new BlurListener(elem))
     override def removeListener(elem: BlurListener) = p.removeListener(elem)
   }
 
-  def focusListeners = new ListenersTrait[FocusEvent => Unit, FocusListener] {
+  lazy val focusListeners = new ListenersTrait[FocusEvent => Unit, FocusListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.event.FieldEvents.FocusEvent])
     override def addListener(elem: FocusEvent => Unit) = p.addListener(new FocusListener(elem))
     override def removeListener(elem: FocusListener) = p.removeListener(elem)
