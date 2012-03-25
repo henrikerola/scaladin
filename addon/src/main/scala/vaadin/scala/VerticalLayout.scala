@@ -50,10 +50,26 @@ class VerticalLayout extends AbstractOrderedLayout /*with LayoutClickListener*/ 
       this.width = width
       this.height = height
     }
-    p.setMargin(margin)
-    p.setSpacing(spacing)
-    p.setCaption(caption)
+    this.margin = margin
+    this.spacing = spacing
+    this.caption = caption
     p.setStyleName(style)
   }
 
+}
+
+class HorizontalLayout extends AbstractOrderedLayout /*with LayoutClickListener*/ {
+
+  override val p = new com.vaadin.ui.HorizontalLayout
+  WrapperRegistry.put(this)
+
+  def this(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null) = {
+    this()
+    this.width = width
+    this.height = height
+    this.margin = margin
+    this.spacing = spacing
+    this.caption = caption
+    p.setStyleName(style)
+  }
 }

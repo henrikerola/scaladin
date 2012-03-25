@@ -12,20 +12,6 @@ trait LayoutClickListener extends LayoutClickNotifier {
   }
 }
 
-class HorizontalLayout(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null)
-  extends AbstractOrderedLayout /*with LayoutClickListener*/ {
-
-  override val p = new com.vaadin.ui.HorizontalLayout
-  WrapperRegistry.put(this)
-
-  p.setWidth(if (width.isDefined) width.get.toString else null)
-  p.setHeight(if (height.isDefined) height.get.toString else null)
-  p.setMargin(margin)
-  p.setSpacing(spacing)
-  p.setCaption(caption)
-  p.setStyleName(style)
-}
-
 // TODO com.vaadin.ui.FormLayout calls setMargin(true, false, true, false) in constructor
 class FormLayout(width: Option[Measure] = 100 percent, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = true, style: String = null)
   extends com.vaadin.ui.FormLayout {
