@@ -50,10 +50,42 @@ class VerticalLayout(implicit wrapper: WrapperRegistry) extends AbstractOrderedL
       this.width = width
       this.height = height
     }
-    p.setMargin(margin)
-    p.setSpacing(spacing)
-    p.setCaption(caption)
+    this.margin = margin
+    this.spacing = spacing
+    this.caption = caption
     p.setStyleName(style)
   }
 
+}
+
+class HorizontalLayout(implicit wrapper: WrapperRegistry) extends AbstractOrderedLayout /*with LayoutClickListener*/ {
+
+  override val p = new com.vaadin.ui.HorizontalLayout
+  wr.put(this)
+
+  def this(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null)(implicit wrapper: WrapperRegistry) {
+    this()
+    this.width = width
+    this.height = height
+    this.margin = margin
+    this.spacing = spacing
+    this.caption = caption
+    p.setStyleName(style)
+  }
+}
+
+// TODO com.vaadin.ui.FormLayout calls setMargin(true, false, true, false) in constructor
+class FormLayout(implicit wrapper: WrapperRegistry) extends AbstractOrderedLayout {
+
+  override val p = new com.vaadin.ui.FormLayout
+  wr.put(this)
+
+  def this(width: Option[Measure] = 100 percent, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = true, style: String = null)(implicit wrapper: WrapperRegistry) {
+    this()
+    this.width = width
+    this.height = height
+    this.margin = margin
+    this.spacing = spacing
+    p.setStyleName(style)
+  }
 }

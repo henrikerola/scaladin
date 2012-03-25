@@ -1,11 +1,11 @@
 package vaadin.scala
 
-class GridLayout extends AbstractLayout with SpacingHandler with AlignmentHandler {
+class GridLayout(implicit wrapper: WrapperRegistry) extends AbstractLayout with SpacingHandler with AlignmentHandler {
 
   val p = new com.vaadin.ui.GridLayout
-  WrapperRegistry.put(this)
+  wr.put(this)
 
-  def this(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, columns: Int = 1, rows: Int = 1) = {
+  def this(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, columns: Int = 1, rows: Int = 1)(implicit wrapper: WrapperRegistry) = {
     this()
     this.width = width
     this.height = height

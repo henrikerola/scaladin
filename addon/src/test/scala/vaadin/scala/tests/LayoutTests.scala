@@ -83,6 +83,25 @@ class LayoutTests extends FunSuite {
     assert(layout.caption === None)
     assert(layout.p.getStyleName === "")
   }
+  
+  test("FormLayout, constructor with all params but without names") {
+    val layout = new FormLayout(10 px, 100 em, true, true, "Style")
+    assert(layout.width === (10 px))
+    assert(layout.height === (100 em))
+    assert(layout.margin === Margin(true, true, true, true))
+    assert(layout.spacing === true)
+    assert(layout.p.getStyleName === "Style")
+
+  }
+
+  test("FormLayout, default constructor") {
+    val layout = new FormLayout()
+    assert(layout.width === (100 pct))
+    assert(layout.height === None)
+    assert(layout.margin === Margin(true, false, true, false))
+    assert(layout.spacing === true)
+    assert(layout.p.getStyleName === "")
+  }
 
   test("CssLayout, constructor with all params but without names") {
     val layout = new CssLayout(10 px, 100 em, true, "Style", "Caption")
