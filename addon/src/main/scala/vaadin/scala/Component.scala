@@ -8,7 +8,7 @@ trait Component extends Wrapper {
 
   // TODO: add methods styleName, addStyleName, removeStyleName?
 
-  def styles(): mutable.Set[String] = new mutable.Set[String] {
+  val styles = new mutable.Set[String] {
     def contains(key: String) = p.getStyleName().split(" ").iterator.contains(key)
     def iterator: Iterator[String] = p.getStyleName().split(" ").iterator
     def +=(elem: String) = { elem.split(" ").foreach(p.addStyleName(_)); this }

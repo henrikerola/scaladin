@@ -113,25 +113,25 @@ class Table(implicit wrapper: WrapperRegistry) extends AbstractSelect {
   def footerVisible = p.isFooterVisible
   def footerVisible_=(footerVisible: Boolean) = p.setFooterVisible(footerVisible)
 
-  def headerClickListeners = new ListenersTrait[HeaderClickEvent => Unit, HeaderClickListener] {
+  lazy val headerClickListeners = new ListenersTrait[HeaderClickEvent => Unit, HeaderClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.HeaderClickListener])
     override def addListener(elem: HeaderClickEvent => Unit) = p.addListener(new HeaderClickListener(elem))
     override def removeListener(elem: HeaderClickListener) = p.removeListener(elem)
   }
 
-  def footerClickListeners = new ListenersTrait[FooterClickEvent => Unit, FooterClickListener] {
+  lazy val footerClickListeners = new ListenersTrait[FooterClickEvent => Unit, FooterClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.FooterClickListener])
     override def addListener(elem: FooterClickEvent => Unit) = p.addListener(new FooterClickListener(elem))
     override def removeListener(elem: FooterClickListener) = p.removeListener(elem)
   }
 
-  def columnResizeListeners = new ListenersTrait[ColumnResizeEvent => Unit, ColumnResizeListener] {
+  lazy val columnResizeListeners = new ListenersTrait[ColumnResizeEvent => Unit, ColumnResizeListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.ColumnReorderListener])
     override def addListener(elem: ColumnResizeEvent => Unit) = p.addListener(new ColumnResizeListener(elem))
     override def removeListener(elem: ColumnResizeListener) = p.removeListener(elem)
   }
 
-  def columnReorderListeners = new ListenersTrait[ColumnReorderEvent => Unit, ColumnReorderListener] {
+  lazy val columnReorderListeners = new ListenersTrait[ColumnReorderEvent => Unit, ColumnReorderListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.ColumnReorderListener])
     override def addListener(elem: ColumnReorderEvent => Unit) = p.addListener(new ColumnReorderListener(elem))
     override def removeListener(elem: ColumnReorderListener) = p.removeListener(elem)

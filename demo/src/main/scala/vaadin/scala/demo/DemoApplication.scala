@@ -33,16 +33,16 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
       })
 
       tabs.addComponent(buildWelcomeScreen.p)
-      tabs.addComponent(buildLabels)
-      tabs.addComponent(buildButtons)
-      tabs.addComponent(buildTextFields)
+      tabs.addComponent(buildLabels.p)
+      tabs.addComponent(buildButtons.p)
+      tabs.addComponent(buildTextFields.p)
       tabs.addComponent(buildSelects.p)
       tabs.addComponent(buildDateFields.p)
       //tabs.addComponent(buildTabSheets) // FIXME
-      tabs.addComponent(buildPanels)
-      tabs.addComponent(buildTables)
+      tabs.addComponent(buildPanels.p)
+      tabs.addComponent(buildTables.p)
       tabs.addComponent(buildWindows(tabs).p)
-      tabs.addComponent(buildSplitPanels)
+      tabs.addComponent(buildSplitPanels.p)
     }.p
   }
 
@@ -59,58 +59,58 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     }
   }
 
-  def buildLabels(): com.vaadin.ui.Layout = {
+  def buildLabels(): Layout = {
     new GridLayout(columns = 2, rows = 1, width = 560 px, spacing = true, margin = true, caption = "Labels", style = Reindeer.LAYOUT_WHITE) {
-      add(new HtmlLabel(<span>Header Style (<code>Reindeer.LABEL_H1</code>)</span>).p)
-      add(new H1("Lorem Ipsum").p)
+      add(new HtmlLabel(<span>Header Style (<code>Reindeer.LABEL_H1</code>)</span>))
+      add(new H1("Lorem Ipsum"))
 
-      add(new HtmlLabel(<span>Sub-header Style (<code>Reindeer.LABEL_H2</code>)</span>).p)
-      add(new H2("Lorem Ipsum Dolor").p)
+      add(new HtmlLabel(<span>Sub-header Style (<code>Reindeer.LABEL_H2</code>)</span>))
+      add(new H2("Lorem Ipsum Dolor"))
 
-      add(new HtmlLabel(<span>Normal Label</span>).p)
-      add(new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit.").p)
+      add(new HtmlLabel(<span>Normal Label</span>))
+      add(new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit."))
 
-      add(new HtmlLabel(<span>Small Style (<code>Reindeer.LABEL_SMALL</code>)</span>).p)
-      add(new SmallText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.").p)
+      add(new HtmlLabel(<span>Small Style (<code>Reindeer.LABEL_SMALL</code>)</span>))
+      add(new SmallText("Lorem ipsum dolor sit amet, consectetur adipiscing elit."))
     }
   }
 
-  def buildButtons(): com.vaadin.ui.Layout = {
+  def buildButtons(): Layout = {
     new GridLayout(columns = 2, rows = 1, caption = "Buttons", margin = true, spacing = true, width = 370 px) {
-      setColumnExpandRatio(0, 1)
+      columnExpandRatio(0, 1)
 
-      add(new HtmlLabel(<span>"Default" Style (<code>Reindeer.BUTTON_DEFAULT</code>)</span>).p)
-      add(new Button(caption = "Default Button", style = Reindeer.BUTTON_DEFAULT).p)
+      add(new HtmlLabel(<span>"Default" Style (<code>Reindeer.BUTTON_DEFAULT</code>)</span>))
+      add(new Button(caption = "Default Button", style = Reindeer.BUTTON_DEFAULT))
 
-      add(new HtmlLabel(<span>Normal Button</span>).p)
-      add(new Button("Normal Button").p)
+      add(new HtmlLabel(<span>Normal Button</span>))
+      add(new Button("Normal Button"))
 
-      add(new HtmlLabel(<span>Disabled Button (<code>Button.setEnabled(false)</code>)</span>).p)
-      add(new Button("Disabled Button", enabled = false).p)
+      add(new HtmlLabel(<span>Disabled Button (<code>Button.enabled(false)</code>)</span>))
+      add(new Button("Disabled Button", enabled = false))
 
-      add(new HtmlLabel(<span>Small Style (<code>Reindeer.BUTTON_SMALL</code>)</span>).p)
-      add(new Button(caption = "Small Button", style = Reindeer.BUTTON_SMALL).p)
+      add(new HtmlLabel(<span>Small Style (<code>Reindeer.BUTTON_SMALL</code>)</span>))
+      add(new Button(caption = "Small Button", style = Reindeer.BUTTON_SMALL))
 
-      add(new HtmlLabel(<span>Link Style (<code>Reindeer.BUTTON_LINK</code>)</span>).p)
-      add(new Button(caption = "Link Button", style = BaseTheme.BUTTON_LINK).p) //no way to access inherited static members in Scala
+      add(new HtmlLabel(<span>Link Style (<code>Reindeer.BUTTON_LINK</code>)</span>))
+      add(new Button(caption = "Link Button", style = BaseTheme.BUTTON_LINK)) //no way to access inherited static members in Scala
     }
   }
 
-  def buildTextFields(): com.vaadin.ui.Layout = {
+  def buildTextFields(): Layout = {
     new GridLayout(columns = 2, rows = 1, caption = "Text fields", margin = true, spacing = true, width = 400 px, style = Reindeer.LAYOUT_WHITE) {
-      setColumnExpandRatio(0, 1)
+      columnExpandRatio(0, 1)
 
-      add(new HtmlLabel(<span>Normal TextField</span>).p)
+      add(new HtmlLabel(<span>Normal TextField</span>))
       //      add(new TextField(prompt = "Enter text"))
 
-      add(new HtmlLabel(<span>Small Style (<code>Reindeer.TEXTFIELD_SMALL</code>)</span>).p)
+      add(new HtmlLabel(<span>Small Style (<code>Reindeer.TEXTFIELD_SMALL</code>)</span>))
       //      add(new TextField(style = Reindeer.TEXTFIELD_SMALL, prompt = "Enter text"))
 
-      add(new HtmlLabel(<span>Normal TextArea</span>).p)
-      add(new TextArea(height = 5 em, prompt = "Enter text"))
+      add(new HtmlLabel(<span>Normal TextArea</span>))
+      add(new TextArea(height = 5 em, prompt = "Enter text") with ScaladinWrapper)
 
-      add(new HtmlLabel(<span>Small Style TextArea (<code>Reindeer.TEXTFIELD_SMALL</code>)</span>).p)
-      add(new TextArea(height = 5 em, style = Reindeer.TEXTFIELD_SMALL, prompt = "Enter text"))
+      add(new HtmlLabel(<span>Small Style TextArea (<code>Reindeer.TEXTFIELD_SMALL</code>)</span>))
+      add(new TextArea(height = 5 em, style = Reindeer.TEXTFIELD_SMALL, prompt = "Enter text") with ScaladinWrapper)
     }
   }
 
@@ -219,25 +219,25 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     tabSheetLayout
   }*/
 
-  def buildPanels(): com.vaadin.ui.Layout = {
+  def buildPanels(): Layout = {
     new GridLayout(columns = 2, rows = 1, caption = "Panels", margin = true, spacing = true, width = 700 px, style = Reindeer.LAYOUT_WHITE) {
-      setColumnExpandRatio(0, 2)
-      setColumnExpandRatio(1, 5)
+      columnExpandRatio(0, 2)
+      columnExpandRatio(1, 5)
 
-      add(new HtmlLabel(<span>Normal Panel</span>).p)
-      val normalPanel = add(new Panel(caption = "Normal Panel", height = 100 px))
+      add(new HtmlLabel(<span>Normal Panel</span>))
+      val normalPanel = add(new Panel(caption = "Normal Panel", height = 100 px) with ScaladinWrapper)
       normalPanel.add(new Label("Panel content").p)
 
-      add(new HtmlLabel(<span>Light Style (<code>Reindeer.PANEL_LIGHT</code>)</span>).p)
-      val lightPanel = add(new Panel(caption = "Light Style Panel", style = Reindeer.PANEL_LIGHT))
+      add(new HtmlLabel(<span>Light Style (<code>Reindeer.PANEL_LIGHT</code>)</span>))
+      val lightPanel = add(new Panel(caption = "Light Style Panel", style = Reindeer.PANEL_LIGHT) with ScaladinWrapper)
       lightPanel.add(new Label("Panel content").p)
     }
   }
 
-  def buildTables(): com.vaadin.ui.Layout = {
+  def buildTables(): Layout = {
     val tableLayout = new GridLayout(columns = 2, rows = 1, caption = "Tables", margin = true, spacing = true, width = 700 px, style = Reindeer.LAYOUT_WHITE)
-    tableLayout.setColumnExpandRatio(0, 3)
-    tableLayout.setColumnExpandRatio(1, 5)
+    tableLayout.columnExpandRatio(0, 3)
+    tableLayout.columnExpandRatio(1, 5)
 
     for (i <- 0 until 4) {
       val table = new Table(width = 100 percent)
@@ -248,19 +248,19 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
 
       i match {
 
-        case 0 => tableLayout.addComponent(new HtmlLabel(<span>Normal Table</span>).p)
+        case 0 => tableLayout.addComponent(new HtmlLabel(<span>Normal Table</span>))
 
         case 1 =>
           table.p.setStyleName("strong")
-          tableLayout.addComponent(new HtmlLabel(<span>Strong Style (<code>Reindeer.TABLE_STRONG</code>)</span>).p)
+          tableLayout.addComponent(new HtmlLabel(<span>Strong Style (<code>Reindeer.TABLE_STRONG</code>)</span>))
 
         case 2 =>
           table.p.setStyleName("borderless")
-          tableLayout.addComponent(new HtmlLabel(<span>Borderless Style (<code>Reindeer.TABLE_BORDERLESS</code>)</span>).p)
+          tableLayout.addComponent(new HtmlLabel(<span>Borderless Style (<code>Reindeer.TABLE_BORDERLESS</code>)</span>))
 
         case 3 =>
           table.p.setStyleName("borderless strong")
-          tableLayout.addComponent(new Label("Borderless & Strong Combined").p)
+          tableLayout.addComponent(new Label("Borderless & Strong Combined"))
 
       }
 
@@ -273,7 +273,7 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
           "Last column value " + j), j)
       }
 
-      tableLayout.addComponent(table.p)
+      tableLayout.addComponent(table)
     }
 
     tableLayout
@@ -332,15 +332,15 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
     windowLayout
   }
 
-  def buildSplitPanels(): com.vaadin.ui.Layout = {
+  def buildSplitPanels(): Layout = {
     new GridLayout(columns = 2, rows = 1, caption = "Split panels", margin = true, spacing = true, width = 400 px, style = Reindeer.LAYOUT_WHITE) {
-      setColumnExpandRatio(0, 1)
+      columnExpandRatio(0, 1)
 
-      add(new HtmlLabel(<span>Normal SplitPanel</span>).p)
-      add(new HorizontalSplitPanel(width = 100 px, height = 200 px).p)
+      add(new HtmlLabel(<span>Normal SplitPanel</span>))
+      add(new HorizontalSplitPanel(width = 100 px, height = 200 px))
 
-      add(new HtmlLabel(<span>Small Style (<code>Reindeer.SPLITPANEL_SMALL</code>)</span>).p)
-      add(new HorizontalSplitPanel(width = 100 px, height = 200 px, style = Reindeer.SPLITPANEL_SMALL).p)
+      add(new HtmlLabel(<span>Small Style (<code>Reindeer.SPLITPANEL_SMALL</code>)</span>))
+      add(new HorizontalSplitPanel(width = 100 px, height = 200 px, style = Reindeer.SPLITPANEL_SMALL))
 
     }
   }

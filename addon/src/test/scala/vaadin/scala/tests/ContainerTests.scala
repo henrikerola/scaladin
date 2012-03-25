@@ -127,4 +127,32 @@ class ContainerTests extends FunSuite {
     val itemPropertyValues: List[Any] = item filterProperties (_.getValue.asInstanceOf[String].startsWith("value")) values
     val containerPropertyValues: List[Any] = container \\ 'propertyId1 values
   }
+  
+  test("Property pattern matching") {
+	  val property1 = Property("test")
+	  property1 match {
+	    case Property(x: String) => assert("test" === x)
+	  }
+	  
+	  property1 match {
+	    case Property("test") => //not matching throws exception
+	  }
+	  
+	  val item = Item('id1 -> "value1", 'id2 -> 42)
+	  val result = item.filterProperties(x => x match {
+	    case Property(42) => true 
+	    case _ => false
+	    })
+	  assert(1 === result.size)
+	  assert(42 == result.head.getValue)
+  }
+  
+  test("Item property matching") {
+	  import scala.collection.JavaConverters._
+
+	  val item = Item('id1 -> "value2", 'id2 -> "value1")
+	  item match {
+	    case Item(Property("value1"), _*) => //not matching throws exception
+	  }
+  }
 }

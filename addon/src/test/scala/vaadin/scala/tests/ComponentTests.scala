@@ -31,7 +31,7 @@ class ComponentTests extends FunSuite {
     assert(link.targetHeight === -1)
     assert(link.targetBorder === Link.TargetBorder.Default)
   }
-
+  
   test("Component.styles.contains") {
     val label = new Label
     label.styles += "style1"
@@ -81,7 +81,7 @@ class ComponentTests extends FunSuite {
     label.styles += " stylez "
 
     assert(label.p.getStyleName === "style1 styleName2 foobar stylez")
-    assert(label.styles().size === 4)
+    assert(label.styles.size === 4)
   }
 
   test("Component.styles -=") {

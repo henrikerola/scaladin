@@ -33,7 +33,7 @@ abstract class AbstractSplitPanel(implicit wrapper: WrapperRegistry) extends Abs
   def locked = p.isLocked();
   def locked_=(locked: Boolean) = p.setLocked(locked)
   
-  def splitterClickListeners = new ListenersTrait[SplitterClickEvent => Unit, SplitterClickListener] {
+  lazy val splitterClickListeners = new ListenersTrait[SplitterClickEvent => Unit, SplitterClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.AbstractSplitPanel#SplitterClickEvent])
     override def addListener(elem: SplitterClickEvent => Unit) = p.addListener(new SplitterClickListener(elem))
     override def removeListener(elem: SplitterClickListener) = p.removeListener(elem)
