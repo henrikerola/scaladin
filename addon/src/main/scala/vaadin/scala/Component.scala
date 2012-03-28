@@ -76,11 +76,19 @@ trait AbstractComponent extends Component with Sizeable {
   def immediate_=(immediate: Boolean) = p.setImmediate(immediate);
 }
 
-trait AbstractField extends AbstractComponent with PropertyViewer {
+trait Focusable extends Component {
 
-  override def p: com.vaadin.ui.AbstractField
+  def p: com.vaadin.ui.Component.Focusable
 
   def focus() = p.focus()
+
+  def tabIndex = p.getTabIndex()
+  def tabIndex_=(tabIndex: Int) = p.setTabIndex(tabIndex)
+}
+
+trait AbstractField extends AbstractComponent with PropertyViewer with Focusable {
+
+  override def p: com.vaadin.ui.AbstractField
 
   def value: Option[Any] = Option(p.getValue())
   def value_=(value: Option[Any]): Unit = p.setValue(value.getOrElse(null))

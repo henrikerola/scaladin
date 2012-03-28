@@ -78,21 +78,6 @@ class Accordion(width: Option[Measure] = 100 percent, height: Option[Measure] = 
 
 }
 
-class Panel(caption: String = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, style: String = null)
-  extends com.vaadin.ui.Panel() {
-  setCaption(caption)
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  setStyleName(style)
-
-  def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
-
-  def add[C <: VaadinComponent](component: C = null): C = {
-    addComponent(component)
-    component
-  }
-}
-
 class CustomComponent(width: Option[Measure] = 100 percent, height: Option[Measure] = None, compositionRoot: Component = null)
   extends com.vaadin.ui.CustomComponent(if (compositionRoot != null) compositionRoot.p else null) {
   setWidth(if (width.isDefined) width.get.toString else null)
