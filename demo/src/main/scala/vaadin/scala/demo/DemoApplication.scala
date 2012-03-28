@@ -225,12 +225,12 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
       columnExpandRatio(1, 5)
 
       add(new HtmlLabel(<span>Normal Panel</span>))
-      val normalPanel = add(new Panel(caption = "Normal Panel", height = 100 px) with ScaladinWrapper)
-      normalPanel.add(new Label("Panel content").p)
+      val normalPanel = add(new Panel{ caption = "Normal Panel"; height = 100 px })
+      normalPanel.components += new Label("Panel content")
 
       add(new HtmlLabel(<span>Light Style (<code>Reindeer.PANEL_LIGHT</code>)</span>))
-      val lightPanel = add(new Panel(caption = "Light Style Panel", style = Reindeer.PANEL_LIGHT) with ScaladinWrapper)
-      lightPanel.add(new Label("Panel content").p)
+      val lightPanel = add(new Panel { caption = "Light Style Panel"; styleNames += Reindeer.PANEL_LIGHT })
+      lightPanel.components += new Label("Panel content")
     }
   }
 
@@ -264,9 +264,9 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
 
       }
 
-      table.p.addContainerProperty ("First", classOf[String], null)
-      table.p.addContainerProperty ("Second", classOf[String], null)
-      table.p.addContainerProperty ("Third", classOf[String], null)
+      table.p.addContainerProperty("First", classOf[String], null)
+      table.p.addContainerProperty("Second", classOf[String], null)
+      table.p.addContainerProperty("Third", classOf[String], null)
 
       for (j <- 0 until 100) {
         table.p.addItem(Array("Foo " + j, "Bar value " + j,
