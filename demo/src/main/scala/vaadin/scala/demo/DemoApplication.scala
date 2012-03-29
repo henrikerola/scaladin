@@ -2,7 +2,6 @@ package vaadin.scala.demo
 
 import com.vaadin.ui.Component
 import java.util.Date
-import com.vaadin.Application
 import com.vaadin.terminal.ExternalResource
 import com.vaadin.ui.themes.Reindeer
 import vaadin.scala._
@@ -13,11 +12,11 @@ import com.vaadin.data.Property.ValueChangeEvent
 import com.vaadin.ui.{ Alignment => VaadinAlignment }
 import com.vaadin.event.ShortcutAction.KeyCode
 
-class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme", theme = "reindeer") {
+class DemoApplication extends Application(title = "Vaadin Reindeer Theme", applicationTheme = "reindeer") {
 
   val DATE = new Date()
 
-  val help = new Window("Help")
+  val help = new Window { caption = "Help" }
 
   override def main: com.vaadin.ui.ComponentContainer = {
 
@@ -282,49 +281,63 @@ class DemoApplication extends SimpleApplication(title = "Vaadin Reindeer Theme",
   def buildWindows(tabs: TabSheet): Layout = {
     val windowLayout = new CssLayout(caption = "Windows")
 
-    val normalWindow = new Window(caption = "Normal window", width = 280 px, height = 180 px)
-    normalWindow.setPositionX(40)
-    normalWindow.setPositionY(160)
+    val normalWindow = new Window {
+      caption = "Normal window"
+      width = (280 px)
+      height = (180 px)
+      positionX = 40
+      positionY = 160
+    }
 
-    val notResizableWindow = new Window(caption = "Window, no resize", width = 280 px, height = 180 px, resizable = false)
-    notResizableWindow.setPositionX(350)
-    notResizableWindow.setPositionY(160)
-    notResizableWindow.addComponent(new HtmlLabel(<span><code>Window.setResizable(false)</code></span>).p)
+    val notResizableWindow = new Window {
+      caption = "Window, no resize"
+      width = (280 px)
+      resizable = false
+      height = (180 px)
+      positionX = 350
+      positionY = 160
+      components += new HtmlLabel(<span><code>Window.setResizable(false)</code></span>)
+    }
 
-    val lightWindow = new Window(caption = " Light window", width = 280 px, height = 230 px, style = Reindeer.WINDOW_LIGHT)
-    lightWindow.setPositionX(40)
-    lightWindow.setPositionY(370)
-    lightWindow.addComponent(new HtmlLabel(<span><code>Reindeer.WINDOW_LIGHT</code></span>).p)
+    val lightWindow = new Window {
+      caption = " Light window"
+      width = (280 px)
+      height = (230 px)
+      styles += Reindeer.WINDOW_LIGHT
+      positionX = 40
+      positionY = 370
+      components += new HtmlLabel(<span><code>Reindeer.WINDOW_LIGHT</code></span>)
+    }
 
-    val blackWindow = new Window(caption = "Black window", width = 280 px, height = 230 px, style = Reindeer.WINDOW_BLACK)
-    blackWindow.setPositionX(350)
-    blackWindow.setPositionY(370)
-    blackWindow.addComponent(new HtmlLabel(<span><code>Reindeer.WINDOW_BLACK</code></span>).p)
+    val blackWindow = new Window {
+      caption = "Black window"
+      width = (280 px)
+      height = (230 px)
+      styles += Reindeer.WINDOW_BLACK
+      positionX = 350
+      positionY = 370
+      components += new HtmlLabel(<span><code>Reindeer.WINDOW_BLACK</code></span>)
+    }
 
     tabs.addListener(event => {
-      val mainWindow = getMainWindow
-
       if (event.getTabSheet.getSelectedTab == windowLayout) {
-        mainWindow.addWindow(normalWindow)
-        mainWindow.addWindow(notResizableWindow)
-        mainWindow.addWindow(lightWindow)
-        mainWindow.addWindow(blackWindow)
+        mainWindow.windows += (normalWindow, notResizableWindow, lightWindow, blackWindow)
 
       } else {
-        if (normalWindow.getParent == mainWindow) {
-          mainWindow.removeWindow(normalWindow)
+        if (normalWindow.parent == mainWindow) {
+          mainWindow.windows -= normalWindow
         }
 
-        if (notResizableWindow.getParent == mainWindow) {
-          mainWindow.removeWindow(notResizableWindow)
+        if (notResizableWindow.parent == mainWindow) {
+          mainWindow.windows -= notResizableWindow
         }
 
-        if (lightWindow.getParent == mainWindow) {
-          mainWindow.removeWindow(lightWindow)
+        if (lightWindow.parent == mainWindow) {
+          mainWindow.windows -= lightWindow
         }
 
-        if (blackWindow.getParent == mainWindow) {
-          mainWindow.removeWindow(blackWindow)
+        if (blackWindow.parent == mainWindow) {
+          mainWindow.windows -= blackWindow
         }
       }
     })
