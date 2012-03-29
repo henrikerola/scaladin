@@ -21,35 +21,12 @@ trait FilterableComponentContainer[C <: ComponentContainer] extends ComponentCon
   }
 }
 
-class WindowCloseListener(action: com.vaadin.ui.Window#CloseEvent => Unit) extends com.vaadin.ui.Window.CloseListener {
-  def windowClose(event: com.vaadin.ui.Window#CloseEvent) { action(event) }
-}
-
-class Window(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, content: VaadinComponentContainer = null, modal: Boolean = false, icon: Resource = null, style: String = null, resizable: Boolean = true, draggable: Boolean = true, closable: Boolean = true)
-  extends com.vaadin.ui.Window(caption, content) {
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  setModal(modal)
-  if (icon == null) setIcon(null) else setIcon(icon.p)
-  setStyleName(style)
-  setResizable(resizable)
-  setClosable(closable)
-  setDraggable(draggable)
-
-  def add[C <: VaadinComponent](component: C = null): C = {
-    addComponent(component)
-    component
-  }
-
-  def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
-}
-
 class SelectedTabChangeListener(action: com.vaadin.ui.TabSheet#SelectedTabChangeEvent => Unit) extends com.vaadin.ui.TabSheet.SelectedTabChangeListener {
   def selectedTabChange(event: com.vaadin.ui.TabSheet#SelectedTabChangeEvent) = action(event)
 }
 
 class TabSheet(width: Option[Measure] = 100 percent, height: Option[Measure] = None, caption: String = null, style: String = null, size: Tuple2[String, String] = null)
-  extends com.vaadin.ui.TabSheet() {
+    extends com.vaadin.ui.TabSheet() {
   setCaption(caption)
   if (size != null) {
     setWidth(size._1)
@@ -66,7 +43,7 @@ class TabSheet(width: Option[Measure] = 100 percent, height: Option[Measure] = N
 }
 
 class Accordion(width: Option[Measure] = 100 percent, height: Option[Measure] = None, caption: String = null, style: String = null)
-  extends com.vaadin.ui.Accordion() {
+    extends com.vaadin.ui.Accordion() {
   setCaption(caption)
   setWidth(if (width.isDefined) width.get.toString else null)
   setHeight(if (height.isDefined) height.get.toString else null)
@@ -79,7 +56,7 @@ class Accordion(width: Option[Measure] = 100 percent, height: Option[Measure] = 
 }
 
 class Panel(caption: String = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, style: String = null)
-  extends com.vaadin.ui.Panel() {
+    extends com.vaadin.ui.Panel() {
   setCaption(caption)
   setWidth(if (width.isDefined) width.get.toString else null)
   setHeight(if (height.isDefined) height.get.toString else null)
@@ -94,7 +71,7 @@ class Panel(caption: String = null, width: Option[Measure] = 100 percent, height
 }
 
 class CustomComponent(width: Option[Measure] = 100 percent, height: Option[Measure] = None, compositionRoot: Component = null)
-  extends com.vaadin.ui.CustomComponent(if (compositionRoot != null) compositionRoot.p else null) {
+    extends com.vaadin.ui.CustomComponent(if (compositionRoot != null) compositionRoot.p else null) {
   setWidth(if (width.isDefined) width.get.toString else null)
   setHeight(if (height.isDefined) height.get.toString else null)
 }
