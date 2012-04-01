@@ -18,8 +18,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
 
   val help = new Window { caption = "Help" }
 
-  override def main: com.vaadin.ui.ComponentContainer = {
-
+  override def main = {
     new VerticalLayout(size = Full) {
       val tabs = new TabSheet(size = Full)
 
@@ -42,7 +41,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       tabs.addComponent(buildTables.p)
       tabs.addComponent(buildWindows(tabs).p)
       tabs.addComponent(buildSplitPanels.p)
-    }.p
+    }
   }
 
   def buildScalaWrappersAd(): Layout = {
@@ -51,9 +50,9 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
         add(alignment = Alignment.MiddleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
           content = <span>This demo is implemented completely in <a href="http://www.scala-lang.org">Scala</a>,</span>))
         add(alignment = Alignment.MiddleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
-          content = <span>with the help of the ScalaWrappers Vaadin addon.</span>))
+          content = <span>with the help of the Scaladin Vaadin addon.</span>))
         add(alignment = Alignment.MiddleCenter, component = new HtmlLabel(width = None, style = Reindeer.LABEL_H2,
-          content = <span>You can find more info about the add-on from the <a href="http://vaadin.com/addon/scala-wrappers">Directory page</a>.</span>))
+          content = <span>You can find more info about the add-on from the <a href="http://vaadin.com/addon/scaladin">Directory page</a>.</span>))
       })
     }
   }
@@ -224,7 +223,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       columnExpandRatio(1, 5)
 
       add(new HtmlLabel(<span>Normal Panel</span>))
-      val normalPanel = add(new Panel{ caption = "Normal Panel"; height = 100 px })
+      val normalPanel = add(new Panel { caption = "Normal Panel"; height = 100 px })
       normalPanel.components += new Label("Panel content")
 
       add(new HtmlLabel(<span>Light Style (<code>Reindeer.PANEL_LIGHT</code>)</span>))
@@ -286,7 +285,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       width = (280 px)
       height = (180 px)
       positionX = 40
-      positionY = 160
+      positionY = 250
     }
 
     val notResizableWindow = new Window {
@@ -295,7 +294,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       resizable = false
       height = (180 px)
       positionX = 350
-      positionY = 160
+      positionY = 250
       components += new HtmlLabel(<span><code>Window.setResizable(false)</code></span>)
     }
 
@@ -303,9 +302,9 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       caption = " Light window"
       width = (280 px)
       height = (230 px)
-      styles += Reindeer.WINDOW_LIGHT
+      styleNames += Reindeer.WINDOW_LIGHT
       positionX = 40
-      positionY = 370
+      positionY = 460
       components += new HtmlLabel(<span><code>Reindeer.WINDOW_LIGHT</code></span>)
     }
 
@@ -313,14 +312,14 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       caption = "Black window"
       width = (280 px)
       height = (230 px)
-      styles += Reindeer.WINDOW_BLACK
+      styleNames += Reindeer.WINDOW_BLACK
       positionX = 350
-      positionY = 370
+      positionY = 460
       components += new HtmlLabel(<span><code>Reindeer.WINDOW_BLACK</code></span>)
     }
 
     tabs.addListener(event => {
-      if (event.getTabSheet.getSelectedTab == windowLayout) {
+      if (event.getTabSheet.getSelectedTab == windowLayout.p) {
         mainWindow.windows += (normalWindow, notResizableWindow, lightWindow, blackWindow)
 
       } else {
@@ -531,30 +530,35 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
   }
 
   def openHelpWindow() {
-    if ("initialized" != help.getData) {
-      help.setData("initialized")
+    if ("initialized" != help.data) {
+      help.data = "initialized"
       help.setCloseShortcut(KeyCode.ESCAPE)
+      help.center
+      help.width = 400 px;
+      help.resizable = false
 
-      help.center()
-      help.setWidth("400px")
-      help.setResizable(false)
-
-      val helpText = new HtmlLabel(<span><strong>How To Use This Application</strong><p>Click around, explore. The purpose of this app is to show you what is possible to achieve with the Reindeer theme and its different styles.</p><p>Most of the UI controls that are visible in this application don't actually do anything. They are purely for show, like the menu items and the components that demostrate the different style names assosiated with the components.</p><strong>So, What Then?</strong><p>Go and use the styles you see here in your own application and make them beautiful!</p></span>)
-      help.addComponent(helpText.p)
+      help.components += new HtmlLabel(<span><strong>How To Use This Application</strong><p>Click around, explore. The purpose of this app is to show you what is possible to achieve with the Reindeer theme and its different styles.</p><p>Most of the UI controls that are visible in this application don't actually do anything. They are purely for show, like the menu items and the components that demostrate the different style names assosiated with the components.</p><strong>So, What Then?</strong><p>Go and use the styles you see here in your own application and make them beautiful!</p></span>)
     }
-    if (!getMainWindow.getChildWindows.contains(help)) {
-      getMainWindow.addWindow(help)
+    if (!mainWindow.windows.contains(help)) {
+      mainWindow.windows += help
     }
   }
 
   def openLogoutWindow() {
     val logoutLayout = new VerticalLayout(spacing = true)
 
-    val logout = new Window(caption = "Logout", modal = true, style = Reindeer.WINDOW_BLACK, width = 260 px, resizable = false, closable = false, draggable = false)
-    logout.setContent(logoutLayout.p)
-    logout.setCloseShortcut(KeyCode.ESCAPE)
-
-    logout.addComponent(new HtmlLabel(<span>Are you sure you want to log out? You will be redirected to vaadin.com.</span>).p)
+    val logout = new Window {
+      caption = "Logout"
+      modal = true
+      styleNames += Reindeer.WINDOW_BLACK
+      width = 260 px;
+      resizable = false
+      closable = false
+      draggable = false
+      content = logoutLayout
+      setCloseShortcut(KeyCode.ESCAPE)
+      components += new HtmlLabel(<span>Are you sure you want to log out? You will be redirected to vaadin.com.</span>)
+    }
 
     val buttons = new HorizontalLayout(spacing = true) {
       val yes = add(new Button(caption = "Logout", style = Reindeer.BUTTON_DEFAULT, action = _ => getMainWindow.open(new ExternalResource("http://vaadin.com"))))
@@ -564,7 +568,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
 
     logoutLayout.add(component = buttons, alignment = Alignment.TopCenter)
 
-    getMainWindow.addWindow(logout)
+    mainWindow.windows += logout
   }
 
   class H1(caption: String) extends Label(caption) {

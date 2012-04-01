@@ -74,6 +74,9 @@ trait AbstractComponent extends Component with Sizeable {
 
   def immediate = p.isImmediate();
   def immediate_=(immediate: Boolean) = p.setImmediate(immediate);
+
+  def data_=(data: Any) = p.setData(data)
+  def data = p.getData
 }
 
 trait Focusable extends Component {
