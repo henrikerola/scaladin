@@ -9,12 +9,13 @@ abstract class Application(title: String = "", applicationTheme: String = com.va
   def init(): Unit = {
     mainWindow = new Window { caption = Some(title) }
     theme = applicationTheme
-    //    mainWindow.content = main
+    mainWindow.content = main
   }
 
-  def main: com.vaadin.ui.ComponentContainer = new VerticalLayout(margin = true) { add(new Label("Replace me")) }.p
+  def main: ComponentContainer = new VerticalLayout(margin = true) { add(new Label("Replace me")) }
 
-  def main(windowName: String): com.vaadin.ui.ComponentContainer = main
+  //TODO multiwindow support
+  def main(windowName: String): ComponentContainer = main
 
   def mainWindow_=(window: Window) = super.setMainWindow(window.p)
   def mainWindow = wrapperRegistry.get[Window](super.getMainWindow).get

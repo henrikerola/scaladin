@@ -6,7 +6,7 @@ class WindowCloseListener(action: com.vaadin.ui.Window#CloseEvent => Unit) exten
   def windowClose(event: com.vaadin.ui.Window#CloseEvent) { action(event) }
 }
 
-class Window(implicit wrapper: WrapperRegistry) extends AbstractComponentContainer {
+class Window(implicit wrapper: WrapperRegistry) extends Panel {
   override val p = new com.vaadin.ui.Window
 
   def positionX_=(positionX: Int) = p.setPositionX(positionX)
@@ -30,4 +30,18 @@ class Window(implicit wrapper: WrapperRegistry) extends AbstractComponentContain
     def +=(elem: Window) = { p.addWindow(elem.p); this }
     def -=(elem: Window) = { p.removeWindow(elem.p); this }
   }
+
+  //not a property
+  def setCloseShortcut(keyCode: Int, modifiers: Int*): Unit = { p.setCloseShortcut(keyCode, modifiers.map(_.asInstanceOf[Int]): _*) }
+
+  def center = p.center
+
+  def modal_=(modal: Boolean) = p.setModal(modal)
+  def modal = p.isModal
+
+  def closable_=(closable: Boolean) = p.setClosable(modal)
+  def closable = p.isClosable
+
+  def draggable_=(draggable: Boolean) = p.setDraggable(draggable)
+  def draggable = p.isDraggable
 }

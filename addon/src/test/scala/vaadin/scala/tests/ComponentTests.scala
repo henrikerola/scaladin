@@ -32,21 +32,21 @@ class ComponentTests extends FunSuite {
     assert(link.targetBorder === Link.TargetBorder.Default)
   }
   
-  test("Component.styles.contains") {
+  test("Component.styleNames.contains") {
     val label = new Label
-    label.styles += "style1"
-    label.styles += "styleName2"
+    label.styleNames += "style1"
+    label.styleNames += "styleName2"
 
-    assert(label.styles.contains("style1"))
+    assert(label.styleNames.contains("style1"))
   }
 
-  test("Component.styles.iterator") {
+  test("Component.styleNames.iterator") {
     val label = new Label
-    label.styles += "style1"
-    label.styles += "styleName2"
-    label.styles += "stylez"
+    label.styleNames += "style1"
+    label.styleNames += "styleName2"
+    label.styleNames += "stylez"
 
-    val iter = label.styles.iterator
+    val iter = label.styleNames.iterator
     assert(iter.next === "style1")
     assert(iter.next === "styleName2")
     assert(iter.next === "stylez")
@@ -63,45 +63,45 @@ class ComponentTests extends FunSuite {
     //    assert(label.getHeightUnits == Sizeable.UNITS_EM)
     assert(label.property === Some(property))
     assert(label.contentMode === Label.ContentMode.Preformatted)
-    assert(label.styles.mkString == "Style")
+    assert(label.styleNames.mkString == "Style")
   }
 
   test("Label, default constructor") {
     val label = new Label
-    label.styles += "style1"
-    label.styles += "styleName2"
+    label.styleNames += "style1"
+    label.styleNames += "styleName2"
 
     assert(label.p.getStyleName === "style1 styleName2")
   }
 
-  test("Component.styles +=, spaces are splitted") {
+  test("Component.styleNames +=, spaces are splitted") {
     val label = new Label
-    label.styles += "  style1  "
-    label.styles += "  styleName2    foobar  "
-    label.styles += " stylez "
+    label.styleNames += "  style1  "
+    label.styleNames += "  styleName2    foobar  "
+    label.styleNames += " stylez "
 
     assert(label.p.getStyleName === "style1 styleName2 foobar stylez")
-    assert(label.styles.size === 4)
+    assert(label.styleNames.size === 4)
   }
 
-  test("Component.styles -=") {
+  test("Component.styleNames -=") {
     val label = new Label
-    label.styles += "style1"
-    label.styles += "styleName2"
-    label.styles += "stylez"
+    label.styleNames += "style1"
+    label.styleNames += "styleName2"
+    label.styleNames += "stylez"
 
-    label.styles -= "styleName2"
+    label.styleNames -= "styleName2"
 
     assert(label.p.getStyleName === "style1 stylez")
   }
 
-  test("Component.styles.size") {
+  test("Component.styleNames.size") {
     val label = new Label
-    label.styles += "style1"
-    label.styles += "style2"
-    label.styles += "style3"
+    label.styleNames += "style1"
+    label.styleNames += "style2"
+    label.styleNames += "style3"
 
-    assert(label.styles.size === 3)
+    assert(label.styleNames.size === 3)
   }
 
   test("HtmlLabel, constructor with all params but without names") {
@@ -136,7 +136,7 @@ class ComponentTests extends FunSuite {
     //    assert(textField.getHeight === -1)
     assert(textField.property === None)
     assert(textField.value === Some(""))
-    assert(textField.styles.mkString === "")
+    assert(textField.styleNames.mkString === "")
     assert(textField.prompt === None)
   }
 
@@ -148,7 +148,7 @@ class ComponentTests extends FunSuite {
     //    assert(textField.getHeight === 22)
     assert(textField.property === Some(property))
     assert(textField.value === Some("value2"))
-    assert(textField.styles.mkString === "style")
+    assert(textField.styleNames.mkString === "style")
     assert(textField.prompt === Some("prompt"))
   }
   

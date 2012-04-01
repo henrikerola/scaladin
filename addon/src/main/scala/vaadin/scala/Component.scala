@@ -8,7 +8,7 @@ trait Component extends Wrapper {
 
   // TODO: add methods styleName, addStyleName, removeStyleName?
 
-  val styles = new mutable.Set[String] {
+  val styleNames = new mutable.Set[String] {
     def contains(key: String) = p.getStyleName().split(" ").iterator.contains(key)
     def iterator: Iterator[String] = p.getStyleName().split(" ").iterator
     def +=(elem: String) = { elem.split(" ").foreach(p.addStyleName(_)); this }
@@ -87,13 +87,24 @@ abstract class AbstractComponent(implicit wrapper: WrapperRegistry) extends Comp
 
   def immediate = p.isImmediate();
   def immediate_=(immediate: Boolean) = p.setImmediate(immediate);
+
+  def data_=(data: Any) = p.setData(data)
+  def data = p.getData
 }
 
-abstract class AbstractField(implicit wrapper: WrapperRegistry) extends AbstractComponent with PropertyViewer {
+trait Focusable extends Component {
 
-  override def p: com.vaadin.ui.AbstractField
+  def p: com.vaadin.ui.Component.Focusable
 
   def focus() = p.focus()
+
+  def tabIndex = p.getTabIndex()
+  def tabIndex_=(tabIndex: Int) = p.setTabIndex(tabIndex)
+}
+
+abstract class AbstractField(implicit wrapper: WrapperRegistry) extends AbstractComponent with PropertyViewer with Focusable {
+
+  override def p: com.vaadin.ui.AbstractField
 
   def value: Option[Any] = Option(p.getValue())
   def value_=(value: Option[Any]): Unit = p.setValue(value.getOrElse(null))
