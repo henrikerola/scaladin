@@ -320,23 +320,23 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
 
     tabs.addListener(event => {
       if (event.getTabSheet.getSelectedTab == windowLayout.p) {
-        mainWindow.windows += (normalWindow, notResizableWindow, lightWindow, blackWindow)
+        mainWindow.childWindows += (normalWindow, notResizableWindow, lightWindow, blackWindow)
 
       } else {
         if (normalWindow.parent == mainWindow) {
-          mainWindow.windows -= normalWindow
+          mainWindow.childWindows -= normalWindow
         }
 
         if (notResizableWindow.parent == mainWindow) {
-          mainWindow.windows -= notResizableWindow
+          mainWindow.childWindows -= notResizableWindow
         }
 
         if (lightWindow.parent == mainWindow) {
-          mainWindow.windows -= lightWindow
+          mainWindow.childWindows -= lightWindow
         }
 
         if (blackWindow.parent == mainWindow) {
-          mainWindow.windows -= blackWindow
+          mainWindow.childWindows -= blackWindow
         }
       }
     })
@@ -539,8 +539,8 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
 
       help.components += new HtmlLabel(<span><strong>How To Use This Application</strong><p>Click around, explore. The purpose of this app is to show you what is possible to achieve with the Reindeer theme and its different styles.</p><p>Most of the UI controls that are visible in this application don't actually do anything. They are purely for show, like the menu items and the components that demostrate the different style names assosiated with the components.</p><strong>So, What Then?</strong><p>Go and use the styles you see here in your own application and make them beautiful!</p></span>)
     }
-    if (!mainWindow.windows.contains(help)) {
-      mainWindow.windows += help
+    if (!mainWindow.childWindows.contains(help)) {
+      mainWindow.childWindows += help
     }
   }
 
@@ -568,7 +568,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
 
     logoutLayout.add(component = buttons, alignment = Alignment.TopCenter)
 
-    mainWindow.windows += logout
+    mainWindow.childWindows += logout
   }
 
   class H1(caption: String) extends Label(caption) {
