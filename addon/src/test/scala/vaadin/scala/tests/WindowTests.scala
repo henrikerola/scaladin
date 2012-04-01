@@ -6,6 +6,8 @@ import org.scalatest.BeforeAndAfter
 
 class WindowTests extends FunSuite with BeforeAndAfter {
 
+  implicit val testWrapper = new WrapperRegistry
+
   var window: Window = _
 
   before {
