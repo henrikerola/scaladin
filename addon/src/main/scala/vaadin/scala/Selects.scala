@@ -10,82 +10,51 @@ class PropertyValueChangeListener(action: com.vaadin.data.Property.ValueChangeEv
   override def valueChange(event: com.vaadin.data.Property.ValueChangeEvent) = action(event)
 }
 
+object ItemCaptionMode extends Enumeration {
+  import com.vaadin.ui.AbstractSelect._
+  val Id = Value(ITEM_CAPTION_MODE_ID)
+  val Item = Value(ITEM_CAPTION_MODE_ITEM)
+  val Index = Value(ITEM_CAPTION_MODE_INDEX)
+  val ExplicitDefaultsId = Value(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID)
+  val Explicit = Value(ITEM_CAPTION_MODE_EXPLICIT)
+  val IconOnly = Value(ITEM_CAPTION_MODE_ICON_ONLY)
+  val Property = Value(ITEM_CAPTION_MODE_PROPERTY)
+}
+
 trait AbstractSelect extends AbstractField {
 
+  def p: com.vaadin.ui.AbstractSelect
+
+  // NewItemHandler
+  
+  def itemCaptionMode = ItemCaptionMode(p.getItemCaptionMode)
+  def itemCaptionMode_=(itemCaptionMode: ItemCaptionMode.Value) = p.setItemCaptionMode(itemCaptionMode.id)
+
+  def itemCaptionPropertyId: Option[Any] = Option(p.getItemCaptionPropertyId)
+  def itemCaptionPropertyId_=(itemCaptionPropertyId: Option[Any]) = p.setItemCaptionPropertyId(itemCaptionPropertyId.getOrElse(null))
+  def itemCaptionPropertyId_=(itemCaptionPropertyId: Any) = p.setItemCaptionPropertyId(itemCaptionPropertyId)
+
+  def itemIconPropertyId: Option[Any] = Option(p.getItemIconPropertyId)
+  def itemIconPropertyId_=(itemIconPropertyId: Option[Any]) = p.setItemIconPropertyId(itemIconPropertyId.getOrElse(null))
+  def itemIconPropertyId_=(itemIconPropertyId: Any) = p.setItemIconPropertyId(itemIconPropertyId)
+
+  def nullSelectionAllowed = p.isNullSelectionAllowed
+  def nullSelectionAllowed_=(nullSelectionAllowed: Boolean) = p.setNullSelectionAllowed(nullSelectionAllowed)
+
+  def nullSelectionItemId: Option[Any] = Option(p.getNullSelectionItemId)
+  def nullSelectionItemId_=(nullSelectionItemId: Option[Any]) = p.setNullSelectionItemId(nullSelectionItemId.getOrElse(null))
+  def nullSelectionItemId_=(nullSelectionItemId: Any) = p.setNullSelectionItemId(nullSelectionItemId)
+
+  def selected(itemId: Any) = p.isSelected(itemId)
+  def select(itemId: Any) = p.select(itemId)
+  def unselect(itemId: Any) = p.unselect(itemId)
+
 }
 
-trait Select extends AbstractSelect {
+trait MultiSelectable extends AbstractSelect {
 
-}
-
-class NativeSelect(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, value: Any = null, style: String = null, nullSelectionAllowed: Boolean = true)
-  extends com.vaadin.ui.NativeSelect(caption) with ValueChangeFunction {
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  if (value != null) setValue(value)
-  setStyleName(style)
-  setNullSelectionAllowed(nullSelectionAllowed)
-}
-
-class ComboBox(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)
-  extends Select /*with ValueChangeFunction*/ {
-
-  override val p = new com.vaadin.ui.ComboBox(caption);
-  WrapperRegistry.put(this)
-
-  p.setWidth(if (width.isDefined) width.get.toString else null)
-  p.setHeight(if (height.isDefined) height.get.toString else null)
-  if (dataSource != null) p.setContainerDataSource(dataSource)
-  if (value != null) p.setValue(value)
-  p.setStyleName(style)
-  p.setInputPrompt(prompt)
-  p.setNullSelectionAllowed(nullSelectionAllowed)
-
-  // TODO: Is there difference between null and "" so we could return "" when input prompt is null and avoid Option?
-  def inputPrompt: Option[String] = Option(p.getInputPrompt)
-  def inputPrompt_=(inputPrompt: Option[String]) = p.setInputPrompt(inputPrompt.getOrElse(null))
-  def inputPrompt_=(inputPrompt: String) = p.setInputPrompt(inputPrompt)
-
-  def textInputAllowed = p.isTextInputAllowed()
-  def textInputAllowed_=(textInputAllowed: Boolean) = p.setTextInputAllowed(textInputAllowed)
-}
-
-class ListSelect(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, nullSelectionAllowed: Boolean = true)
-  extends com.vaadin.ui.ListSelect(caption) with ValueChangeFunction {
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  if (dataSource != null) setContainerDataSource(dataSource)
-  if (value != null) setValue(value)
-  setStyleName(style)
-  setNullSelectionAllowed(nullSelectionAllowed)
-}
-
-class OptionGroup(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)
-  extends com.vaadin.ui.OptionGroup(caption) with ValueChangeFunction {
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  if (dataSource != null) setContainerDataSource(dataSource)
-  if (value != null) setValue(value)
-  setStyleName(style)
-  setNullSelectionAllowed(nullSelectionAllowed)
-}
-
-class TwinColSelect(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, value: Any = null, style: String = null, prompt: String = null, nullSelectionAllowed: Boolean = true)
-  extends com.vaadin.ui.TwinColSelect(caption) with ValueChangeFunction {
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  if (dataSource != null) setContainerDataSource(dataSource)
-  if (value != null) setValue(value)
-  setStyleName(style)
-  setNullSelectionAllowed(nullSelectionAllowed)
-}
-
-trait ItemClickListener extends com.vaadin.event.ItemClickEvent.ItemClickNotifier {
-  def addItemClickListener(action: com.vaadin.event.ItemClickEvent => Unit) {
-    addListener(new com.vaadin.event.ItemClickEvent.ItemClickListener {
-      override def itemClick(event: com.vaadin.event.ItemClickEvent) = action(event)
-    })
-  }
+  def multiSelect = p.isMultiSelect
+  def multiSelect_=(multiSelect: Boolean) = p.setMultiSelect(multiSelect)
 }
 
 trait TableColumnGenerator extends com.vaadin.ui.Table {
@@ -112,7 +81,7 @@ class TreeTable(caption: String = null, width: Option[Measure] = None, height: O
 }
 
 class Tree(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, property: com.vaadin.data.Property = null, value: Any = null, selectable: Boolean = false, nullSelectionAllowed: Boolean = true, immediate: Boolean = false, style: String = null)
-  extends com.vaadin.ui.Tree with ValueChangeFunction with ItemClickListener {
+  extends com.vaadin.ui.Tree with ValueChangeFunction {
   setWidth(if (width.isDefined) width.get.toString else null)
   setHeight(if (height.isDefined) height.get.toString else null)
   if (dataSource != null) setContainerDataSource(dataSource)

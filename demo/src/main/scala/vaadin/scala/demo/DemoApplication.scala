@@ -116,16 +116,16 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     val selectsLayout = new HorizontalLayout(spacing = true) {
       margin(top = true)
       val comboBox = add(new ComboBox())
-      val nativeSelect = addComponent(new NativeSelect())
-      val listSelect = addComponent(new ListSelect())
-      val twinColSelect = addComponent(new TwinColSelect())
+      val nativeSelect = add(new NativeSelect())
+      val listSelect = add(new ListSelect())
+      val twinColSelect = add(new TwinColSelect())
     }
 
     for (i <- 0 until 25) {
       selectsLayout.comboBox.p.addItem("Item " + i)
-      selectsLayout.nativeSelect.addItem("Item " + i)
-      selectsLayout.listSelect.addItem("Item " + i)
-      selectsLayout.twinColSelect.addItem("Item " + i)
+      selectsLayout.nativeSelect.p.addItem("Item " + i)
+      selectsLayout.listSelect.p.addItem("Item " + i)
+      selectsLayout.twinColSelect.p.addItem("Item " + i)
     }
 
     new VerticalLayout(caption = "Selects", margin = true, spacing = true) {
@@ -476,16 +476,17 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     bgColor.description = "Set the style name for the main layout of this window:<ul><li>Default - no style</li><li>White - Reindeer.LAYOUT_WHITE</li><li>Blue - Reindeer.LAYOUT_BLUE</li><li>Black - Reindeer.LAYOUT_BLACK</li></ul>"
     toggles.addComponent(bgColor.p)
     val colors = new NativeSelect()
-    colors.setNullSelectionAllowed(false)
-    colors.setDescription("Set the style name for the main layout of this window:<ul><li>Default - no style</li><li>White - Reindeer.LAYOUT_WHITE</li><li>Blue - Reindeer.LAYOUT_BLUE</li><li>Black - Reindeer.LAYOUT_BLACK</li></ul>")
-    colors.addItem("Default")
-    colors.addItem("White")
-    colors.addItem("Blue")
-    colors.addItem("Black")
-    colors.setImmediate(true)
-    colors.addListener(event => mainLayout.p.setStyleName(event.getProperty.getValue.toString.toLowerCase))
+    colors.nullSelectionAllowed = false
+    colors.description = "Set the style name for the main layout of this window:<ul><li>Default - no style</li><li>White - Reindeer.LAYOUT_WHITE</li><li>Blue - Reindeer.LAYOUT_BLUE</li><li>Black - Reindeer.LAYOUT_BLACK</li></ul>"
+    colors.p.addItem("Default")
+    colors.p.addItem("White")
+    colors.p.addItem("Blue")
+    colors.p.addItem("Black")
+    colors.immediate = true
+    // FIXME:
+    //colors.addListener(event => mainLayout.p.setStyleName(event.getProperty.getValue.toString.toLowerCase))
 
-    colors.setValue("Blue")
+    colors.value = "Blue"
     toggles.addComponent(colors)
     val transparent = new CheckBox(caption = "Transparent tabs", immediate = true, action = event =>
       {
