@@ -22,8 +22,7 @@ class EmbeddedTests extends FunSuite {
 
 	  val res = new ThemeResource("img.png")
 	  embedded.source = res
-	  // Why this equals fails?
-	  assert(embedded.source === res)
+	  assert(embedded.source === Some(res))
   }
   
   test("source, None") {
@@ -35,13 +34,13 @@ class EmbeddedTests extends FunSuite {
   test("codebase, String") {
 	  val embedded = new Embedded
 	  embedded.codebase = "codebase"
-	  assert(embedded.codebase.get === "codebase")
+	  assert(embedded.codebase === Some("codebase"))
   }
   
   test("codebase, Option") {
 	  val embedded = new Embedded
 	  embedded.codebase = Option("codebase")
-	  assert(embedded.codebase.get === "codebase")
+	  assert(embedded.codebase === Some("codebase"))
   }
   
   test("codebase, None") {
@@ -53,13 +52,13 @@ class EmbeddedTests extends FunSuite {
   test("codetype, String") {
 	  val embedded = new Embedded
 	  embedded.codetype = "codetype"
-	  assert(embedded.codetype.get === "codetype")
+	  assert(embedded.codetype === Some("codetype"))
   }
   
   test("codetype, Option") {
 	  val embedded = new Embedded
 	  embedded.codetype = Option("codetype")
-	  assert(embedded.codetype.get === "codetype")
+	  assert(embedded.codetype === Some("codetype"))
   }
   
   test("codetype, None") {
@@ -71,13 +70,13 @@ class EmbeddedTests extends FunSuite {
   test("standby, String") {
 	  val embedded = new Embedded
 	  embedded.standby = "standby"
-	  assert(embedded.standby.get === "standby")
+	  assert(embedded.standby === Some("standby"))
   }
   
   test("standby, Option") {
 	  val embedded = new Embedded
 	  embedded.standby = Option("standby")
-	  assert(embedded.standby.get === "standby")
+	  assert(embedded.standby === Some("standby"))
   }
   
   test("standby, None") {
@@ -89,13 +88,13 @@ class EmbeddedTests extends FunSuite {
   test("classId, String") {
 	  val embedded = new Embedded
 	  embedded.classId = "classId"
-	  assert(embedded.classId.get === "classId")
+	  assert(embedded.classId === Some("classId"))
   }
   
   test("classId, Option") {
 	  val embedded = new Embedded
 	  embedded.classId = Option("classId")
-	  assert(embedded.classId.get === "classId")
+	  assert(embedded.classId === Some("classId"))
   }
   
   test("classId, None") {
@@ -107,13 +106,13 @@ class EmbeddedTests extends FunSuite {
   test("archive, String") {
 	  val embedded = new Embedded
 	  embedded.archive = "archive"
-	  assert(embedded.archive.get === "archive")
+	  assert(embedded.archive === Some("archive"))
   }
   
   test("archive, Option") {
 	  val embedded = new Embedded
 	  embedded.archive = Option("archive")
-	  assert(embedded.archive.get === "archive")
+	  assert(embedded.archive === Some("archive"))
   }
   
   test("archive, None") {
