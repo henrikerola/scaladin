@@ -37,7 +37,7 @@ class CssLayout(width: Option[Measure] = None, height: Option[Measure] = None, m
   val cssMap = Map[VaadinComponent, String]()
 
   def add[C <: Component](component: C, css: String = null): C = {
-    addComponent(component)
+    add(component)
     if (css != null) cssMap(component.p) = css
     component
   }
@@ -62,19 +62,6 @@ class CustomLayout(width: Option[Measure] = 100 percent, height: Option[Measure]
     setTemplateName(template)
   else if (contents != null)
     setTemplateContents(contents)
-
-  def add[C <: com.vaadin.ui.Component](component: C, location: String): C = {
-    addComponent(component, location)
-    component
-  }
-}
-
-class AbsoluteLayout(width: Option[Measure] = 100 percent, height: Option[Measure] = 100 percent, caption: String = null, style: String = null)
-  extends com.vaadin.ui.AbsoluteLayout with LayoutClickListener {
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  setCaption(caption)
-  setStyleName(style)
 
   def add[C <: com.vaadin.ui.Component](component: C, location: String): C = {
     addComponent(component, location)

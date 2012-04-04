@@ -22,9 +22,9 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     new VerticalLayout(size = Full) {
       val tabs = new TabSheet(size = Full)
 
-      addComponent(buildScalaWrappersAd)
+      add(buildScalaWrappersAd)
       addComponent(getTopMenu)
-      addComponent(getHeader(this, tabs))
+      add(getHeader(this, tabs))
       add(ratio = 1, component = new CssLayout(size = Full) {
         margin(false, true, true, true)
         p.addComponent(tabs)
@@ -36,7 +36,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       tabs.addComponent(buildTextFields.p)
       tabs.addComponent(buildSelects.p)
       tabs.addComponent(buildDateFields.p)
-      //tabs.addComponent(buildTabSheets) // FIXME
+      //tabs.add(buildTabSheets) // FIXME
       tabs.addComponent(buildPanels.p)
       tabs.addComponent(buildTables.p)
       tabs.addComponent(buildWindows(tabs).p)
@@ -131,12 +131,13 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     new VerticalLayout(caption = "Selects", margin = true, spacing = true) {
       add(new Label(
         "Selects don't currently have any additional style names, but here you can see how they behave with the different background colors."))
-      addComponent(selectsLayout)
+      add(selectsLayout)
     }
   }
 
   def buildDateFields(): Layout = {
-    val hl = new HorizontalLayout(spacing = true) {
+    val hl = new HorizontalLayout {
+      spacing = true
       margin(top = true)
       addComponent(new PopupDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_MIN))
       addComponent(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_DAY))
@@ -146,7 +147,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     new VerticalLayout(caption = "Date fields", margin = true, spacing = true) {
       add(new Label(
         "Date fields don't currently have any additional style names, but here you can see how they behave with the different background colors."))
-      addComponent(hl)
+      add(hl)
     }
   }
 
@@ -246,19 +247,19 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
 
       i match {
 
-        case 0 => tableLayout.addComponent(new HtmlLabel(<span>Normal Table</span>))
+        case 0 => tableLayout.add(new HtmlLabel(<span>Normal Table</span>))
 
         case 1 =>
           table.p.setStyleName("strong")
-          tableLayout.addComponent(new HtmlLabel(<span>Strong Style (<code>Reindeer.TABLE_STRONG</code>)</span>))
+          tableLayout.add(new HtmlLabel(<span>Strong Style (<code>Reindeer.TABLE_STRONG</code>)</span>))
 
         case 2 =>
           table.p.setStyleName("borderless")
-          tableLayout.addComponent(new HtmlLabel(<span>Borderless Style (<code>Reindeer.TABLE_BORDERLESS</code>)</span>))
+          tableLayout.add(new HtmlLabel(<span>Borderless Style (<code>Reindeer.TABLE_BORDERLESS</code>)</span>))
 
         case 3 =>
           table.p.setStyleName("borderless strong")
-          tableLayout.addComponent(new Label("Borderless & Strong Combined"))
+          tableLayout.add(new Label("Borderless & Strong Combined"))
 
       }
 
@@ -271,7 +272,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
           "Last column value " + j), j)
       }
 
-      tableLayout.addComponent(table)
+      tableLayout.add(table)
     }
 
     tableLayout
@@ -393,13 +394,13 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       add(new HtmlLabel(<span><p><strong><code>Reindeer.LAYOUT_BLACK</code></strong></p><p>Reserved for small parts of the application. Or alternatively, use for the whole application.</p><p><strong>This style is non-overridable</strong>, meaning that everything you place inside it will transform to their corresponding black styles when available, excluding Labels.</p></span>))
     }
 
-    colors.addComponent(whiteLayout)
-    colors.addComponent(blueLayout)
-    colors.addComponent(blackLayout)
+    colors.add(whiteLayout)
+    colors.add(blueLayout)
+    colors.add(blackLayout)
 
     val note = new HtmlLabel(<span><p>Note, that you cannot nest the layout styles infinitely inside each other. After a couple levels, the result will be undefined, due to limitations in CSS (which are in fact caused by Internet Explorer 6).</p></span>)
 
-    l.addComponent(new CssLayout(margin = true, width = 100 percent) {
+    l.add(new CssLayout(margin = true, width = 100 percent) {
       add(new H1("Guide to the Reindeer Theme"))
       add(new Ruler())
       add(texts)
@@ -407,7 +408,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       add(new Ruler())
       add(new HtmlLabel(<span><p>You can easily change the feel of some parts of your application by using the three layout styles provided by Reindeer: white, blue and black. The colored area contains the margins of the layout. All contained components will switch their style if an alternative style is available for that color.</p></span>))
       add(colors)
-      addComponent(note)
+      add(note)
     })
 
     return l
@@ -471,10 +472,10 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       add(new SmallText("Documentation and Examples of Available Styles")).sizeUndefined()
     }
 
-    val toggles = new HorizontalLayout(spacing = true)
+    val toggles = new HorizontalLayout { spacing = true }
     val bgColor = new Label("Background color")
     bgColor.description = "Set the style name for the main layout of this window:<ul><li>Default - no style</li><li>White - Reindeer.LAYOUT_WHITE</li><li>Blue - Reindeer.LAYOUT_BLUE</li><li>Black - Reindeer.LAYOUT_BLACK</li></ul>"
-    toggles.addComponent(bgColor.p)
+    toggles.add(bgColor)
     val colors = new NativeSelect()
     colors.nullSelectionAllowed = false
     colors.description = "Set the style name for the main layout of this window:<ul><li>Default - no style</li><li>White - Reindeer.LAYOUT_WHITE</li><li>Blue - Reindeer.LAYOUT_BLUE</li><li>Black - Reindeer.LAYOUT_BLACK</li></ul>"
@@ -487,7 +488,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     //colors.addListener(event => mainLayout.p.setStyleName(event.getProperty.getValue.toString.toLowerCase))
 
     colors.value = "Blue"
-    toggles.addComponent(colors)
+    toggles.add(colors)
     val transparent = new CheckBox(caption = "Transparent tabs", immediate = true, action = event =>
       {
         if (event.getButton.booleanValue) {
@@ -507,12 +508,12 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
         getMainWindow.open(new ExternalResource(getURL))
       })
     transparent.description = "Set style Reindeer.TABSHEET_MINIMAL to the main tab sheet (preview components on different background colors)."
-    toggles.addComponent(transparent)
+    toggles.add(transparent)
 
     val userLayout = new CssLayout()
     val user = new Label("Welcome, Guest")
     user.sizeUndefined()
-    userLayout.addComponent(user)
+    userLayout.add(user)
 
     val help = new Button(caption = "Help", action = _ => openHelpWindow(), style = Reindeer.BUTTON_SMALL)
     val logout = new Button(caption = "Logout", action = _ => openLogoutWindow(), style = Reindeer.BUTTON_SMALL)
@@ -521,7 +522,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       add(component = help, alignment = Alignment.MiddleLeft)
       add(logout)
     }
-    userLayout.addComponent(buttons)
+    userLayout.add(buttons)
 
     new HorizontalLayout(width = 100 percent, margin = true, spacing = true) {
       add(titleLayout)
