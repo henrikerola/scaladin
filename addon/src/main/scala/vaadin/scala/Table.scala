@@ -75,6 +75,14 @@ class Table(implicit wrapper: WrapperRegistry) extends AbstractSelect {
   def sortable = !p.isSortDisabled
   def sortable_=(sortable: Boolean) = p.setSortDisabled(!sortable)
 
+  // TODO: sort(Object[] propertyId, boolean[] ascending)
+  // TODO: getSortableContainerPropertyIds() {
+  // TODO: sortContainerPropertyId: Any = p.getSortContainerPropertyId 
+  // TODO: setSortContainerPropertyId
+
+  def sortAscending = p.isSortAscending
+  def sortAscending_=(sortAscending: Boolean) = p.setSortAscending(true)
+
   def selectionMode = {
     if (!p.isSelectable)
       Table.SelectionMode.None
@@ -110,8 +118,16 @@ class Table(implicit wrapper: WrapperRegistry) extends AbstractSelect {
 
   def refreshRowCache() = p.refreshRowCache()
 
+  // get/setColumnFooter
+
   def footerVisible = p.isFooterVisible
   def footerVisible_=(footerVisible: Boolean) = p.setFooterVisible(footerVisible)
+
+  lazy val itemClickListeners = new ListenersTrait[ItemClickEvent => Unit, ItemClickListener] {
+    override def listeners = p.getListeners(classOf[com.vaadin.event.ItemClickEvent.ItemClickListener])
+    override def addListener(elem: ItemClickEvent => Unit) = p.addListener(new ItemClickListener(elem))
+    override def removeListener(elem: ItemClickListener) = p.removeListener(elem)
+  }
 
   lazy val headerClickListeners = new ListenersTrait[HeaderClickEvent => Unit, HeaderClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.HeaderClickListener])
@@ -137,9 +153,51 @@ class Table(implicit wrapper: WrapperRegistry) extends AbstractSelect {
     override def removeListener(elem: ColumnReorderListener) = p.removeListener(elem)
   }
 
-  // ItemDescriptionGenerator
+  private class CellStyleGenerator(val generator: (Any, Any) => String) extends com.vaadin.ui.Table.CellStyleGenerator {
+    def getStyle(itemId: Any, propertyId: Any) = generator(itemId, propertyId)
+
+  }
+
+  def cellStyleGenerator: Option[(Any, Any) => String] = p.getCellStyleGenerator match {
+    case null                          => None
+    case generator: CellStyleGenerator => Some(generator.generator)
+  }
+
+  def cellStyleGenerator_=(generator: (Any, Any) => String): Unit = {
+    p.setCellStyleGenerator(new CellStyleGenerator(generator))
+  }
+
+  def cellStyleGenerator_=(generator: Option[(Any, Any) => String]): Unit = generator match {
+    case None            => p.setCellStyleGenerator(null)
+    case Some(generator) => cellStyleGenerator = generator
+  }
+
+  private class ItemDescriptionGenerator(val generator: (Table, Any, Any) => String) extends com.vaadin.ui.AbstractSelect.ItemDescriptionGenerator {
+    def generateDescription(source: com.vaadin.ui.Component, itemId: Any, propertyId: Any) = generator(wrapper.get[Table](source).get, itemId, propertyId)
+  }
+
+  def itemDescriptionGenerator: Option[(Table, Any, Any) => String] = p.getItemDescriptionGenerator match {
+    case null                                => None
+    case generator: ItemDescriptionGenerator => Some(generator.generator)
+  }
+
+  def itemDescriptionGenerator_=(generator: (Table, Any, Any) => String): Unit = {
+    p.setItemDescriptionGenerator(new ItemDescriptionGenerator(generator))
+  }
+
+  def itemDescriptionGenerator_=(generator: Option[(Table, Any, Any) => String]): Unit = generator match {
+    case None            => p.setItemDescriptionGenerator(null)
+    case Some(generator) => itemDescriptionGenerator = generator
+  }
+
   // RowGenerator
 
+}
+
+case class ItemClickEvent(component: Component, item: com.vaadin.data.Item, itemId: Any, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
+
+class ItemClickListener(val action: ItemClickEvent => Unit)(implicit wrapper: WrapperRegistry) extends com.vaadin.event.ItemClickEvent.ItemClickListener with Listener {
+  def itemClick(e: com.vaadin.event.ItemClickEvent) = action(ItemClickEvent(wrapper.get[Table](e.getComponent).get, e.getItem(), e.getItemId(), e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
 }
 
 case class HeaderClickEvent(component: Component, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)

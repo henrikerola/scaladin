@@ -9,8 +9,9 @@ trait ComponentContainer extends Component {
 
   // TODO: remove Component part from methods => add, remove, removeAll... ?
 
-  def addComponent(c: Component): Unit = {
-    p.addComponent(c.p)
+  def add[C <: Component](component: C): C = {
+    p.addComponent(component.p)
+    component
   }
 
   def removeComponent(c: Component): Unit = {
