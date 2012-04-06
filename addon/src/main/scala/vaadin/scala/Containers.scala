@@ -63,7 +63,7 @@ trait FilterableItem extends com.vaadin.data.Item {
   def values = Item.getProperties(this).map(_.getValue)
 }
 
-class Item extends Wrapper {
+trait Item extends Wrapper {
 
   def p: com.vaadin.data.Item
 
@@ -76,7 +76,7 @@ class Item extends Wrapper {
   def removeItemProperty(id: Any) = p.removeItemProperty(id)
 }
 
-class FilterableContainerWrap(wrapped: com.vaadin.data.Container) extends Container with FilterableContainer { def p = wrapped }
+class FilterableContainerWrap(wrapped: com.vaadin.data.Container) extends Container.Container with FilterableContainer { def p = wrapped }
 
 class FilterableItemWrap(wrapped: com.vaadin.data.Item) extends Item with FilterableItem { def p = wrapped }
 

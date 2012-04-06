@@ -71,6 +71,6 @@ object Container {
 
     def hasChildren(itemId: Any) = p.hasChildren(itemId)
 
-    def removeItem(itemId: Any) = p.removeItem(itemId)
+    override def removeItem(itemId: Any) = p.removeItem(itemId)
   }
 }
