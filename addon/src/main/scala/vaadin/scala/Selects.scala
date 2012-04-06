@@ -6,7 +6,7 @@ trait ValueChangeFunction extends com.vaadin.data.Property.ValueChangeNotifier {
 }
 
 class PropertyValueChangeListener(action: com.vaadin.data.Property.ValueChangeEvent => Unit)
-  extends com.vaadin.data.Property.ValueChangeListener {
+    extends com.vaadin.data.Property.ValueChangeListener {
   override def valueChange(event: com.vaadin.data.Property.ValueChangeEvent) = action(event)
 }
 
@@ -21,36 +21,6 @@ object ItemCaptionMode extends Enumeration {
   val Property = Value(ITEM_CAPTION_MODE_PROPERTY)
 }
 
-trait AbstractSelect extends AbstractField {
-
-  def p: com.vaadin.ui.AbstractSelect
-
-  // NewItemHandler
-  
-  def itemCaptionMode = ItemCaptionMode(p.getItemCaptionMode)
-  def itemCaptionMode_=(itemCaptionMode: ItemCaptionMode.Value) = p.setItemCaptionMode(itemCaptionMode.id)
-
-  def itemCaptionPropertyId: Option[Any] = Option(p.getItemCaptionPropertyId)
-  def itemCaptionPropertyId_=(itemCaptionPropertyId: Option[Any]) = p.setItemCaptionPropertyId(itemCaptionPropertyId.getOrElse(null))
-  def itemCaptionPropertyId_=(itemCaptionPropertyId: Any) = p.setItemCaptionPropertyId(itemCaptionPropertyId)
-
-  def itemIconPropertyId: Option[Any] = Option(p.getItemIconPropertyId)
-  def itemIconPropertyId_=(itemIconPropertyId: Option[Any]) = p.setItemIconPropertyId(itemIconPropertyId.getOrElse(null))
-  def itemIconPropertyId_=(itemIconPropertyId: Any) = p.setItemIconPropertyId(itemIconPropertyId)
-
-  def nullSelectionAllowed = p.isNullSelectionAllowed
-  def nullSelectionAllowed_=(nullSelectionAllowed: Boolean) = p.setNullSelectionAllowed(nullSelectionAllowed)
-
-  def nullSelectionItemId: Option[Any] = Option(p.getNullSelectionItemId)
-  def nullSelectionItemId_=(nullSelectionItemId: Option[Any]) = p.setNullSelectionItemId(nullSelectionItemId.getOrElse(null))
-  def nullSelectionItemId_=(nullSelectionItemId: Any) = p.setNullSelectionItemId(nullSelectionItemId)
-
-  def selected(itemId: Any) = p.isSelected(itemId)
-  def select(itemId: Any) = p.select(itemId)
-  def unselect(itemId: Any) = p.unselect(itemId)
-
-}
-
 trait MultiSelectable extends AbstractSelect {
 
   def multiSelect = p.isMultiSelect
@@ -61,7 +31,7 @@ trait TableColumnGenerator extends com.vaadin.ui.Table {
   def addGeneratedColumn(id: Any, generate: (com.vaadin.ui.Table, AnyRef, AnyRef) => AnyRef): Unit = {
     addGeneratedColumn(id, new ColumnGenerator {
       def generateCell(table: com.vaadin.ui.Table, itemId: AnyRef,
-        columnId: AnyRef): AnyRef = {
+                       columnId: AnyRef): AnyRef = {
         generate(table, itemId, columnId)
       }
     })
@@ -69,7 +39,7 @@ trait TableColumnGenerator extends com.vaadin.ui.Table {
 }
 
 class TreeTable(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, property: com.vaadin.data.Property = null, value: Any = null, selectable: Boolean = false, immediate: Boolean = false, style: String = null)
-  extends com.vaadin.ui.TreeTable(caption) with ValueChangeFunction with TableColumnGenerator {
+    extends com.vaadin.ui.TreeTable(caption) with ValueChangeFunction with TableColumnGenerator {
   setWidth(if (width.isDefined) width.get.toString else null)
   setHeight(if (height.isDefined) height.get.toString else null)
   if (dataSource != null) setContainerDataSource(dataSource)
@@ -81,7 +51,7 @@ class TreeTable(caption: String = null, width: Option[Measure] = None, height: O
 }
 
 class Tree(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, property: com.vaadin.data.Property = null, value: Any = null, selectable: Boolean = false, nullSelectionAllowed: Boolean = true, immediate: Boolean = false, style: String = null)
-  extends com.vaadin.ui.Tree with ValueChangeFunction {
+    extends com.vaadin.ui.Tree with ValueChangeFunction {
   setWidth(if (width.isDefined) width.get.toString else null)
   setHeight(if (height.isDefined) height.get.toString else null)
   if (dataSource != null) setContainerDataSource(dataSource)
