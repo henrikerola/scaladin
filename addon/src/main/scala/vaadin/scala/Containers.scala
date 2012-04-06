@@ -19,27 +19,11 @@ object Item {
   }
 
   def unapplySeq(item: com.vaadin.data.Item): Option[Seq[com.vaadin.data.Property]] = {
-    if(item != null) Some(item.getItemPropertyIds.asScala.map(item.getItemProperty(_)).toSeq) 
+    if (item != null) Some(item.getItemPropertyIds.asScala.map(item.getItemProperty(_)).toSeq)
     else None
   }
-  
 
   def getProperties(item: com.vaadin.data.Item) = item.getItemPropertyIds.asScala.map(item.getItemProperty)
-}
-
-object Container {
-  def apply(items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*) = {
-    val container = new com.vaadin.data.util.IndexedContainer
-    for (item <- items) {
-      val containerItem = container.addItem(item._1)
-      for (property <- item._2) {
-        container.addContainerProperty(property._1, property._2.getClass, null)
-        containerItem.getItemProperty(property._1).setValue(property._2)
-      }
-    }
-
-    container
-  }
 }
 
 trait FilterableContainer extends com.vaadin.data.Container {
@@ -79,49 +63,22 @@ trait FilterableItem extends com.vaadin.data.Item {
   def values = Item.getProperties(this).map(_.getValue)
 }
 
-class ContainerWrap(wrapped: com.vaadin.data.Container) extends com.vaadin.data.Container {
-  def getItem(id: Any) = wrapped.getItem(id)
+class Item extends Wrapper {
 
-  def getItemIds() = wrapped.getItemIds
+  def p: com.vaadin.data.Item
 
-  def removeAllItems() = wrapped.removeAllItems
+  def getItemProperty(id: Any) = p.getItemProperty(id)
 
-  def addContainerProperty(propertyId: Any, propertyType: Class[_], defaultValue: Any) = wrapped.addContainerProperty(propertyId, propertyType, defaultValue)
+  def getItemPropertyIds() = p.getItemPropertyIds()
 
-  def removeContainerProperty(propertyId: Any) = wrapped.removeContainerProperty(propertyId)
+  def addItemProperty(id: Any, property: com.vaadin.data.Property) = p.addItemProperty(id, property)
 
-  def removeItem(itemId: Any) = wrapped.removeItem(itemId)
-
-  def addItem() = wrapped.addItem()
-
-  def addItem(itemId: Any) = wrapped.addItem(itemId)
-
-  def containsId(itemId: Any) = wrapped.containsId(itemId)
-
-  def size() = wrapped.size()
-
-  def getContainerProperty(itemId: Any, propertyId: Any) = wrapped.getContainerProperty(itemId, propertyId)
-
-  def getContainerPropertyIds() = wrapped.getContainerPropertyIds()
-
-  def getType(propertyId: Any) = wrapped.getType(propertyId)
-
+  def removeItemProperty(id: Any) = p.removeItemProperty(id)
 }
 
-class ItemWrap(wrapped: com.vaadin.data.Item) extends com.vaadin.data.Item {
+class FilterableContainerWrap(wrapped: com.vaadin.data.Container) extends Container with FilterableContainer { def p = wrapped }
 
-  def getItemProperty(id: Any) = wrapped.getItemProperty(id)
-
-  def getItemPropertyIds() = wrapped.getItemPropertyIds()
-
-  def addItemProperty(id: Any, property: com.vaadin.data.Property) = wrapped.addItemProperty(id, property)
-
-  def removeItemProperty(id: Any) = wrapped.removeItemProperty(id)
-}
-
-class FilterableContainerWrap(wrapped: com.vaadin.data.Container) extends ContainerWrap(wrapped) with FilterableContainer
-
-class FilterableItemWrap(wrapped: com.vaadin.data.Item) extends ItemWrap(wrapped) with FilterableItem
+class FilterableItemWrap(wrapped: com.vaadin.data.Item) extends Item with FilterableItem { def p = wrapped }
 
 class PropertyListWrap(wrapped: List[com.vaadin.data.Property]) {
   def values = wrapped.map(_.getValue)
@@ -129,16 +86,17 @@ class PropertyListWrap(wrapped: List[com.vaadin.data.Property]) {
 
 class FunctionProperty[T](getter: () => T, setter: T => Unit = null) extends com.vaadin.data.Property {
   def getValue = getter().asInstanceOf[AnyRef]
-  
+
   def setValue(value: Any) = {
-	  setter(value.asInstanceOf[T])
+    setter(value.asInstanceOf[T])
   }
-  
+
   def getType = getter.getClass //dirty tricks
-  
+
   def isReadOnly = setter != null
-  
+
   def setReadOnly(readOnly: Boolean): Unit = {
     //NOOP
   }
 }
+
