@@ -54,7 +54,11 @@ trait ScaladinWrapper extends com.vaadin.ui.Component with Component {
 
   def p: this.type = this
 
-  def init(implicit wrapper: WrapperRegistry): Unit = _wrapper = Some(wrapper)
+  def init(implicit wrapper: WrapperRegistry): this.type = {
+    _wrapper = Some(wrapper)
+    wr.put(this)
+    this
+  }
 
   def wr: WrapperRegistry = _wrapper match {
     case Some(wr: WrapperRegistry) => wr

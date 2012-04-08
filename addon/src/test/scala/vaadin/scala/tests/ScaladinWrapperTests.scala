@@ -10,9 +10,8 @@ class ScaladinWrapperTests extends FunSuite {
 
   implicit val testWrapper = new WrapperRegistry
 
-  test("Wrap Vaadin Label") {
-    val vaadinLabel = new com.vaadin.ui.Label with ScaladinWrapper
-    vaadinLabel.init
+  test("wrap Vaadin Label") {
+    val vaadinLabel = new com.vaadin.ui.Label with ScaladinWrapper init
 
     val scaladinLayout = new VerticalLayout {
       components += vaadinLabel
@@ -23,10 +22,18 @@ class ScaladinWrapperTests extends FunSuite {
     assert(vaadinLabel.parent === Some(scaladinLayout))
   }
 
-  test("Wrapping Vaadin component and using it without initing first") {
+  test("wrapping Vaadin component and using it without initing first") {
     intercept[IllegalStateException] {
       val vaadinLabel = new com.vaadin.ui.Label with ScaladinWrapper
       vaadinLabel.parent
     }
+  }
+
+  test("type checks") {
+    val vaadinLabel = new com.vaadin.ui.Label with ScaladinWrapper init
+
+    assert(vaadinLabel.isInstanceOf[com.vaadin.ui.Label])
+    assert(vaadinLabel.p.isInstanceOf[com.vaadin.ui.Label])
+
   }
 }

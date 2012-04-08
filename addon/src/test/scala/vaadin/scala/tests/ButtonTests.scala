@@ -53,7 +53,7 @@ class ButtonTests extends FunSuite {
 
     assert(!button.clickListeners.contains(listener2))
   }
-  
+
   test("focusListeners, add a listener") {
     val button = new Button
 
@@ -61,20 +61,20 @@ class ButtonTests extends FunSuite {
 
     assert(button.focusListeners.size === 1)
   }
-  
+
   val focusListener = (e: FocusEvent) => println("1")
   val focusListener2 = (e: FocusEvent) => println(e)
-  
+
   test("focusListeners, remove a listener") {
     val button = new Button
 
     button.focusListeners += focusListener
-    
+
     button.focusListeners -= focusListener
-    
+
     assert(button.clickListeners.size === 0)
   }
-  
+
   test("focusListeners.iterator returns added listeners") {
     val button = new Button
 
@@ -86,15 +86,15 @@ class ButtonTests extends FunSuite {
     assert(iter.next() === focusListener2)
     assert(!iter.hasNext)
   }
-  
+
   test("focusListeners.contains returns true for added listener") {
     val button = new Button
 
     button.focusListeners.add(focusListener)
-    
+
     assert(button.focusListeners.contains(focusListener))
   }
-  
+
   test("focusListeners.contains returns false for non-added listener") {
     val button = new Button
 

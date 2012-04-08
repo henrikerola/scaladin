@@ -7,6 +7,10 @@ class AbsoluteLayout(val p: com.vaadin.ui.AbsoluteLayout = new com.vaadin.ui.Abs
     component
   }
 
+  override def add[C <: Component](component: C): C = {
+    add(component, "")
+  }
+
   // TODO: layout click listener
 
   def position(component: Component) = p.getPosition(component.p) match {
