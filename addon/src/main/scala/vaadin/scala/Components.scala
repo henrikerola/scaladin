@@ -3,16 +3,6 @@ package vaadin.scala
 import com.vaadin.ui.themes.BaseTheme
 import com.vaadin.ui._
 
-class TextArea(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, property: com.vaadin.data.Property = null, value: Any = null, style: String = null, prompt: String = null)
-  extends com.vaadin.ui.TextArea(caption) {
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  if (property != null) setPropertyDataSource(property)
-  if (value != null) setValue(value)
-  setStyleName(style)
-  setInputPrompt(prompt)
-}
-
 class RichTextArea(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, property: com.vaadin.data.Property = null, value: Any = null, style: String = null)
   extends com.vaadin.ui.RichTextArea(caption) {
   setWidth(if (width.isDefined) width.get.toString else null)

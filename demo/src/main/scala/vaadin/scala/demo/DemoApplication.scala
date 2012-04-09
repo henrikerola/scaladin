@@ -105,10 +105,10 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       //      add(new TextField(style = Reindeer.TEXTFIELD_SMALL, prompt = "Enter text"))
 
       add(new HtmlLabel(<span>Normal TextArea</span>))
-      add(new TextArea(height = 5 em, prompt = "Enter text") with ScaladinWrapper)
+      add(new TextArea { height = 5 em; prompt = "Enter text" })
 
       add(new HtmlLabel(<span>Small Style TextArea (<code>Reindeer.TEXTFIELD_SMALL</code>)</span>))
-      add(new TextArea(height = 5 em, style = Reindeer.TEXTFIELD_SMALL, prompt = "Enter text") with ScaladinWrapper)
+      add(new TextArea { height = 5 em; styleNames += Reindeer.TEXTFIELD_SMALL; prompt = "Enter text" })
     }
   }
 
