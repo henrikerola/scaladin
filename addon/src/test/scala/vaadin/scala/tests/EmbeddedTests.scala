@@ -17,7 +17,7 @@ class EmbeddedTests extends FunSuite {
 	  assert(embedded.objectType === Embedded.Type.image)
   }
   
-  ignore("source, Resource") {
+  test("source, Resource") {
 	  val embedded = new Embedded
 
 	  val res = new ThemeResource("img.png")
