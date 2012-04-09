@@ -50,21 +50,3 @@ class CssLayout(width: Option[Measure] = None, height: Option[Measure] = None, m
   //	  p.getCss(c.p)
   //  }
 }
-
-class CustomLayout(width: Option[Measure] = 100 percent, height: Option[Measure] = None, template: String = null, contents: String = null, caption: String = null, style: String = null)
-  extends com.vaadin.ui.CustomLayout {
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  setCaption(caption)
-  setStyleName(style)
-
-  if (template != null)
-    setTemplateName(template)
-  else if (contents != null)
-    setTemplateContents(contents)
-
-  def add[C <: com.vaadin.ui.Component](component: C, location: String): C = {
-    addComponent(component, location)
-    component
-  }
-}
