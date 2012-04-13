@@ -6,6 +6,8 @@ trait Component extends Wrapper {
   def p: com.vaadin.ui.Component
 
   // TODO: add methods styleName, addStyleName, removeStyleName?
+  
+  def styleName_=(styleName: String) = p.setStyleName(styleName)
 
   val styleNames = new mutable.Set[String] {
     def contains(key: String) = p.getStyleName().split(" ").iterator.contains(key)
@@ -64,9 +66,9 @@ trait Sizeable extends Component {
   def sizeUndefined() = p.setSizeUndefined
 }
 
-trait AbstractComponent extends Component with Sizeable {
-
-  override def p: com.vaadin.ui.AbstractComponent
+abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent) extends Component with Sizeable {
+  
+  WrapperRegistry.put(this)
 
   def description = Option(p.getDescription)
   def description_=(description: Option[String]) = p.setDescription(description.getOrElse(null))

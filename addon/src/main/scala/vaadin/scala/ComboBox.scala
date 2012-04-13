@@ -10,7 +10,7 @@ object ComboBox {
 }
 
 // In Vaadin ComboBox extends Select, here just extend AbstractSelect directly and add methods from Select to ComboBox
-class ComboBox(override val p: com.vaadin.ui.ComboBox = new com.vaadin.ui.ComboBox) extends AbstractSelect {
+class ComboBox(override val p: com.vaadin.ui.ComboBox = new com.vaadin.ui.ComboBox) extends AbstractSelect(p) {
 
   WrapperRegistry.put(this)
 

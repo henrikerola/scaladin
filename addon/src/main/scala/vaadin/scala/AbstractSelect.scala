@@ -1,8 +1,6 @@
 package vaadin.scala
 
-trait AbstractSelect extends AbstractField with Container.Viewer {
-
-  def p: com.vaadin.ui.AbstractSelect
+abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect) extends AbstractField(p) with Container.Viewer {
 
   // NewItemHandler
 

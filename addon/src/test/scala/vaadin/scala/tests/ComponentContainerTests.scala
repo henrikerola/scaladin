@@ -4,24 +4,24 @@ import vaadin.scala._
 import com.vaadin.terminal.Sizeable
 
 class ComponentContainerTests extends FunSuite {
-  
+
   test("ComponentContainer.components.contains returns true for added Component") {
     val layout = new VerticalLayout
-    
+
     val label = new Label
     layout.components += label
-    
+
     assert(layout.components.contains(label))
   }
-  
+
   test("ComponentContainer.components.contains return false for non-added Component") {
     val layout = new VerticalLayout
-    
+
     layout.components += new Label
-    
+
     assert(!layout.components.contains(new Label))
   }
-  
+
   test("ComponentContainer.components.iterator returns added components") {
     val layout = new VerticalLayout
 
@@ -29,8 +29,7 @@ class ComponentContainerTests extends FunSuite {
     layout.components += label1
     val label2 = new Label
     layout add label2
-    
-    
+
     val iter = layout.components.iterator
     assert(iter.next() == label1)
     assert(iter.next() == label2)
@@ -47,9 +46,9 @@ class ComponentContainerTests extends FunSuite {
 
   ignore("filtering component container with matches returns results") {
     val layout = new VerticalLayout with FilterableComponentContainer[VerticalLayout] {
-      val one = add(new Label(style = "one"))
-      val two = add(new Label(style = "two"))
-      val three = add(new Label(style = "three"))
+      val one = add(new Label { styleNames += "one" })
+      val two = add(new Label { styleNames += "two" })
+      val three = add(new Label { styleNames += "three" })
     }
 
     val result = layout filter (c => List("one", "two") contains c.getStyleName)
@@ -87,9 +86,9 @@ class ComponentContainerTests extends FunSuite {
 
   def createTestLayout: VerticalLayout with FilterableComponentContainer[VerticalLayout] = {
     new VerticalLayout with FilterableComponentContainer[VerticalLayout] {
-      val one = add(new Label(style = "one"))
-      val two = add(new Label(style = "two"))
-      val three = add(new Label(style = "three"))
+      val one = add(new Label { styleNames += "one" })
+      val two = add(new Label { styleNames += "two" })
+      val three = add(new Label { styleNames += "three" })
     }
   }
 
@@ -102,20 +101,20 @@ class ComponentContainerTests extends FunSuite {
     assert(accordion.getCaption == "Caption")
     assert(accordion.getStyleName == "Style")
   }
-  
+
   test("Accordion, test SelectedTabChangeListener") {
     val accordion = new Accordion() {
       def fireSelectedTabChangeEvent() = {
         fireSelectedTabChange;
       }
     }
-    
+
     var cnt = 0;
     accordion.addListener(_ => cnt = cnt + 1)
     accordion.fireSelectedTabChangeEvent
     assert(cnt == 1)
   }
-  
+
   test("CustomComponent, default constructor") {
     val customComponent = new CustomComponent() {
       def compositionRoot = {
@@ -128,7 +127,7 @@ class ComponentContainerTests extends FunSuite {
     assert(customComponent.getHeight === -1)
     assert(customComponent.getHeightUnits === Sizeable.UNITS_PIXELS)
   }
-  
+
   test("CustomComponent, constructor with all params but without names") {
     val label = new Label
     val customComponent = new CustomComponent(200 px, 50 em, label) {
@@ -142,5 +141,5 @@ class ComponentContainerTests extends FunSuite {
     assert(customComponent.getHeight === 50)
     assert(customComponent.getHeightUnits === Sizeable.UNITS_EM)
   }
-  
+
 }

@@ -1,6 +1,6 @@
 package vaadin.scala
 
-class NativeSelect(override val p: com.vaadin.ui.NativeSelect = new com.vaadin.ui.NativeSelect) extends AbstractSelect {
+class NativeSelect(override val p: com.vaadin.ui.NativeSelect = new com.vaadin.ui.NativeSelect) extends AbstractSelect(p) {
 
   WrapperRegistry.put(this)
 

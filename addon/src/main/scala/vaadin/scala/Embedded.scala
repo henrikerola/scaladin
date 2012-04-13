@@ -9,19 +9,7 @@ object Embedded {
   }
 }
 
-class Embedded extends AbstractComponent {
-
-  override val p = new com.vaadin.ui.Embedded
-
-  def this(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, source: Resource = null, objectType: Embedded.Type.Value = Embedded.Type.objectType, style: String = null) = {
-    this()
-    this.caption = caption
-    this.width = width
-    this.height = height
-    this.source = source
-    this.objectType = objectType
-    p.setStyleName(style)
-  }
+class Embedded(override val p: com.vaadin.ui.Embedded = new com.vaadin.ui.Embedded) extends AbstractComponent(p) {
 
   // TODO: parameters, click listener
 

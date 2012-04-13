@@ -1,9 +1,6 @@
 package vaadin.scala
 
-trait AbstractSlider extends AbstractField {
-
-  val p = new com.vaadin.ui.Slider
-  WrapperRegistry.put(this)
+abstract class AbstractSlider(override val p: com.vaadin.ui.Slider) extends AbstractField(p) {
 
   def min = p.getMin
   def min_=(min: Double) = p.setMin(min)
@@ -18,40 +15,12 @@ trait AbstractSlider extends AbstractField {
 
 }
 
-class HorizontalSlider extends AbstractSlider {
+class HorizontalSlider(override val p: com.vaadin.ui.Slider = new com.vaadin.ui.Slider) extends AbstractSlider(p) {
   
   p.setOrientation(com.vaadin.ui.Slider.ORIENTATION_HORIZONTAL)
-
-  def this(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, property: com.vaadin.data.Property = null, value: Any = null, min: Double = 0, max: Double = 100, resolution: Int = 0, style: String = null) = {
-    this()
-
-    this.caption = caption
-    this.width = width
-    this.height = height
-    if (property != null) p.setPropertyDataSource(property)
-    if (value != null) p.setValue(value)
-    this.min = min
-    this.max = max
-    this.resolution = resolution
-    p.setStyleName(style)
-  }
 }
 
-class VerticalSlider extends AbstractSlider {
+class VerticalSlider(override val p: com.vaadin.ui.Slider = new com.vaadin.ui.Slider) extends AbstractSlider(p) {
   
   p.setOrientation(com.vaadin.ui.Slider.ORIENTATION_VERTICAL)
-
-  def this(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, property: com.vaadin.data.Property = null, value: Any = null, min: Double = 0, max: Double = 100, resolution: Int = 0, style: String = null) = {
-    this()
-    
-    this.caption = caption
-    this.width = width
-    this.height = height
-    if (property != null) p.setPropertyDataSource(property)
-    if (value != null) p.setValue(value)
-    this.min = min
-    this.max = max
-    this.resolution = resolution
-    p.setStyleName(style)
-  }
 }

@@ -12,26 +12,28 @@ trait LayoutClickListener extends LayoutClickNotifier {
   }
 }
 
-class CssLayout(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, style: String = null, caption: String = null, size: Tuple2[String, String] = null)
-  extends AbstractLayout /*with LayoutClickListener*/ {
+class CssLayout(override val p: com.vaadin.ui.CssLayout = new com.vaadin.ui.CssLayout) extends AbstractLayout(p) /*with LayoutClickListener*/ {
 
-  override val p = new com.vaadin.ui.CssLayout {
-    override def getCss(c: VaadinComponent): String = {
-      cssMap.getOrElse(c, null)
+  //  override val p = new com.vaadin.ui.CssLayout {
+  //    override def getCss(c: VaadinComponent): String = {
+  //      cssMap.getOrElse(c, null)
+  //    }
+  //  }
+
+  /*-
+  def this(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, style: String = null, caption: String = null, size: Tuple2[String, String] = null) {
+    this(new com.vaadin.ui.CssLayout)
+    if (size != null) {
+      p.setWidth(size._1)
+      p.setHeight(size._2)
+    } else {
+      p.setWidth(if (width.isDefined) width.get.toString else null)
+      p.setHeight(if (height.isDefined) height.get.toString else null)
     }
-  }
-  WrapperRegistry.put(this)
-
-  if (size != null) {
-    p.setWidth(size._1)
-    p.setHeight(size._2)
-  } else {
-    p.setWidth(if (width.isDefined) width.get.toString else null)
-    p.setHeight(if (height.isDefined) height.get.toString else null)
-  }
-  p.setMargin(margin)
-  p.setStyleName(style)
-  p.setCaption(caption)
+    p.setMargin(margin)
+    p.setStyleName(style)
+    p.setCaption(caption)
+  }*/
 
   // TODO remove css from map when component is removed from the layout
   val cssMap = Map[VaadinComponent, String]()

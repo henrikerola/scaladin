@@ -16,18 +16,7 @@ class LabelTests extends FunSuite {
     assert(Label.ContentMode.Raw.id === com.vaadin.ui.Label.CONTENT_RAW)
   }
   
-  test("constructor: with all params but without names") {
-    val property = Property("Test")
-    val label = new Label("Content", 10 px, 100 em, property, Label.ContentMode.Preformatted, "Style")
-    assert(label.value === Some("Content"))
-    assert(label.width === (10 px))
-    assert(label.height === (100 em))
-    assert(label.property === Some(property))
-    assert(label.contentMode === Label.ContentMode.Preformatted)
-    assert(label.p.getStyleName === "Style")
-  }
-
-  test("constructor: constructor") {
+  test("constructor") {
     val label = new Label
     assert(label.value === Some(""))
     assert(label.width === (100 pct))

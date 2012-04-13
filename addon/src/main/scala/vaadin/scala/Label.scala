@@ -15,14 +15,12 @@ object Label {
 }
 
 // TODO: implement interfaces
-class Label extends AbstractComponent with PropertyViewer {
-
-  override val p = new com.vaadin.ui.Label;
-  WrapperRegistry.put(this)
+class Label(override val p: com.vaadin.ui.Label = new com.vaadin.ui.Label) extends AbstractComponent(p) with PropertyViewer {
 
   // icon, caption as constructor parameters?
+  /*-
   def this(content: String = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, property: com.vaadin.data.Property = null, contentMode: Label.ContentMode.Value = Label.ContentMode(com.vaadin.ui.Label.CONTENT_DEFAULT), style: String = null) = {
-    this()
+    this(new com.vaadin.ui.Label)
 
     this.width = width
     this.height = height
@@ -30,7 +28,7 @@ class Label extends AbstractComponent with PropertyViewer {
     if (content != null) p.setValue(content)
     p.setContentMode(contentMode.id)
     p.setStyleName(style)
-  }
+  }*/
 
   // TODO: should we call value as content instead?
   def value: Option[String] = Option(if (p.getValue() != null) p.getValue().toString else null)
@@ -44,5 +42,8 @@ class Label extends AbstractComponent with PropertyViewer {
   // TODO: getType
 }
 
-class HtmlLabel(content: Node = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, property: com.vaadin.data.Property = null, style: String = null)
-  extends Label(width = width, height = height, content = if (content != null) content.toString else null, property = property, contentMode = Label.ContentMode.Xhtml, style = style)
+class HtmlLabel(override val p: com.vaadin.ui.Label = new com.vaadin.ui.Label) extends Label(p) {
+  contentMode = Label.ContentMode.Xhtml
+  
+  def value_=(value: Node) = p.setValue(value.toString)
+}

@@ -1,6 +1,6 @@
 package vaadin.scala
 
-class ListSelect(override val p: com.vaadin.ui.ListSelect = new com.vaadin.ui.ListSelect) extends AbstractSelect with MultiSelectable {
+class ListSelect(override val p: com.vaadin.ui.ListSelect = new com.vaadin.ui.ListSelect) extends AbstractSelect(p) with MultiSelectable {
 
   WrapperRegistry.put(this)
 

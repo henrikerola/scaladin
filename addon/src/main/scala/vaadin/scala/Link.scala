@@ -10,20 +10,18 @@ object Link {
   }
 }
 
-class Link extends AbstractComponent {
+class Link(override val p: com.vaadin.ui.Link = new com.vaadin.ui.Link) extends AbstractComponent(p) {
 
-  override val p = new com.vaadin.ui.Link()
-  WrapperRegistry.put(this)
-
+  /*-
   def this(caption: String = null, resource: Resource = null, targetName: String = null, targetWidth: Int = -1, targetHeight: Int = -1, targetBorder: Link.TargetBorder.Value = Link.TargetBorder.Default) = {
-    this()
+    this(new com.vaadin.ui.Link)
     p.setCaption(caption)
     if (resource != null) p.setResource(resource.p)
     p.setTargetName(targetName)
     p.setTargetWidth(targetWidth)
     p.setTargetHeight(targetHeight)
     p.setTargetBorder(targetBorder.id)
-  }
+  }*/
   
   def targetName = Option(p.getTargetName)
   def targetName_=(targetName: Option[String]) = p.setTargetName(caption.getOrElse(null))

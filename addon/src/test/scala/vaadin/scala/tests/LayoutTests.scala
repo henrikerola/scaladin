@@ -6,19 +6,6 @@ import com.vaadin.terminal.Sizeable
 
 class LayoutTests extends FunSuite {
 
-  test("VerticalLayout, constructor with all params but without names") {
-    val layout = new VerticalLayout(10 px, 100 em, true, true, "Caption", "Style")
-    assert(layout.p.getWidth === 10)
-    assert(layout.p.getWidthUnits === Sizeable.UNITS_PIXELS)
-    assert(layout.p.getHeight === 100)
-    assert(layout.p.getHeightUnits === Sizeable.UNITS_EM)
-    assert(layout.margin === Margin(true, true, true, true))
-    assert(layout.spacing === true)
-    assert(layout.caption === Some("Caption"))
-    assert(layout.p.getStyleName === "Style")
-
-  }
-
   test("VerticalLayout, default constructor") {
     val layout = new VerticalLayout()
     assert(layout.p.getWidth === 100)
@@ -57,19 +44,6 @@ class LayoutTests extends FunSuite {
     assert(layout.p.getComponentIndex(button.p) === 2)
   }
 
-  test("HorizontalLayout, constructor with all params but without names") {
-    val layout = new HorizontalLayout(10 px, 100 em, true, true, "Caption", "Style")
-    assert(layout.p.getWidth === 10)
-    assert(layout.p.getWidthUnits === Sizeable.UNITS_PIXELS)
-    assert(layout.p.getHeight === 100)
-    assert(layout.p.getHeightUnits === Sizeable.UNITS_EM)
-    assert(layout.margin === Margin(true, true, true, true))
-    assert(layout.spacing === true)
-    assert(layout.caption === Some("Caption"))
-    assert(layout.p.getStyleName === "Style")
-
-  }
-
   test("HorizontalLayout, default constructor") {
     val layout = new HorizontalLayout()
     assert(layout.p.getWidth === -1)
@@ -82,16 +56,6 @@ class LayoutTests extends FunSuite {
     assert(layout.p.getStyleName === "")
   }
   
-  test("FormLayout, constructor with all params but without names") {
-    val layout = new FormLayout(10 px, 100 em, true, true, "Style")
-    assert(layout.width === (10 px))
-    assert(layout.height === (100 em))
-    assert(layout.margin === Margin(true, true, true, true))
-    assert(layout.spacing === true)
-    assert(layout.p.getStyleName === "Style")
-
-  }
-
   test("FormLayout, default constructor") {
     val layout = new FormLayout()
     assert(layout.width === (100 pct))
@@ -99,17 +63,6 @@ class LayoutTests extends FunSuite {
     assert(layout.margin === Margin(true, false, true, false))
     assert(layout.spacing === true)
     assert(layout.p.getStyleName === "")
-  }
-
-  test("CssLayout, constructor with all params but without names") {
-    val layout = new CssLayout(10 px, 100 em, true, "Style", "Caption")
-    assert(layout.p.getWidth === 10)
-    assert(layout.p.getWidthUnits === Sizeable.UNITS_PIXELS)
-    assert(layout.p.getHeight === 100)
-    assert(layout.p.getHeightUnits === Sizeable.UNITS_EM)
-    assert(layout.margin === Margin(true, true, true, true))
-    assert(layout.caption === Some("Caption"))
-    assert(layout.p.getStyleName === "Style")
   }
 
   test("CssLayout, default constructor") {

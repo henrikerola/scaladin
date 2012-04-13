@@ -1,8 +1,6 @@
 package vaadin.scala
 
-trait AbstractOrderedLayout extends AbstractLayout with SpacingHandler with AlignmentHandler {
-
-  override def p: com.vaadin.ui.AbstractOrderedLayout
+abstract class AbstractOrderedLayout(override val p: com.vaadin.ui.AbstractOrderedLayout) extends AbstractLayout(p) with SpacingHandler with AlignmentHandler {
 
   def add[C <: Component](component: C = null, ratio: Float = -1, alignment: Alignment.Value = null, index: Int = -1): C = {
     if (index < 0)
@@ -35,13 +33,11 @@ trait AbstractOrderedLayout extends AbstractLayout with SpacingHandler with Alig
   // TODO: add addComponentAsFirst ?, listeners
 }
 
-class VerticalLayout extends AbstractOrderedLayout /*with LayoutClickListener*/ {
+class VerticalLayout(override val p: com.vaadin.ui.VerticalLayout = new com.vaadin.ui.VerticalLayout) extends AbstractOrderedLayout(p) /*with LayoutClickListener*/ {
 
-  override val p = new com.vaadin.ui.VerticalLayout
-  WrapperRegistry.put(this)
-
+  /*-
   def this(width: Option[Measure] = 100 percent, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, size: Tuple2[String, String] = null) {
-    this()
+    this(new com.vaadin.ui.VerticalLayout)
 
     if (size != null) {
       p.setWidth(size._1)
@@ -54,38 +50,35 @@ class VerticalLayout extends AbstractOrderedLayout /*with LayoutClickListener*/ 
     this.spacing = spacing
     this.caption = caption
     p.setStyleName(style)
-  }
+  }*/
 
 }
 
-class HorizontalLayout extends AbstractOrderedLayout /*with LayoutClickListener*/ {
+class HorizontalLayout(override val p: com.vaadin.ui.HorizontalLayout = new com.vaadin.ui.HorizontalLayout)  extends AbstractOrderedLayout(p) /*with LayoutClickListener*/ {
 
-  override val p = new com.vaadin.ui.HorizontalLayout
-  WrapperRegistry.put(this)
-
+  /*-
   def this(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null) = {
-    this()
+    this(new com.vaadin.ui.HorizontalLayout)
     this.width = width
     this.height = height
     this.margin = margin
     this.spacing = spacing
     this.caption = caption
     p.setStyleName(style)
-  }
+  }*/
 }
 
 // TODO com.vaadin.ui.FormLayout calls setMargin(true, false, true, false) in constructor
-class FormLayout extends AbstractOrderedLayout {
+class FormLayout(override val p: com.vaadin.ui.FormLayout = new com.vaadin.ui.FormLayout) extends AbstractOrderedLayout(p) {
 
-  override val p = new com.vaadin.ui.FormLayout
-  WrapperRegistry.put(this)
 
+  /*-
   def this(width: Option[Measure] = 100 percent, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = true, style: String = null) = {
-    this()
+    this(new com.vaadin.ui.FormLayout)
     this.width = width
     this.height = height
     this.margin = margin
     this.spacing = spacing
     p.setStyleName(style)
-  }
+  }*/
 }

@@ -1,8 +1,6 @@
 package vaadin.scala
 
-class TwinColSelect(override val p: com.vaadin.ui.TwinColSelect = new com.vaadin.ui.TwinColSelect) extends AbstractSelect with MultiSelectable {
-
-  WrapperRegistry.put(this)
+class TwinColSelect(override val p: com.vaadin.ui.TwinColSelect = new com.vaadin.ui.TwinColSelect) extends AbstractSelect(p) with MultiSelectable {
 
   def rows = p.getRows
   def rows_=(rows: Int) = p.setRows(rows)

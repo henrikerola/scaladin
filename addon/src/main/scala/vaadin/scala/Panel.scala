@@ -1,10 +1,7 @@
 package vaadin.scala
 
-class Panel extends AbstractComponentContainer with Focusable {
-
-  val p = new com.vaadin.ui.Panel()
-  WrapperRegistry.put(this)
-
+class Panel(override val p: com.vaadin.ui.Panel = new com.vaadin.ui.Panel) extends AbstractComponentContainer(p) with Focusable {
+  
   /*-
   def this(caption: String = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, style: String = null) {
     this()

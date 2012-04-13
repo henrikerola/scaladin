@@ -8,18 +8,6 @@ import vaadin.scala._
 
 class ComponentTests extends FunSuite {
 
-  test("Link, constructor with all params but without names") {
-    val resource = new ExternalResource("http://www.example.com")
-
-    val link = new Link("Caption", resource, "targetname", 200, 300, Link.TargetBorder.None)
-    assert(link.caption === Some("Caption"))
-    assert(link.resource === Some(resource))
-    assert(link.targetName === Some("targetname"))
-    assert(link.targetWidth === 200)
-    assert(link.targetHeight === 300)
-    assert(link.targetBorder === Link.TargetBorder.None)
-  }
-
   test("Link, default constructor") {
     val link = new Link
     assert(link.caption === None)
@@ -49,19 +37,6 @@ class ComponentTests extends FunSuite {
     assert(iter.next === "styleName2")
     assert(iter.next === "stylez")
     assert(!iter.hasNext)
-  }
-
-  test("Label, constructor with all params but without names") {
-    val property = Property("Test");
-    val label = new Label("Content", 10 px, 100 em, property, Label.ContentMode.Preformatted, "Style")
-    assert(label.value === Some("Content"))
-    //    assert(label.getWidth == 10)
-    //    assert(label.getWidthUnits == Sizeable.UNITS_PIXELS)
-    //    assert(label.getHeight == 100)
-    //    assert(label.getHeightUnits == Sizeable.UNITS_EM)
-    assert(label.property === Some(property))
-    assert(label.contentMode === Label.ContentMode.Preformatted)
-    assert(label.styleNames.mkString == "Style")
   }
 
   test("Label, default constructor") {
@@ -100,19 +75,6 @@ class ComponentTests extends FunSuite {
     label.styleNames += "style3"
 
     assert(label.styleNames.size === 3)
-  }
-
-  test("HtmlLabel, constructor with all params but without names") {
-    val property = Property("Test");
-    val label = new HtmlLabel(<span>Content</span>, 10 px, 100 em, property, "Style")
-    assert(label.value === Some("<span>Content</span>"))
-    assert(label.p.getWidth == 10)
-    assert(label.p.getWidthUnits == Sizeable.UNITS_PIXELS)
-    assert(label.p.getHeight == 100)
-    assert(label.p.getHeightUnits == Sizeable.UNITS_EM)
-    assert(label.property === Some(property))
-    assert(label.contentMode == Label.ContentMode.Xhtml)
-    assert(label.p.getStyleName == "Style")
   }
 
   test("HtmlLabel, default constructor") {

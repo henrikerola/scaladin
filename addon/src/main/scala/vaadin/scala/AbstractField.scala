@@ -1,8 +1,6 @@
 package vaadin.scala
 
-trait AbstractField extends AbstractComponent with PropertyViewer with Focusable {
-
-  override def p: com.vaadin.ui.AbstractField
+abstract class AbstractField(override val p: com.vaadin.ui.AbstractField) extends AbstractComponent(p) with PropertyViewer with Focusable {
 
   def value: Option[Any] = Option(p.getValue())
   def value_=(value: Option[Any]): Unit = p.setValue(value.getOrElse(null))

@@ -28,23 +28,7 @@ object Table {
   }
 }
 
-class Table extends AbstractSelect {
-
-  override val p = new com.vaadin.ui.Table //with ValueChangeFunction with ItemClickListener with TableColumnGenerator {
-  WrapperRegistry.put(this)
-
-  def this(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, property: com.vaadin.data.Property = null, value: Any = null, selectable: Boolean = false, immediate: Boolean = false, style: String = null) = {
-    this()
-    this.caption = caption
-    this.width = width
-    this.height = height
-    if (dataSource != null) p.setContainerDataSource(dataSource)
-    if (property != null) p.setPropertyDataSource(property)
-    this.value = value
-    p.setSelectable(selectable)
-    this.immediate = immediate
-    p.setStyleName(style)
-  }
+class Table(override val p: com.vaadin.ui.Table = new com.vaadin.ui.Table) extends AbstractSelect(p) {
 
   // VisibleColumns
   // getColumnHeaders()

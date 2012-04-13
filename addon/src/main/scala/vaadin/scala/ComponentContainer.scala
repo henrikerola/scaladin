@@ -48,10 +48,10 @@ trait ComponentContainer extends Component {
   // TODO: listeners
 }
 
-trait AbstractComponentContainer extends AbstractComponent with ComponentContainer {
-
-  override def p: com.vaadin.ui.AbstractComponentContainer
-
+abstract class AbstractComponentContainer(override val p: com.vaadin.ui.AbstractComponentContainer) extends AbstractComponent(p) with ComponentContainer {
+  
+	// FIXME
+	WrapperRegistry.put(this)
 }
 
 case class Margin(top: Boolean = false, right: Boolean = false, bottom: Boolean = false, left: Boolean = false)
@@ -66,8 +66,7 @@ trait Layout extends ComponentContainer {
 
 }
 
-trait AbstractLayout extends AbstractComponentContainer with Layout {
-  override def p: com.vaadin.ui.AbstractLayout
+abstract class AbstractLayout(override val p: com.vaadin.ui.AbstractLayout) extends AbstractComponentContainer(p) with Layout {
 
   def margin: Margin = {
     val margin = p.getMargin()

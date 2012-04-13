@@ -5,19 +5,6 @@ import org.scalatest.FunSuite
 
 class CheckBoxTests extends FunSuite {
 
-  test("Constructor with all params but without names") {
-    val icon = new ThemeResource("icon.png");
-    // TODO listener
-    val checkBox = new CheckBox("Caption", true, true, null, icon, "Style", false, "Description")
-    assert(checkBox.caption === Some("Caption"))
-    assert(checkBox.value === Some(true))
-    assert(checkBox.immediate === true)
-    assert(checkBox.icon === Some(icon))
-    assert(checkBox.p.getStyleName === "Style")
-    assert(checkBox.enabled === false)
-    assert(checkBox.description === Some("Description"))
-  }
-
   test("Default constructor") {
     val checkBox = new CheckBox()
     assert(checkBox.caption === None)

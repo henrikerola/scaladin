@@ -8,9 +8,7 @@ class SplitterClickListener(val action: SplitterClickEvent => Unit) extends com.
   def splitterClick(e: com.vaadin.ui.AbstractSplitPanel#SplitterClickEvent) = action(SplitterClickEvent(WrapperRegistry.get[AbstractSplitPanel](e.getComponent()).get))
 }
 
-trait AbstractSplitPanel extends AbstractLayout {
-
-  override def p: com.vaadin.ui.AbstractSplitPanel
+abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPanel) extends AbstractLayout(p) {
 
   def first = WrapperRegistry.get[Component](p.getFirstComponent)
   def first_=(component: Component) = p.setFirstComponent(if (component != null) component.p else null)
@@ -41,18 +39,16 @@ trait AbstractSplitPanel extends AbstractLayout {
 
 }
 
-class HorizontalSplitPanel extends AbstractSplitPanel {
+class HorizontalSplitPanel(override val p: com.vaadin.ui.HorizontalSplitPanel = new com.vaadin.ui.HorizontalSplitPanel) extends AbstractSplitPanel(p) {
 
-  override val p = new com.vaadin.ui.HorizontalSplitPanel()
-  WrapperRegistry.put(this)
-
+  /*-
   def this(width: Option[Measure] = 100 percent, height: Option[Measure] = 100 percent, caption: String = null, style: String = null) = {
-    this()
+    this(new com.vaadin.ui.HorizontalSplitPanel)
     this.width = width;
     this.height = height;
     this.caption = caption;
     p.setStyleName(style)
-  }
+  }*/
 
   //  def add[C <: VaadinComponent](component: C = null): C = {
   //    addComponent(component)
@@ -62,18 +58,16 @@ class HorizontalSplitPanel extends AbstractSplitPanel {
   //def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
 }
 
-class VerticalSplitPanel extends AbstractSplitPanel {
+class VerticalSplitPanel(override val p: com.vaadin.ui.VerticalSplitPanel = new com.vaadin.ui.VerticalSplitPanel) extends AbstractSplitPanel(p) {
 
-  override val p = new com.vaadin.ui.VerticalSplitPanel()
-  WrapperRegistry.put(this)
-
+  /*-
   def this(width: Option[Measure] = 100 percent, height: Option[Measure] = 100 percent, caption: String = null, style: String = null) = {
-    this()
+    this(new com.vaadin.ui.VerticalSplitPanel)
     this.width = width;
     this.height = height;
     this.caption = caption;
     p.setStyleName(style)
-  }
+  }*/
 
   //  def add[C <: VaadinComponent](component: C = null): C = {
   //    addComponent(component)

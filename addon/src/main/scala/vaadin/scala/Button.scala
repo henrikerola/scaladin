@@ -20,13 +20,11 @@ class FocusListener(val action: FocusEvent => Unit) extends com.vaadin.event.Fie
   def focus(e: com.vaadin.event.FieldEvents.FocusEvent) = action(FocusEvent(WrapperRegistry.get[Button](e.getComponent()).get))
 }
 
-class Button extends AbstractField {
+class Button(override val p: com.vaadin.ui.Button = new com.vaadin.ui.Button) extends AbstractField(p) {
 
-  override val p = new com.vaadin.ui.Button()
-  WrapperRegistry.put(this)
-
+  /*-
   def this(caption: String = null, action: ButtonClickEvent => Unit = null, icon: Resource = null, style: String = null, enabled: Boolean = true) = {
-    this()
+    this(new com.vaadin.ui.Button)
 
     this.caption = caption
     this.icon = icon
@@ -34,7 +32,7 @@ class Button extends AbstractField {
     this.enabled = enabled
 
     if (action != null) clickListeners += action
-  }
+  }*/
 
   def disableOnClick = p.isDisableOnClick()
   def disableOnClick_=(disableOnClick: Boolean) = p.setDisableOnClick(disableOnClick)
@@ -60,8 +58,6 @@ class Button extends AbstractField {
   }
 }
 
-class LinkButton(caption: String = null, action: ButtonClickEvent => Unit = null, icon: Resource = null, style: String = null)
-  extends Button(caption, action, icon) {
+class LinkButton(override val p: com.vaadin.ui.Button = new com.vaadin.ui.Button) extends Button(p) {
   p.setStyleName(BaseTheme.BUTTON_LINK)
-  p.addStyleName(style)
 }

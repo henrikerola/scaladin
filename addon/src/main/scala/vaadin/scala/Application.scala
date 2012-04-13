@@ -10,7 +10,10 @@ abstract class Application(title: String = "", applicationTheme: String = com.va
     mainWindow.content = main
   }
 
-  def main: ComponentContainer = new VerticalLayout(margin = true) { add(new Label("Replace me")) }
+  def main: ComponentContainer = new VerticalLayout {
+    margin = true
+    add(new Label { value = "Replace me" })
+  }
 
   //TODO multiwindow support
   def main(windowName: String): ComponentContainer = main

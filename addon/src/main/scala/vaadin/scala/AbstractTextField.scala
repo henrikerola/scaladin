@@ -1,8 +1,6 @@
 package vaadin.scala
 
-abstract class AbstractTextField(val p: com.vaadin.ui.AbstractTextField) extends AbstractField {
-  
-  WrapperRegistry.put(this)
+abstract class AbstractTextField(override val p: com.vaadin.ui.AbstractTextField) extends AbstractField(p) {
 
   def prompt: Option[String] = Option(p.getInputPrompt())
   def prompt_=(prompt: Option[String]) = p.setInputPrompt(prompt.getOrElse(null))

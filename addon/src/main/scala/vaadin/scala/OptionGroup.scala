@@ -1,6 +1,6 @@
 package vaadin.scala
 
-class OptionGroup(override val p: com.vaadin.ui.OptionGroup = new com.vaadin.ui.OptionGroup) extends AbstractSelect with MultiSelectable {
+class OptionGroup(override val p: com.vaadin.ui.OptionGroup = new com.vaadin.ui.OptionGroup) extends AbstractSelect(p) with MultiSelectable {
 
   WrapperRegistry.put(this)
 
