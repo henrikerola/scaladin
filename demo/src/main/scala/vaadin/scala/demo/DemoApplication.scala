@@ -139,9 +139,9 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     val hl = new HorizontalLayout {
       spacing = true
       margin(top = true)
-      addComponent(new PopupDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_MIN))
-      addComponent(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_DAY))
-      addComponent(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_YEAR))
+      add(new PopupDateField { value = DATE; resolution = DateField.Resolution.Minute })
+      add(new InlineDateField { value = DATE; resolution = DateField.Resolution.Day })
+      add(new InlineDateField { value = DATE; resolution = DateField.Resolution.Year })
     }
 
     new VerticalLayout(caption = "Date fields", margin = true, spacing = true) {
