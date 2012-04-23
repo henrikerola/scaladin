@@ -1,0 +1,27 @@
+package vaadin.scala.tests
+
+import org.scalatest.FunSuite
+import vaadin.scala._
+import com.vaadin.terminal.Sizeable
+import com.vaadin.data.util.IndexedContainer
+
+class TextAreaTests extends FunSuite {
+
+  test("rows") {
+    val textarea = new TextArea
+
+    assert(textarea.rows === 5)
+
+    textarea.rows = 7
+    assert(textarea.rows === 7)
+  }
+
+  test("wordwrap") {
+    val textarea = new TextArea
+
+    assert(textarea.wordwrap === true)
+
+    textarea.wordwrap = false
+    assert(textarea.wordwrap === false)
+  }
+}
