@@ -18,7 +18,7 @@ object Container {
 
     def p: com.vaadin.data.Container
 
-    def getItem(id: Any) = p.getItem(id)
+    def getItem(id: Any): Item = wrapItem(p.getItem(id))
 
     def getItemIds() = p.getItemIds
 
@@ -38,11 +38,15 @@ object Container {
 
     def size() = p.size()
 
-    def getContainerProperty(itemId: Any, propertyId: Any) = p.getContainerProperty(itemId, propertyId)
+    def getContainerProperty(itemId: Any, propertyId: Any) = wrapProperty(p.getContainerProperty(itemId, propertyId))
 
     def getContainerPropertyIds() = p.getContainerPropertyIds()
 
     def getType(propertyId: Any) = p.getType(propertyId)
+
+    protected def wrapItem(unwrapped: com.vaadin.data.Item): Item
+
+    protected def wrapProperty(unwrapped: com.vaadin.data.Property): Property
   }
 
   trait Viewer extends Wrapper {

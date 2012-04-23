@@ -21,13 +21,12 @@ object Units extends Enumeration {
 
 case class Measure(value: Number, unit: Units.Value) {
 
-  def apply(m: Measure) = {}
-
+  def update(i: Int) = ""
   override def toString = value + unit.toString
 }
 
 class MeasureExtent(value: Number) {
-  def px: Option[Measure] = Option(new Measure(value, Units.px))
+  def px: Option[Measure] = Option(Measure(value, Units.px))
   def percent: Option[Measure] = Option(new Measure(value, Units.pct))
   def pct: Option[Measure] = Option(new Measure(value, Units.pct))
   def em: Option[Measure] = Option(new Measure(value, Units.em))
