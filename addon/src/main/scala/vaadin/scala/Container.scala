@@ -1,8 +1,11 @@
 package vaadin.scala
 
 object Container {
-  def apply(items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*) = {
-    val container = new com.vaadin.data.util.IndexedContainer
+  def apply(items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): Container = fill(new IndexedContainer, items: _*)
+
+  def filterable(items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): FilterableContainer = fill(new IndexedContainer with FilterableContainer, items: _*)
+
+  def fill[C <: Container](container: C, items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): C = {
     for (item <- items) {
       val containerItem = container.addItem(item._1)
       for (property <- item._2) {
@@ -10,7 +13,6 @@ object Container {
         containerItem.getItemProperty(property._1).setValue(property._2)
       }
     }
-
     container
   }
 
@@ -76,5 +78,36 @@ object Container {
     def hasChildren(itemId: Any) = p.hasChildren(itemId)
 
     override def removeItem(itemId: Any) = p.removeItem(itemId)
+  }
+  trait Ordered extends Container {
+
+    def p: com.vaadin.data.Container.Ordered
+
+    def nextItemId(itemId: Any): Any = p.nextItemId(itemId)
+
+    def prevItemId(itemId: Any): Any = p.prevItemId(itemId)
+
+    def firstItemId(): Any = p.firstItemId
+
+    def lastItemId(): Any = p.lastItemId
+
+    def isFirstId(itemId: Any): Boolean = p.isFirstId(itemId)
+
+    def isLastId(itemId: Any): Boolean = p.isLastId(itemId)
+
+    def addItemAfter(previousItemId: Any): Any = p.addItemAfter(previousItemId)
+
+    def addItemAfter(previousItemId: Any, newItemId: Any): Item = wrapItem(p.addItemAfter(previousItemId, newItemId))
+
+  }
+
+  trait Sortable extends Ordered {
+    import scala.collection.JavaConverters._
+
+    def p: com.vaadin.data.Container.Sortable
+
+    def sort(propertyId: Array[AnyRef], ascending: Array[Boolean]) = p.sort(propertyId, ascending)
+
+    def getSortableContainerPropertyIds(): Iterable[_] = p.getSortableContainerPropertyIds.asScala
   }
 }

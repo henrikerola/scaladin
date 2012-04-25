@@ -14,9 +14,12 @@ object FilesystemContainer {
   val PropertyLastModified = com.vaadin.data.util.FilesystemContainer.PROPERTY_LASTMODIFIED
 
   val FileProperties = com.vaadin.data.util.FilesystemContainer.FILE_PROPERTIES
+
+  def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new FunctionProperty(_ => unwrapped.getValue, (x: Any) => unwrapped.setValue(x))
+
 }
 
-class FilesystemContainer(root: File) extends Container.Hierarchical with Wrapper {
+class FilesystemContainer(root: File) extends Container.Hierarchical {
 
   // p cannot be used as a constructor parameter because of the required file parameter
   val p = new com.vaadin.data.util.FilesystemContainer(root)
@@ -32,15 +35,16 @@ class FilesystemContainer(root: File) extends Container.Hierarchical with Wrappe
   def recursive = p.isRecursive
   def recursive_=(isRecursive: Boolean) = p.setRecursive(isRecursive)
 
-  def wrapItem(unwrapped: com.vaadin.data.util.FilesystemContainer#FileItem): FileItem = new FileItem(unwrapped)
-  def wrapProperty(unwrapped: com.vaadin.data.util.MethodProperty[Any]) = new MethodProperty[Any](unwrapped)
+  def wrapItem(unwrapped: com.vaadin.data.Item): Item = new FileItem(unwrapped.asInstanceOf[com.vaadin.data.util.FilesystemContainer#FileItem])
+
+  def wrapProperty(unwrapped: com.vaadin.data.Property): Property = FilesystemContainer.wrapProperty(unwrapped)
 }
 
-class FileItem(override val p: com.vaadin.data.util.FilesystemContainer#FileItem) extends Item with Wrapper {
+class FileItem(override val p: com.vaadin.data.util.FilesystemContainer#FileItem) extends Item {
   def lastModified = p.lastModified
   def name = p.getName()
   def icon = p.getIcon()
   def size = p.getSize()
 
-  def wrapProperty(unwrapped: com.vaadin.data.util.MethodProperty[Any]): Property = new MethodProperty[Any](unwrapped)
+  protected override def wrapProperty(unwrapped: com.vaadin.data.Property): Property = FilesystemContainer.wrapProperty(unwrapped)
 }

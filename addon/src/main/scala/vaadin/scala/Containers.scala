@@ -47,9 +47,10 @@ class FilterableContainerWrap(wrapped: com.vaadin.data.Container) extends Contai
 class FilterableItemWrap(wrapped: com.vaadin.data.Item) extends Item with FilterableItem {
   def p = wrapped
   def wrapProperty(unwrapped: com.vaadin.data.Property) = new BasicProperty(unwrapped)
+
 }
 
-class PropertyListWrap(wrapped: List[com.vaadin.data.Property]) {
-  def values = wrapped.map(_.getValue)
+class PropertyListWrap(wrapped: List[Property]) {
+  def values = wrapped.map(_.value)
 }
 

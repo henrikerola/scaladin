@@ -21,12 +21,12 @@ class Label extends AbstractComponent with PropertyViewer {
   WrapperRegistry.put(this)
 
   // icon, caption as constructor parameters?
-  def this(content: String = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, property: com.vaadin.data.Property = null, contentMode: Label.ContentMode.Value = Label.ContentMode(com.vaadin.ui.Label.CONTENT_DEFAULT), style: String = null) = {
+  def this(content: String = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, property: Property = null, contentMode: Label.ContentMode.Value = Label.ContentMode(com.vaadin.ui.Label.CONTENT_DEFAULT), style: String = null) = {
     this()
 
     this.width = width
     this.height = height
-    if (property != null) p.setPropertyDataSource(property)
+    if (property != null) p.setPropertyDataSource(property.p)
     if (content != null) p.setValue(content)
     p.setContentMode(contentMode.id)
     p.setStyleName(style)
@@ -39,10 +39,10 @@ class Label extends AbstractComponent with PropertyViewer {
 
   def contentMode = Label.ContentMode(p.getContentMode)
   def contentMode_=(contentMode: Label.ContentMode.Value) = p.setContentMode(contentMode.id)
-  
+
   // TODO: valuechangelistener
   // TODO: getType
 }
 
-class HtmlLabel(content: Node = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, property: com.vaadin.data.Property = null, style: String = null)
+class HtmlLabel(content: Node = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, property: Property = null, style: String = null)
   extends Label(width = width, height = height, content = if (content != null) content.toString else null, property = property, contentMode = Label.ContentMode.Xhtml, style = style)

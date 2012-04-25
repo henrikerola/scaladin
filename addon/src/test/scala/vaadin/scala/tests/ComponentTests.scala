@@ -29,7 +29,7 @@ class ComponentTests extends FunSuite {
     assert(link.targetHeight === -1)
     assert(link.targetBorder === Link.TargetBorder.Default)
   }
-  
+
   test("Component.styleNames.contains") {
     val label = new Label
     label.styleNames += "style1"
@@ -59,7 +59,7 @@ class ComponentTests extends FunSuite {
     //    assert(label.getWidthUnits == Sizeable.UNITS_PIXELS)
     //    assert(label.getHeight == 100)
     //    assert(label.getHeightUnits == Sizeable.UNITS_EM)
-    assert(label.property === Some(property))
+    assert(label.property.get.p === property.p)
     assert(label.contentMode === Label.ContentMode.Preformatted)
     assert(label.styleNames.mkString == "Style")
   }
@@ -110,7 +110,7 @@ class ComponentTests extends FunSuite {
     assert(label.p.getWidthUnits == Sizeable.UNITS_PIXELS)
     assert(label.p.getHeight == 100)
     assert(label.p.getHeightUnits == Sizeable.UNITS_EM)
-    assert(label.property === Some(property))
+    assert(label.property.get.p === property.p)
     assert(label.contentMode == Label.ContentMode.Xhtml)
     assert(label.p.getStyleName == "Style")
   }
@@ -126,43 +126,43 @@ class ComponentTests extends FunSuite {
     assert(label.contentMode == Label.ContentMode.Xhtml)
     assert(label.p.getStyleName == "")
   }
-  
+
   test("width, defined size") {
     val label = new Label()
     label.width = 25 px;
     assert(label.width.get === Measure(25, Units.px))
   }
-  
+
   test("width, undefined size") {
     val label = new Label()
     label.width = None;
     assert(label.width === None)
   }
-  
+
   test("height, defined size") {
     val label = new Label()
     label.height = 25 px;
     assert(label.height.get === Measure(25, Units.px))
   }
-  
+
   test("height, undefined size") {
     val label = new Label()
     label.height = None;
     assert(label.height === None)
   }
-  
+
   test("sizeFull()") {
     val label = new Label
     label.sizeFull()
     assert(label.width.get === Measure(100, Units.pct))
     assert(label.height.get === Measure(100, Units.pct))
   }
-  
+
   test("sizeUndefined()") {
     val label = new Label
     label.sizeUndefined()
     assert(label.width === None)
     assert(label.height === None)
   }
-  
+
 }

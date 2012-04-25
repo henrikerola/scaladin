@@ -12,12 +12,12 @@ object Property {
 trait Property extends Wrapper {
   def p: com.vaadin.data.Property
 
-  def value() = p.getValue()
-  def value_=(value: Any) = p.setValue(value)
-  def getType = p.getType()
-  def readOnly() = p.isReadOnly()
-  def readOnly_=(readOnly: Boolean) = p.setReadOnly(readOnly)
-  override def toString = p.toString
+  def value(): Any = p.getValue()
+  def value_=(value: Any): Unit = p.setValue(value)
+  def getType: Class[_] = p.getType()
+  def readOnly(): Boolean = p.isReadOnly()
+  def readOnly_=(readOnly: Boolean): Unit = p.setReadOnly(readOnly)
+  override def toString: String = p.toString
 }
 
 /**
@@ -25,26 +25,29 @@ trait Property extends Wrapper {
  */
 class BasicProperty(override val p: com.vaadin.data.Property) extends Property
 
-class ObjectProperty[T](value: T) extends Property with Wrapper {
+class ObjectProperty[T](value: T) extends Property {
   val p = new com.vaadin.data.util.ObjectProperty[T](value)
 }
 
-class FunctionProperty[T](getter: () => T, setter: T => Unit = null) extends com.vaadin.data.Property {
-  def getValue = getter().asInstanceOf[AnyRef]
-
-  def setValue(value: Any) = {
-    setter(value.asInstanceOf[T])
+class FunctionProperty[T](getter: Unit => T, setter: T => Unit = null)(implicit m: Manifest[T]) extends Property {
+  //delegate
+  val p = new com.vaadin.data.Property() {
+    def getValue = value.asInstanceOf[AnyRef]
+    def setValue(v: Any) = value_=(v)
+    def getType = FunctionProperty.this.getType
+    def isReadOnly = readOnly
+    def setReadOnly(ro: Boolean) = readOnly_=(ro)
   }
 
-  def getType = getter.getClass //dirty tricks
+  override def value: Any = getter()
 
-  def isReadOnly = setter != null
+  override def value_=(value: Any) = setter(value.asInstanceOf[T])
 
-  def setReadOnly(readOnly: Boolean): Unit = {
-    //NOOP
-  }
-}
+  override def getType: Class[T] = m.erasure.asInstanceOf[Class[T]]
 
-class MethodProperty[T](override val p: com.vaadin.data.util.MethodProperty[T]) extends Property {
+  override def readOnly = setter != null
 
+  override def readOnly_=(readOnly: Boolean): Unit = () // NOOP
+
+  override def toString = "Value: " + value
 }

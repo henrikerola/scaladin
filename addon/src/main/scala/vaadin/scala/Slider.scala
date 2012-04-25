@@ -19,16 +19,16 @@ trait AbstractSlider extends AbstractField {
 }
 
 class HorizontalSlider extends AbstractSlider {
-  
+
   p.setOrientation(com.vaadin.ui.Slider.ORIENTATION_HORIZONTAL)
 
-  def this(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, property: com.vaadin.data.Property = null, value: Any = null, min: Double = 0, max: Double = 100, resolution: Int = 0, style: String = null) = {
+  def this(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, property: Property = null, value: Any = null, min: Double = 0, max: Double = 100, resolution: Int = 0, style: String = null) = {
     this()
 
     this.caption = caption
     this.width = width
     this.height = height
-    if (property != null) p.setPropertyDataSource(property)
+    if (property != null) p.setPropertyDataSource(property.p)
     if (value != null) p.setValue(value)
     this.min = min
     this.max = max
@@ -38,16 +38,16 @@ class HorizontalSlider extends AbstractSlider {
 }
 
 class VerticalSlider extends AbstractSlider {
-  
+
   p.setOrientation(com.vaadin.ui.Slider.ORIENTATION_VERTICAL)
 
-  def this(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, property: com.vaadin.data.Property = null, value: Any = null, min: Double = 0, max: Double = 100, resolution: Int = 0, style: String = null) = {
+  def this(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, property: Property = null, value: Any = null, min: Double = 0, max: Double = 100, resolution: Int = 0, style: String = null) = {
     this()
-    
+
     this.caption = caption
     this.width = width
     this.height = height
-    if (property != null) p.setPropertyDataSource(property)
+    if (property != null) p.setPropertyDataSource(property.p)
     if (value != null) p.setValue(value)
     this.min = min
     this.max = max

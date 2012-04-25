@@ -93,7 +93,15 @@ trait PropertyViewer {
 
   def p: com.vaadin.data.Property.Viewer
 
-  def property: Option[com.vaadin.data.Property] = Option(p.getPropertyDataSource())
-  def property_=(property: Option[com.vaadin.data.Property]) = p.setPropertyDataSource(property.getOrElse(null))
-  def property_=(property: com.vaadin.data.Property) = p.setPropertyDataSource(property)
+  def property: Option[Property] = p.getPropertyDataSource() match {
+    case p: com.vaadin.data.Property => Some(new BasicProperty(p))
+    case null => None
+  }
+
+  def property_=(property: Option[Property]) = property match {
+    case Some(prop) => p.setPropertyDataSource(prop.p)
+    case None => p.setPropertyDataSource(null)
+  }
+
+  def property_=(property: Property) = p.setPropertyDataSource(property.p)
 }
