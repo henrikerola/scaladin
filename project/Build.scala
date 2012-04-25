@@ -29,11 +29,13 @@ object Dependencies {
   val jettyVersion = "7.3.0.v20110203"
   val scalaTestVersion = "1.6.1"
   val junitVersion = "4.9"
+  val mockitoVersion = "1.9.0"
 
   val vaadin = "com.vaadin" % "vaadin" % vaadinVersion
   val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
   val scalaTest = "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
   val junitInterface = "com.novocode" % "junit-interface" % "0.7" % "test->default"
+  val mockito = "org.mockito" % "mockito-all" % mockitoVersion % "test" 
 }
 
 object ScalaWrappersForVaadinBuild extends Build {
@@ -42,7 +44,7 @@ object ScalaWrappersForVaadinBuild extends Build {
 
   val addonSettings = buildSettings ++ jacoco.settings ++ Seq(
     name := buildName,
-    libraryDependencies := Seq(vaadin, scalaTest, junitInterface),
+    libraryDependencies := Seq(vaadin, scalaTest, junitInterface, mockito),
     packageConfiguration in Compile in packageBin ~= { 
       (config: Package.Configuration) => new Package.Configuration(config.sources, config.jar, manifestAttributes) 
     },

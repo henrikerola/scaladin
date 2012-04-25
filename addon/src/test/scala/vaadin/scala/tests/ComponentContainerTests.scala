@@ -93,6 +93,7 @@ class ComponentContainerTests extends FunSuite {
     }
   }
 
+  /*-
   test("Accordion, constructor with all params but without names") {
     val accordion = new Accordion(10 px, 100 em, "Caption", "Style")
     assert(accordion.getWidth == 10)
@@ -114,7 +115,7 @@ class ComponentContainerTests extends FunSuite {
     accordion.addListener(_ => cnt = cnt + 1)
     accordion.fireSelectedTabChangeEvent
     assert(cnt == 1)
-  }
+  }*/
   
   test("CustomComponent, default constructor") {
     val customComponent = new CustomComponent() {
