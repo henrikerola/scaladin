@@ -20,27 +20,29 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
 
   override def main = {
     new VerticalLayout(size = Full) {
-      val tabs = new TabSheet(size = Full)
+      val tabs = new TabSheet {
+        sizeFull()
+      }
 
       add(buildScalaWrappersAd)
       addComponent(getTopMenu)
       add(getHeader(this, tabs))
       add(ratio = 1, component = new CssLayout(size = Full) {
         margin(false, true, true, true)
-        p.addComponent(tabs)
+        add(tabs)
       })
 
-      tabs.addComponent(buildWelcomeScreen.p)
-      tabs.addComponent(buildLabels.p)
-      tabs.addComponent(buildButtons.p)
-      tabs.addComponent(buildTextFields.p)
-      tabs.addComponent(buildSelects.p)
-      tabs.addComponent(buildDateFields.p)
+      tabs.add(buildWelcomeScreen)
+      tabs.add(buildLabels)
+      tabs.add(buildButtons)
+      tabs.add(buildTextFields)
+      tabs.add(buildSelects)
+      tabs.add(buildDateFields)
       //tabs.add(buildTabSheets) // FIXME
-      tabs.addComponent(buildPanels.p)
-      tabs.addComponent(buildTables.p)
-      tabs.addComponent(buildWindows(tabs).p)
-      tabs.addComponent(buildSplitPanels.p)
+      tabs.add(buildPanels)
+      tabs.add(buildTables)
+      tabs.add(buildWindows(tabs))
+      tabs.add(buildSplitPanels)
     }
   }
 
@@ -319,6 +321,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       components += new HtmlLabel(<span><code>Reindeer.WINDOW_BLACK</code></span>)
     }
 
+    /*- FIXME:
     tabs.addListener(event => {
       if (event.getTabSheet.getSelectedTab == windowLayout.p) {
         mainWindow.childWindows += (normalWindow, notResizableWindow, lightWindow, blackWindow)
@@ -340,7 +343,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
           mainWindow.childWindows -= blackWindow
         }
       }
-    })
+    })*/
 
     windowLayout
   }
@@ -492,16 +495,16 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     val transparent = new CheckBox(caption = "Transparent tabs", immediate = true, action = event =>
       {
         if (event.getButton.booleanValue) {
-          tabs.setStyleName(Reindeer.TABSHEET_MINIMAL)
+          tabs.styleNames += Reindeer.TABSHEET_MINIMAL
         } else {
-          tabs.removeStyleName(Reindeer.TABSHEET_MINIMAL)
+          tabs.styleNames -= Reindeer.TABSHEET_MINIMAL
         }
 
-        tabs.getComponents.foreach(c => {
+        tabs.components.foreach(c => {
           if (event.getButton.booleanValue) {
-            c.removeStyleName(Reindeer.LAYOUT_WHITE)
+            c.styleNames -= Reindeer.LAYOUT_WHITE
           } else {
-            c.addStyleName(Reindeer.LAYOUT_WHITE)
+            c.styleNames += Reindeer.LAYOUT_WHITE
           }
         })
         // Force refresh
