@@ -25,7 +25,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       }
 
       add(buildScalaWrappersAd)
-      addComponent(getTopMenu)
+      add(getTopMenu)
       add(getHeader(this, tabs))
       add(ratio = 1, component = new CssLayout(size = Full) {
         margin(false, true, true, true)
@@ -418,52 +418,53 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
   }
 
   def getTopMenu(): MenuBar = {
-    val menubar = new MenuBar(width = 100 percent)
-    val file = menubar.addItem("File", null)
-    val newItem = file.addItem("New", null)
-    file.addItem("Open file...", null)
-    file addSeparator
+    val menubar = new MenuBar {
+      width = 100 percent
+    }
+    val file = menubar.addItem("File")
+    val newItem = file.addItem("New")
+    file.addItem("Open file...")
+    file.addSeparator
 
-    newItem.addItem("File", null)
-    newItem.addItem("Folder", null)
-    newItem.addItem("Project...", null)
+    newItem.addItem("File")
+    newItem.addItem("Folder")
+    newItem.addItem("Project...")
 
-    file.addItem("Close", null)
-    file.addItem("Close All", null)
+    file.addItem("Close")
+    file.addItem("Close All")
     file.addSeparator()
 
-    file.addItem("Save", null)
-    file.addItem("Save As...", null)
-    file.addItem("Save All", null)
+    file.addItem("Save")
+    file.addItem("Save As...")
+    file.addItem("Save All")
 
-    val edit = menubar.addItem("Edit", null)
-    edit.addItem("Undo", null)
-    edit.addItem("Redo", null).setEnabled(false)
+    val edit = menubar.addItem("Edit")
+    edit.addItem("Undo")
+    edit.addItem("Redo").enabled = false
     edit.addSeparator()
 
-    edit.addItem("Cut", null)
-    edit.addItem("Copy", null)
-    edit.addItem("Paste", null)
+    edit.addItem("Cut")
+    edit.addItem("Copy")
+    edit.addItem("Paste")
     edit.addSeparator()
 
-    val find = edit.addItem("Find/Replace", null)
+    val find = edit.addItem("Find/Replace")
 
-    find.addItem("Google Search", new MenuBarCommand(_ => getMainWindow.open(new ExternalResource("http://www.google.com"))))
+    find.addItem("Google Search", (e: MenuBar.MenuItem) => getMainWindow.open(new ExternalResource("http://www.google.com")))
     find.addSeparator()
-    find.addItem("Find/Replace...", null)
-    find.addItem("Find Next", null)
-    find.addItem("Find Previous", null)
+    find.addItem("Find/Replace...")
+    find.addItem("Find Next")
+    find.addItem("Find Previous")
 
-    val view = menubar.addItem("View", null)
-    val statusBarItem = view.addItem("Show/Hide Status Bar", null)
-    statusBarItem.setCheckable(true)
-    statusBarItem.setChecked(true)
-    view.addItem("Customize Toolbar...", null)
+    val view = menubar.addItem("View")
+    val statusBarItem = view.addCheckableItem("Show/Hide Status Bar")
+    statusBarItem.checked = true
+    view.addItem("Customize Toolbar...")
     view.addSeparator()
 
-    view.addItem("Actual Size", null)
-    view.addItem("Zoom In", null)
-    view.addItem("Zoom Out", null)
+    view.addItem("Actual Size")
+    view.addItem("Zoom In")
+    view.addItem("Zoom Out")
 
     menubar
   }
