@@ -1,4 +1,4 @@
-package scala.vaadin.scala.tests
+package vaadin.scala.tests
 
 import org.junit.Test
 import org.scalatest.junit.AssertionsForJUnit
@@ -7,7 +7,10 @@ import vaadin.scala._
 import vaadin.scala.implicits._
 import scala.collection.JavaConversions._
 import com.vaadin.data.util.IndexedContainer
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class ContainerTests extends FunSuite {
 
   test("property creation with a string") {
@@ -25,7 +28,7 @@ class ContainerTests extends FunSuite {
   test("item creation with one property") {
     val result = Item('testId -> "foobar")
     assert(1 === result.propertyIds.size)
-    val property = result.property('testId)
+    val property = result.property('testId).get
     assert(classOf[String] === property.getType)
     assert("foobar" === property.value)
   }
@@ -34,7 +37,7 @@ class ContainerTests extends FunSuite {
     val result = Item('testId1 -> "foobar1", 'testId2 -> "foobar2", 'testId3 -> "foobar3")
     assert(3 === result.propertyIds.size)
     for (propertyId <- result.propertyIds) {
-      val property = result.property(propertyId)
+      val property = result.property(propertyId).get
       assert(classOf[String] === property.getType)
       assert(true === property.value.asInstanceOf[String].startsWith("foobar"))
     }
@@ -44,9 +47,9 @@ class ContainerTests extends FunSuite {
     val result = Container('itemId -> List('propertyId -> "foobar"))
 
     assert(1 === result.size)
-    val item = result.getItem('itemId)
+    val item = result.getItem('itemId).get
     assert(1 === item.propertyIds.size)
-    val property = item.property('propertyId)
+    val property = item.property('propertyId).get
     assert(classOf[String] === property.getType)
     assert("foobar" === property.value)
   }
@@ -54,13 +57,13 @@ class ContainerTests extends FunSuite {
   test("container creation with one item") {
     val result = Container('itemId -> List())
     assert(1 === result.size)
-    val item = result.getItem('itemId)
+    val item = result.getItem('itemId).get
     assert(0 === item.propertyIds.size)
   }
 
   test("container item id filter with one item") {
     val containerWithOneItem = Container.filterable('itemId -> List())
-    val result = containerWithOneItem \ 'itemId
+    val result = containerWithOneItem \ 'itemId get
 
     assert(null != result)
     assert(result.isInstanceOf[Item])
@@ -91,7 +94,7 @@ class ContainerTests extends FunSuite {
 
   test("item property id filter with two properties") {
     val itemWithOneProperty = Item.filterable('propertyId1 -> "value1", 'propertyId2 -> "value2")
-    val result = itemWithOneProperty \ 'propertyId1
+    val result = itemWithOneProperty \ 'propertyId1 get
 
     assert("value1" === result.value)
   }
@@ -119,9 +122,9 @@ class ContainerTests extends FunSuite {
     val item = Item.filterable('propertyId1 -> "value1", 'propertyId2 -> "value2")
     val container = Container.filterable('itemId1 -> List('propertyId1 -> "value1", 'propertyId2 -> "value2"), 'itemId2 -> List())
 
-    val itemProperty: Property = item \ 'propertyId1
+    val itemProperty: Property = item \ 'propertyId1 get
     val itemProperties: List[Property] = item filterProperties (_.value.asInstanceOf[String].startsWith("value"))
-    val property2: Property = container \ 'itemId1 \ 'propertyId1
+    val property2: Property = container \ 'itemId1 \ 'propertyId1 get
     val containerProperties: List[Property] = container \\ 'propertyId1
 
     val itemPropertyValues: List[Any] = item filterProperties (_.value.asInstanceOf[String].startsWith("value")) values

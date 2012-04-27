@@ -12,7 +12,7 @@ object Property {
 trait Property extends Wrapper {
   def p: com.vaadin.data.Property
 
-  def value(): Any = p.getValue()
+  def value: Any = p.getValue()
   def value_=(value: Any): Unit = p.setValue(value)
   def getType: Class[_] = p.getType()
   def readOnly(): Boolean = p.isReadOnly()
