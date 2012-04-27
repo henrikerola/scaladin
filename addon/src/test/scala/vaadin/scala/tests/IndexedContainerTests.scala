@@ -14,12 +14,14 @@ class IndexedContainerTests extends FunSuite with BeforeAndAfter {
   var container: Container.Container = _
 
   before {
-    container = new IndexedContainer
+    container = new IndexedContainer()
   }
 
   test("addItem for an empty container") {
     assert(true === container.addItem.isDefined)
     assert(true === container.addItem.isDefined)
+    assert(2 === container.size)
+
   }
 
   test("addItem with an existing id") {
@@ -28,6 +30,9 @@ class IndexedContainerTests extends FunSuite with BeforeAndAfter {
 
     val existingId = container.addItem.get
     assert(None == container.addItem(existingId))
+
+    assert(true === container.containsId('someId))
+    assert(true === container.containsId(existingId))
   }
 
   test("removeItem") {
@@ -36,5 +41,13 @@ class IndexedContainerTests extends FunSuite with BeforeAndAfter {
     container.addItem('id)
 
     assert(container.removeItem('id))
+  }
+
+  test("container properties") {
+    container.addContainerProperty('propertyId, classOf[String], "")
+    val item = container.addItem('itemId).get
+    assert(1 === item.propertyIds.size)
+    val property = item.property('propertyId).get
+    assert("" === property.value)
   }
 }
