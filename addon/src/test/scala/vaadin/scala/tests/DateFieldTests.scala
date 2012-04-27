@@ -5,7 +5,10 @@ import vaadin.scala._
 import com.vaadin.terminal.Sizeable
 import vaadin.scala.Property
 import com.vaadin.data.util.ObjectProperty
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class PopupDateFieldTests extends FunSuite {
 
   test("prompt") {

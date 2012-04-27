@@ -2,7 +2,10 @@ package vaadin.scala.tests
 
 import vaadin.scala._
 import org.scalatest.FunSuite
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class CheckBoxTests extends FunSuite {
 
   test("Constructor with all params but without names") {
@@ -28,13 +31,13 @@ class CheckBoxTests extends FunSuite {
     assert(checkBox.enabled === true)
     assert(checkBox.description === None)
   }
-  
+
   test("value") {
     val checkBox = new CheckBox()
-    
+
     checkBox.value = true
     assert(checkBox.value === Some(true))
   }
-  
+
   // TODO test focus and blur listeners
 }

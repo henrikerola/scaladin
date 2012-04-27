@@ -2,26 +2,29 @@ package vaadin.scala.tests
 import org.scalatest.FunSuite
 import vaadin.scala._
 import com.vaadin.terminal.Sizeable
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class ComponentContainerTests extends FunSuite {
-  
+
   test("ComponentContainer.components.contains returns true for added Component") {
     val layout = new VerticalLayout
-    
+
     val label = new Label
     layout.components += label
-    
+
     assert(layout.components.contains(label))
   }
-  
+
   test("ComponentContainer.components.contains return false for non-added Component") {
     val layout = new VerticalLayout
-    
+
     layout.components += new Label
-    
+
     assert(!layout.components.contains(new Label))
   }
-  
+
   test("ComponentContainer.components.iterator returns added components") {
     val layout = new VerticalLayout
 
@@ -29,8 +32,7 @@ class ComponentContainerTests extends FunSuite {
     layout.components += label1
     val label2 = new Label
     layout add label2
-    
-    
+
     val iter = layout.components.iterator
     assert(iter.next() == label1)
     assert(iter.next() == label2)
@@ -116,7 +118,7 @@ class ComponentContainerTests extends FunSuite {
     accordion.fireSelectedTabChangeEvent
     assert(cnt == 1)
   }*/
-  
+
   test("CustomComponent, default constructor") {
     val customComponent = new CustomComponent() {
       def compositionRoot = {
@@ -129,7 +131,7 @@ class ComponentContainerTests extends FunSuite {
     assert(customComponent.getHeight === -1)
     assert(customComponent.getHeightUnits === Sizeable.UNITS_PIXELS)
   }
-  
+
   test("CustomComponent, constructor with all params but without names") {
     val label = new Label
     val customComponent = new CustomComponent(200 px, 50 em, label) {
@@ -143,5 +145,5 @@ class ComponentContainerTests extends FunSuite {
     assert(customComponent.getHeight === 50)
     assert(customComponent.getHeightUnits === Sizeable.UNITS_EM)
   }
-  
+
 }

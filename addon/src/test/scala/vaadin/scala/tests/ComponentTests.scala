@@ -5,7 +5,10 @@ import org.scalatest.FunSuite
 import com.vaadin.terminal.Sizeable
 
 import vaadin.scala._
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class ComponentTests extends FunSuite {
 
   test("Link, constructor with all params but without names") {

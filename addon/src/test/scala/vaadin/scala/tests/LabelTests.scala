@@ -4,7 +4,10 @@ import org.scalatest.FunSuite
 import vaadin.scala._
 import com.vaadin.terminal.Sizeable
 import vaadin.scala.Property
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class LabelTests extends FunSuite {
 
   test("ContentModes") {

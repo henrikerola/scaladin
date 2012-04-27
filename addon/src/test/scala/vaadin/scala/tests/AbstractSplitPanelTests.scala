@@ -3,7 +3,10 @@ package vaadin.scala.tests
 import vaadin.scala._
 import org.scalatest.FunSuite
 import scala.reflect.Method
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class AbstractSplitPanelTests extends FunSuite {
 
   test("default splitPosition") {
