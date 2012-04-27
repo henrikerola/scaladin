@@ -42,7 +42,7 @@ trait Item extends Wrapper {
 
 class PropertysetItem(override val p: com.vaadin.data.util.PropertysetItem = new com.vaadin.data.util.PropertysetItem) extends Item {
 
-  def getListeners(listenerType: Class[_]) = p.getListeners(listenerType)
+  def listeners(listenerType: Class[_]) = p.getListeners(listenerType)
 
   def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new BasicProperty(unwrapped)
 }

@@ -6,22 +6,22 @@ trait FilterableContainer extends Container.Container {
   /**
    * Filter based on item id
    */
-  def \(itemId: Any): Option[Item] = getItem(itemId)
+  def \(itemId: Any): Option[Item] = item(itemId)
 
   /**
    * Filter based on Item
    */
-  def filterItems(itemFilter: Item => Boolean): List[Item] = getItemIds.map(getItem).flatten.filter(itemFilter).toList
+  def filterItems(itemFilter: Item => Boolean): List[Item] = itemIds.map(item).flatten.filter(itemFilter).toList
 
   /**
    * Filter based on property
    */
-  def filterProperties(propertyFilter: Property => Boolean): List[Property] = getItemIds.map(getItem).flatten.flatMap(Item.getProperties).filter(propertyFilter).toList
+  def filterProperties(propertyFilter: Property => Boolean): List[Property] = itemIds.map(item).flatten.flatMap(Item.getProperties).filter(propertyFilter).toList
 
   /**
    * Filter based on property id
    */
-  def \\(propertyId: Any): List[Property] = getItemIds.map(getItem).flatten.map(_.property(propertyId)).flatten.toList
+  def \\(propertyId: Any): List[Property] = itemIds.map(item).flatten.map(_.property(propertyId)).flatten.toList
 }
 
 trait FilterableItem extends Item {

@@ -31,9 +31,9 @@ object Container {
 
     def p: com.vaadin.data.Container
 
-    def getItem(id: Any): Option[Item] = optionalWrapItem(p.getItem(id))
+    def item(id: Any): Option[Item] = optionalWrapItem(p.getItem(id))
 
-    def getItemIds(): Iterable[Any] = p.getItemIds.asScala
+    def itemIds(): Iterable[Any] = p.getItemIds.asScala
 
     def removeAllItems(): Boolean = p.removeAllItems
 
@@ -51,9 +51,9 @@ object Container {
 
     def size(): Int = p.size()
 
-    def getContainerProperty(itemId: Any, propertyId: Any): Property = wrapProperty(p.getContainerProperty(itemId, propertyId))
+    def property(itemId: Any, propertyId: Any): Property = wrapProperty(p.getContainerProperty(itemId, propertyId))
 
-    def getContainerPropertyIds(): Iterable[Any] = p.getContainerPropertyIds().asScala
+    def propertyIds(): Iterable[Any] = p.getContainerPropertyIds().asScala
 
     def getType(propertyId: Any): Class[_] = p.getType(propertyId)
 
@@ -124,6 +124,6 @@ object Container {
 
     def sort(propertyId: Array[AnyRef], ascending: Array[Boolean]) = p.sort(propertyId, ascending)
 
-    def getSortableContainerPropertyIds(): Iterable[Any] = p.getSortableContainerPropertyIds.asScala
+    def sortableContainerPropertyIds(): Iterable[Any] = p.getSortableContainerPropertyIds.asScala
   }
 }
