@@ -22,10 +22,6 @@ object Table {
     val IconOnly = Value(ROW_HEADER_MODE_ICON_ONLY)
     val ExplicitDefaultsId = Value(ROW_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
   }
-
-  object SelectionMode extends Enumeration {
-    val None, Single, Multi, MultiSimple = Value
-  }
 }
 
 class Table extends AbstractSelect {
@@ -85,26 +81,26 @@ class Table extends AbstractSelect {
 
   def selectionMode = {
     if (!p.isSelectable)
-      Table.SelectionMode.None
+      SelectionMode.None
     else if (p.isMultiSelect && p.getMultiSelectMode == SIMPLE)
-      Table.SelectionMode.MultiSimple
+      SelectionMode.MultiSimple
     else if (p.isMultiSelect)
-      Table.SelectionMode.Multi
+      SelectionMode.Multi
     else
-      Table.SelectionMode.Single
+      SelectionMode.Single
   }
 
-  def selectionMode_=(selectionMode: Table.SelectionMode.Value) = selectionMode match {
-    case Table.SelectionMode.None =>
+  def selectionMode_=(selectionMode: SelectionMode.Value) = selectionMode match {
+    case SelectionMode.None =>
       p.setSelectable(false)
-    case Table.SelectionMode.Single =>
+    case SelectionMode.Single =>
       p.setSelectable(true)
       p.setMultiSelect(false)
-    case Table.SelectionMode.Multi =>
+    case SelectionMode.Multi =>
       p.setSelectable(true)
       p.setMultiSelect(true)
       p.setMultiSelectMode(DEFAULT)
-    case Table.SelectionMode.MultiSimple =>
+    case SelectionMode.MultiSimple =>
       p.setSelectable(true)
       p.setMultiSelect(true)
       p.setMultiSelectMode(SIMPLE)

@@ -64,19 +64,19 @@ class TableTests extends FunSuite {
 
   test("selectionMode, default should be None") {
     val table = new Table
-    assert(table.selectionMode === Table.SelectionMode.None)
+    assert(table.selectionMode === SelectionMode.None)
 
   }
 
   test("selectionMode, None") {
-    import Table.SelectionMode._
+    import SelectionMode._
     val table = new Table
     table.selectionMode = None
     assert(table.selectionMode === None)
   }
 
   test("selectionMode, Single") {
-    import Table.SelectionMode._
+    import SelectionMode._
     val table = new Table
     table.selectionMode = Single
     assert(table.selectionMode === Single)
@@ -84,14 +84,14 @@ class TableTests extends FunSuite {
 
   test("selectionMode, Multi") {
     val table = new Table
-    table.selectionMode = Table.SelectionMode.Multi
-    assert(table.selectionMode === Table.SelectionMode.Multi)
+    table.selectionMode = SelectionMode.Multi
+    assert(table.selectionMode === SelectionMode.Multi)
   }
 
   test("selectionMode, MultiSimple") {
     val table = new Table
-    table.selectionMode = Table.SelectionMode.MultiSimple
-    assert(table.selectionMode === Table.SelectionMode.MultiSimple)
+    table.selectionMode = SelectionMode.MultiSimple
+    assert(table.selectionMode === SelectionMode.MultiSimple)
   }
 
   test("ColumnHeaderModes") {
