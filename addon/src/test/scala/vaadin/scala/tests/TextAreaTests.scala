@@ -4,7 +4,10 @@ import org.scalatest.FunSuite
 import vaadin.scala._
 import com.vaadin.terminal.Sizeable
 import com.vaadin.data.util.IndexedContainer
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class TextAreaTests extends FunSuite {
 
   test("rows") {

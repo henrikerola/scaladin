@@ -3,7 +3,10 @@ package vaadin.scala.tests
 import org.scalatest.FunSuite
 import vaadin.scala._
 import com.vaadin.terminal.Sizeable
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class LayoutTests extends FunSuite {
 
   test("VerticalLayout, default constructor") {
@@ -55,7 +58,7 @@ class LayoutTests extends FunSuite {
     assert(layout.caption === None)
     assert(layout.p.getStyleName === "")
   }
-  
+
   test("FormLayout, default constructor") {
     val layout = new FormLayout()
     assert(layout.width === (100 pct))

@@ -1,4 +1,4 @@
-package scala.vaadin.scala.tests
+package vaadin.scala.tests
 
 import org.junit.Test
 import org.scalatest.junit.AssertionsForJUnit
@@ -7,36 +7,39 @@ import vaadin.scala._
 import vaadin.scala.implicits._
 import scala.collection.JavaConversions._
 import com.vaadin.data.util.IndexedContainer
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class ContainerTests extends FunSuite {
 
   test("property creation with a string") {
     val result = Property("foobar")
     assert(classOf[String] === result.getType)
-    assert("foobar" === result.getValue)
+    assert("foobar" === result.value)
   }
 
   test("property creation with a symbol") {
     val result = Property('foobar)
     assert(classOf[Symbol] === result.getType)
-    assert('foobar === result.getValue)
+    assert('foobar === result.value)
   }
 
   test("item creation with one property") {
     val result = Item('testId -> "foobar")
-    assert(1 === result.getItemPropertyIds.size)
-    val property = result.getItemProperty('testId)
+    assert(1 === result.propertyIds.size)
+    val property = result.property('testId).get
     assert(classOf[String] === property.getType)
-    assert("foobar" === property.getValue)
+    assert("foobar" === property.value)
   }
 
   test("item creation with three properties") {
     val result = Item('testId1 -> "foobar1", 'testId2 -> "foobar2", 'testId3 -> "foobar3")
-    assert(3 === result.getItemPropertyIds.size)
-    for (propertyId <- result.getItemPropertyIds) {
-      val property = result.getItemProperty(propertyId)
+    assert(3 === result.propertyIds.size)
+    for (propertyId <- result.propertyIds) {
+      val property = result.property(propertyId).get
       assert(classOf[String] === property.getType)
-      assert(true === property.getValue.asInstanceOf[String].startsWith("foobar"))
+      assert(true === property.value.asInstanceOf[String].startsWith("foobar"))
     }
   }
 
@@ -44,69 +47,69 @@ class ContainerTests extends FunSuite {
     val result = Container('itemId -> List('propertyId -> "foobar"))
 
     assert(1 === result.size)
-    val item = result.getItem('itemId)
-    assert(1 === item.getItemPropertyIds.size)
-    val property = item.getItemProperty('propertyId)
+    val item = result.item('itemId).get
+    assert(1 === item.propertyIds.size)
+    val property = item.property('propertyId).get
     assert(classOf[String] === property.getType)
-    assert("foobar" === property.getValue)
+    assert("foobar" === property.value)
   }
 
   test("container creation with one item") {
     val result = Container('itemId -> List())
     assert(1 === result.size)
-    val item = result.getItem('itemId)
-    assert(0 === item.getItemPropertyIds.size)
+    val item = result.item('itemId).get
+    assert(0 === item.propertyIds.size)
   }
 
   test("container item id filter with one item") {
-    val containerWithOneItem = Container('itemId -> List())
-    val result = containerWithOneItem \ 'itemId
+    val containerWithOneItem = Container.filterable('itemId -> List())
+    val result = containerWithOneItem \ 'itemId get
 
     assert(null != result)
-    assert(result.isInstanceOf[com.vaadin.data.Item])
+    assert(result.isInstanceOf[Item])
   }
 
   test("container item filter with one item") {
-    val containerWithOneItem = Container('itemId -> List('propertyId -> "value"))
-    val result = containerWithOneItem filterItems (_.getItemPropertyIds.contains('propertyId))
+    val containerWithOneItem = Container.filterable('itemId -> List('propertyId -> "value"))
+    val result = containerWithOneItem filterItems (_.propertyIds.contains('propertyId))
 
     assert(1 === result.size)
   }
 
   test("container property id filter with one item and property") {
-    val containerWithOneItem = Container('itemId -> List('propertyId -> "value"))
+    val containerWithOneItem = Container.filterable('itemId -> List('propertyId -> "value"))
     val result = containerWithOneItem \\ 'propertyId
 
     assert(1 === result.size)
-    assert("value" === result.head.getValue)
+    assert("value" === result.head.value)
   }
 
   test("container property filter with one item and property") {
-    val containerWithOneItem = Container('itemId -> List('propertyId -> "value"))
-    val result = containerWithOneItem filterProperties (_.getValue == "value")
+    val containerWithOneItem = Container.filterable('itemId -> List('propertyId -> "value"))
+    val result = containerWithOneItem filterProperties (_.value == "value")
 
     assert(1 === result.size)
-    assert("value" === result.head.getValue)
+    assert("value" === result.head.value)
   }
 
   test("item property id filter with two properties") {
-    val itemWithOneProperty = Item('propertyId1 -> "value1", 'propertyId2 -> "value2")
-    val result = itemWithOneProperty \ 'propertyId1
+    val itemWithOneProperty = Item.filterable('propertyId1 -> "value1", 'propertyId2 -> "value2")
+    val result = itemWithOneProperty \ 'propertyId1 get
 
-    assert("value1" === result.getValue)
+    assert("value1" === result.value)
   }
 
   test("item property filter with two properties") {
-    val itemWithOneProperty = Item('propertyId1 -> "value1", 'propertyId2 -> "value2")
-    val result = itemWithOneProperty filterProperties (_.getValue == "value1")
+    val itemWithOneProperty = Item.filterable('propertyId1 -> "value1", 'propertyId2 -> "value2")
+    val result = itemWithOneProperty filterProperties (_.value == "value1")
 
     assert(1 === result.size)
-    assert("value1" === result.head.getValue)
+    assert("value1" === result.head.value)
   }
 
   test("item property filter with two property values ") {
-    val itemWithOneProperty = Item('propertyId1 -> "value1", 'propertyId2 -> "value2")
-    val result = itemWithOneProperty filterProperties (_.getValue.asInstanceOf[String].startsWith("value"))
+    val itemWithOneProperty = Item.filterable('propertyId1 -> "value1", 'propertyId2 -> "value2")
+    val result = itemWithOneProperty filterProperties (_.value.asInstanceOf[String].startsWith("value"))
     val propertyValues = result values
 
     assert(2 === propertyValues.size)
@@ -116,15 +119,15 @@ class ContainerTests extends FunSuite {
 
   test("data filter return types") {
     val property = Property("propertyValue")
-    val item = Item('propertyId1 -> "value1", 'propertyId2 -> "value2")
-    val container = Container('itemId1 -> List('propertyId1 -> "value1", 'propertyId2 -> "value2"), 'itemId2 -> List())
+    val item = Item.filterable('propertyId1 -> "value1", 'propertyId2 -> "value2")
+    val container = Container.filterable('itemId1 -> List('propertyId1 -> "value1", 'propertyId2 -> "value2"), 'itemId2 -> List())
 
-    val itemProperty: com.vaadin.data.Property = item \ 'propertyId1
-    val itemProperties: List[com.vaadin.data.Property] = item filterProperties (_.getValue.asInstanceOf[String].startsWith("value"))
-    val property2: com.vaadin.data.Property = container \ 'itemId1 \ 'propertyId1
-    val containerProperties: List[com.vaadin.data.Property] = container \\ 'propertyId1
+    val itemProperty: Property = item \ 'propertyId1 get
+    val itemProperties: List[Property] = item filterProperties (_.value.asInstanceOf[String].startsWith("value"))
+    val property2: Property = container \ 'itemId1 \ 'propertyId1 get
+    val containerProperties: List[Property] = container \\ 'propertyId1
 
-    val itemPropertyValues: List[Any] = item filterProperties (_.getValue.asInstanceOf[String].startsWith("value")) values
+    val itemPropertyValues: List[Any] = item filterProperties (_.value.asInstanceOf[String].startsWith("value")) values
     val containerPropertyValues: List[Any] = container \\ 'propertyId1 values
   }
 
@@ -141,10 +144,10 @@ class ContainerTests extends FunSuite {
     val item = Item('id1 -> "value1", 'id2 -> 42)
     val result = item.filterProperties(x => x match {
       case Property(42) => true
-      case _            => false
+      case _ => false
     })
     assert(1 === result.size)
-    assert(42 == result.head.getValue)
+    assert(42 == result.head.value)
   }
 
   test("Item property matching") {

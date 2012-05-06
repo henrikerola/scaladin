@@ -21,42 +21,8 @@ trait FilterableComponentContainer[C <: ComponentContainer] extends ComponentCon
   }
 }
 
-class SelectedTabChangeListener(action: com.vaadin.ui.TabSheet#SelectedTabChangeEvent => Unit) extends com.vaadin.ui.TabSheet.SelectedTabChangeListener {
-  def selectedTabChange(event: com.vaadin.ui.TabSheet#SelectedTabChangeEvent) = action(event)
-}
-
-class TabSheet(width: Option[Measure] = 100 percent, height: Option[Measure] = None, caption: String = null, style: String = null, size: Tuple2[String, String] = null)
-    extends com.vaadin.ui.TabSheet() {
-  setCaption(caption)
-  if (size != null) {
-    setWidth(size._1)
-    setHeight(size._2)
-  } else {
-    setWidth(if (width.isDefined) width.get.toString else null)
-    setHeight(if (height.isDefined) height.get.toString else null)
-  }
-  setStyleName(style)
-
-  def addListener(action: com.vaadin.ui.TabSheet#SelectedTabChangeEvent => Unit): Unit = addListener(new SelectedTabChangeListener(action))
-
-  def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
-}
-
-class Accordion(width: Option[Measure] = 100 percent, height: Option[Measure] = None, caption: String = null, style: String = null)
-    extends com.vaadin.ui.Accordion() {
-  setCaption(caption)
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  setStyleName(style)
-
-  def addListener(action: com.vaadin.ui.TabSheet#SelectedTabChangeEvent => Unit): Unit = addListener(new SelectedTabChangeListener(action))
-
-  def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
-
-}
-
 class CustomComponent(width: Option[Measure] = 100 percent, height: Option[Measure] = None, compositionRoot: Component = null)
-    extends com.vaadin.ui.CustomComponent(if (compositionRoot != null) compositionRoot.p else null) {
+  extends com.vaadin.ui.CustomComponent(if (compositionRoot != null) compositionRoot.p else null) {
   setWidth(if (width.isDefined) width.get.toString else null)
   setHeight(if (height.isDefined) height.get.toString else null)
 }

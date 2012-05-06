@@ -2,7 +2,10 @@ package vaadin.scala.tests
 
 import vaadin.scala._
 import org.scalatest.FunSuite
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class PanelTests extends FunSuite {
 
   test("content") {
@@ -30,7 +33,7 @@ class PanelTests extends FunSuite {
     panel.scrollLeft = 126
     assert(panel.scrollLeft === 126)
   }
-  
+
   test("scrollTop") {
     val panel = new Panel
 

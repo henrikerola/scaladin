@@ -2,9 +2,14 @@ package vaadin.scala
 
 package object implicits {
 
-  implicit def containerToFilterable[C <: com.vaadin.data.Container](c: C) = new FilterableContainerWrap(c)
+  implicit def containerToFilterable(c: Container.Container) = new FilterableContainerWrap(c.p)
 
-  implicit def itemToFilterable[I <: com.vaadin.data.Item](i: I) = new FilterableItemWrap(i)
+  implicit def itemToFilterable(i: Item) = new FilterableItemWrap(i.p)
 
-  implicit def propertyListToValueWrap[P <: com.vaadin.data.Property](pl: List[P]) = new PropertyListWrap(pl)
+  implicit def itemOptionToFilterable(i: Option[Item]) = i match {
+    case Some(item: Item) => new FilterableItemWrap(item.p)
+    case None => EmptyFilterableItem
+  }
+
+  implicit def propertyListToValueWrap[P <: Property](pl: List[P]) = new PropertyListWrap(pl)
 }

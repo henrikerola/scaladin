@@ -1,0 +1,35 @@
+package vaadin.scala.tests
+
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.FunSuite
+import org.scalatest.BeforeAndAfter
+import vaadin.scala.FilesystemContainer
+import java.io.File
+import vaadin.scala.ThemeResource
+
+@RunWith(classOf[JUnitRunner])
+class FileSystemContainerTests extends FunSuite with BeforeAndAfter {
+
+  var container: FilesystemContainer = _
+  val temp1 = File.createTempFile("FileSystemContainerTest1", "txt")
+  val temp2 = File.createTempFile("FileSystemContainerTest2", "txt")
+
+  before {
+    container = new FilesystemContainer(root = temp1, recursiveFromRoot = false)
+    container.addRoot(temp2)
+  }
+
+  after {
+    temp1.deleteOnExit
+    temp2.deleteOnExit
+  }
+
+  test("getItem") {
+    assert(2 === container.size)
+    val item = container.item(temp1).get
+    assert(item.property(FilesystemContainer.PropertyName).get.value.asInstanceOf[String].startsWith("FileSystemContainerTest"))
+    //   TODO
+    //    assert(item.property(FilesystemContainer.PropertyIcon).get.value.isInstanceOf[ThemeResource], "File icon was " + item.property(FilesystemContainer.PropertyIcon).get.value.getClass + " instead of ThemeResource")
+  }
+}

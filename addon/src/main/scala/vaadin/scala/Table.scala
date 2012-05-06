@@ -23,8 +23,11 @@ object Table {
     val ExplicitDefaultsId = Value(ROW_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
   }
 
-  object SelectionMode extends Enumeration {
-    val None, Single, Multi, MultiSimple = Value
+  object ColumnAlignment extends Enumeration {
+    import com.vaadin.ui.Table._
+    val Left = Value(ALIGN_LEFT)
+    val Center = Value(ALIGN_CENTER)
+    val Right = Value(ALIGN_RIGHT)
   }
 }
 
@@ -34,9 +37,27 @@ class Table(override val p: com.vaadin.ui.Table = new com.vaadin.ui.Table) exten
   // getColumnHeaders()
   // getColumnIcons()
   // getColumnAlignments()
-  // setColumnWidth(Object propertyId, int width)
-  // setColumnExpandRatio(Object propertyId, float expandRatio) {
-  // getColumnWidth(Object propertyId) {
+
+  def columnExpandRatio(propertyId: Any) = p.getColumnExpandRatio(propertyId)
+  def columnExpandRatio(propertyId: Any, ratio: Float) = p.setColumnExpandRatio(propertyId, ratio)
+
+  def columnWidth(propertyId: Any) = p.getColumnWidth(propertyId)
+  def columnWidth(propertyId: Any, width: Int) = p.setColumnWidth(propertyId, width)
+
+  def columnIcon(propertyId: Any) = WrapperRegistry.get[Resource](p.getColumnIcon(propertyId))
+  def columnIcon(propertyId: Any, icon: Option[Resource]) = p.setColumnIcon(propertyId, if (icon.isDefined) icon.get.p else null)
+  def columnIcon(propertyId: Any, icon: Resource) = p.setColumnIcon(propertyId, icon.p)
+
+  def columnHeader(propertyId: Any) = Option(p.getColumnHeader(propertyId))
+  def columnHeader(propertyId: Any, header: Option[String]) = p.setColumnHeader(propertyId, header.getOrElse(null))
+  def columnHeader(propertyId: Any, header: String) = p.setColumnHeader(propertyId, header)
+  
+  def columnFooter(propertyId: Any) = Option(p.getColumnFooter(propertyId))
+  def columnFooter(propertyId: Any, footer: Option[String]) = p.setColumnFooter(propertyId, footer.getOrElse(null))
+  def columnFooter(propertyId: Any, footer: String) = p.setColumnFooter(propertyId, footer)
+
+  def columnAlignment(propertyId: Any) = Table.ColumnAlignment.withName(p.getColumnAlignment(propertyId))
+  def columnAlignment(propertyId: Any, alignment: Table.ColumnAlignment.Value) = p.setColumnAlignment(propertyId, alignment.toString)
 
   def pageLength = p.getPageLength
   def pageLength_=(pageLength: Int) = p.setPageLength(pageLength)
@@ -69,26 +90,26 @@ class Table(override val p: com.vaadin.ui.Table = new com.vaadin.ui.Table) exten
 
   def selectionMode = {
     if (!p.isSelectable)
-      Table.SelectionMode.None
+      SelectionMode.None
     else if (p.isMultiSelect && p.getMultiSelectMode == SIMPLE)
-      Table.SelectionMode.MultiSimple
+      SelectionMode.MultiSimple
     else if (p.isMultiSelect)
-      Table.SelectionMode.Multi
+      SelectionMode.Multi
     else
-      Table.SelectionMode.Single
+      SelectionMode.Single
   }
 
-  def selectionMode_=(selectionMode: Table.SelectionMode.Value) = selectionMode match {
-    case Table.SelectionMode.None =>
+  def selectionMode_=(selectionMode: SelectionMode.Value) = selectionMode match {
+    case SelectionMode.None =>
       p.setSelectable(false)
-    case Table.SelectionMode.Single =>
+    case SelectionMode.Single =>
       p.setSelectable(true)
       p.setMultiSelect(false)
-    case Table.SelectionMode.Multi =>
+    case SelectionMode.Multi =>
       p.setSelectable(true)
       p.setMultiSelect(true)
       p.setMultiSelectMode(DEFAULT)
-    case Table.SelectionMode.MultiSimple =>
+    case SelectionMode.MultiSimple =>
       p.setSelectable(true)
       p.setMultiSelect(true)
       p.setMultiSelectMode(SIMPLE)
@@ -101,8 +122,6 @@ class Table(override val p: com.vaadin.ui.Table = new com.vaadin.ui.Table) exten
   def rowHeaderMode_=(rowHeaderMode: Table.RowHeaderMode.Value) = p.setRowHeaderMode(rowHeaderMode.id)
 
   def refreshRowCache() = p.refreshRowCache()
-
-  // get/setColumnFooter
 
   def footerVisible = p.isFooterVisible
   def footerVisible_=(footerVisible: Boolean) = p.setFooterVisible(footerVisible)

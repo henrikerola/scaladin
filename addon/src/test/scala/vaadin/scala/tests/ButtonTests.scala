@@ -2,9 +2,12 @@ package vaadin.scala.tests
 
 import vaadin.scala._
 import org.scalatest.FunSuite
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class ButtonTests extends FunSuite {
-  
+
   val listener1 = (e: ButtonClickEvent) => println("1")
   val listener2 = (e: ButtonClickEvent) => println(e)
 
@@ -15,14 +18,14 @@ class ButtonTests extends FunSuite {
 
     assert(button.clickListeners.size === 1)
   }
-  
+
   test("clickListener remove a clicklistener") {
     val button = new Button
 
     button.clickListeners += listener1
-    
+
     button.clickListeners -= listener1
-    
+
     assert(button.clickListeners.size === 0)
   }
 
@@ -37,21 +40,21 @@ class ButtonTests extends FunSuite {
     assert(iter.next() === listener2)
     assert(!iter.hasNext)
   }
-  
+
   test("clickListeners.contains returns true for added listener") {
     val button = new Button
 
     button.clickListeners += (listener1)
-    
+
     assert(button.clickListeners.contains(listener1))
   }
-  
+
   test("clickListeners.contains returns false for non-added listener") {
     val button = new Button
 
     assert(!button.clickListeners.contains(listener2))
   }
-  
+
   test("focusListeners, add a listener") {
     val button = new Button
 
@@ -59,20 +62,20 @@ class ButtonTests extends FunSuite {
 
     assert(button.focusListeners.size === 1)
   }
-  
+
   val focusListener = (e: FocusEvent) => println("1")
   val focusListener2 = (e: FocusEvent) => println(e)
-  
+
   test("focusListeners, remove a listener") {
     val button = new Button
 
     button.focusListeners += focusListener
-    
+
     button.focusListeners -= focusListener
-    
+
     assert(button.clickListeners.size === 0)
   }
-  
+
   test("focusListeners.iterator returns added listeners") {
     val button = new Button
 
@@ -84,15 +87,15 @@ class ButtonTests extends FunSuite {
     assert(iter.next() === focusListener2)
     assert(!iter.hasNext)
   }
-  
+
   test("focusListeners.contains returns true for added listener") {
     val button = new Button
 
     button.focusListeners.add(focusListener)
-    
+
     assert(button.focusListeners.contains(focusListener))
   }
-  
+
   test("focusListeners.contains returns false for non-added listener") {
     val button = new Button
 

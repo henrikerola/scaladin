@@ -1,102 +1,67 @@
 package vaadin.scala
 import scala.collection.JavaConverters._
 
-object Property {
-  def apply[T](value: T): com.vaadin.data.Property = new com.vaadin.data.util.ObjectProperty[T](value)
-
-  def unapply(property: com.vaadin.data.Property): Option[Any] = {
-    if (property != null) Some(property.getValue)
-    else None
-  }
-}
-
-object Item {
-  def apply(properties: Tuple2[Any, Any]*) = {
-    val item = new com.vaadin.data.util.PropertysetItem
-    properties foreach (p => item.addItemProperty(p._1, Property(p._2)))
-
-    item
-  }
-
-  def unapplySeq(item: com.vaadin.data.Item): Option[Seq[com.vaadin.data.Property]] = {
-    if (item != null) Some(item.getItemPropertyIds.asScala.map(item.getItemProperty(_)).toSeq)
-    else None
-  }
-
-  def getProperties(item: com.vaadin.data.Item) = item.getItemPropertyIds.asScala.map(item.getItemProperty)
-}
-
-trait FilterableContainer extends com.vaadin.data.Container {
+trait FilterableContainer extends Container.Container {
 
   /**
    * Filter based on item id
    */
-  def \(itemId: Any) = getItem(itemId)
+  def \(itemId: Any): Option[Item] = item(itemId)
 
   /**
    * Filter based on Item
    */
-  def filterItems(itemFilter: com.vaadin.data.Item => Boolean) = getItemIds.asScala.map(getItem).filter(itemFilter).toList
+  def filterItems(itemFilter: Item => Boolean): List[Item] = itemIds.map(item).flatten.filter(itemFilter).toList
 
   /**
    * Filter based on property
    */
-  def filterProperties(propertyFilter: com.vaadin.data.Property => Boolean) = getItemIds.asScala.map(getItem).flatMap(Item.getProperties).filter(propertyFilter).toList
+  def filterProperties(propertyFilter: Property => Boolean): List[Property] = itemIds.map(item).flatten.flatMap(Item.getProperties).filter(propertyFilter).toList
 
   /**
    * Filter based on property id
    */
-  def \\(propertyId: Any) = getItemIds.asScala.map(getItem).map(_.getItemProperty(propertyId)).toList
+  def \\(propertyId: Any): List[Property] = itemIds.map(item).flatten.map(_.property(propertyId)).flatten.toList
 }
 
-trait FilterableItem extends com.vaadin.data.Item {
+trait FilterableItem extends Item {
   /**
    * Filter based on property
    */
-  def filterProperties(propertyFilter: com.vaadin.data.Property => Boolean) = Item.getProperties(this).filter(propertyFilter).toList
+  def filterProperties(propertyFilter: Property => Boolean): List[Property] = Item.getProperties(this).filter(propertyFilter).toList
 
   /**
    * Filter based on property id
    */
-  def \(propertyId: Any): com.vaadin.data.Property = getItemProperty(propertyId)
+  def \(propertyId: Any): Option[Property] = property(propertyId)
 
-  def values = Item.getProperties(this).map(_.getValue)
+  def values: List[Any] = Item.getProperties(this).map(_.value).toList
 }
 
-trait Item extends Wrapper {
-
-  def p: com.vaadin.data.Item
-
-  def getItemProperty(id: Any) = p.getItemProperty(id)
-
-  def getItemPropertyIds() = p.getItemPropertyIds()
-
-  def addItemProperty(id: Any, property: com.vaadin.data.Property) = p.addItemProperty(id, property)
-
-  def removeItemProperty(id: Any) = p.removeItemProperty(id)
+class FilterableContainerWrap(wrapped: com.vaadin.data.Container) extends Container.Container with FilterableContainer {
+  def p = wrapped
+  def wrapItem(unwrapped: com.vaadin.data.Item) = new FilterableItemWrap(unwrapped)
+  def wrapProperty(unwrapped: com.vaadin.data.Property) = new BasicProperty(unwrapped)
 }
 
-class FilterableContainerWrap(wrapped: com.vaadin.data.Container) extends Container.Container with FilterableContainer { def p = wrapped }
-
-class FilterableItemWrap(wrapped: com.vaadin.data.Item) extends Item with FilterableItem { def p = wrapped }
-
-class PropertyListWrap(wrapped: List[com.vaadin.data.Property]) {
-  def values = wrapped.map(_.getValue)
+class FilterableItemWrap(wrapped: com.vaadin.data.Item) extends FilterableItem {
+  def p = wrapped
+  def wrapProperty(unwrapped: com.vaadin.data.Property) = new BasicProperty(unwrapped)
 }
 
-class FunctionProperty[T](getter: () => T, setter: T => Unit = null) extends com.vaadin.data.Property {
-  def getValue = getter().asInstanceOf[AnyRef]
+object EmptyFilterableItem extends FilterableItem {
+  val p = null
 
-  def setValue(value: Any) = {
-    setter(value.asInstanceOf[T])
-  }
+  override def filterProperties(propertyFilter: Property => Boolean): List[Property] = List()
 
-  def getType = getter.getClass //dirty tricks
+  override def \(propertyId: Any): Option[Property] = None
 
-  def isReadOnly = setter != null
+  override def values: List[Any] = List()
 
-  def setReadOnly(readOnly: Boolean): Unit = {
-    //NOOP
-  }
+  def wrapProperty(unwrapped: com.vaadin.data.Property) = null
+}
+
+class PropertyListWrap(wrapped: List[Property]) {
+  def values = wrapped.map(_.value)
 }
 

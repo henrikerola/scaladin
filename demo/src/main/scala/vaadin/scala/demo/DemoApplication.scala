@@ -20,27 +20,29 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
 
   override def main = {
     new VerticalLayout(size = Full) {
-      val tabs = new TabSheet(size = Full)
+      val tabs = new TabSheet {
+        sizeFull()
+      }
 
       add(buildScalaWrappersAd)
-      addComponent(getTopMenu)
+      add(getTopMenu)
       add(getHeader(this, tabs))
       add(ratio = 1, component = new CssLayout(size = Full) {
         margin(false, true, true, true)
-        p.addComponent(tabs)
+        add(tabs)
       })
 
-      tabs.addComponent(buildWelcomeScreen.p)
-      tabs.addComponent(buildLabels.p)
-      tabs.addComponent(buildButtons.p)
-      tabs.addComponent(buildTextFields.p)
-      tabs.addComponent(buildSelects.p)
-      tabs.addComponent(buildDateFields.p)
+      tabs.add(buildWelcomeScreen)
+      tabs.add(buildLabels)
+      tabs.add(buildButtons)
+      tabs.add(buildTextFields)
+      tabs.add(buildSelects)
+      tabs.add(buildDateFields)
       //tabs.add(buildTabSheets) // FIXME
-      tabs.addComponent(buildPanels.p)
-      tabs.addComponent(buildTables.p)
-      tabs.addComponent(buildWindows(tabs).p)
-      tabs.addComponent(buildSplitPanels.p)
+      tabs.add(buildPanels)
+      tabs.add(buildTables)
+      tabs.add(buildWindows(tabs))
+      tabs.add(buildSplitPanels)
     }
   }
 
@@ -139,9 +141,9 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     val hl = new HorizontalLayout {
       spacing = true
       margin(top = true)
-      addComponent(new PopupDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_MIN))
-      addComponent(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_DAY))
-      addComponent(new InlineDateField(value = DATE, resolution = com.vaadin.ui.DateField.RESOLUTION_YEAR))
+      add(new PopupDateField { value = DATE; resolution = DateField.Resolution.Minute })
+      add(new InlineDateField { value = DATE; resolution = DateField.Resolution.Day })
+      add(new InlineDateField { value = DATE; resolution = DateField.Resolution.Year })
     }
 
     new VerticalLayout(caption = "Date fields", margin = true, spacing = true) {
@@ -319,6 +321,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       components += new HtmlLabel(<span><code>Reindeer.WINDOW_BLACK</code></span>)
     }
 
+    /*- FIXME:
     tabs.addListener(event => {
       if (event.getTabSheet.getSelectedTab == windowLayout.p) {
         mainWindow.childWindows += (normalWindow, notResizableWindow, lightWindow, blackWindow)
@@ -340,7 +343,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
           mainWindow.childWindows -= blackWindow
         }
       }
-    })
+    })*/
 
     windowLayout
   }
@@ -415,52 +418,53 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
   }
 
   def getTopMenu(): MenuBar = {
-    val menubar = new MenuBar(width = 100 percent)
-    val file = menubar.addItem("File", null)
-    val newItem = file.addItem("New", null)
-    file.addItem("Open file...", null)
-    file addSeparator
+    val menubar = new MenuBar {
+      width = 100 percent
+    }
+    val file = menubar.addItem("File")
+    val newItem = file.addItem("New")
+    file.addItem("Open file...")
+    file.addSeparator
 
-    newItem.addItem("File", null)
-    newItem.addItem("Folder", null)
-    newItem.addItem("Project...", null)
+    newItem.addItem("File")
+    newItem.addItem("Folder")
+    newItem.addItem("Project...")
 
-    file.addItem("Close", null)
-    file.addItem("Close All", null)
+    file.addItem("Close")
+    file.addItem("Close All")
     file.addSeparator()
 
-    file.addItem("Save", null)
-    file.addItem("Save As...", null)
-    file.addItem("Save All", null)
+    file.addItem("Save")
+    file.addItem("Save As...")
+    file.addItem("Save All")
 
-    val edit = menubar.addItem("Edit", null)
-    edit.addItem("Undo", null)
-    edit.addItem("Redo", null).setEnabled(false)
+    val edit = menubar.addItem("Edit")
+    edit.addItem("Undo")
+    edit.addItem("Redo").enabled = false
     edit.addSeparator()
 
-    edit.addItem("Cut", null)
-    edit.addItem("Copy", null)
-    edit.addItem("Paste", null)
+    edit.addItem("Cut")
+    edit.addItem("Copy")
+    edit.addItem("Paste")
     edit.addSeparator()
 
-    val find = edit.addItem("Find/Replace", null)
+    val find = edit.addItem("Find/Replace")
 
-    find.addItem("Google Search", new MenuBarCommand(_ => getMainWindow.open(new ExternalResource("http://www.google.com"))))
+    find.addItem("Google Search", (e: MenuBar.MenuItem) => getMainWindow.open(new ExternalResource("http://www.google.com")))
     find.addSeparator()
-    find.addItem("Find/Replace...", null)
-    find.addItem("Find Next", null)
-    find.addItem("Find Previous", null)
+    find.addItem("Find/Replace...")
+    find.addItem("Find Next")
+    find.addItem("Find Previous")
 
-    val view = menubar.addItem("View", null)
-    val statusBarItem = view.addItem("Show/Hide Status Bar", null)
-    statusBarItem.setCheckable(true)
-    statusBarItem.setChecked(true)
-    view.addItem("Customize Toolbar...", null)
+    val view = menubar.addItem("View")
+    val statusBarItem = view.addCheckableItem("Show/Hide Status Bar")
+    statusBarItem.checked = true
+    view.addItem("Customize Toolbar...")
     view.addSeparator()
 
-    view.addItem("Actual Size", null)
-    view.addItem("Zoom In", null)
-    view.addItem("Zoom Out", null)
+    view.addItem("Actual Size")
+    view.addItem("Zoom In")
+    view.addItem("Zoom Out")
 
     menubar
   }
@@ -492,16 +496,16 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     val transparent = new CheckBox(caption = "Transparent tabs", immediate = true, action = event =>
       {
         if (event.getButton.booleanValue) {
-          tabs.setStyleName(Reindeer.TABSHEET_MINIMAL)
+          tabs.styleNames += Reindeer.TABSHEET_MINIMAL
         } else {
-          tabs.removeStyleName(Reindeer.TABSHEET_MINIMAL)
+          tabs.styleNames -= Reindeer.TABSHEET_MINIMAL
         }
 
-        tabs.getComponents.foreach(c => {
+        tabs.components.foreach(c => {
           if (event.getButton.booleanValue) {
-            c.removeStyleName(Reindeer.LAYOUT_WHITE)
+            c.styleNames -= Reindeer.LAYOUT_WHITE
           } else {
-            c.addStyleName(Reindeer.LAYOUT_WHITE)
+            c.styleNames += Reindeer.LAYOUT_WHITE
           }
         })
         // Force refresh
@@ -536,7 +540,8 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       help.data = "initialized"
       help.setCloseShortcut(KeyCode.ESCAPE)
       help.center
-      help.width = 400 px;
+      help.width = 400 px
+
       help.resizable = false
 
       help.components += new HtmlLabel(<span><strong>How To Use This Application</strong><p>Click around, explore. The purpose of this app is to show you what is possible to achieve with the Reindeer theme and its different styles.</p><p>Most of the UI controls that are visible in this application don't actually do anything. They are purely for show, like the menu items and the components that demostrate the different style names assosiated with the components.</p><strong>So, What Then?</strong><p>Go and use the styles you see here in your own application and make them beautiful!</p></span>)

@@ -4,7 +4,10 @@ import org.scalatest.FunSuite
 import vaadin.scala._
 import com.vaadin.terminal.Sizeable
 import org.scalatest.BeforeAndAfter
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class AbsoluteLayoutTests extends FunSuite with BeforeAndAfter {
 
   var layout: AbsoluteLayout = _
