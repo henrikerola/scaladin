@@ -7,6 +7,7 @@ trait Component extends Wrapper {
 
   // TODO: add methods styleName, addStyleName, removeStyleName?
   
+  def styleName = p.getStyleName
   def styleName_=(styleName: String) = p.setStyleName(styleName)
 
   val styleNames = new mutable.Set[String] {

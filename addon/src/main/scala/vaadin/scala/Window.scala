@@ -7,6 +7,8 @@ class WindowCloseListener(action: com.vaadin.ui.Window#CloseEvent => Unit) exten
 }
 
 class Window(override val p: com.vaadin.ui.Window = new com.vaadin.ui.Window) extends Panel(p) {
+  
+  WrapperRegistry.put(this)
 
   def positionX_=(positionX: Int) = p.setPositionX(positionX)
   def positionX = p.getPositionX
