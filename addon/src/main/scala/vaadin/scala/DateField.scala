@@ -13,7 +13,7 @@ object DateField {
   }
 }
 
-class DateField(override val p: com.vaadin.ui.DateField = new com.vaadin.ui.DateField) extends AbstractField {
+class DateField(override val p: com.vaadin.ui.DateField = new com.vaadin.ui.DateField) extends AbstractField(p) {
 
   resolution = DateField.Resolution.Second
 

@@ -80,7 +80,7 @@ object MenuBar {
 
 }
 
-class MenuBar(override val p: com.vaadin.ui.MenuBar = new com.vaadin.ui.MenuBar) extends AbstractComponent {
+class MenuBar(override val p: com.vaadin.ui.MenuBar = new com.vaadin.ui.MenuBar) extends AbstractComponent(p) {
 
   WrapperRegistry.put(this)
   WrapperRegistry.put(new MenuBar.MenuItem(p.getMoreMenuItem))

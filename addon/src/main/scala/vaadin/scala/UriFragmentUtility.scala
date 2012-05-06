@@ -16,7 +16,7 @@ object UriFragmentUtility {
  * @see com.vaadin.ui.UriFragmentUtility
  * @author Henri Kerola / Vaadin
  */
-class UriFragmentUtility(override val p: com.vaadin.ui.UriFragmentUtility = new com.vaadin.ui.UriFragmentUtility) extends AbstractComponent {
+class UriFragmentUtility(override val p: com.vaadin.ui.UriFragmentUtility = new com.vaadin.ui.UriFragmentUtility) extends AbstractComponent(p) {
   
   WrapperRegistry.put(this)
 

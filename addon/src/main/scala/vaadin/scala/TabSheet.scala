@@ -40,7 +40,7 @@ object TabSheet {
 
 }
 
-class TabSheet(override val p: com.vaadin.ui.TabSheet = new com.vaadin.ui.TabSheet) extends AbstractComponentContainer {
+class TabSheet(override val p: com.vaadin.ui.TabSheet = new com.vaadin.ui.TabSheet) extends AbstractComponentContainer(p) {
   
   WrapperRegistry.put(this)
 

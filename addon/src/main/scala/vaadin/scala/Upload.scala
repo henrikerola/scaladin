@@ -20,7 +20,7 @@ object Upload {
  * @see com.vaadin.ui.Upload
  * @author Henri Kerola / Vaadin
  */
-class Upload(override val p: com.vaadin.ui.Upload = new com.vaadin.ui.Upload) extends AbstractComponent with Focusable {
+class Upload(override val p: com.vaadin.ui.Upload = new com.vaadin.ui.Upload) extends AbstractComponent(p) with Focusable {
 
   WrapperRegistry.put(this)
 
