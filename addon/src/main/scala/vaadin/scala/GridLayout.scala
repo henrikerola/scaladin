@@ -1,9 +1,15 @@
 package vaadin.scala
 
-class GridLayout(override val p: com.vaadin.ui.GridLayout = new com.vaadin.ui.GridLayout) extends AbstractLayout(p) with SpacingHandler with AlignmentHandler {
+import vaadin.scala.mixins.GridLayoutMixin
+
+package mixins {
+  trait GridLayoutMixin extends AbstractLayoutMixin
+}
+
+class GridLayout(override val p: com.vaadin.ui.GridLayout with GridLayoutMixin = new com.vaadin.ui.GridLayout with GridLayoutMixin) extends AbstractLayout(p) with SpacingHandler with AlignmentHandler {
 
   def this(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, columns: Int = 1, rows: Int = 1) = {
-    this(new com.vaadin.ui.GridLayout)
+    this(new com.vaadin.ui.GridLayout with GridLayoutMixin)
     this.width = width
     this.height = height
     this.margin = margin

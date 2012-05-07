@@ -1,6 +1,11 @@
 package vaadin.scala
 
 import com.vaadin.ui.themes.BaseTheme
+import vaadin.scala.mixins.ButtonMixin
+
+package mixins {
+  trait ButtonMixin extends AbstractFieldMixin
+}
 
 case class ButtonClickEvent(button: Button, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends Event
 
@@ -20,7 +25,7 @@ class FocusListener(val action: FocusEvent => Unit) extends com.vaadin.event.Fie
   def focus(e: com.vaadin.event.FieldEvents.FocusEvent) = action(FocusEvent(WrapperRegistry.get[Button](e.getComponent()).get))
 }
 
-class Button(override val p: com.vaadin.ui.Button = new com.vaadin.ui.Button) extends AbstractField(p) {
+class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin) extends AbstractField(p) {
 
   /*-
   def this(caption: String = null, action: ButtonClickEvent => Unit = null, icon: Resource = null, style: String = null, enabled: Boolean = true) = {
@@ -58,6 +63,6 @@ class Button(override val p: com.vaadin.ui.Button = new com.vaadin.ui.Button) ex
   }
 }
 
-class LinkButton(override val p: com.vaadin.ui.Button = new com.vaadin.ui.Button) extends Button(p) {
+class LinkButton(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin) extends Button(p) {
   p.setStyleName(BaseTheme.BUTTON_LINK)
 }

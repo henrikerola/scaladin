@@ -1,5 +1,11 @@
 package vaadin.scala
 
+import vaadin.scala.mixins.LinkMixin
+
+package mixins {
+  trait LinkMixin extends AbstractComponentMixin
+}
+
 object Link {
   object TargetBorder extends Enumeration {
     import com.vaadin.ui.Link._
@@ -10,7 +16,7 @@ object Link {
   }
 }
 
-class Link(override val p: com.vaadin.ui.Link = new com.vaadin.ui.Link) extends AbstractComponent(p) {
+class Link(override val p: com.vaadin.ui.Link with LinkMixin = new com.vaadin.ui.Link with LinkMixin) extends AbstractComponent(p) {
 
   /*-
   def this(caption: String = null, resource: Resource = null, targetName: String = null, targetWidth: Int = -1, targetHeight: Int = -1, targetBorder: Link.TargetBorder.Value = Link.TargetBorder.Default) = {

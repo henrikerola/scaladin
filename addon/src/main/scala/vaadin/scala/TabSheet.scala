@@ -1,5 +1,11 @@
 package vaadin.scala
 
+import vaadin.scala.mixins.TabSheetMixin
+
+package mixins {
+  trait TabSheetMixin extends AbstractComponentContainerMixin
+}
+
 object TabSheet {
 
   class Tab(val p: com.vaadin.ui.TabSheet.Tab) extends Wrapper {
@@ -40,9 +46,7 @@ object TabSheet {
 
 }
 
-class TabSheet(override val p: com.vaadin.ui.TabSheet = new com.vaadin.ui.TabSheet) extends AbstractComponentContainer(p) {
-  
-  WrapperRegistry.put(this)
+class TabSheet(override val p: com.vaadin.ui.TabSheet with TabSheetMixin = new com.vaadin.ui.TabSheet with TabSheetMixin) extends AbstractComponentContainer(p) {
 
   def removeTab(tab: TabSheet.Tab) = p.removeTab(tab.p)
 

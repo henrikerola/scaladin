@@ -1,6 +1,12 @@
 package vaadin.scala
 
-class AbsoluteLayout(override val p: com.vaadin.ui.AbsoluteLayout = new com.vaadin.ui.AbsoluteLayout) extends AbstractLayout(p) {
+import vaadin.scala.mixins.AbsoluteLayoutMixin
+
+package mixins {
+  trait AbsoluteLayoutMixin extends AbstractLayoutMixin
+}
+
+class AbsoluteLayout(override val p: com.vaadin.ui.AbsoluteLayout with AbsoluteLayoutMixin = new com.vaadin.ui.AbsoluteLayout with AbsoluteLayoutMixin) extends AbstractLayout(p) {
 
   def add[C <: Component](component: C, location: String): C = {
     p.addComponent(component.p, location)

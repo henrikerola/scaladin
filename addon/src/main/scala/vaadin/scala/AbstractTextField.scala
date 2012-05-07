@@ -1,6 +1,12 @@
 package vaadin.scala
 
-abstract class AbstractTextField(override val p: com.vaadin.ui.AbstractTextField) extends AbstractField(p) {
+import vaadin.scala.mixins.AbstractTextFieldMixin
+
+package mixins {
+  trait AbstractTextFieldMixin extends AbstractFieldMixin
+}
+
+abstract class AbstractTextField(override val p: com.vaadin.ui.AbstractTextField with AbstractTextFieldMixin) extends AbstractField(p) {
 
   def prompt: Option[String] = Option(p.getInputPrompt())
   def prompt_=(prompt: Option[String]) = p.setInputPrompt(prompt.getOrElse(null))

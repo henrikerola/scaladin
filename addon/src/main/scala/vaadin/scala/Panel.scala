@@ -1,6 +1,12 @@
 package vaadin.scala
 
-class Panel(override val p: com.vaadin.ui.Panel = new com.vaadin.ui.Panel) extends AbstractComponentContainer(p) with Focusable {
+import vaadin.scala.mixins.PanelMixin
+
+package mixins {
+  trait PanelMixin extends AbstractComponentContainerMixin
+}
+
+class Panel(override val p: com.vaadin.ui.Panel with PanelMixin = new com.vaadin.ui.Panel with PanelMixin) extends AbstractComponentContainer(p) with Focusable {
   
   /*-
   def this(caption: String = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, style: String = null) {

@@ -1,5 +1,11 @@
 package vaadin.scala
 
-class TextField(override val p: com.vaadin.ui.TextField = new com.vaadin.ui.TextField) extends AbstractTextField(p) {
+import vaadin.scala.mixins.TextFieldMixin
+
+package mixins {
+  trait TextFieldMixin extends AbstractTextFieldMixin
+}
+
+class TextField(override val p: com.vaadin.ui.TextField with TextFieldMixin = new com.vaadin.ui.TextField with TextFieldMixin) extends AbstractTextField(p) {
 
 }

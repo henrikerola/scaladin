@@ -1,6 +1,11 @@
 package vaadin.scala
 
 import com.vaadin.ui.AbstractSelect.MultiSelectMode._
+import vaadin.scala.mixins.TableMixin
+
+package mixins {
+  trait TableMixin extends AbstractSelectMixin
+}
 
 object Table {
   object ColumnHeaderMode extends Enumeration {
@@ -31,7 +36,7 @@ object Table {
   }
 }
 
-class Table(override val p: com.vaadin.ui.Table = new com.vaadin.ui.Table) extends AbstractSelect(p) {
+class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin.ui.Table with TableMixin) extends AbstractSelect(p) {
 
   // VisibleColumns
   // getColumnHeaders()

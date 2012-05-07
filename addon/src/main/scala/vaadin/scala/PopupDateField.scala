@@ -1,6 +1,12 @@
 package vaadin.scala
 
-class PopupDateField(override val p: com.vaadin.ui.PopupDateField = new com.vaadin.ui.PopupDateField) extends DateField(p) {
+import vaadin.scala.mixins.PopupDateFieldMixin
+
+package mixins {
+  trait PopupDateFieldMixin extends DateFieldMixin
+}
+
+class PopupDateField(override val p: com.vaadin.ui.PopupDateField with PopupDateFieldMixin = new com.vaadin.ui.PopupDateField with PopupDateFieldMixin) extends DateField(p) {
 
   def prompt: Option[String] = Option(p.getInputPrompt())
   def prompt_=(prompt: Option[String]) = p.setInputPrompt(prompt.getOrElse(null))

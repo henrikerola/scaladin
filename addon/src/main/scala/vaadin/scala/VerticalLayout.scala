@@ -1,6 +1,18 @@
 package vaadin.scala
 
-abstract class AbstractOrderedLayout(override val p: com.vaadin.ui.AbstractOrderedLayout) extends AbstractLayout(p) with SpacingHandler with AlignmentHandler {
+import vaadin.scala.mixins.AbstractOrderedLayoutMixin
+import vaadin.scala.mixins.HorizontalLayoutMixin
+import vaadin.scala.mixins.FormLayoutMixin
+import vaadin.scala.mixins.VerticalLayoutMixin
+
+package mixins {
+  trait AbstractOrderedLayoutMixin extends AbstractLayoutMixin
+  trait VerticalLayoutMixin extends AbstractOrderedLayoutMixin
+  trait HorizontalLayoutMixin extends AbstractOrderedLayoutMixin
+  trait FormLayoutMixin extends AbstractOrderedLayoutMixin
+}
+
+abstract class AbstractOrderedLayout(override val p: com.vaadin.ui.AbstractOrderedLayout with AbstractOrderedLayoutMixin) extends AbstractLayout(p) with SpacingHandler with AlignmentHandler {
 
   def add[C <: Component](component: C = null, ratio: Float = -1, alignment: Alignment.Value = null, index: Int = -1): C = {
     if (index < 0)
@@ -33,7 +45,7 @@ abstract class AbstractOrderedLayout(override val p: com.vaadin.ui.AbstractOrder
   // TODO: add addComponentAsFirst ?, listeners
 }
 
-class VerticalLayout(override val p: com.vaadin.ui.VerticalLayout = new com.vaadin.ui.VerticalLayout) extends AbstractOrderedLayout(p) /*with LayoutClickListener*/ {
+class VerticalLayout(override val p: com.vaadin.ui.VerticalLayout with VerticalLayoutMixin = new com.vaadin.ui.VerticalLayout with VerticalLayoutMixin) extends AbstractOrderedLayout(p) /*with LayoutClickListener*/ {
 
   /*-
   def this(width: Option[Measure] = 100 percent, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, size: Tuple2[String, String] = null) {
@@ -54,7 +66,7 @@ class VerticalLayout(override val p: com.vaadin.ui.VerticalLayout = new com.vaad
 
 }
 
-class HorizontalLayout(override val p: com.vaadin.ui.HorizontalLayout = new com.vaadin.ui.HorizontalLayout)  extends AbstractOrderedLayout(p) /*with LayoutClickListener*/ {
+class HorizontalLayout(override val p: com.vaadin.ui.HorizontalLayout with HorizontalLayoutMixin = new com.vaadin.ui.HorizontalLayout with HorizontalLayoutMixin) extends AbstractOrderedLayout(p) /*with LayoutClickListener*/ {
 
   /*-
   def this(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null) = {
@@ -69,8 +81,7 @@ class HorizontalLayout(override val p: com.vaadin.ui.HorizontalLayout = new com.
 }
 
 // TODO com.vaadin.ui.FormLayout calls setMargin(true, false, true, false) in constructor
-class FormLayout(override val p: com.vaadin.ui.FormLayout = new com.vaadin.ui.FormLayout) extends AbstractOrderedLayout(p) {
-
+class FormLayout(override val p: com.vaadin.ui.FormLayout with FormLayoutMixin = new com.vaadin.ui.FormLayout with FormLayoutMixin) extends AbstractOrderedLayout(p) {
 
   /*-
   def this(width: Option[Measure] = 100 percent, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = true, style: String = null) = {

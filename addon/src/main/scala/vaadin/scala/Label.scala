@@ -1,6 +1,11 @@
 package vaadin.scala
 
 import scala.xml.Node
+import vaadin.scala.mixins.LabelMixin
+
+package mixins {
+  trait LabelMixin extends AbstractComponentMixin
+}
 
 object Label {
   object ContentMode extends Enumeration {
@@ -15,7 +20,7 @@ object Label {
 }
 
 // TODO: implement interfaces
-class Label(override val p: com.vaadin.ui.Label = new com.vaadin.ui.Label) extends AbstractComponent(p) with PropertyViewer {
+class Label(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin.ui.Label with LabelMixin) extends AbstractComponent(p) with PropertyViewer {
 
   // icon, caption as constructor parameters?
   /*-
@@ -42,8 +47,9 @@ class Label(override val p: com.vaadin.ui.Label = new com.vaadin.ui.Label) exten
   // TODO: getType
 }
 
-class HtmlLabel(override val p: com.vaadin.ui.Label = new com.vaadin.ui.Label) extends Label(p) {
+class HtmlLabel(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin.ui.Label with LabelMixin) extends Label(p) {
   contentMode = Label.ContentMode.Xhtml
-  
+
   def value_=(value: Node) = p.setValue(value.toString)
 }
+

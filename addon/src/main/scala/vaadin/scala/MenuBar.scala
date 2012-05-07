@@ -1,5 +1,11 @@
 package vaadin.scala
 
+import vaadin.scala.mixins.MenuBarMixin
+
+package mixins {
+  trait MenuBarMixin extends AbstractComponentMixin
+}
+
 object MenuBar {
 
   class Command(val action: MenuItem => Unit) extends com.vaadin.ui.MenuBar.Command {
@@ -80,7 +86,7 @@ object MenuBar {
 
 }
 
-class MenuBar(override val p: com.vaadin.ui.MenuBar = new com.vaadin.ui.MenuBar) extends AbstractComponent(p) {
+class MenuBar(override val p: com.vaadin.ui.MenuBar with MenuBarMixin = new com.vaadin.ui.MenuBar with MenuBarMixin) extends AbstractComponent(p) {
 
   WrapperRegistry.put(this)
   WrapperRegistry.put(new MenuBar.MenuItem(p.getMoreMenuItem))

@@ -1,5 +1,14 @@
 package vaadin.scala
 
+import vaadin.scala.mixins.AbstractSplitPanelMixin
+import vaadin.scala.mixins.HorizontalSplitPanelMixin
+import vaadin.scala.mixins.VerticalSplitPanelMixin
+
+package mixins {
+  trait AbstractSplitPanelMixin extends AbstractLayoutMixin
+  trait VerticalSplitPanelMixin extends AbstractSplitPanelMixin
+  trait HorizontalSplitPanelMixin extends AbstractSplitPanelMixin
+}
 
 // TODO extend MouseClickEvents.ClickEvent
 case class SplitterClickEvent(component: Component) extends Event
@@ -8,7 +17,7 @@ class SplitterClickListener(val action: SplitterClickEvent => Unit) extends com.
   def splitterClick(e: com.vaadin.ui.AbstractSplitPanel#SplitterClickEvent) = action(SplitterClickEvent(WrapperRegistry.get[AbstractSplitPanel](e.getComponent()).get))
 }
 
-abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPanel) extends AbstractLayout(p) {
+abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPanel with AbstractSplitPanelMixin) extends AbstractLayout(p) {
 
   def first = WrapperRegistry.get[Component](p.getFirstComponent)
   def first_=(component: Component) = p.setFirstComponent(if (component != null) component.p else null)
@@ -39,7 +48,7 @@ abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPan
 
 }
 
-class HorizontalSplitPanel(override val p: com.vaadin.ui.HorizontalSplitPanel = new com.vaadin.ui.HorizontalSplitPanel) extends AbstractSplitPanel(p) {
+class HorizontalSplitPanel(override val p: com.vaadin.ui.HorizontalSplitPanel with HorizontalSplitPanelMixin = new com.vaadin.ui.HorizontalSplitPanel with HorizontalSplitPanelMixin) extends AbstractSplitPanel(p) {
 
   /*-
   def this(width: Option[Measure] = 100 percent, height: Option[Measure] = 100 percent, caption: String = null, style: String = null) = {
@@ -58,7 +67,7 @@ class HorizontalSplitPanel(override val p: com.vaadin.ui.HorizontalSplitPanel = 
   //def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
 }
 
-class VerticalSplitPanel(override val p: com.vaadin.ui.VerticalSplitPanel = new com.vaadin.ui.VerticalSplitPanel) extends AbstractSplitPanel(p) {
+class VerticalSplitPanel(override val p: com.vaadin.ui.VerticalSplitPanel with VerticalSplitPanelMixin = new com.vaadin.ui.VerticalSplitPanel with VerticalSplitPanelMixin) extends AbstractSplitPanel(p) {
 
   /*-
   def this(width: Option[Measure] = 100 percent, height: Option[Measure] = 100 percent, caption: String = null, style: String = null) = {

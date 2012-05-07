@@ -1,5 +1,9 @@
 package vaadin.scala
 
-class Accordion(override val p: com.vaadin.ui.Accordion = new com.vaadin.ui.Accordion) extends TabSheet(p) {
+import vaadin.scala.mixins.AccordionMixin
 
+package mixins {
+  trait AccordionMixin extends TabSheetMixin
 }
+
+class Accordion(override val p: com.vaadin.ui.Accordion with AccordionMixin = new com.vaadin.ui.Accordion with AccordionMixin) extends TabSheet(p)

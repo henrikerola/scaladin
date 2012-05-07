@@ -1,6 +1,12 @@
 package vaadin.scala
 
-abstract class AbstractField(override val p: com.vaadin.ui.AbstractField) extends AbstractComponent(p) with PropertyViewer with Focusable {
+import vaadin.scala.mixins.AbstractFieldMixin
+
+package mixins {
+  trait AbstractFieldMixin extends AbstractComponentMixin
+}
+
+abstract class AbstractField(override val p: com.vaadin.ui.AbstractField with AbstractFieldMixin) extends AbstractComponent(p) with PropertyViewer with Focusable {
 
   def value: Option[Any] = Option(p.getValue())
   def value_=(value: Option[Any]): Unit = p.setValue(value.getOrElse(null))

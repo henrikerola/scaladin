@@ -1,12 +1,24 @@
 package vaadin.scala
 
 import scala.collection.mutable
+import vaadin.scala.mixins.ComponentMixin
+import vaadin.scala.mixins.AbstractComponentMixin
+
+package mixins {
+
+  trait ScaladinMixin {
+    var wrapper: Wrapper = _
+  }
+
+  trait ComponentMixin extends ScaladinMixin
+  trait AbstractComponentMixin extends ComponentMixin
+}
 
 trait Component extends Wrapper {
-  def p: com.vaadin.ui.Component
+  def p: com.vaadin.ui.Component with ComponentMixin
 
   // TODO: add methods styleName, addStyleName, removeStyleName?
-  
+
   def styleName = p.getStyleName
   def styleName_=(styleName: String) = p.setStyleName(styleName)
 
@@ -48,9 +60,10 @@ trait Component extends Wrapper {
   // TODO: ..
 }
 
-trait ScaladinWrapper extends com.vaadin.ui.Component with Component {
+trait ScaladinWrapper extends com.vaadin.ui.Component with Component with ComponentMixin {
   def p: this.type = this
   WrapperRegistry.put(this)
+  p.wrapper = this
 }
 
 trait Sizeable extends Component {
@@ -67,9 +80,10 @@ trait Sizeable extends Component {
   def sizeUndefined() = p.setSizeUndefined
 }
 
-abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent) extends Component with Sizeable {
-  
+abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with AbstractComponentMixin) extends Component with Sizeable {
+
   WrapperRegistry.put(this)
+  p.wrapper = this
 
   def description = Option(p.getDescription)
   def description_=(description: Option[String]) = p.setDescription(description.getOrElse(null))
@@ -84,7 +98,7 @@ abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent) extends
 
 trait Focusable extends Component {
 
-  def p: com.vaadin.ui.Component.Focusable
+  def p: com.vaadin.ui.Component.Focusable with ComponentMixin
 
   def focus() = p.focus()
 

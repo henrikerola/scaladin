@@ -1,5 +1,11 @@
 package vaadin.scala
 
+import vaadin.scala.mixins.DateFieldMixin
+
+package mixins {
+  trait DateFieldMixin extends AbstractFieldMixin
+}
+
 object DateField {
   object Resolution extends Enumeration {
     import com.vaadin.ui.DateField._
@@ -13,7 +19,7 @@ object DateField {
   }
 }
 
-class DateField(override val p: com.vaadin.ui.DateField = new com.vaadin.ui.DateField) extends AbstractField(p) {
+class DateField(override val p: com.vaadin.ui.DateField with DateFieldMixin = new com.vaadin.ui.DateField with DateFieldMixin) extends AbstractField(p) {
 
   resolution = DateField.Resolution.Second
 

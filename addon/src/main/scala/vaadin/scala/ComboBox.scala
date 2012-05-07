@@ -1,5 +1,11 @@
 package vaadin.scala
 
+import vaadin.scala.mixins.ComboBoxMixin
+
+package mixins {
+  trait ComboBoxMixin extends AbstractSelectMixin
+}
+
 object ComboBox {
   object FilterinMode extends Enumeration {
     import com.vaadin.ui.AbstractSelect.Filtering._
@@ -10,9 +16,7 @@ object ComboBox {
 }
 
 // In Vaadin ComboBox extends Select, here just extend AbstractSelect directly and add methods from Select to ComboBox
-class ComboBox(override val p: com.vaadin.ui.ComboBox = new com.vaadin.ui.ComboBox) extends AbstractSelect(p) {
-
-  WrapperRegistry.put(this)
+class ComboBox(override val p: com.vaadin.ui.ComboBox with ComboBoxMixin = new com.vaadin.ui.ComboBox with ComboBoxMixin) extends AbstractSelect(p) {
 
   def inputPrompt: Option[String] = Option(p.getInputPrompt)
   def inputPrompt_=(inputPrompt: Option[String]) = p.setInputPrompt(inputPrompt.getOrElse(null))

@@ -6,8 +6,12 @@ import com.vaadin.terminal.Sizeable
 import org.scalatest.BeforeAndAfter
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
+import vaadin.scala.mixins.TabSheetMixin
+import vaadin.scala.mixins.TabSheetMixin
 
 class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
+
+  class VaadinTabSheet extends com.vaadin.ui.TabSheet with TabSheetMixin
 
   var tabSheet: TabSheet = _
 
@@ -17,7 +21,7 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   val label2 = new Label
   var tab2: TabSheet.Tab = _
 
-  var spy: com.vaadin.ui.TabSheet = _
+  var spy: VaadinTabSheet = _
   var tabSheetWithSpy: TabSheet = _
 
   before {
@@ -25,7 +29,7 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     tab = tabSheet.addTab(label)
     tab2 = tabSheet.addTab(label2)
 
-    spy = Mockito.spy(new com.vaadin.ui.TabSheet)
+    spy = Mockito.spy(new VaadinTabSheet)
     tabSheetWithSpy = new TabSheet(spy)
   }
 
@@ -227,7 +231,7 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
       tab1.closable = true
       val tab2 = addTab(new Label, "Tab 2", new ThemeResource("../runo/icons/16/globe.png"))
       tab2.closable = true
-      
+
       selectedTab = tab2
     }
   }

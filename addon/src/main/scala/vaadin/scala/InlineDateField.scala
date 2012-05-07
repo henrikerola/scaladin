@@ -1,5 +1,9 @@
 package vaadin.scala
 
-class InlineDateField(override val p: com.vaadin.ui.InlineDateField = new com.vaadin.ui.InlineDateField) extends DateField(p) {
+import vaadin.scala.mixins.InlineDateFieldMixin
 
+package mixins {
+  trait InlineDateFieldMixin extends DateFieldMixin
 }
+
+class InlineDateField(override val p: com.vaadin.ui.InlineDateField with InlineDateFieldMixin = new com.vaadin.ui.InlineDateField with InlineDateFieldMixin) extends DateField(p)

@@ -1,6 +1,11 @@
 package vaadin.scala
 
 import vaadin.scala.internal.FragmentChangedListener
+import vaadin.scala.mixins.UriFragmentUtilityMixin
+
+package mixins {
+  trait UriFragmentUtilityMixin extends AbstractComponentMixin
+}
 
 package internal {
   class FragmentChangedListener(val action: UriFragmentUtility.FragmentChangedEvent => Unit) extends com.vaadin.ui.UriFragmentUtility.FragmentChangedListener with Listener {
@@ -16,7 +21,7 @@ object UriFragmentUtility {
  * @see com.vaadin.ui.UriFragmentUtility
  * @author Henri Kerola / Vaadin
  */
-class UriFragmentUtility(override val p: com.vaadin.ui.UriFragmentUtility = new com.vaadin.ui.UriFragmentUtility) extends AbstractComponent(p) {
+class UriFragmentUtility(override val p: com.vaadin.ui.UriFragmentUtility with UriFragmentUtilityMixin = new com.vaadin.ui.UriFragmentUtility with UriFragmentUtilityMixin) extends AbstractComponent(p) {
   
   WrapperRegistry.put(this)
 

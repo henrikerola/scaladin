@@ -1,8 +1,12 @@
 package vaadin.scala
 
-class OptionGroup(override val p: com.vaadin.ui.OptionGroup = new com.vaadin.ui.OptionGroup) extends AbstractSelect(p) with MultiSelectable {
+import vaadin.scala.mixins.OptionGroupMixin
 
-  WrapperRegistry.put(this)
+package mixins {
+  trait OptionGroupMixin extends AbstractSelectMixin
+}
+
+class OptionGroup(override val p: com.vaadin.ui.OptionGroup with OptionGroupMixin = new com.vaadin.ui.OptionGroup with OptionGroupMixin) extends AbstractSelect(p) with MultiSelectable {
 
   def itemEnabled(itemId: Any) = p.isItemEnabled(itemId)
   def itemEnabled(itemId: Any, enabled: Boolean) = p.setItemEnabled(itemId, enabled)

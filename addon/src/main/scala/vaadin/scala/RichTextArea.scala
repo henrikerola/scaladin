@@ -1,6 +1,12 @@
 package vaadin.scala
 
-class RichTextArea(override val p: com.vaadin.ui.RichTextArea = new com.vaadin.ui.RichTextArea) extends AbstractField(p) {
+import vaadin.scala.mixins.RichTextAreaMixin
+
+package mixins {
+  trait RichTextAreaMixin extends AbstractFieldMixin
+}
+
+class RichTextArea(override val p: com.vaadin.ui.RichTextArea with RichTextAreaMixin = new com.vaadin.ui.RichTextArea with RichTextAreaMixin) extends AbstractField(p) {
 
   def selectAll() = p.selectAll()
 

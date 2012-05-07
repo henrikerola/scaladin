@@ -6,6 +6,11 @@ import vaadin.scala.internal.UploadStartedListener
 import vaadin.scala.internal.UploadFinishedListener
 import vaadin.scala.internal.UploadFailedListener
 import vaadin.scala.internal.UploadSucceededListener
+import vaadin.scala.mixins.UploadMixin
+
+package mixins {
+  trait UploadMixin extends AbstractComponentMixin
+}
 
 object Upload {
   case class ReceiveEvent(filename: String, mimeType: String)
@@ -20,9 +25,7 @@ object Upload {
  * @see com.vaadin.ui.Upload
  * @author Henri Kerola / Vaadin
  */
-class Upload(override val p: com.vaadin.ui.Upload = new com.vaadin.ui.Upload) extends AbstractComponent(p) with Focusable {
-
-  WrapperRegistry.put(this)
+class Upload(override val p: com.vaadin.ui.Upload with UploadMixin = new com.vaadin.ui.Upload with UploadMixin) extends AbstractComponent(p) with Focusable {
 
   def receiver: Option[Upload.ReceiveEvent => java.io.OutputStream] = p.getReceiver match {
     case null => None

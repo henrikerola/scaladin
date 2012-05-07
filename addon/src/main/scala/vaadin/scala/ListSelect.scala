@@ -1,8 +1,12 @@
 package vaadin.scala
 
-class ListSelect(override val p: com.vaadin.ui.ListSelect = new com.vaadin.ui.ListSelect) extends AbstractSelect(p) with MultiSelectable {
+import vaadin.scala.mixins.ListSelectMixin
 
-  WrapperRegistry.put(this)
+package mixins {
+  trait ListSelectMixin extends AbstractSelectMixin
+}
+
+class ListSelect(override val p: com.vaadin.ui.ListSelect with ListSelectMixin = new com.vaadin.ui.ListSelect with ListSelectMixin) extends AbstractSelect(p) with MultiSelectable {
 
   def rows = p.getRows
   def rows_=(rows: Int) = p.setRows(rows)

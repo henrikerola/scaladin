@@ -9,15 +9,18 @@ import org.mockito.Matchers
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import java.io.FileOutputStream
+import vaadin.scala.mixins.UploadMixin
 
 @RunWith(classOf[JUnitRunner])
 class UploadTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
+  class VaadinUpload extends com.vaadin.ui.Upload with UploadMixin
+
   var upload: Upload = _
-  var spy: com.vaadin.ui.Upload = _
+  var spy: VaadinUpload = _
 
   before {
-    val vaadinUpload = new com.vaadin.ui.Upload
+    val vaadinUpload = new VaadinUpload
     spy = Mockito.spy(vaadinUpload)
     upload = new Upload(spy)
   }

@@ -1,5 +1,11 @@
 package vaadin.scala
 
+import vaadin.scala.mixins.EmbeddedMixin
+
+package mixins {
+  trait EmbeddedMixin extends AbstractComponentMixin
+}
+
 object Embedded {
   object Type extends Enumeration {
     import com.vaadin.ui.Embedded._
@@ -9,7 +15,7 @@ object Embedded {
   }
 }
 
-class Embedded(override val p: com.vaadin.ui.Embedded = new com.vaadin.ui.Embedded) extends AbstractComponent(p) {
+class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new com.vaadin.ui.Embedded with EmbeddedMixin) extends AbstractComponent(p) {
 
   // TODO: parameters, click listener
 

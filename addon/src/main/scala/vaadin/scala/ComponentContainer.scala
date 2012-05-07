@@ -2,10 +2,21 @@ package vaadin.scala
 
 import scala.collection.mutable
 import com.vaadin.ui.Layout.MarginHandler
+import vaadin.scala.mixins.AbstractComponentContainerMixin
+import vaadin.scala.mixins.AbstractLayoutMixin
+import vaadin.scala.mixins.ComponentContainerMixin
+import vaadin.scala.mixins.LayoutMixin
+
+package mixins {
+  trait ComponentContainerMixin extends ComponentMixin
+  trait AbstractComponentContainerMixin extends AbstractComponentMixin with ComponentContainerMixin
+  trait LayoutMixin extends ComponentContainerMixin
+  trait AbstractLayoutMixin extends AbstractComponentContainerMixin with LayoutMixin
+}
 
 trait ComponentContainer extends Component {
 
-  override def p: com.vaadin.ui.ComponentContainer
+  override def p: com.vaadin.ui.ComponentContainer with ComponentContainerMixin
 
   // TODO: remove Component part from methods => add, remove, removeAll... ?
 
@@ -48,17 +59,18 @@ trait ComponentContainer extends Component {
   // TODO: listeners
 }
 
-abstract class AbstractComponentContainer(override val p: com.vaadin.ui.AbstractComponentContainer) extends AbstractComponent(p) with ComponentContainer {
+abstract class AbstractComponentContainer(override val p: com.vaadin.ui.AbstractComponentContainer with AbstractComponentContainerMixin) extends AbstractComponent(p) with ComponentContainer {
   
 	// FIXME
 	WrapperRegistry.put(this)
 }
 
+
 case class Margin(top: Boolean = false, right: Boolean = false, bottom: Boolean = false, left: Boolean = false)
 
 trait Layout extends ComponentContainer {
 
-  override def p: com.vaadin.ui.Layout
+  override def p: com.vaadin.ui.Layout with LayoutMixin
 
   def margin_=(margin: Boolean) = p.setMargin(margin)
   def margin_=(margin: Margin) = p.setMargin(margin.top, margin.right, margin.bottom, margin.left)
@@ -66,7 +78,7 @@ trait Layout extends ComponentContainer {
 
 }
 
-abstract class AbstractLayout(override val p: com.vaadin.ui.AbstractLayout) extends AbstractComponentContainer(p) with Layout {
+abstract class AbstractLayout(override val p: com.vaadin.ui.AbstractLayout with AbstractLayoutMixin) extends AbstractComponentContainer(p) with Layout {
 
   def margin: Margin = {
     val margin = p.getMargin()

@@ -1,6 +1,11 @@
 package vaadin.scala
+import vaadin.scala.mixins.SliderMixin
 
-abstract class AbstractSlider(override val p: com.vaadin.ui.Slider) extends AbstractField(p) {
+package mixins {
+  trait SliderMixin extends AbstractFieldMixin
+}
+
+abstract class AbstractSlider(override val p: com.vaadin.ui.Slider with SliderMixin) extends AbstractField(p) {
 
   def min = p.getMin
   def min_=(min: Double) = p.setMin(min)
@@ -15,12 +20,12 @@ abstract class AbstractSlider(override val p: com.vaadin.ui.Slider) extends Abst
 
 }
 
-class HorizontalSlider(override val p: com.vaadin.ui.Slider = new com.vaadin.ui.Slider) extends AbstractSlider(p) {
-  
+class HorizontalSlider(override val p: com.vaadin.ui.Slider with SliderMixin = new com.vaadin.ui.Slider with SliderMixin) extends AbstractSlider(p) {
+
   p.setOrientation(com.vaadin.ui.Slider.ORIENTATION_HORIZONTAL)
 }
 
-class VerticalSlider(override val p: com.vaadin.ui.Slider = new com.vaadin.ui.Slider) extends AbstractSlider(p) {
-  
+class VerticalSlider(override val p: com.vaadin.ui.Slider with SliderMixin = new com.vaadin.ui.Slider with SliderMixin) extends AbstractSlider(p) {
+
   p.setOrientation(com.vaadin.ui.Slider.ORIENTATION_VERTICAL)
 }
