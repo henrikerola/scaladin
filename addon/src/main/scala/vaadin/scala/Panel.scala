@@ -7,7 +7,7 @@ package mixins {
 }
 
 class Panel(override val p: com.vaadin.ui.Panel with PanelMixin = new com.vaadin.ui.Panel with PanelMixin) extends AbstractComponentContainer(p) with Focusable {
-  
+
   /*-
   def this(caption: String = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, style: String = null) {
     this()
@@ -16,6 +16,12 @@ class Panel(override val p: com.vaadin.ui.Panel with PanelMixin = new com.vaadin
     this.height = height
     p.setStyleName(style)
   }*/
+  
+  // Vaadin Panel sets a default content (VerticalLayout) for Panel but 
+  // we must to reset a default content because Panel with PaneMixin is used.
+  content = new VerticalLayout {
+    margin = true
+  }
 
   def content: ComponentContainer = wrapperFor[ComponentContainer](p.getContent).get
   def content_=(content: ComponentContainer) = p.setContent(content.p)

@@ -8,6 +8,13 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class PanelTests extends FunSuite {
 
+  test("content, VerticalLayout is Panel's default content") {
+    val panel = new Panel
+
+    assert(panel.content.isInstanceOf[VerticalLayout])
+    assert(panel.content.asInstanceOf[VerticalLayout].margin === Margin(true, true, true, true))
+  }
+
   test("content") {
     val panel = new Panel
 

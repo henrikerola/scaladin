@@ -14,6 +14,11 @@ class WindowTests extends FunSuite with BeforeAndAfter {
   before {
     window = new Window
   }
+  
+  test("content, VerticalLayout is Window's default content") {
+    assert(window.content.isInstanceOf[VerticalLayout])
+    assert(window.content.asInstanceOf[VerticalLayout].margin === Margin(true, true, true, true))
+  }
 
   test("child window handling") {
     val anotherWindow = new Window
