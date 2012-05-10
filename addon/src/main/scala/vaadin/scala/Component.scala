@@ -34,11 +34,11 @@ trait Component extends Wrapper {
   def icon_=(icon: Option[Resource]) = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
   def icon_=(icon: Resource) = if (icon == null) p.setIcon(null) else p.setIcon(icon.p)
 
-  // TODO return wrapped window and use Option?
-  def window = p.getWindow()
+  def window = WrapperRegistry.get[Window](p.getWindow)
 
-  //TODO return wrapped application and use Option?
-  def application = p.getApplication()
+  def application = Option(p.getApplication)
+
+  def locale = Option(p.getLocale)
 
   //override def toString = p.toString
 

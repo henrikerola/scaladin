@@ -1,5 +1,8 @@
 package vaadin.scala
 
+import vaadin.scala.listeners.BlurListeners
+import vaadin.scala.listeners.FocusListeners
+
 // In Vaadin 6 CheckBox extends Button, but here we do similarly than Vaadin 7 does and extend AbstractField
 class CheckBox extends AbstractField {
 
@@ -27,15 +30,6 @@ class CheckBox extends AbstractField {
   override def value: Option[Boolean] = Option(p.booleanValue());
   def value_=(value: Boolean) = p.setValue(value)
   
-  def blurListeners = new ListenersTrait[BlurEvent => Unit, BlurListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.event.FieldEvents.BlurEvent])
-    override def addListener(elem: BlurEvent => Unit) = p.addListener(new BlurListener(elem))
-    override def removeListener(elem: BlurListener) = p.removeListener(elem)
-  }
-
-  def focusListeners = new ListenersTrait[FocusEvent => Unit, FocusListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.event.FieldEvents.FocusEvent])
-    override def addListener(elem: FocusEvent => Unit) = p.addListener(new FocusListener(elem))
-    override def removeListener(elem: FocusListener) = p.removeListener(elem)
-  }
+  lazy val blurListeners = new BlurListeners(p)
+  lazy val focusListeners = new FocusListeners(p)
 }

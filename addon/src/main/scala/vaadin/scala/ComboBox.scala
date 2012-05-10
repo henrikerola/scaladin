@@ -1,5 +1,8 @@
 package vaadin.scala
 
+import vaadin.scala.listeners.BlurListeners
+import vaadin.scala.listeners.FocusListeners
+
 object ComboBox {
   object FilterinMode extends Enumeration {
     import com.vaadin.ui.AbstractSelect.Filtering._
@@ -29,5 +32,6 @@ class ComboBox(override val p: com.vaadin.ui.ComboBox = new com.vaadin.ui.ComboB
   def scrollToSelectedItem = p.isScrollToSelectedItem
   def scrollToSelectedItem_=(scrollToSelectedItem: Boolean) = p.setScrollToSelectedItem(scrollToSelectedItem)
 
-  // TODO: blur and focus listeners
+  lazy val blurListeners = new BlurListeners(p)
+  lazy val focusListeners = new FocusListeners(p)
 }
