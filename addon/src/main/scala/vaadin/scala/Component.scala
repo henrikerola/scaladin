@@ -9,7 +9,14 @@ import vaadin.scala.internal.WrapperUtil
 package mixins {
 
   trait ScaladinMixin {
-    var wrapper: Wrapper = _
+    private[this] var _wrapper: Option[Wrapper] = None
+    def wrapper = _wrapper
+    def wrapper_=(wrapper: Wrapper) = {
+      if (_wrapper.isDefined)
+        throw new RuntimeException("wrapper cannot be reset once set")
+      else
+        _wrapper = Some(wrapper)
+    }
   }
 
   trait ComponentMixin extends ScaladinMixin
