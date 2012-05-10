@@ -88,12 +88,13 @@ class UploadTests extends FunSuite with BeforeAndAfter with MockitoSugar {
       receiver = { e: Upload.ReceiveEvent =>
         new FileOutputStream("/tmp/" + e.filename)
       }
-      succeededListeners += { e: Upload.SucceededEvent =>
-        window.showNotification("Upload Succeeded")
-      }
-      failedListeners += { e: Upload.FailedEvent =>
-        window.showNotification("Upload Failed")
-      }
+      // FIXME
+      //      succeededListeners += { e: Upload.SucceededEvent =>
+      //        window.map(showNotification("Upload Succeeded"))
+      //      }
+      //      failedListeners += { e: Upload.FailedEvent =>
+      //        window.showNotification("Upload Failed")
+      //      }
     }
   }
 

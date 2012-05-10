@@ -2,6 +2,8 @@ package vaadin.scala
 
 import scala.collection.mutable
 import vaadin.scala.mixins.WindowMixin
+import vaadin.scala.listeners.BlurListeners
+import vaadin.scala.listeners.FocusListeners
 
 package mixins {
   trait WindowMixin extends PanelMixin
@@ -38,7 +40,7 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
   //not a property
   def setCloseShortcut(keyCode: Int, modifiers: Int*): Unit = { p.setCloseShortcut(keyCode, modifiers.map(_.asInstanceOf[Int]): _*) }
 
-  def center = p.center
+  def center() = p.center()
 
   def modal_=(modal: Boolean) = p.setModal(modal)
   def modal = p.isModal
@@ -48,4 +50,7 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
 
   def draggable_=(draggable: Boolean) = p.setDraggable(draggable)
   def draggable = p.isDraggable
+  
+  lazy val blurListeners = new BlurListeners(p)
+  lazy val focusListeners = new FocusListeners(p)
 }

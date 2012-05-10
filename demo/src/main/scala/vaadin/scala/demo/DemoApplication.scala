@@ -616,7 +616,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     val buttons = new HorizontalLayout {
       spacing = true
       val yes = add(new Button { caption = "Logout"; styleName = Reindeer.BUTTON_DEFAULT; clickListeners += getMainWindow.open(new ExternalResource("http://vaadin.com")) })
-      val no = add(new Button { caption = "Cancel"; clickListeners += { event => getMainWindow.removeWindow(event.button.window) } })
+      val no = add(new Button { caption = "Cancel"; clickListeners += { event => mainWindow.childWindows -= event.button.window.get } })
     }
     buttons.yes.focus()
 

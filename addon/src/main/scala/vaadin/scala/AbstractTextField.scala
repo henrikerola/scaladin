@@ -1,6 +1,8 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.AbstractTextFieldMixin
+import vaadin.scala.listeners.BlurListeners
+import vaadin.scala.listeners.FocusListeners
 
 package mixins {
   trait AbstractTextFieldMixin extends AbstractFieldMixin
@@ -8,7 +10,7 @@ package mixins {
 
 abstract class AbstractTextField(override val p: com.vaadin.ui.AbstractTextField with AbstractTextFieldMixin) extends AbstractField(p) {
 
-  def prompt: Option[String] = Option(p.getInputPrompt())
+  def prompt: Option[String] = Option(p.getInputPrompt)
   def prompt_=(prompt: Option[String]) = p.setInputPrompt(prompt.getOrElse(null))
   def prompt_=(prompt: String) = p.setInputPrompt(prompt)
 
@@ -23,4 +25,7 @@ abstract class AbstractTextField(override val p: com.vaadin.ui.AbstractTextField
 
   def columns = p.getColumns
   def columns_=(columns: Int) = p.setColumns(columns)
+
+  lazy val blurListeners = new BlurListeners(p)
+  lazy val focusListeners = new FocusListeners(p)
 }

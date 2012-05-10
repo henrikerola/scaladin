@@ -1,6 +1,8 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.DateFieldMixin
+import vaadin.scala.listeners.BlurListeners
+import vaadin.scala.listeners.FocusListeners
 
 package mixins {
   trait DateFieldMixin extends AbstractFieldMixin
@@ -35,7 +37,8 @@ class DateField(override val p: com.vaadin.ui.DateField with DateFieldMixin = ne
   def lenient = p.isLenient
   def lenient_=(lenient: Boolean) = p.setLenient(lenient)
 
-  // TODO: blur and focus listeners
+  lazy val blurListeners = new BlurListeners(p)
+  lazy val focusListeners = new FocusListeners(p)
 
   def showISOWeekNumbers = p.isShowISOWeekNumbers
   def showISOWeekNumbers_=(showISOWeekNumbers: Boolean) = p.setShowISOWeekNumbers(showISOWeekNumbers)

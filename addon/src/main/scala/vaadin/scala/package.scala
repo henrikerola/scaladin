@@ -8,8 +8,11 @@ package object scala {
 
   implicit def fullSizeToUnitExtend(value: Size): Tuple2[String, String] = value.toSizes
 
+  //implicit def byNameParameterToFocusEventListener(action: => Unit): FocusEvent => Unit = (e: FocusEvent) => action
+  //implicit def byNameParameterToBlurEventListener(action: => Unit): BlurEvent => Unit = (e: BlurEvent) => action
+
   // Button
-  implicit def byNameParameterToButtonClickEventListener(action: => Unit): ButtonClickEvent => Unit = (e: ButtonClickEvent) => action
+  implicit def byNameParameterToButtonClickEventListener(action: => Unit): Button.ClickEvent => Unit = (e: Button.ClickEvent) => action
 
   // Upload
   //  implicit def byNameParameterToUploadReceiver(action: => Unit): Upload.ReceiveEvent => Unit = (e: Upload.ReceiveEvent) => action

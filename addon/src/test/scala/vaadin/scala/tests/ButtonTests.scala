@@ -8,8 +8,8 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class ButtonTests extends FunSuite {
 
-  val listener1 = (e: ButtonClickEvent) => println("1")
-  val listener2 = (e: ButtonClickEvent) => println(e)
+  val listener1 = (e: Button.ClickEvent) => println("1")
+  val listener2 = (e: Button.ClickEvent) => println(e)
 
   test("clickListeners, add a clicklistener") {
     val button = new Button

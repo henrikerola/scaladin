@@ -1,6 +1,8 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.CheckBoxMixin
+import vaadin.scala.listeners.BlurListeners
+import vaadin.scala.listeners.FocusListeners
 
 package mixins {
   trait CheckBoxMixin extends AbstractFieldMixin
@@ -13,15 +15,6 @@ class CheckBox(override val p: com.vaadin.ui.CheckBox with CheckBoxMixin = new c
   override def value: Option[Boolean] = Option(p.booleanValue());
   def value_=(value: Boolean) = p.setValue(value)
   
-  def blurListeners = new ListenersTrait[BlurEvent => Unit, BlurListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.event.FieldEvents.BlurEvent])
-    override def addListener(elem: BlurEvent => Unit) = p.addListener(new BlurListener(elem))
-    override def removeListener(elem: BlurListener) = p.removeListener(elem)
-  }
-
-  def focusListeners = new ListenersTrait[FocusEvent => Unit, FocusListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.event.FieldEvents.FocusEvent])
-    override def addListener(elem: FocusEvent => Unit) = p.addListener(new FocusListener(elem))
-    override def removeListener(elem: FocusListener) = p.removeListener(elem)
-  }
+  lazy val blurListeners = new BlurListeners(p)
+  lazy val focusListeners = new FocusListeners(p)
 }

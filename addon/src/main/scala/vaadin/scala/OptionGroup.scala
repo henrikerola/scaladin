@@ -1,6 +1,8 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.OptionGroupMixin
+import vaadin.scala.listeners.BlurListeners
+import vaadin.scala.listeners.FocusListeners
 
 package mixins {
   trait OptionGroupMixin extends AbstractSelectMixin
@@ -13,7 +15,8 @@ class OptionGroup(override val p: com.vaadin.ui.OptionGroup with OptionGroupMixi
 
   def htmlContentAllowed = p.isHtmlContentAllowed
   def htmlContentAllowed_=(htmlContentAllowed: Boolean) = p.setHtmlContentAllowed(htmlContentAllowed)
-  
-  // TODO: blur and focus listeners
+
+  lazy val blurListeners = new BlurListeners(p)
+  lazy val focusListeners = new FocusListeners(p)
 
 }
