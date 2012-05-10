@@ -96,19 +96,19 @@ package internal {
   }
 
   class UploadStartedListener(val action: Upload.StartedEvent => Unit) extends com.vaadin.ui.Upload.StartedListener with Listener {
-    def uploadStarted(e: com.vaadin.ui.Upload.StartedEvent) = action(Upload.StartedEvent(WrapperRegistry.get[Upload](e.getUpload).get, e.getFilename, e.getMIMEType, e.getContentLength))
+    def uploadStarted(e: com.vaadin.ui.Upload.StartedEvent) = action(Upload.StartedEvent(wrapperFor[Upload](e.getUpload).get, e.getFilename, e.getMIMEType, e.getContentLength))
   }
 
   class UploadFinishedListener(val action: Upload.FinishedEvent => Unit) extends com.vaadin.ui.Upload.FinishedListener with Listener {
-    def uploadFinished(e: com.vaadin.ui.Upload.FinishedEvent) = action(Upload.FinishedEvent(WrapperRegistry.get[Upload](e.getUpload).get, e.getFilename, e.getMIMEType, e.getLength))
+    def uploadFinished(e: com.vaadin.ui.Upload.FinishedEvent) = action(Upload.FinishedEvent(wrapperFor[Upload](e.getUpload).get, e.getFilename, e.getMIMEType, e.getLength))
   }
 
   class UploadFailedListener(val action: Upload.FailedEvent => Unit) extends com.vaadin.ui.Upload.FailedListener with Listener {
-    def uploadFailed(e: com.vaadin.ui.Upload.FailedEvent) = action(Upload.FailedEvent(WrapperRegistry.get[Upload](e.getUpload).get, e.getFilename, e.getMIMEType, e.getLength, e.getReason))
+    def uploadFailed(e: com.vaadin.ui.Upload.FailedEvent) = action(Upload.FailedEvent(wrapperFor[Upload](e.getUpload).get, e.getFilename, e.getMIMEType, e.getLength, e.getReason))
   }
 
   class UploadSucceededListener(val action: Upload.SucceededEvent => Unit) extends com.vaadin.ui.Upload.SucceededListener with Listener {
-    def uploadSucceeded(e: com.vaadin.ui.Upload.SucceededEvent) = action(Upload.SucceededEvent(WrapperRegistry.get[Upload](e.getUpload).get, e.getFilename, e.getMIMEType, e.getLength))
+    def uploadSucceeded(e: com.vaadin.ui.Upload.SucceededEvent) = action(Upload.SucceededEvent(wrapperFor[Upload](e.getUpload).get, e.getFilename, e.getMIMEType, e.getLength))
   }
 }
 

@@ -50,7 +50,7 @@ trait ComponentContainer extends Component {
       p.getComponentIterator.contains(key.p)
     }
     def iterator: Iterator[Component] = {
-      p.getComponentIterator.map(WrapperRegistry.get[Component](_).get)
+      p.getComponentIterator.map(wrapperFor[Component](_).get)
     }
     def +=(elem: Component) = { p.addComponent(elem.p); this }
     def -=(elem: Component) = { p.removeComponent(elem.p); this }
@@ -59,11 +59,7 @@ trait ComponentContainer extends Component {
   // TODO: listeners
 }
 
-abstract class AbstractComponentContainer(override val p: com.vaadin.ui.AbstractComponentContainer with AbstractComponentContainerMixin) extends AbstractComponent(p) with ComponentContainer {
-  
-	// FIXME
-	WrapperRegistry.put(this)
-}
+abstract class AbstractComponentContainer(override val p: com.vaadin.ui.AbstractComponentContainer with AbstractComponentContainerMixin) extends AbstractComponent(p) with ComponentContainer
 
 
 case class Margin(top: Boolean = false, right: Boolean = false, bottom: Boolean = false, left: Boolean = false)

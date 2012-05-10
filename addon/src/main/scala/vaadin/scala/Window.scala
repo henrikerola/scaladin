@@ -29,7 +29,7 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
       p.getChildWindows.contains(key.p)
     }
     def iterator: Iterator[Window] = {
-      p.getChildWindows.iterator.map(WrapperRegistry.get[Window](_).get)
+      p.getChildWindows.iterator.map(wrapperFor[Window](_).get)
     }
     def +=(elem: Window) = { p.addWindow(elem.p); this }
     def -=(elem: Window) = { p.removeWindow(elem.p); this }

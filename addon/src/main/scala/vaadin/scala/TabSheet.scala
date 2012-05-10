@@ -1,6 +1,7 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.TabSheetMixin
+import vaadin.scala.internal.WrapperUtil
 
 package mixins {
   trait TabSheetMixin extends AbstractComponentContainerMixin
@@ -8,9 +9,7 @@ package mixins {
 
 object TabSheet {
 
-  class Tab(val p: com.vaadin.ui.TabSheet.Tab) extends Wrapper {
-
-    WrapperRegistry.put(this)
+  class Tab(val p: com.vaadin.ui.TabSheet.Tab) {
 
     def visible = p.isVisible
     def visible_=(visible: Boolean) = p.setVisible(visible)
@@ -25,7 +24,7 @@ object TabSheet {
     def caption_=(caption: Option[String]) = p.setCaption(caption.getOrElse(null))
     def caption_=(caption: String) = p.setCaption(caption)
 
-    def icon: Option[Resource] = WrapperRegistry.get[Resource](p.getIcon)
+    def icon: Option[Resource] = WrapperUtil.wrapperFor[Resource](p.getIcon)
     def icon_=(icon: Option[Resource]) = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
     def icon_=(icon: Resource) = if (icon == null) p.setIcon(null) else p.setIcon(icon.p)
 
@@ -34,8 +33,8 @@ object TabSheet {
     def description_=(description: String) = p.setDescription(description)
 
     // TODO: component error
-    
-    def component = WrapperRegistry.get[Component](p.getComponent).get
+
+    def component = WrapperUtil.wrapperFor[Component](p.getComponent).get
 
     def styleName = Option(p.getStyleName)
     def styleName_=(styleName: Option[String]) = p.setStyleName(styleName.getOrElse(null))
@@ -48,24 +47,33 @@ object TabSheet {
 
 class TabSheet(override val p: com.vaadin.ui.TabSheet with TabSheetMixin = new com.vaadin.ui.TabSheet with TabSheetMixin) extends AbstractComponentContainer(p) {
 
+  // TODO: Tab should be removed from the map when removed from the TabSheet
+  // TODO: change to protected/private
+  val tabs = scala.collection.mutable.Map.empty[com.vaadin.ui.TabSheet.Tab, TabSheet.Tab]
+  protected def register(vaadinTab: com.vaadin.ui.TabSheet.Tab): TabSheet.Tab = {
+    val tab = new TabSheet.Tab(vaadinTab)
+    tabs += vaadinTab -> tab
+    tab
+  }
+
   def removeTab(tab: TabSheet.Tab) = p.removeTab(tab.p)
 
-  def addTab(component: Component) = new TabSheet.Tab(p.addTab(component.p))
-  def addTab(component: Component, caption: String) = new TabSheet.Tab(p.addTab(component.p, caption))
-  def addTab(component: Component, caption: String, icon: Resource) = new TabSheet.Tab(p.addTab(component.p, caption, icon.p))
-  def addTab(component: Component, caption: String, icon: Resource, position: Int) = new TabSheet.Tab(p.addTab(component.p, caption, icon.p, position))
-  def addTab(component: Component, position: Int) = new TabSheet.Tab(p.addTab(component.p, position))
+  def addTab(component: Component) = register(p.addTab(component.p))
+  def addTab(component: Component, caption: String) = register(p.addTab(component.p, caption))
+  def addTab(component: Component, caption: String, icon: Resource) = register(p.addTab(component.p, caption, icon.p))
+  def addTab(component: Component, caption: String, icon: Resource, position: Int) = register(p.addTab(component.p, caption, icon.p, position))
+  def addTab(component: Component, position: Int) = register(p.addTab(component.p, position))
 
   def tabsVisible = !p.areTabsHidden
   def tabsVisible_=(tabsVisible: Boolean) = p.hideTabs(!tabsVisible)
 
-  def tab(component: Component): Option[TabSheet.Tab] = WrapperRegistry.get[TabSheet.Tab](p.getTab(component.p))
-  def tab(position: Int): Option[TabSheet.Tab] = WrapperRegistry.get[TabSheet.Tab](p.getTab(position))
+  def tab(component: Component): Option[TabSheet.Tab] = tabs.get(p.getTab(component.p))
+  def tab(position: Int): Option[TabSheet.Tab] = tabs.get(p.getTab(position))
 
-  def selectedComponent = WrapperRegistry.get[Component](p.getSelectedTab).get
+  def selectedComponent = wrapperFor[Component](p.getSelectedTab).get
   def selectedComponent_=(component: Component) = p.setSelectedTab(component.p)
-  
-  def selectedTab = tab(selectedComponent).get
+
+  def selectedTab: TabSheet.Tab = tab(selectedComponent).get
   def selectedTab_=(tab: TabSheet.Tab) = { selectedComponent = tab.component }
 
   def tabPosition(tab: TabSheet.Tab) = p.getTabPosition(tab.p)
@@ -73,8 +81,8 @@ class TabSheet(override val p: com.vaadin.ui.TabSheet with TabSheetMixin = new c
 
   private class TabCloseHandler(val action: TabSheet.TabCloseEvent => Unit) extends com.vaadin.ui.TabSheet.CloseHandler {
     def onTabClose(tabsheet: com.vaadin.ui.TabSheet, tabContent: com.vaadin.ui.Component) = {
-      val component = WrapperRegistry.get[Component](tabContent).get
-      action(TabSheet.TabCloseEvent(WrapperRegistry.get[TabSheet](tabsheet).get, component, tab(component).get))
+      val component = wrapperFor[Component](tabContent).get
+      action(TabSheet.TabCloseEvent(wrapperFor[TabSheet](tabsheet).get, component, tab(component).get))
     }
   }
 
@@ -87,6 +95,6 @@ class TabSheet(override val p: com.vaadin.ui.TabSheet with TabSheetMixin = new c
     _closeHandler = handler
     p.setCloseHandler(new TabCloseHandler(handler))
   }
-  
+
   // TODO: SelectedTabChangeListener
 }

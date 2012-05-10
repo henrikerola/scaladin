@@ -23,7 +23,7 @@ class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new c
   def objectType = Embedded.Type(p.getType)
   def objectType_=(objectType: Embedded.Type.Value) = p.setType(objectType.id)
 
-  def source: Option[Resource] = WrapperRegistry.get[Resource](p.getSource)
+  def source: Option[Resource] = wrapperFor[Resource](p.getSource)
   def source_=(source: Option[Resource]) = if (source.isDefined) p.setSource(source.get.p) else p.setSource(null)
   def source_=(source: Resource) = if (source == null) p.setSource(null) else p.setSource(source.p)
 

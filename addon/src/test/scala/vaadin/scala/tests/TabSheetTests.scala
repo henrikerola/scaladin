@@ -119,34 +119,66 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
   test("addTab(component)") {
     val labelToBeAdded = new Label
-    tabSheetWithSpy.addTab(labelToBeAdded)
+
+    assert(tabSheetWithSpy.tabs.size === 0)
+    val addedTab: TabSheet.Tab = tabSheetWithSpy.addTab(labelToBeAdded)
     Mockito.verify(spy).addTab(labelToBeAdded.p)
+    assert(tabSheetWithSpy.tabs.size === 1)
+    assert(tabSheetWithSpy.tabs.contains(addedTab.p))
+    assert(tabSheetWithSpy.tabs.get(addedTab.p) === Some(addedTab))
   }
 
   test("addTab(component, caption)") {
     val labelToBeAdded = new Label
-    tabSheetWithSpy.addTab(labelToBeAdded, "my caption")
+
+    assert(tabSheetWithSpy.tabs.size === 0)
+    val addedTab: TabSheet.Tab = tabSheetWithSpy.addTab(labelToBeAdded, "my caption")
     Mockito.verify(spy).addTab(labelToBeAdded.p, "my caption")
+    assert(tabSheetWithSpy.tabs.size === 1)
+    assert(tabSheetWithSpy.tabs.contains(addedTab.p))
+    assert(tabSheetWithSpy.tabs.get(addedTab.p) === Some(addedTab))
   }
 
   test("addTab(component, caption, icon)") {
     val labelToBeAdded = new Label
     val icon = new ThemeResource("icon.png")
-    tabSheetWithSpy.addTab(labelToBeAdded, "my caption", icon)
+
+    assert(tabSheetWithSpy.tabs.size === 0)
+    val addedTab: TabSheet.Tab = tabSheetWithSpy.addTab(labelToBeAdded, "my caption", icon)
     Mockito.verify(spy).addTab(labelToBeAdded.p, "my caption", icon.p)
+    assert(tabSheetWithSpy.tabs.size === 1)
+    assert(tabSheetWithSpy.tabs.contains(addedTab.p))
+    assert(tabSheetWithSpy.tabs.get(addedTab.p) === Some(addedTab))
   }
 
   test("addTab(component, caption, icon, position)") {
     val labelToBeAdded = new Label
     val icon = new ThemeResource("icon.png")
-    tabSheetWithSpy.addTab(labelToBeAdded, "my caption", icon, 0)
+
+    assert(tabSheetWithSpy.tabs.size === 0)
+    val addedTab: TabSheet.Tab = tabSheetWithSpy.addTab(labelToBeAdded, "my caption", icon, 0)
     Mockito.verify(spy).addTab(labelToBeAdded.p, "my caption", icon.p, 0)
+    assert(tabSheetWithSpy.tabs.size === 1)
+    assert(tabSheetWithSpy.tabs.contains(addedTab.p))
+    assert(tabSheetWithSpy.tabs.get(addedTab.p) === Some(addedTab))
   }
 
   test("addTab(component, position)") {
     val labelToBeAdded = new Label
-    tabSheetWithSpy.addTab(labelToBeAdded, 0)
+    
+    assert(tabSheetWithSpy.tabs.size === 0)
+    val addedTab: TabSheet.Tab = tabSheetWithSpy.addTab(labelToBeAdded, 0)
     Mockito.verify(spy).addTab(labelToBeAdded.p, 0)
+    assert(tabSheetWithSpy.tabs.size === 1)
+    assert(tabSheetWithSpy.tabs.contains(addedTab.p))
+    assert(tabSheetWithSpy.tabs.get(addedTab.p) === Some(addedTab))
+  }
+  
+  ignore("addComponent") {
+    val labelToBeAdded = new Label
+    
+    tabSheet.components += label
+    assert(tabSheet.tab(labelToBeAdded) != None)
   }
 
   test("tabsVisible") {

@@ -2,6 +2,7 @@ package vaadin.scala
 
 import com.vaadin.ui.themes.BaseTheme
 import vaadin.scala.mixins.ButtonMixin
+import vaadin.scala.internal.WrapperUtil
 
 package mixins {
   trait ButtonMixin extends AbstractFieldMixin
@@ -10,19 +11,19 @@ package mixins {
 case class ButtonClickEvent(button: Button, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends Event
 
 class ButtonClickListener(val action: ButtonClickEvent => Unit) extends com.vaadin.ui.Button.ClickListener with Listener {
-  def buttonClick(e: com.vaadin.ui.Button#ClickEvent) = action(ButtonClickEvent(WrapperRegistry.get[Button](e.getButton()).get, e.getClientX(), e.getClientY(), e.getRelativeX(), e.getRelativeY(), e.isAltKey(), e.isCtrlKey(), e.isMetaKey(), e.isShiftKey()))
+  def buttonClick(e: com.vaadin.ui.Button#ClickEvent) = action(ButtonClickEvent(wrapperFor[Button](e.getButton()).get, e.getClientX(), e.getClientY(), e.getRelativeX(), e.getRelativeY(), e.isAltKey(), e.isCtrlKey(), e.isMetaKey(), e.isShiftKey()))
 }
 
 case class BlurEvent(component: Component) extends Event
 
 class BlurListener(val action: BlurEvent => Unit) extends com.vaadin.event.FieldEvents.BlurListener with Listener {
-  def blur(e: com.vaadin.event.FieldEvents.BlurEvent) = action(BlurEvent(WrapperRegistry.get[Button](e.getComponent()).get))
+  def blur(e: com.vaadin.event.FieldEvents.BlurEvent) = action(BlurEvent(wrapperFor[Button](e.getComponent()).get))
 }
 
 case class FocusEvent(component: Component) extends Event
 
 class FocusListener(val action: FocusEvent => Unit) extends com.vaadin.event.FieldEvents.FocusListener with Listener {
-  def focus(e: com.vaadin.event.FieldEvents.FocusEvent) = action(FocusEvent(WrapperRegistry.get[Button](e.getComponent()).get))
+  def focus(e: com.vaadin.event.FieldEvents.FocusEvent) = action(FocusEvent(wrapperFor[Button](e.getComponent()).get))
 }
 
 class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin) extends AbstractField(p) {

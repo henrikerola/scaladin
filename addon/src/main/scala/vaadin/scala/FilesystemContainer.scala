@@ -21,7 +21,8 @@ object FilesystemContainer {
 }
 
 class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContainer) extends Container.Hierarchical {
-  WrapperRegistry.put(this)
+  // FIXME:
+  //WrapperRegistry.put(this)
 
   def this(root: File, extension: String = null, filenameFilter: FilenameFilter = null, recursiveFromRoot: Boolean = true) {
     this(new com.vaadin.data.util.FilesystemContainer(root))
@@ -56,7 +57,8 @@ class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContain
 class FileItem(override val p: com.vaadin.data.util.FilesystemContainer#FileItem) extends Item {
   def lastModified: Date = p.lastModified
   def name: String = p.getName()
-  def icon: Resource = new ThemeResource(p.getIcon().asInstanceOf[com.vaadin.terminal.ThemeResource])
+  // FIXME
+  //def icon: Resource = new ThemeResource(p.getIcon().asInstanceOf[com.vaadin.terminal.ThemeResource])
   def size: Long = p.getSize()
 
   protected override def wrapProperty(unwrapped: com.vaadin.data.Property): Property = FilesystemContainer.wrapProperty(unwrapped)

@@ -17,7 +17,7 @@ class Panel(override val p: com.vaadin.ui.Panel with PanelMixin = new com.vaadin
     p.setStyleName(style)
   }*/
 
-  def content: ComponentContainer = WrapperRegistry.get[ComponentContainer](p.getContent).get
+  def content: ComponentContainer = wrapperFor[ComponentContainer](p.getContent).get
   def content_=(content: ComponentContainer) = p.setContent(content.p)
 
   def scrollable = p.isScrollable

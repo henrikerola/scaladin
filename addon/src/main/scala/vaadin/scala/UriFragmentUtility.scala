@@ -9,7 +9,7 @@ package mixins {
 
 package internal {
   class FragmentChangedListener(val action: UriFragmentUtility.FragmentChangedEvent => Unit) extends com.vaadin.ui.UriFragmentUtility.FragmentChangedListener with Listener {
-    def fragmentChanged(e: com.vaadin.ui.UriFragmentUtility#FragmentChangedEvent) = action(UriFragmentUtility.FragmentChangedEvent(WrapperRegistry.get[UriFragmentUtility](e.getUriFragmentUtility).get, Option(e.getUriFragmentUtility.getFragment)))
+    def fragmentChanged(e: com.vaadin.ui.UriFragmentUtility#FragmentChangedEvent) = action(UriFragmentUtility.FragmentChangedEvent(wrapperFor[UriFragmentUtility](e.getUriFragmentUtility).get, Option(e.getUriFragmentUtility.getFragment)))
   }
 }
 
@@ -23,8 +23,6 @@ object UriFragmentUtility {
  */
 class UriFragmentUtility(override val p: com.vaadin.ui.UriFragmentUtility with UriFragmentUtilityMixin = new com.vaadin.ui.UriFragmentUtility with UriFragmentUtilityMixin) extends AbstractComponent(p) {
   
-  WrapperRegistry.put(this)
-
   def fragment = Option(p.getFragment)
   def fragment_=(fragment: Option[String]) = p.setFragment(fragment.getOrElse(null))
   def fragment_=(fragment: String) = p.setFragment(fragment)

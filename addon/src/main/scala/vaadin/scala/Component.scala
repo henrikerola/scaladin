@@ -3,6 +3,8 @@ package vaadin.scala
 import scala.collection.mutable
 import vaadin.scala.mixins.ComponentMixin
 import vaadin.scala.mixins.AbstractComponentMixin
+import vaadin.scala.mixins.ScaladinMixin
+import vaadin.scala.internal.WrapperUtil
 
 package mixins {
 
@@ -16,6 +18,8 @@ package mixins {
 
 trait Component extends Wrapper {
   def p: com.vaadin.ui.Component with ComponentMixin
+
+  protected def wrapperFor[T](vaadinComponent: Any): Option[T] = WrapperUtil.wrapperFor[T](vaadinComponent)
 
   // TODO: add methods styleName, addStyleName, removeStyleName?
 
@@ -36,7 +40,7 @@ trait Component extends Wrapper {
   def visible_=(visible: Boolean) = p.setVisible(visible)
 
   // TODO parent setter?
-  def parent: Option[Component] = WrapperRegistry.get[Component](p.getParent())
+  def parent: Option[Component] = wrapperFor[Component](p.getParent())
 
   def readOnly = p.isReadOnly
   def readOnly_=(readOnly: Boolean) = p.setReadOnly(readOnly)
@@ -45,7 +49,7 @@ trait Component extends Wrapper {
   def caption_=(caption: Option[String]) = p.setCaption(caption.getOrElse(null))
   def caption_=(caption: String) = p.setCaption(caption)
 
-  def icon: Option[Resource] = WrapperRegistry.get[Resource](p.getIcon)
+  def icon: Option[Resource] = wrapperFor[Resource](p.getIcon)
   def icon_=(icon: Option[Resource]) = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
   def icon_=(icon: Resource) = if (icon == null) p.setIcon(null) else p.setIcon(icon.p)
 
@@ -62,7 +66,6 @@ trait Component extends Wrapper {
 
 trait ScaladinWrapper extends com.vaadin.ui.Component with Component with ComponentMixin {
   def p: this.type = this
-  WrapperRegistry.put(this)
   p.wrapper = this
 }
 
@@ -82,7 +85,6 @@ trait Sizeable extends Component {
 
 abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with AbstractComponentMixin) extends Component with Sizeable {
 
-  WrapperRegistry.put(this)
   p.wrapper = this
 
   def description = Option(p.getDescription)

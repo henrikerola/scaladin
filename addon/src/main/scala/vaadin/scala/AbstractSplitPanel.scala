@@ -14,16 +14,16 @@ package mixins {
 case class SplitterClickEvent(component: Component) extends Event
 
 class SplitterClickListener(val action: SplitterClickEvent => Unit) extends com.vaadin.ui.AbstractSplitPanel.SplitterClickListener with Listener {
-  def splitterClick(e: com.vaadin.ui.AbstractSplitPanel#SplitterClickEvent) = action(SplitterClickEvent(WrapperRegistry.get[AbstractSplitPanel](e.getComponent()).get))
+  def splitterClick(e: com.vaadin.ui.AbstractSplitPanel#SplitterClickEvent) = action(SplitterClickEvent(wrapperFor[AbstractSplitPanel](e.getComponent()).get))
 }
 
 abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPanel with AbstractSplitPanelMixin) extends AbstractLayout(p) {
 
-  def first = WrapperRegistry.get[Component](p.getFirstComponent)
+  def first = wrapperFor[Component](p.getFirstComponent)
   def first_=(component: Component) = p.setFirstComponent(if (component != null) component.p else null)
   def first_=(component: Option[Component]) = p.setFirstComponent(if (component.isDefined) component.get.p else null)
 
-  def second = WrapperRegistry.get[Component](p.getSecondComponent)
+  def second = wrapperFor[Component](p.getSecondComponent)
   def second_=(component: Component) = p.setSecondComponent(if (component != null) component.p else null)
   def second_=(component: Option[Component]) = p.setSecondComponent(if (component.isDefined) component.get.p else null)
 

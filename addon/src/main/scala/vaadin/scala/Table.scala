@@ -49,7 +49,7 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def columnWidth(propertyId: Any) = p.getColumnWidth(propertyId)
   def columnWidth(propertyId: Any, width: Int) = p.setColumnWidth(propertyId, width)
 
-  def columnIcon(propertyId: Any) = WrapperRegistry.get[Resource](p.getColumnIcon(propertyId))
+  def columnIcon(propertyId: Any) = wrapperFor[Resource](p.getColumnIcon(propertyId))
   def columnIcon(propertyId: Any, icon: Option[Resource]) = p.setColumnIcon(propertyId, if (icon.isDefined) icon.get.p else null)
   def columnIcon(propertyId: Any, icon: Resource) = p.setColumnIcon(propertyId, icon.p)
 
@@ -181,7 +181,7 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   }
 
   private class ItemDescriptionGenerator(val generator: (Table, Any, Any) => String) extends com.vaadin.ui.AbstractSelect.ItemDescriptionGenerator {
-    def generateDescription(source: com.vaadin.ui.Component, itemId: Any, propertyId: Any) = generator(WrapperRegistry.get[Table](source).get, itemId, propertyId)
+    def generateDescription(source: com.vaadin.ui.Component, itemId: Any, propertyId: Any) = generator(wrapperFor[Table](source).get, itemId, propertyId)
   }
 
   def itemDescriptionGenerator: Option[(Table, Any, Any) => String] = p.getItemDescriptionGenerator match {
@@ -205,29 +205,29 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
 case class ItemClickEvent(component: Component, item: com.vaadin.data.Item, itemId: Any, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
 
 class ItemClickListener(val action: ItemClickEvent => Unit) extends com.vaadin.event.ItemClickEvent.ItemClickListener with Listener {
-  def itemClick(e: com.vaadin.event.ItemClickEvent) = action(ItemClickEvent(WrapperRegistry.get[Table](e.getComponent).get, e.getItem(), e.getItemId(), e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
+  def itemClick(e: com.vaadin.event.ItemClickEvent) = action(ItemClickEvent(wrapperFor[Table](e.getComponent).get, e.getItem(), e.getItemId(), e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
 }
 
 case class HeaderClickEvent(component: Component, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
 
 class HeaderClickListener(val action: HeaderClickEvent => Unit) extends com.vaadin.ui.Table.HeaderClickListener with Listener {
-  def headerClick(e: com.vaadin.ui.Table.HeaderClickEvent) = action(HeaderClickEvent(WrapperRegistry.get[Table](e.getComponent).get, e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
+  def headerClick(e: com.vaadin.ui.Table.HeaderClickEvent) = action(HeaderClickEvent(wrapperFor[Table](e.getComponent).get, e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
 }
 
 case class FooterClickEvent(component: Component, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
 
 class FooterClickListener(val action: FooterClickEvent => Unit) extends com.vaadin.ui.Table.FooterClickListener with Listener {
-  def footerClick(e: com.vaadin.ui.Table.FooterClickEvent) = action(FooterClickEvent(WrapperRegistry.get[Table](e.getComponent).get, e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
+  def footerClick(e: com.vaadin.ui.Table.FooterClickEvent) = action(FooterClickEvent(wrapperFor[Table](e.getComponent).get, e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
 }
 
 case class ColumnResizeEvent(component: Component, propertyId: Any, previousWidth: Int, currentWidth: Int) extends Event
 
 class ColumnResizeListener(val action: ColumnResizeEvent => Unit) extends com.vaadin.ui.Table.ColumnResizeListener with Listener {
-  def columnResize(e: com.vaadin.ui.Table.ColumnResizeEvent) = action(ColumnResizeEvent(WrapperRegistry.get[Table](e.getComponent).get, e.getPropertyId, e.getPreviousWidth, e.getCurrentWidth))
+  def columnResize(e: com.vaadin.ui.Table.ColumnResizeEvent) = action(ColumnResizeEvent(wrapperFor[Table](e.getComponent).get, e.getPropertyId, e.getPreviousWidth, e.getCurrentWidth))
 }
 
 case class ColumnReorderEvent(component: Component) extends Event
 
 class ColumnReorderListener(val action: ColumnReorderEvent => Unit) extends com.vaadin.ui.Table.ColumnReorderListener with Listener {
-  def columnReorder(e: com.vaadin.ui.Table.ColumnReorderEvent) = action(ColumnReorderEvent(WrapperRegistry.get[Table](e.getComponent).get))
+  def columnReorder(e: com.vaadin.ui.Table.ColumnReorderEvent) = action(ColumnReorderEvent(wrapperFor[Table](e.getComponent).get))
 }

@@ -2,7 +2,11 @@ package vaadin.scala
 
 import scala.collection.mutable
 
-trait Listener { def action: Any }
+trait Listener {
+  def action: Any
+
+  protected def wrapperFor[T](vaadinComponent: com.vaadin.ui.Component): Option[T] = internal.WrapperUtil.wrapperFor[T](vaadinComponent)
+}
 
 trait ListenersTrait[E, L <: Listener] extends mutable.Set[E] {
 
