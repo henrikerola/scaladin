@@ -40,7 +40,7 @@ abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPan
   def locked = p.isLocked();
   def locked_=(locked: Boolean) = p.setLocked(locked)
   
-  lazy val splitterClickListeners = new ListenersTrait[SplitterClickEvent => Unit, SplitterClickListener] {
+  lazy val splitterClickListeners = new ListenersTrait[SplitterClickEvent, SplitterClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.AbstractSplitPanel#SplitterClickEvent])
     override def addListener(elem: SplitterClickEvent => Unit) = p.addListener(new SplitterClickListener(elem))
     override def removeListener(elem: SplitterClickListener) = p.removeListener(elem)

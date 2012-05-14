@@ -30,7 +30,7 @@ class UriFragmentUtility(override val p: com.vaadin.ui.UriFragmentUtility with U
   def fragment(fragment: String, fireEvent: Boolean) = p.setFragment(fragment, fireEvent)
   def fragment(fragment: Option[String], fireEvent: Boolean) = p.setFragment(fragment.getOrElse(null), fireEvent)
 
-  lazy val fragmentChangedListeners = new ListenersTrait[UriFragmentUtility.FragmentChangedEvent => Unit, FragmentChangedListener] {
+  lazy val fragmentChangedListeners = new ListenersTrait[UriFragmentUtility.FragmentChangedEvent, FragmentChangedListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.UriFragmentUtility#FragmentChangedEvent])
     override def addListener(elem: UriFragmentUtility.FragmentChangedEvent => Unit) = p.addListener(new FragmentChangedListener(elem))
     override def removeListener(elem: FragmentChangedListener) = p.removeListener(elem)

@@ -131,31 +131,31 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def footerVisible = p.isFooterVisible
   def footerVisible_=(footerVisible: Boolean) = p.setFooterVisible(footerVisible)
 
-  lazy val itemClickListeners = new ListenersTrait[ItemClickEvent => Unit, ItemClickListener] {
+  lazy val itemClickListeners = new ListenersTrait[ItemClickEvent, ItemClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.event.ItemClickEvent.ItemClickListener])
     override def addListener(elem: ItemClickEvent => Unit) = p.addListener(new ItemClickListener(elem))
     override def removeListener(elem: ItemClickListener) = p.removeListener(elem)
   }
 
-  lazy val headerClickListeners = new ListenersTrait[HeaderClickEvent => Unit, HeaderClickListener] {
+  lazy val headerClickListeners = new ListenersTrait[HeaderClickEvent, HeaderClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.HeaderClickListener])
     override def addListener(elem: HeaderClickEvent => Unit) = p.addListener(new HeaderClickListener(elem))
     override def removeListener(elem: HeaderClickListener) = p.removeListener(elem)
   }
 
-  lazy val footerClickListeners = new ListenersTrait[FooterClickEvent => Unit, FooterClickListener] {
+  lazy val footerClickListeners = new ListenersTrait[FooterClickEvent, FooterClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.FooterClickListener])
     override def addListener(elem: FooterClickEvent => Unit) = p.addListener(new FooterClickListener(elem))
     override def removeListener(elem: FooterClickListener) = p.removeListener(elem)
   }
 
-  lazy val columnResizeListeners = new ListenersTrait[ColumnResizeEvent => Unit, ColumnResizeListener] {
+  lazy val columnResizeListeners = new ListenersTrait[ColumnResizeEvent, ColumnResizeListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.ColumnReorderListener])
     override def addListener(elem: ColumnResizeEvent => Unit) = p.addListener(new ColumnResizeListener(elem))
     override def removeListener(elem: ColumnResizeListener) = p.removeListener(elem)
   }
 
-  lazy val columnReorderListeners = new ListenersTrait[ColumnReorderEvent => Unit, ColumnReorderListener] {
+  lazy val columnReorderListeners = new ListenersTrait[ColumnReorderEvent, ColumnReorderListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.ColumnReorderListener])
     override def addListener(elem: ColumnReorderEvent => Unit) = p.addListener(new ColumnReorderListener(elem))
     override def removeListener(elem: ColumnReorderListener) = p.removeListener(elem)

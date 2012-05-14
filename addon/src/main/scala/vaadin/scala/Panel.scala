@@ -35,7 +35,7 @@ class Panel(override val p: com.vaadin.ui.Panel with PanelMixin = new com.vaadin
   def scrollTop = p.getScrollTop
   def scrollTop_=(scrollTop: Int) = p.setScrollTop(scrollTop)
 
-  lazy val clickListeners = new ListenersTrait[ClickEvent => Unit, ClickListener] {
+  lazy val clickListeners = new ListenersTrait[ClickEvent, ClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.event.MouseEvents.ClickListener])
     override def addListener(elem: ClickEvent => Unit) = p.addListener(new ClickListener(elem))
     override def removeListener(elem: ClickListener) = p.removeListener(elem)

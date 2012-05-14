@@ -8,18 +8,19 @@ trait Listener {
   protected def wrapperFor[T](vaadinComponent: com.vaadin.ui.Component): Option[T] = internal.WrapperUtil.wrapperFor[T](vaadinComponent)
 }
 
-trait ListenersTrait[E, L <: Listener] extends mutable.Set[E] {
+trait ListenersTrait[E, L <: Listener] extends mutable.Set[E => Unit] {
 
   import scala.collection.JavaConversions._
-  def contains(key: E) = {
+  def contains(key: E => Unit) = {
     iterator.contains(key)
   }
-  def iterator(): Iterator[E] = {
+  def iterator(): Iterator[E => Unit] = {
     val list = listeners.map(_.asInstanceOf[L].action)
-    list.iterator.asInstanceOf[Iterator[E]]
+    list.iterator.asInstanceOf[Iterator[E => Unit]]
   }
-  def +=(elem: E) = { addListener(elem); this }
-  def -=(elem: E) = {
+  def +=(elem: => Unit) = { addListener((e: E) => elem); this }
+  def +=(elem: E => Unit) = { addListener(elem); this }
+  def -=(elem: E => Unit) = {
     val list = listeners.foreach { e =>
       if (e.asInstanceOf[L].action == elem) {
         removeListener(e.asInstanceOf[L])
@@ -31,7 +32,7 @@ trait ListenersTrait[E, L <: Listener] extends mutable.Set[E] {
 
   protected def listeners: java.util.Collection[_]
 
-  protected def addListener(elem: E);
+  protected def addListener(elem: E => Unit);
 
   protected def removeListener(elem: L);
 }
@@ -45,7 +46,7 @@ package listeners {
     def blur(e: com.vaadin.event.FieldEvents.BlurEvent) = action(BlurEvent(wrapperFor[Component](e.getComponent()).get))
   }
 
-  class BlurListeners(p: { def getListeners(eventType: Class[_]): java.util.Collection[_]; def addListener(l: com.vaadin.event.FieldEvents.BlurListener); def removeListener(l: com.vaadin.event.FieldEvents.BlurListener) }) extends ListenersTrait[BlurEvent => Unit, BlurListener] {
+  class BlurListeners(p: { def getListeners(eventType: Class[_]): java.util.Collection[_]; def addListener(l: com.vaadin.event.FieldEvents.BlurListener); def removeListener(l: com.vaadin.event.FieldEvents.BlurListener) }) extends ListenersTrait[BlurEvent, BlurListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.event.FieldEvents.BlurEvent])
     override def addListener(elem: BlurEvent => Unit) = p.addListener(new BlurListener(elem))
     override def removeListener(elem: BlurListener) = p.removeListener(elem)
@@ -55,7 +56,7 @@ package listeners {
     def focus(e: com.vaadin.event.FieldEvents.FocusEvent) = action(FocusEvent(wrapperFor[Component](e.getComponent()).get))
   }
 
-  class FocusListeners(p: { def getListeners(eventType: Class[_]): java.util.Collection[_]; def addListener(l: com.vaadin.event.FieldEvents.FocusListener); def removeListener(l: com.vaadin.event.FieldEvents.FocusListener) }) extends ListenersTrait[FocusEvent => Unit, FocusListener] {
+  class FocusListeners(p: { def getListeners(eventType: Class[_]): java.util.Collection[_]; def addListener(l: com.vaadin.event.FieldEvents.FocusListener); def removeListener(l: com.vaadin.event.FieldEvents.FocusListener) }) extends ListenersTrait[FocusEvent, FocusListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.event.FieldEvents.FocusEvent])
     override def addListener(elem: FocusEvent => Unit) = p.addListener(new FocusListener(elem))
     override def removeListener(elem: FocusListener) = p.removeListener(elem)
