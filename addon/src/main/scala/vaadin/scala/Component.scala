@@ -65,6 +65,12 @@ trait Component extends Wrapper {
   def application = Option(p.getApplication)
 
   def locale = Option(p.getLocale)
+  
+  def id = Option(p.getDebugId())
+  def id_=(id: Option[String]) = p.setDebugId(id.getOrElse(null))
+  def id_=(id: String) = p.setDebugId(id)
+  
+  def requestRepaint() = p.requestRepaint()
 
   //override def toString = p.toString
 

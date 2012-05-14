@@ -1,15 +1,52 @@
 package vaadin.scala.tests
 
 import org.scalatest.FunSuite
-
 import com.vaadin.terminal.Sizeable
-
 import vaadin.scala._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import vaadin.scala.mixins.ComponentMixin
+import org.scalatest.BeforeAndAfter
+import org.scalatest.mock.MockitoSugar
+import org.mockito.Mockito
 
 @RunWith(classOf[JUnitRunner])
-class ComponentTests extends FunSuite {
+class ComponentTests extends FunSuite with BeforeAndAfter with MockitoSugar {
+
+  abstract class VaadinComponent extends com.vaadin.ui.Component with ComponentMixin
+
+  var component: Component = _
+  var mockedVaadinComponent: VaadinComponent = _
+
+  before {
+    mockedVaadinComponent = mock[VaadinComponent]
+    component = new Component {
+      override val p = mockedVaadinComponent
+    }
+  }
+
+  test("id") {
+    Mockito.when(mockedVaadinComponent.getDebugId).thenReturn("test-id")
+    assert(component.id === Some("test-id"))
+    Mockito.verify(mockedVaadinComponent).getDebugId
+    
+    Mockito.reset(mockedVaadinComponent)
+    
+    Mockito.when(mockedVaadinComponent.getDebugId).thenReturn(null)
+    assert(component.id === None)
+    Mockito.verify(mockedVaadinComponent).getDebugId
+
+    component.id = None
+    Mockito.verify(mockedVaadinComponent).setDebugId(null)
+
+    component.id = "myDebugId"
+    Mockito.verify(mockedVaadinComponent).setDebugId("myDebugId")
+  }
+
+  test("requestRepaint()") {
+    component.requestRepaint()
+    Mockito.verify(mockedVaadinComponent).requestRepaint()
+  }
 
   test("Link, default constructor") {
     val link = new Link
