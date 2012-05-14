@@ -4,7 +4,6 @@ import scala.collection.mutable
 import vaadin.scala.mixins.ComponentMixin
 import vaadin.scala.mixins.AbstractComponentMixin
 import vaadin.scala.mixins.ScaladinMixin
-import vaadin.scala.internal.WrapperUtil
 
 package mixins {
 
@@ -25,8 +24,6 @@ package mixins {
 
 trait Component extends Wrapper {
   def p: com.vaadin.ui.Component with ComponentMixin
-
-  protected def wrapperFor[T](vaadinComponent: Any): Option[T] = WrapperUtil.wrapperFor[T](vaadinComponent)
 
   // TODO: add methods styleName, addStyleName, removeStyleName?
 
