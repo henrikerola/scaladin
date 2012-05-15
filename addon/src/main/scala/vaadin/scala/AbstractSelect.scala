@@ -6,7 +6,8 @@ package mixins {
   trait AbstractSelectMixin extends AbstractFieldMixin
 }
 
-abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with AbstractSelectMixin) extends AbstractField(p) with Container.Viewer {
+abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with AbstractSelectMixin)
+  extends AbstractField(p) with Container.Container with Container.Viewer {
 
   // NewItemHandler
 
@@ -31,4 +32,8 @@ abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with 
   def selected(itemId: Any) = p.isSelected(itemId)
   def select(itemId: Any) = p.select(itemId)
   def unselect(itemId: Any) = p.unselect(itemId)
+
+  // Container.Container:
+  protected def wrapItem(unwrapped: com.vaadin.data.Item): Item = new IndexedContainerItem(unwrapped)
+  protected def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new BasicProperty(unwrapped)
 }

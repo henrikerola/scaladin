@@ -36,7 +36,8 @@ object Table {
   }
 }
 
-class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin.ui.Table with TableMixin) extends AbstractSelect(p) {
+class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin.ui.Table with TableMixin)
+  extends AbstractSelect(p) with Container.Ordered with Container.Sortable {
 
   // VisibleColumns
   // getColumnHeaders()
@@ -56,7 +57,7 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def columnHeader(propertyId: Any) = Option(p.getColumnHeader(propertyId))
   def columnHeader(propertyId: Any, header: Option[String]) = p.setColumnHeader(propertyId, header.getOrElse(null))
   def columnHeader(propertyId: Any, header: String) = p.setColumnHeader(propertyId, header)
-  
+
   def columnFooter(propertyId: Any) = Option(p.getColumnFooter(propertyId))
   def columnFooter(propertyId: Any, footer: Option[String]) = p.setColumnFooter(propertyId, footer.getOrElse(null))
   def columnFooter(propertyId: Any, footer: String) = p.setColumnFooter(propertyId, footer)
@@ -85,8 +86,6 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def sortable = !p.isSortDisabled
   def sortable_=(sortable: Boolean) = p.setSortDisabled(!sortable)
 
-  // TODO: sort(Object[] propertyId, boolean[] ascending)
-  // TODO: getSortableContainerPropertyIds() {
   // TODO: sortContainerPropertyId: Any = p.getSortContainerPropertyId 
   // TODO: setSortContainerPropertyId
 
