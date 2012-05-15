@@ -50,7 +50,14 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
 
   def draggable_=(draggable: Boolean) = p.setDraggable(draggable)
   def draggable = p.isDraggable
-  
+
+  def showNotification(caption: String) = p.showNotification(caption)
+  def showNotification(caption: String, notificationType: Notification.Type.Value) = p.showNotification(caption, notificationType.id)
+  def showNotification(caption: String, description: String) = p.showNotification(caption, description)
+  def showNotification(caption: String, description: String, notificationType: Notification.Type.Value) = p.showNotification(caption, description, notificationType.id)
+  def showNotification(caption: String, description: String, notificationType: Notification.Type.Value, htmlContentAllowed: Boolean) = p.showNotification(caption, description, notificationType.id, htmlContentAllowed)
+  def showNotification(notification: Notification) = p.showNotification(notification.p)
+
   lazy val blurListeners = new BlurListeners(p)
   lazy val focusListeners = new FocusListeners(p)
 }
