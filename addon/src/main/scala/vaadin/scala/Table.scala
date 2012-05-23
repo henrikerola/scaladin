@@ -37,7 +37,7 @@ object Table {
 }
 
 class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin.ui.Table with TableMixin)
-  extends AbstractSelect(p) with Container.Ordered with Container.Sortable {
+  extends AbstractSelect(p) with Container.Ordered with Container.Sortable with ItemDescriptionGenerator {
 
   // VisibleColumns
   // getColumnHeaders()
@@ -177,24 +177,6 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def cellStyleGenerator_=(generator: Option[(Any, Any) => String]): Unit = generator match {
     case None => p.setCellStyleGenerator(null)
     case Some(generator) => cellStyleGenerator = generator
-  }
-
-  private class ItemDescriptionGenerator(val generator: (Table, Any, Any) => String) extends com.vaadin.ui.AbstractSelect.ItemDescriptionGenerator {
-    def generateDescription(source: com.vaadin.ui.Component, itemId: Any, propertyId: Any) = generator(wrapperFor[Table](source).get, itemId, propertyId)
-  }
-
-  def itemDescriptionGenerator: Option[(Table, Any, Any) => String] = p.getItemDescriptionGenerator match {
-    case null => None
-    case generator: ItemDescriptionGenerator => Some(generator.generator)
-  }
-
-  def itemDescriptionGenerator_=(generator: (Table, Any, Any) => String): Unit = {
-    p.setItemDescriptionGenerator(new ItemDescriptionGenerator(generator))
-  }
-
-  def itemDescriptionGenerator_=(generator: Option[(Table, Any, Any) => String]): Unit = generator match {
-    case None => p.setItemDescriptionGenerator(null)
-    case Some(generator) => itemDescriptionGenerator = generator
   }
 
   // RowGenerator
