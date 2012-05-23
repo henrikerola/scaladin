@@ -20,9 +20,3 @@ trait FilterableComponentContainer[C <: ComponentContainer] extends ComponentCon
     newList
   }
 }
-
-class CustomComponent(width: Option[Measure] = 100 percent, height: Option[Measure] = None, compositionRoot: Component = null)
-  extends com.vaadin.ui.CustomComponent(if (compositionRoot != null) compositionRoot.p else null) {
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-}
