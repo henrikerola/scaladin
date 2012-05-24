@@ -12,7 +12,7 @@ package mixins {
  * @author Henri Kerola / Vaadin
  */
 class Tree(override val p: com.vaadin.ui.Tree with TreeMixin = new com.vaadin.ui.Tree with TreeMixin)
-  extends AbstractSelect(p) with Container.Hierarchical with ItemDescriptionGenerator {
+  extends AbstractSelect(p) with Container.Hierarchical with ItemDescriptionGeneratorOwner {
 
   def expanded(itemId: Any): Boolean = p.isExpanded(itemId)
 

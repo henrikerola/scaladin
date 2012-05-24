@@ -37,7 +37,7 @@ object Table {
 }
 
 class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin.ui.Table with TableMixin)
-  extends AbstractSelect(p) with Container.Ordered with Container.Sortable with ItemDescriptionGenerator {
+  extends AbstractSelect(p) with Container.Ordered with Container.Sortable with ItemDescriptionGeneratorOwner {
 
   // VisibleColumns
   // getColumnHeaders()
