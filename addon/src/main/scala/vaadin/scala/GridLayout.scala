@@ -6,7 +6,8 @@ package mixins {
   trait GridLayoutMixin extends AbstractLayoutMixin
 }
 
-class GridLayout(override val p: com.vaadin.ui.GridLayout with GridLayoutMixin = new com.vaadin.ui.GridLayout with GridLayoutMixin) extends AbstractLayout(p) with SpacingHandler with AlignmentHandler {
+class GridLayout(override val p: com.vaadin.ui.GridLayout with GridLayoutMixin = new com.vaadin.ui.GridLayout with GridLayoutMixin)
+  extends AbstractLayout(p) with SpacingHandler with AlignmentHandler with LayoutClickNotifier {
 
   def this(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, columns: Int = 1, rows: Int = 1) = {
     this(new com.vaadin.ui.GridLayout with GridLayoutMixin)
@@ -61,7 +62,7 @@ class GridLayout(override val p: com.vaadin.ui.GridLayout with GridLayoutMixin =
 
   // TODO return wrapped Area
   def componentArea(component: Component) = p.getComponentArea(component.p)
-  
+
   // TODO: LayoutClickListener
 
 }
