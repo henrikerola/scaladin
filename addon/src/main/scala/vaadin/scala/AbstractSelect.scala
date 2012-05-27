@@ -3,11 +3,11 @@ package vaadin.scala
 import vaadin.scala.mixins.AbstractSelectMixin
 
 package mixins {
-  trait AbstractSelectMixin extends AbstractFieldMixin
+  trait AbstractSelectMixin extends AbstractFieldMixin with ContainerMixin with ContainerViewerMixin
 }
 
 abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with AbstractSelectMixin)
-  extends AbstractField(p) with Container.Container with Container.Viewer {
+  extends AbstractField(p) with Container with ContainerViewer {
 
   // NewItemHandler
 

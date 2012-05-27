@@ -3,6 +3,12 @@ package vaadin.scala
 import java.io.File
 import java.io.FilenameFilter
 import java.util.Date
+import vaadin.scala.mixins.ContainerHierarchicalMixin
+import vaadin.scala.mixins.FilesystemContainerMixin
+
+package mixins {
+  trait FilesystemContainerMixin extends ContainerHierarchicalMixin
+}
 
 object FilesystemContainer {
 
@@ -20,12 +26,10 @@ object FilesystemContainer {
   def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new FunctionProperty(_ => unwrapped.getValue, (x: Any) => unwrapped.setValue(x))
 }
 
-class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContainer) extends Container.Hierarchical {
-  // FIXME:
-  //WrapperRegistry.put(this)
+class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContainer with FilesystemContainerMixin) extends ContainerHierarchical {
 
   def this(root: File, extension: String = null, filenameFilter: FilenameFilter = null, recursiveFromRoot: Boolean = true) {
-    this(new com.vaadin.data.util.FilesystemContainer(root))
+    this(new com.vaadin.data.util.FilesystemContainer(root) with FilesystemContainerMixin)
     recursive = recursiveFromRoot
     if (extension != null)
       filter = extension

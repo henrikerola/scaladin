@@ -1,16 +1,36 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.AbstractFieldMixin
+import vaadin.scala.listeners.ValueChangeListener
+import vaadin.scala.mixins.FieldMixin
 
 package mixins {
-  trait AbstractFieldMixin extends AbstractComponentMixin
+  trait AbstractFieldMixin extends AbstractComponentMixin with FieldMixin
+  trait FieldMixin extends ComponentMixin
 }
 
-abstract class AbstractField(override val p: com.vaadin.ui.AbstractField with AbstractFieldMixin) extends AbstractComponent(p) with PropertyViewer with Focusable {
+trait Field extends Component with Property with Focusable with Wrapper {
 
-  def value: Option[Any] = Option(p.getValue())
-  def value_=(value: Option[Any]): Unit = p.setValue(value.getOrElse(null))
-  def value_=(value: Any): Unit = p.setValue(value)
+  def p: com.vaadin.ui.Field with FieldMixin
+
+  def description: Option[String] = Option(p.getDescription)
+  def description_=(description: String): Unit = p.setDescription(description)
+  def description_=(description: Option[String]): Unit = p.setDescription(description.getOrElse(null))
+
+  def required: Boolean = p.isRequired
+  def required_=(required: Boolean): Unit = p.setRequired(required)
+
+  def requiredError: Option[String] = Option(p.getRequiredError)
+  def requiredError_=(requiredError: String): Unit = p.setRequiredError(requiredError)
+  def requiredError_=(requiredError: Option[String]): Unit = p.setRequiredError(requiredError.getOrElse(null))
+}
+
+abstract class AbstractField(override val p: com.vaadin.ui.AbstractField with AbstractFieldMixin) extends AbstractComponent(p) with Field with PropertyViewer with Focusable {
+
+  //description is inherited from AbstractComponent and Field, needs override
+  override def description: Option[String] = Option(p.getDescription)
+  override def description_=(description: String): Unit = p.setDescription(description)
+  override def description_=(description: Option[String]): Unit = p.setDescription(description.getOrElse(null))
 
   def invalidCommitted = p.isInvalidCommitted
   def invalidCommitted_=(invalidCommitted: Boolean) = p.setInvalidCommitted(invalidCommitted)
@@ -21,5 +41,15 @@ abstract class AbstractField(override val p: com.vaadin.ui.AbstractField with Ab
   def readThrough = p.isReadThrough
   def readThrough_=(readThrough: Boolean) = p.setReadThrough(readThrough)
 
-  //TODO
+  lazy val valueChangeListeners = new ListenersTrait[ValueChangeEvent, ValueChangeListener] {
+    override def listeners = p.getListeners(classOf[com.vaadin.data.Property.ValueChangeEvent])
+    override def addListener(elem: ValueChangeEvent => Unit) = p.addListener(new ValueChangeListener(elem))
+    override def removeListener(elem: ValueChangeListener) = p.removeListener(elem)
+  }
+}
+
+package listeners {
+  class ValueChangeListener(val action: ValueChangeEvent => Unit) extends com.vaadin.data.Property.ValueChangeListener with Listener {
+    def valueChange(e: com.vaadin.data.Property.ValueChangeEvent) = action(ValueChangeEvent(new BasicProperty(e.getProperty)))
+  }
 }

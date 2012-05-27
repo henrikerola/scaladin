@@ -46,8 +46,9 @@ trait Component extends Wrapper {
   // TODO parent setter?
   def parent: Option[Component] = wrapperFor[Component](p.getParent())
 
-  def readOnly = p.isReadOnly
-  def readOnly_=(readOnly: Boolean) = p.setReadOnly(readOnly)
+  //FIXME: also defined in property, figure out what to do
+  //  def readOnly = p.isReadOnly
+  //  def readOnly_=(readOnly: Boolean) = p.setReadOnly(readOnly)
 
   def caption = Option(p.getCaption)
   def caption_=(caption: Option[String]) = p.setCaption(caption.getOrElse(null))
@@ -62,11 +63,11 @@ trait Component extends Wrapper {
   def application = Option(p.getApplication)
 
   def locale = Option(p.getLocale)
-  
+
   def id = Option(p.getDebugId())
   def id_=(id: Option[String]) = p.setDebugId(id.getOrElse(null))
   def id_=(id: String) = p.setDebugId(id)
-  
+
   def requestRepaint() = p.requestRepaint()
 
   //override def toString = p.toString
@@ -118,19 +119,3 @@ trait Focusable extends Component {
   def tabIndex_=(tabIndex: Int) = p.setTabIndex(tabIndex)
 }
 
-trait PropertyViewer {
-
-  def p: com.vaadin.data.Property.Viewer
-
-  def property: Option[Property] = p.getPropertyDataSource() match {
-    case p: com.vaadin.data.Property => Some(new BasicProperty(p))
-    case null => None
-  }
-
-  def property_=(property: Option[Property]) = property match {
-    case Some(prop) => p.setPropertyDataSource(prop.p)
-    case None => p.setPropertyDataSource(null)
-  }
-
-  def property_=(property: Property) = p.setPropertyDataSource(property.p)
-}

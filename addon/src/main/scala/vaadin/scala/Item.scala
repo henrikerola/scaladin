@@ -1,5 +1,7 @@
 package vaadin.scala
 
+import vaadin.scala.mixins.ScaladinMixin
+
 object Item {
   def apply(properties: Tuple2[Any, Any]*): Item = fill(new PropertysetItem, properties: _*)
 
@@ -37,12 +39,28 @@ trait Item extends Wrapper {
     case _ => None
   }
 
-  protected def wrapProperty(unwrapped: com.vaadin.data.Property): Property
+  //override if needed
+  protected def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new BasicProperty(unwrapped)
+}
+
+trait ItemViewer {
+  def p: com.vaadin.data.Item.Viewer
+
+  def item: Option[Item] = p.getItemDataSource match {
+    case null => None
+    case i => Some(new BasicItem(i))
+  }
+
+  def item_=(item: Item) = p.setItemDataSource(item.p)
+  def item_=(item: Option[Item]) = item match {
+    case Some(item) => p.setItemDataSource(item.p)
+    case None => p.setItemDataSource(null)
+  }
 }
 
 class PropertysetItem(override val p: com.vaadin.data.util.PropertysetItem = new com.vaadin.data.util.PropertysetItem) extends Item {
 
   def listeners(listenerType: Class[_]) = p.getListeners(listenerType)
-
-  def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new BasicProperty(unwrapped)
 }
+
+class BasicItem(override val p: com.vaadin.data.Item) extends Item

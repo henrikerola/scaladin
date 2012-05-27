@@ -1,4 +1,19 @@
 package vaadin.scala
+import vaadin.scala.mixins.ContainerMixin
+import vaadin.scala.mixins.ContainerIndexedMixin
+import vaadin.scala.mixins.ContainerHierarchicalMixin
+import vaadin.scala.mixins.ContainerOrderedMixin
+import vaadin.scala.mixins.ContainerViewerMixin
+import vaadin.scala.mixins.ContainerSortableMixin
+
+package mixins {
+  trait ContainerMixin extends ScaladinMixin
+  trait ContainerHierarchicalMixin extends ContainerMixin
+  trait ContainerOrderedMixin extends ContainerMixin
+  trait ContainerViewerMixin extends ScaladinMixin
+  trait ContainerSortableMixin extends ContainerOrderedMixin
+  trait ContainerIndexedMixin extends ContainerOrderedMixin
+}
 
 object Container {
   def apply(items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): Container = fill(new IndexedContainer, items: _*)
@@ -24,106 +39,123 @@ object Container {
     }
     container
   }
+}
 
-  trait Container extends Wrapper {
+trait Container extends Wrapper {
 
-    import scala.collection.JavaConverters._
+  import scala.collection.JavaConverters._
 
-    def p: com.vaadin.data.Container
+  def p: com.vaadin.data.Container with ContainerMixin
 
-    def item(id: Any): Option[Item] = optionalWrapItem(p.getItem(id))
+  def item(id: Any): Option[Item] = optionalWrapItem(p.getItem(id))
 
-    def itemIds(): Iterable[Any] = p.getItemIds.asScala
+  def itemIds(): Iterable[Any] = p.getItemIds.asScala
 
-    def removeAllItems(): Boolean = p.removeAllItems
+  def removeAllItems(): Boolean = p.removeAllItems
 
-    def addContainerProperty(propertyId: Any, propertyType: Class[_], defaultValue: Any): Boolean = p.addContainerProperty(propertyId, propertyType, defaultValue)
+  def addContainerProperty(propertyId: Any, propertyType: Class[_], defaultValue: Any): Boolean = p.addContainerProperty(propertyId, propertyType, defaultValue)
 
-    def removeContainerProperty(propertyId: Any): Boolean = p.removeContainerProperty(propertyId)
+  def removeContainerProperty(propertyId: Any): Boolean = p.removeContainerProperty(propertyId)
 
-    def removeItem(itemId: Any): Boolean = p.removeItem(itemId)
+  def removeItem(itemId: Any): Boolean = p.removeItem(itemId)
 
-    def addItem(): Option[Any] = Some(p.addItem())
+  def addItem(): Option[Any] = Some(p.addItem())
 
-    def addItem(itemId: Any): Option[Item] = optionalWrapItem(p.addItem(itemId))
+  def addItem(itemId: Any): Option[Item] = optionalWrapItem(p.addItem(itemId))
 
-    def containsId(itemId: Any): Boolean = p.containsId(itemId)
+  def containsId(itemId: Any): Boolean = p.containsId(itemId)
 
-    def size(): Int = p.size()
+  def size(): Int = p.size()
 
-    def property(itemId: Any, propertyId: Any): Property = wrapProperty(p.getContainerProperty(itemId, propertyId))
+  def property(itemId: Any, propertyId: Any): Option[Property] = optionalWrapProperty(p.getContainerProperty(itemId, propertyId))
 
-    def propertyIds(): Iterable[Any] = p.getContainerPropertyIds().asScala
+  def propertyIds(): Iterable[Any] = p.getContainerPropertyIds().asScala
 
-    def getType(propertyId: Any): Class[_] = p.getType(propertyId)
+  def getType(propertyId: Any): Class[_] = p.getType(propertyId)
 
-    protected def wrapItem(unwrapped: com.vaadin.data.Item): Item
+  protected def wrapItem(unwrapped: com.vaadin.data.Item): Item
 
-    protected def wrapProperty(unwrapped: com.vaadin.data.Property): Property
+  protected def wrapProperty(unwrapped: com.vaadin.data.Property): Property
 
-    protected def optionalWrapItem(item: com.vaadin.data.Item): Option[Item] = item match {
-      case i: com.vaadin.data.Item => Some(wrapItem(i))
-      case _ => None
-    }
+  protected def optionalWrapItem(item: com.vaadin.data.Item): Option[Item] = item match {
+    case i: com.vaadin.data.Item => Some(wrapItem(i))
+    case _ => None
   }
 
-  trait Viewer extends Wrapper {
-    def p: com.vaadin.data.Container.Viewer
-
-    def container_=(container: Container) = p.setContainerDataSource(container.p)
-    def container = p.getContainerDataSource
+  protected def optionalWrapProperty(item: com.vaadin.data.Property): Option[Property] = item match {
+    case i: com.vaadin.data.Item => Some(wrapProperty(i))
+    case _ => None
   }
+}
 
-  trait Hierarchical extends Container {
+trait ContainerHierarchical extends Container {
 
-    def p: com.vaadin.data.Container.Hierarchical
+  def p: com.vaadin.data.Container.Hierarchical with ContainerHierarchicalMixin
 
-    def children(itemId: Any) = p.getChildren(itemId)
+  def children(itemId: Any) = p.getChildren(itemId)
 
-    def parent(itemId: Any) = p.getParent(itemId)
-    def parent_=(itemId: Any, newParentId: Any) = p.setParent(itemId, newParentId)
+  def parent(itemId: Any): Any = p.getParent(itemId)
+  def parent_=(itemId: Any, newParentId: Any): Unit = p.setParent(itemId, newParentId)
 
-    def rootItemIds = p.rootItemIds
+  def rootItemIds = p.rootItemIds
 
-    def areChildrenAllowed(itemId: Any) = p.areChildrenAllowed(itemId)
+  def areChildrenAllowed(itemId: Any) = p.areChildrenAllowed(itemId)
 
-    def setChildrenAllowed(itemId: Any, areChildrenAllowed: Boolean) = p.setChildrenAllowed(itemId, areChildrenAllowed)
+  def setChildrenAllowed(itemId: Any, areChildrenAllowed: Boolean) = p.setChildrenAllowed(itemId, areChildrenAllowed)
 
-    def isRoot(itemId: Any) = p.isRoot(itemId)
+  def isRoot(itemId: Any) = p.isRoot(itemId)
 
-    def hasChildren(itemId: Any) = p.hasChildren(itemId)
+  def hasChildren(itemId: Any) = p.hasChildren(itemId)
+}
 
-    override def removeItem(itemId: Any) = p.removeItem(itemId)
-  }
-  trait Ordered extends Container {
+trait ContainerOrdered extends Container {
 
-    def p: com.vaadin.data.Container.Ordered
+  def p: com.vaadin.data.Container.Ordered with ContainerOrderedMixin
 
-    def nextItemId(itemId: Any): Any = p.nextItemId(itemId)
+  def nextItemId(itemId: Any): Any = p.nextItemId(itemId)
 
-    def prevItemId(itemId: Any): Any = p.prevItemId(itemId)
+  def prevItemId(itemId: Any): Any = p.prevItemId(itemId)
 
-    def firstItemId(): Any = p.firstItemId
+  def firstItemId(): Any = p.firstItemId
 
-    def lastItemId(): Any = p.lastItemId
+  def lastItemId(): Any = p.lastItemId
 
-    def isFirstId(itemId: Any): Boolean = p.isFirstId(itemId)
+  def isFirstId(itemId: Any): Boolean = p.isFirstId(itemId)
 
-    def isLastId(itemId: Any): Boolean = p.isLastId(itemId)
+  def isLastId(itemId: Any): Boolean = p.isLastId(itemId)
 
-    def addItemAfter(previousItemId: Any): Any = p.addItemAfter(previousItemId)
+  def addItemAfter(previousItemId: Any): Any = p.addItemAfter(previousItemId)
 
-    def addItemAfter(previousItemId: Any, newItemId: Any): Item = wrapItem(p.addItemAfter(previousItemId, newItemId))
+  def addItemAfter(previousItemId: Any, newItemId: Any): Item = wrapItem(p.addItemAfter(previousItemId, newItemId))
+}
 
-  }
+trait ContainerViewer extends Wrapper {
+  def p: com.vaadin.data.Container.Viewer with ContainerViewerMixin
 
-  trait Sortable extends Ordered {
-    import scala.collection.JavaConverters._
+  def container_=(container: Container) = p.setContainerDataSource(container.p)
+  def container: Option[Container] = wrapperFor[Container](p)
+}
 
-    def p: com.vaadin.data.Container.Sortable
+trait ContainerSortable extends ContainerOrdered {
+  import scala.collection.JavaConverters._
 
-    def sort(propertyId: Array[AnyRef], ascending: Array[Boolean]) = p.sort(propertyId, ascending)
+  def p: com.vaadin.data.Container.Sortable with ContainerSortableMixin
 
-    def sortableContainerPropertyIds(): Iterable[Any] = p.getSortableContainerPropertyIds.asScala
-  }
+  def sort(propertyId: Array[AnyRef], ascending: Array[Boolean]) = p.sort(propertyId, ascending)
+
+  def sortableContainerPropertyIds(): Iterable[Any] = p.getSortableContainerPropertyIds.asScala
+}
+
+trait ContainerIndexed extends ContainerOrdered {
+
+  def p: com.vaadin.data.Container.Indexed with ContainerIndexedMixin
+
+  def indexOfId(itemId: Any): Int = p.indexOfId(itemId)
+
+  def getIdByIndex(index: Int): Any = p.getIdByIndex(index)
+
+  def addItemAt(index: Int): Any = p.addItemAt(index)
+
+  def addItemAt(index: Int, newItemId: Any): Item = wrapItem(p.addItemAt(index, newItemId))
+
 }

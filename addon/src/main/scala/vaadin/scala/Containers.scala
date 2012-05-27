@@ -1,7 +1,8 @@
 package vaadin.scala
 import scala.collection.JavaConverters._
+import vaadin.scala.mixins.ContainerMixin
 
-trait FilterableContainer extends Container.Container {
+trait FilterableContainer extends Container {
 
   /**
    * Filter based on item id
@@ -38,15 +39,15 @@ trait FilterableItem extends Item {
   def values: List[Any] = Item.getProperties(this).map(_.value).toList
 }
 
-class FilterableContainerWrap(wrapped: com.vaadin.data.Container) extends Container.Container with FilterableContainer {
-  def p = wrapped
+class FilterableContainerWrap(wrapped: com.vaadin.data.Container with ContainerMixin) extends Container with FilterableContainer {
+  def p: com.vaadin.data.Container with ContainerMixin = wrapped
+
   def wrapItem(unwrapped: com.vaadin.data.Item) = new FilterableItemWrap(unwrapped)
   def wrapProperty(unwrapped: com.vaadin.data.Property) = new BasicProperty(unwrapped)
 }
 
 class FilterableItemWrap(wrapped: com.vaadin.data.Item) extends FilterableItem {
-  def p = wrapped
-  def wrapProperty(unwrapped: com.vaadin.data.Property) = new BasicProperty(unwrapped)
+  def p: com.vaadin.data.Item = wrapped
 }
 
 object EmptyFilterableItem extends FilterableItem {
@@ -58,7 +59,7 @@ object EmptyFilterableItem extends FilterableItem {
 
   override def values: List[Any] = List()
 
-  def wrapProperty(unwrapped: com.vaadin.data.Property) = null
+  override def wrapProperty(unwrapped: com.vaadin.data.Property) = null
 }
 
 class PropertyListWrap(wrapped: List[Property]) {

@@ -2,9 +2,10 @@ package vaadin.scala
 
 import com.vaadin.ui.AbstractSelect.MultiSelectMode._
 import vaadin.scala.mixins.TableMixin
+import vaadin.scala.mixins.ContainerMixin
 
 package mixins {
-  trait TableMixin extends AbstractSelectMixin
+  trait TableMixin extends AbstractSelectMixin with ContainerOrderedMixin with ContainerSortableMixin
 }
 
 object Table {
@@ -37,7 +38,7 @@ object Table {
 }
 
 class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin.ui.Table with TableMixin)
-  extends AbstractSelect(p) with Container.Ordered with Container.Sortable {
+  extends AbstractSelect(p) with ContainerOrdered with ContainerSortable {
 
   // VisibleColumns
   // getColumnHeaders()

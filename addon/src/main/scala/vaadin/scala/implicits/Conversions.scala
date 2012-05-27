@@ -2,7 +2,7 @@ package vaadin.scala
 
 package object implicits {
 
-  implicit def containerToFilterable(c: Container.Container) = new FilterableContainerWrap(c.p)
+  implicit def containerToFilterable(c: Container) = new FilterableContainerWrap(c.p)
 
   implicit def itemToFilterable(i: Item) = new FilterableItemWrap(i.p)
 
