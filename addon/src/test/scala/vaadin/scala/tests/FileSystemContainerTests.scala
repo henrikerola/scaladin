@@ -28,8 +28,7 @@ class FileSystemContainerTests extends FunSuite with BeforeAndAfter {
   test("getItem") {
     assert(2 === container.size)
     val item = container.item(temp1).get
-    assert(item.property(FilesystemContainer.PropertyName).get.value.asInstanceOf[String].startsWith("FileSystemContainerTest"))
-    //   TODO
-    //    assert(item.property(FilesystemContainer.PropertyIcon).get.value.isInstanceOf[ThemeResource], "File icon was " + item.property(FilesystemContainer.PropertyIcon).get.value.getClass + " instead of ThemeResource")
+    assert(item.property(FilesystemContainer.PropertyName).get.value.get.asInstanceOf[String].startsWith("FileSystemContainerTest"))
+    assert(item.property(FilesystemContainer.PropertyIcon).get.value.get.isInstanceOf[ThemeResource], "File icon was " + item.property(FilesystemContainer.PropertyIcon).get.value.get.getClass + " instead of ThemeResource")
   }
 }

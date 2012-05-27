@@ -11,7 +11,7 @@ class FunctionPropertyTests extends FunSuite {
 
   test("function property with getter") {
     val fp: Property = new FunctionProperty(_ => "testValue")
-    assert("testValue" === fp.value)
+    assert(Some("testValue") === fp.value)
   }
 
   test("function property with getter and setter") {
@@ -19,7 +19,7 @@ class FunctionPropertyTests extends FunSuite {
 
     val fp: Property = new FunctionProperty[String](_ => "testValue", x => (y += x))
 
-    fp.value_=("End")
+    fp.value = "End"
 
     assert("StartEnd" === y)
   }

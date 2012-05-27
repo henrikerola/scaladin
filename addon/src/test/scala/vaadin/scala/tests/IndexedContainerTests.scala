@@ -11,7 +11,7 @@ import org.scalatest.BeforeAndAfter
 @RunWith(classOf[JUnitRunner])
 class IndexedContainerTests extends FunSuite with BeforeAndAfter {
 
-  var container: Container.Container = _
+  var container: Container = _
 
   before {
     container = new IndexedContainer()
@@ -48,6 +48,6 @@ class IndexedContainerTests extends FunSuite with BeforeAndAfter {
     val item = container.addItem('itemId).get
     assert(1 === item.propertyIds.size)
     val property = item.property('propertyId).get
-    assert("" === property.value)
+    assert(Some("") === property.value)
   }
 }
