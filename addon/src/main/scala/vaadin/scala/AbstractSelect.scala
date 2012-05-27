@@ -1,6 +1,9 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.AbstractSelectMixin
+import vaadin.scala.mixins.AbstractFieldMixin
+import vaadin.scala.mixins.ContainerMixin
+import vaadin.scala.mixins.ContainerViewerMixin
 
 package mixins {
   trait AbstractSelectMixin extends AbstractFieldMixin with ContainerMixin with ContainerViewerMixin

@@ -49,16 +49,3 @@ class TreeTable(caption: String = null, width: Option[Measure] = None, height: O
   setImmediate(immediate)
   setStyleName(style)
 }
-
-class Tree(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, property: com.vaadin.data.Property = null, value: Any = null, selectable: Boolean = false, nullSelectionAllowed: Boolean = true, immediate: Boolean = false, style: String = null)
-    extends com.vaadin.ui.Tree with ValueChangeFunction {
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  if (dataSource != null) setContainerDataSource(dataSource)
-  if (property != null) setPropertyDataSource(property)
-  if (value != null) setValue(value)
-  setSelectable(selectable)
-  setNullSelectionAllowed(nullSelectionAllowed)
-  setImmediate(immediate)
-  setStyleName(style)
-}

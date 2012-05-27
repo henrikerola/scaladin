@@ -117,7 +117,7 @@ class ComponentContainerTests extends FunSuite {
     accordion.addListener(_ => cnt = cnt + 1)
     accordion.fireSelectedTabChangeEvent
     assert(cnt == 1)
-  }*/
+  }
 
   test("CustomComponent, default constructor") {
     val customComponent = new CustomComponent() {
@@ -144,6 +144,6 @@ class ComponentContainerTests extends FunSuite {
     assert(customComponent.getWidthUnits == Sizeable.UNITS_PIXELS)
     assert(customComponent.getHeight === 50)
     assert(customComponent.getHeightUnits === Sizeable.UNITS_EM)
-  }
+  }*/
 
 }

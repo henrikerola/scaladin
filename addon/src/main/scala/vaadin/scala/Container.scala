@@ -1,4 +1,6 @@
 package vaadin.scala
+
+import vaadin.scala.mixins.ScaladinMixin
 import vaadin.scala.mixins.ContainerMixin
 import vaadin.scala.mixins.ContainerIndexedMixin
 import vaadin.scala.mixins.ContainerHierarchicalMixin

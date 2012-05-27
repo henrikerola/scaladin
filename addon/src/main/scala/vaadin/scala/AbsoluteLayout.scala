@@ -6,13 +6,14 @@ package mixins {
   trait AbsoluteLayoutMixin extends AbstractLayoutMixin
 }
 
-class AbsoluteLayout(override val p: com.vaadin.ui.AbsoluteLayout with AbsoluteLayoutMixin = new com.vaadin.ui.AbsoluteLayout with AbsoluteLayoutMixin) extends AbstractLayout(p) {
+class AbsoluteLayout(override val p: com.vaadin.ui.AbsoluteLayout with AbsoluteLayoutMixin = new com.vaadin.ui.AbsoluteLayout with AbsoluteLayoutMixin)
+  extends AbstractLayout(p) with LayoutClickNotifier {
 
   def add[C <: Component](component: C, location: String): C = {
     p.addComponent(component.p, location)
     component
   }
-  
+
   // TODO: layout click listener
 
   def position(component: Component) = p.getPosition(component.p) match {

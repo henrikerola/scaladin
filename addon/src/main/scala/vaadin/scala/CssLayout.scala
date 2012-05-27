@@ -2,22 +2,14 @@ package vaadin.scala
 
 import scala.collection.mutable.Map
 import com.vaadin.ui.{ Alignment => VaadinAlignment, Component => VaadinComponent }
-import com.vaadin.event.LayoutEvents.LayoutClickNotifier
 import vaadin.scala.mixins.CssLayoutMixin
 
 package mixins {
   trait CssLayoutMixin extends AbstractLayoutMixin
 }
 
-trait LayoutClickListener extends LayoutClickNotifier {
-  def addLayoutClickListener(action: com.vaadin.event.LayoutEvents.LayoutClickEvent => Unit) {
-    addListener(new com.vaadin.event.LayoutEvents.LayoutClickListener {
-      def layoutClick(event: com.vaadin.event.LayoutEvents.LayoutClickEvent) = action(event)
-    })
-  }
-}
-
-class CssLayout(override val p: com.vaadin.ui.CssLayout with CssLayoutMixin = new com.vaadin.ui.CssLayout with CssLayoutMixin) extends AbstractLayout(p) /*with LayoutClickListener*/ {
+class CssLayout(override val p: com.vaadin.ui.CssLayout with CssLayoutMixin = new com.vaadin.ui.CssLayout with CssLayoutMixin)
+  extends AbstractLayout(p) with LayoutClickNotifier {
 
   //  override val p = new com.vaadin.ui.CssLayout {
   //    override def getCss(c: VaadinComponent): String = {
