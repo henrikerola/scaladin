@@ -1,0 +1,8 @@
+language: scala
+scala:
+  - 2.9.2
+branches:
+  only:
+    - 2.0
+notifications:
+  email: false
