@@ -60,21 +60,16 @@ class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContain
 
 class FileItem(override val p: com.vaadin.data.util.FilesystemContainer#FileItem) extends Item {
   def lastModified: Date = p.lastModified
-  def name: String = p.getName()
-  // FIXME
-  //def icon: Resource = new ThemeResource(p.getIcon().asInstanceOf[com.vaadin.terminal.ThemeResource])
-  def size: Long = p.getSize()
+  def name: String = p.getName
+  def icon: Resource = new ThemeResource(p.getIcon.asInstanceOf[com.vaadin.terminal.ThemeResource].getResourceId)
+  def size: Long = p.getSize
 
   protected override def wrapProperty(unwrapped: com.vaadin.data.Property): Property = FilesystemContainer.wrapProperty(unwrapped)
 }
 
 class FileProperty(override val p: com.vaadin.data.Property) extends BasicProperty(p) {
-
   override def value = super.value match {
-    case Some(value) => value match {
-      case themeResource: com.vaadin.terminal.ThemeResource => Some(new ThemeResource(themeResource.getResourceId))
-      case other => Some(other)
-    }
-    case None => None
+    case Some(r: com.vaadin.terminal.Resource) => Resource.mapResource(Some(r))
+    case other => other
   }
 }

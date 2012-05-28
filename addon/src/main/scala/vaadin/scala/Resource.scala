@@ -6,6 +6,17 @@ package mixins {
   trait ResourceMixin extends ScaladinMixin
 }
 
+object Resource {
+  def mapResource(vaadinResource: Option[com.vaadin.terminal.Resource]): Option[Resource] =
+    vaadinResource map {
+      _ match {
+        case er: com.vaadin.terminal.ExternalResource => new ExternalResource(er.getURL(), er.getMIMEType())
+        case tr: com.vaadin.terminal.ThemeResource => new ThemeResource(tr.getResourceId())
+        case _ => null
+      }
+    }
+}
+
 trait Resource extends Wrapper {
 
   def p: com.vaadin.terminal.Resource with ResourceMixin
