@@ -23,7 +23,7 @@ object FilesystemContainer {
   import scala.collection.JavaConverters._
   val FileProperties: Iterable[String] = com.vaadin.data.util.FilesystemContainer.FILE_PROPERTIES.asScala
 
-  def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new FunctionProperty(_ => unwrapped.getValue, (x: Any) => unwrapped.setValue(x))
+  def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new FileProperty(unwrapped)
 }
 
 class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContainer with FilesystemContainerMixin) extends ContainerHierarchical {
@@ -66,4 +66,15 @@ class FileItem(override val p: com.vaadin.data.util.FilesystemContainer#FileItem
   def size: Long = p.getSize()
 
   protected override def wrapProperty(unwrapped: com.vaadin.data.Property): Property = FilesystemContainer.wrapProperty(unwrapped)
+}
+
+class FileProperty(override val p: com.vaadin.data.Property) extends BasicProperty(p) {
+
+  override def value = super.value match {
+    case Some(value) => value match {
+      case themeResource: com.vaadin.terminal.ThemeResource => Some(new ThemeResource(themeResource.getResourceId))
+      case other => Some(other)
+    }
+    case None => None
+  }
 }

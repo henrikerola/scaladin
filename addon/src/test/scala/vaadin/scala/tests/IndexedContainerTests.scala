@@ -9,9 +9,9 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.BeforeAndAfter
 
 @RunWith(classOf[JUnitRunner])
-class IndexedContainerTests extends FunSuite with BeforeAndAfter {
+class IndexedContainerTests extends ContainerIndexedTest with BeforeAndAfter {
 
-  var container: Container = _
+  var container: IndexedContainer = _
 
   before {
     container = new IndexedContainer()
