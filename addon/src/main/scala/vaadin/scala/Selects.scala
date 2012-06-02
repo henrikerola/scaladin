@@ -37,15 +37,3 @@ trait TableColumnGenerator extends com.vaadin.ui.Table {
     })
   }
 }
-
-class TreeTable(caption: String = null, width: Option[Measure] = None, height: Option[Measure] = None, dataSource: com.vaadin.data.Container = null, property: com.vaadin.data.Property = null, value: Any = null, selectable: Boolean = false, immediate: Boolean = false, style: String = null)
-    extends com.vaadin.ui.TreeTable(caption) with ValueChangeFunction with TableColumnGenerator {
-  setWidth(if (width.isDefined) width.get.toString else null)
-  setHeight(if (height.isDefined) height.get.toString else null)
-  if (dataSource != null) setContainerDataSource(dataSource)
-  if (property != null) setPropertyDataSource(property)
-  if (value != null) setValue(value)
-  setSelectable(selectable)
-  setImmediate(immediate)
-  setStyleName(style)
-}
