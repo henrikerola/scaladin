@@ -9,13 +9,27 @@ package mixins {
   trait AbstractSelectMixin extends AbstractFieldMixin with ContainerMixin with ContainerViewerMixin
 }
 
+object AbstractSelect {
+  
+  object ItemCaptionMode extends Enumeration {
+    import com.vaadin.ui.AbstractSelect._
+    val Id = Value(ITEM_CAPTION_MODE_ID)
+    val Item = Value(ITEM_CAPTION_MODE_ITEM)
+    val Index = Value(ITEM_CAPTION_MODE_INDEX)
+    val ExplicitDefaultsId = Value(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID)
+    val Explicit = Value(ITEM_CAPTION_MODE_EXPLICIT)
+    val IconOnly = Value(ITEM_CAPTION_MODE_ICON_ONLY)
+    val Property = Value(ITEM_CAPTION_MODE_PROPERTY)
+  }
+}
+
 abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with AbstractSelectMixin)
   extends AbstractField(p) with Container with ContainerViewer {
 
   // NewItemHandler
 
-  def itemCaptionMode = ItemCaptionMode(p.getItemCaptionMode)
-  def itemCaptionMode_=(itemCaptionMode: ItemCaptionMode.Value) = p.setItemCaptionMode(itemCaptionMode.id)
+  def itemCaptionMode = AbstractSelect.ItemCaptionMode(p.getItemCaptionMode)
+  def itemCaptionMode_=(itemCaptionMode: AbstractSelect.ItemCaptionMode.Value) = p.setItemCaptionMode(itemCaptionMode.id)
 
   def itemCaptionPropertyId: Option[Any] = Option(p.getItemCaptionPropertyId)
   def itemCaptionPropertyId_=(itemCaptionPropertyId: Option[Any]) = p.setItemCaptionPropertyId(itemCaptionPropertyId.getOrElse(null))
