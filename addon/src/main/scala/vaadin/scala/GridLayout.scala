@@ -62,7 +62,4 @@ class GridLayout(override val p: com.vaadin.ui.GridLayout with GridLayoutMixin =
 
   // TODO return wrapped Area
   def componentArea(component: Component) = p.getComponentArea(component.p)
-
-  // TODO: LayoutClickListener
-
 }
