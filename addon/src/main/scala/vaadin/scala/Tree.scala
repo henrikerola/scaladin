@@ -4,9 +4,15 @@ import com.vaadin.ui.AbstractSelect.MultiSelectMode._
 import vaadin.scala.mixins.TreeMixin
 import vaadin.scala.mixins.AbstractSelectMixin
 import vaadin.scala.mixins.ContainerHierarchicalMixin
+import vaadin.scala.internal.ItemStyleGenerator
 
 package mixins {
   trait TreeMixin extends AbstractSelectMixin with ContainerHierarchicalMixin
+}
+
+object Tree {
+  // TODO move out from Tree? because possible that used in other components too in future (e.g. ComboBox)
+  case class ItemStyleEvent(itemId: Any) extends Event
 }
 
 /**
@@ -53,9 +59,28 @@ class Tree(override val p: com.vaadin.ui.Tree with TreeMixin = new com.vaadin.ui
       p.setMultiselectMode(SIMPLE)
   }
 
+  def itemStyleGenerator: Option[Tree.ItemStyleEvent => Option[String]] = p.getItemStyleGenerator match {
+    case null => None
+    case generator: ItemStyleGenerator => Some(generator.action)
+  }
+  def itemStyleGenerator_=(generator: Tree.ItemStyleEvent => Option[String]): Unit = {
+    p.setItemStyleGenerator(new ItemStyleGenerator(generator))
+  }
+  def itemStyleGenerator_=(generator: Option[Tree.ItemStyleEvent => Option[String]]): Unit = generator match {
+    case None => p.setItemStyleGenerator(null)
+    case Some(generator) => itemStyleGenerator = generator
+  }
+
   // TODO: setNullSelectionItemId throws UnsupportedOperationException
 
   // TODO: ...
 
+}
+
+package internal {
+  // FIXME: should not extend Listener?
+  class ItemStyleGenerator(val action: Tree.ItemStyleEvent => Option[String]) extends com.vaadin.ui.Tree.ItemStyleGenerator with Listener {
+    def getStyle(itemId: Any) = action(Tree.ItemStyleEvent(itemId)).getOrElse(null)
+  }
 }
 
