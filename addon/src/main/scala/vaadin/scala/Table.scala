@@ -41,10 +41,26 @@ object Table {
 class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin.ui.Table with TableMixin)
   extends AbstractSelect(p) with ContainerOrdered with ContainerSortable with ItemDescriptionGeneratorOwner {
 
-  // VisibleColumns
-  // getColumnHeaders()
-  // getColumnIcons()
-  // getColumnAlignments()
+  def visibleColumns: Seq[Any] = p.getVisibleColumns
+  def visibleColumns_=(visibleColumns: Seq[Any]) = p.setVisibleColumns(visibleColumns map { _.asInstanceOf[Object] } toArray)
+
+  def columnHeaders: Seq[Option[String]] = p.getColumnHeaders map {
+    case null => None
+    case header => Some(header)
+  }
+  def columnHeaders_=(columnHeaders: Seq[Option[String]]) = p.setColumnHeaders(columnHeaders map {
+    case None => null
+    case Some(header) => header
+  } toArray)
+
+  def columnIcons: Seq[Option[Resource]] = p.getColumnIcons map { wrapperFor[Resource](_) }
+  def columnIcons_=(columnIcons: Seq[Option[Resource]]) = p.setColumnIcons(columnIcons map {
+    case None => null
+    case Some(icon) => icon.p
+  } toArray)
+
+  def columnAlignments: Seq[Table.ColumnAlignment.Value] = p.getColumnAlignments map { Table.ColumnAlignment.withName(_) }
+  def columnAlignments_=(columnAlignments: Seq[Table.ColumnAlignment.Value]) = p.setColumnAlignments(columnAlignments map { _.toString } toArray)
 
   def columnExpandRatio(propertyId: Any) = p.getColumnExpandRatio(propertyId)
   def columnExpandRatio(propertyId: Any, ratio: Float) = p.setColumnExpandRatio(propertyId, ratio)
