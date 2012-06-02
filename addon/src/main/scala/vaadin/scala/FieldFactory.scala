@@ -10,10 +10,19 @@ package mixins {
   trait TableFieldFactoryMixin extends ScaladinMixin
 }
 
+case class FormFieldIngredients(item: Item, propertyId: Any, uiContext: Component)
+case class TableFieldIngredients(container: Container, itemId: Any, propertyId: Any, uiContext: Component)
+
+object FormFieldFactory {
+  def apply(formFieldFunction: (FormFieldIngredients) => Field): FormFieldFactory = new FormFieldFactory {
+    def createField(ingredients: FormFieldIngredients): Field = formFieldFunction(ingredients)
+  }
+}
+
 trait FormFieldFactory extends Wrapper {
   def p: com.vaadin.ui.FormFieldFactory with FormFieldFactoryMixin = new FormFieldFactoryDelegator { val formFieldFactoryDelegate = FormFieldFactory.this }
 
-  def createField(item: Item, propertyId: Any, uiContext: Component): Field
+  def createField(ingredients: FormFieldIngredients): Field
 }
 
 trait FormFieldFactoryDelegator extends com.vaadin.ui.FormFieldFactory with FormFieldFactoryMixin {
@@ -25,18 +34,25 @@ trait FormFieldFactoryDelegator extends com.vaadin.ui.FormFieldFactory with Form
 
       case mixin: ScaladinMixin if mixin.wrapper.get.isInstanceOf[Form] => {
         val contextWrapper: Form = uiContext.asInstanceOf[Form]
-        formFieldFactoryDelegate.createField(contextWrapper.item.get, propertyId, contextWrapper).p
+        val ingredients = FormFieldIngredients(contextWrapper.item.get, propertyId, contextWrapper)
+        formFieldFactoryDelegate.createField(ingredients).p
       }
 
       case _ => null
     }
   }
 }
+
+object TableFieldFactory {
+  def apply(tableFieldFunction: (TableFieldIngredients) => Field): TableFieldFactory = new TableFieldFactory {
+    def createField(ingredients: TableFieldIngredients): Field = tableFieldFunction(ingredients)
+  }
+}
+
 trait TableFieldFactory extends Wrapper {
   def p: com.vaadin.ui.TableFieldFactory = new TableFieldFactoryDelegator { val tableFieldFactoryDelegate = TableFieldFactory.this }
 
-  def createField(container: Container, itemId: Any, propertyId: Any,
-    uiContext: Component): Field
+  def createField(ingredients: TableFieldIngredients): Field
 }
 
 trait TableFieldFactoryDelegator extends com.vaadin.ui.TableFieldFactory with TableFieldFactoryMixin {
@@ -48,7 +64,7 @@ trait TableFieldFactoryDelegator extends com.vaadin.ui.TableFieldFactory with Ta
 
       case mixin: ScaladinMixin if mixin.wrapper.get.isInstanceOf[Table] => {
         val contextWrapper: Table = uiContext.asInstanceOf[Table]
-        tableFieldFactoryDelegate.createField(contextWrapper.container.get, itemId, propertyId, contextWrapper).p
+        tableFieldFactoryDelegate.createField(TableFieldIngredients(contextWrapper.container.get, itemId, propertyId, contextWrapper)).p
       }
 
       case _ => null
@@ -67,23 +83,22 @@ object DefaultFieldFactory extends FormFieldFactory with TableFieldFactory {
   val Date = classOf[Date]
   val Bool = classOf[Boolean]
 
-  def createField(item: Item, propertyId: Any, uiContext: Component): Field = item.property(propertyId) match {
+  def createField(ingredients: FormFieldIngredients): Field = ingredients.item.property(ingredients.propertyId) match {
     case Some(property) => {
       val propertyType: Class[_] = property.getType
       val field: Field = createFieldByPropertyType(propertyType);
-      field.caption = com.vaadin.ui.DefaultFieldFactory.createCaptionByPropertyId(propertyId)
+      field.caption = com.vaadin.ui.DefaultFieldFactory.createCaptionByPropertyId(ingredients.propertyId)
       field
     }
 
     case None => null
   }
 
-  def createField(container: Container, itemId: Any, propertyId: Any,
-    uiContext: Component): Field = container.property(itemId, propertyId) match {
+  def createField(ingredients: TableFieldIngredients): Field = ingredients.container.property(ingredients.itemId, ingredients.propertyId) match {
     case Some(property) => {
       val propertyType: Class[_] = property.getType;
       val field: Field = createFieldByPropertyType(propertyType);
-      field.caption = com.vaadin.ui.DefaultFieldFactory.createCaptionByPropertyId(propertyId)
+      field.caption = com.vaadin.ui.DefaultFieldFactory.createCaptionByPropertyId(ingredients.propertyId)
       field
     }
 

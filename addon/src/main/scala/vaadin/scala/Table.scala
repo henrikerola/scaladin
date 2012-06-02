@@ -132,6 +132,14 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def footerVisible = p.isFooterVisible
   def footerVisible_=(footerVisible: Boolean) = p.setFooterVisible(footerVisible)
 
+  def tableFieldFactory: Option[TableFieldFactory] = wrapperFor[TableFieldFactory](p.getTableFieldFactory)
+  def tableFieldFactory_=(factory: TableFieldFactory) = p.setTableFieldFactory(factory.p)
+  def tableFieldFactory_=(factoryFunction: (TableFieldIngredients) => Field) = p.setTableFieldFactory(TableFieldFactory(factoryFunction).p)
+  def tableFieldFactory_=(factory: Option[TableFieldFactory]) = factory match {
+    case Some(factory) => p.setTableFieldFactory(factory.p)
+    case None => p.setTableFieldFactory(null)
+  }
+
   lazy val itemClickListeners = new ListenersTrait[ItemClickEvent, ItemClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.event.ItemClickEvent.ItemClickListener])
     override def addListener(elem: ItemClickEvent => Unit) = p.addListener(new ItemClickListener(elem))
