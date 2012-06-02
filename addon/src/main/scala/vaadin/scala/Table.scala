@@ -39,7 +39,7 @@ object Table {
 }
 
 class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin.ui.Table with TableMixin)
-  extends AbstractSelect(p) with ContainerOrdered with ContainerSortable with ItemDescriptionGeneratorOwner {
+  extends AbstractSelect(p) with ContainerOrdered with ContainerSortable with ItemDescriptionGeneratorOwner with ItemClickNotifier {
 
   def visibleColumns: Seq[Any] = p.getVisibleColumns
   def visibleColumns_=(visibleColumns: Seq[Any]) = p.setVisibleColumns(visibleColumns map { _.asInstanceOf[Object] } toArray)
@@ -148,12 +148,6 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def footerVisible = p.isFooterVisible
   def footerVisible_=(footerVisible: Boolean) = p.setFooterVisible(footerVisible)
 
-  lazy val itemClickListeners = new ListenersTrait[ItemClickEvent, ItemClickListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.event.ItemClickEvent.ItemClickListener])
-    override def addListener(elem: ItemClickEvent => Unit) = p.addListener(new ItemClickListener(elem))
-    override def removeListener(elem: ItemClickListener) = p.removeListener(elem)
-  }
-
   lazy val headerClickListeners = new ListenersTrait[HeaderClickEvent, HeaderClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.HeaderClickListener])
     override def addListener(elem: HeaderClickEvent => Unit) = p.addListener(new HeaderClickListener(elem))
@@ -199,12 +193,6 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
 
   // RowGenerator
 
-}
-
-case class ItemClickEvent(component: Component, item: com.vaadin.data.Item, itemId: Any, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
-
-class ItemClickListener(val action: ItemClickEvent => Unit) extends com.vaadin.event.ItemClickEvent.ItemClickListener with Listener {
-  def itemClick(e: com.vaadin.event.ItemClickEvent) = action(ItemClickEvent(wrapperFor[Table](e.getComponent).get, e.getItem(), e.getItemId(), e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
 }
 
 case class HeaderClickEvent(component: Component, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
