@@ -14,8 +14,6 @@ class AbsoluteLayout(override val p: com.vaadin.ui.AbsoluteLayout with AbsoluteL
     component
   }
 
-  // TODO: layout click listener
-
   def position(component: Component) = p.getPosition(component.p) match {
     case null => throw new RuntimeException("Component is not attached to the layout")
     case position => new ComponentPosition(position)

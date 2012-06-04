@@ -192,10 +192,8 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(tabSheet.tab(0) === Some(tab))
   }
 
-  test("tab, illegal position throws an exception") {
-    intercept[IndexOutOfBoundsException] {
-      tabSheet.tab(2)
-    }
+  test("tab, illegal position returns None") {
+    assert(tabSheet.tab(2) === None)
   }
 
   test("selectedComponent") {

@@ -19,25 +19,24 @@ class SplitterClickListener(val action: SplitterClickEvent => Unit) extends com.
 
 abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPanel with AbstractSplitPanelMixin) extends AbstractLayout(p) {
 
-  def first = wrapperFor[Component](p.getFirstComponent)
-  def first_=(component: Component) = p.setFirstComponent(if (component != null) component.p else null)
-  def first_=(component: Option[Component]) = p.setFirstComponent(if (component.isDefined) component.get.p else null)
+  def firstComponent = wrapperFor[Component](p.getFirstComponent)
+  def firstComponent_=(component: Component) = p.setFirstComponent(component.p)
+  def firstComponent_=(component: Option[Component]) = p.setFirstComponent(if (component.isDefined) component.get.p else null)
 
-  def second = wrapperFor[Component](p.getSecondComponent)
-  def second_=(component: Component) = p.setSecondComponent(if (component != null) component.p else null)
-  def second_=(component: Option[Component]) = p.setSecondComponent(if (component.isDefined) component.get.p else null)
-
-  // TODO: methods for first and second component that return the added component?
+  def secondComponent = wrapperFor[Component](p.getSecondComponent)
+  def secondComponent_=(component: Component) = p.setSecondComponent(component.p)
+  def secondComponent_=(component: Option[Component]) = p.setSecondComponent(if (component.isDefined) component.get.p else null)
 
   var reserved = false
 
   def splitPosition = new Measure(p.getSplitPosition(), Units(p.getSplitPositionUnit()))
-  def splitPosition_=(position: Option[Measure]) = position match {
+  def splitPosition_=(position: Option[Measure]): Unit = position match {
     case None => p.setSplitPosition(50, Units.pct.id, reserved)
     case Some(position) => p.setSplitPosition(position.value.intValue, position.unit.id, reserved)
   }
+  def splitPosition_=(position: Measure): Unit = splitPosition = Some(position)
 
-  def locked = p.isLocked();
+  def locked = p.isLocked
   def locked_=(locked: Boolean) = p.setLocked(locked)
   
   lazy val splitterClickListeners = new ListenersTrait[SplitterClickEvent, SplitterClickListener] {
