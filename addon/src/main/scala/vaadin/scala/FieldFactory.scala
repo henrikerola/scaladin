@@ -20,13 +20,12 @@ object FormFieldFactory {
 }
 
 trait FormFieldFactory extends Wrapper {
-  def p: com.vaadin.ui.FormFieldFactory with FormFieldFactoryMixin = new FormFieldFactoryDelegator { val formFieldFactoryDelegate = FormFieldFactory.this }
+  override val p: com.vaadin.ui.FormFieldFactory with FormFieldFactoryMixin = new FormFieldFactoryDelegator { wrapper = FormFieldFactory.this }
 
   def createField(ingredients: FormFieldIngredients): Field
 }
 
 trait FormFieldFactoryDelegator extends com.vaadin.ui.FormFieldFactory with FormFieldFactoryMixin {
-  def formFieldFactoryDelegate: FormFieldFactory
 
   def createField(container: com.vaadin.data.Item, propertyId: Any,
     uiContext: com.vaadin.ui.Component): com.vaadin.ui.Field = {
@@ -35,7 +34,7 @@ trait FormFieldFactoryDelegator extends com.vaadin.ui.FormFieldFactory with Form
       case mixin: ScaladinMixin if mixin.wrapper.get.isInstanceOf[Form] => {
         val contextWrapper: Form = uiContext.asInstanceOf[Form]
         val ingredients = FormFieldIngredients(contextWrapper.item.get, propertyId, contextWrapper)
-        formFieldFactoryDelegate.createField(ingredients).p
+        wrapper.asInstanceOf[FormFieldFactory].createField(ingredients).p
       }
 
       case _ => null
@@ -50,21 +49,19 @@ object TableFieldFactory {
 }
 
 trait TableFieldFactory extends Wrapper {
-  def p: com.vaadin.ui.TableFieldFactory = new TableFieldFactoryDelegator { val tableFieldFactoryDelegate = TableFieldFactory.this }
+  override val p: com.vaadin.ui.TableFieldFactory = new TableFieldFactoryDelegator { wrapper = TableFieldFactory.this }
 
   def createField(ingredients: TableFieldIngredients): Field
 }
 
 trait TableFieldFactoryDelegator extends com.vaadin.ui.TableFieldFactory with TableFieldFactoryMixin {
-  def tableFieldFactoryDelegate: TableFieldFactory
-
   def createField(container: com.vaadin.data.Container, itemId: Any, propertyId: Any,
     uiContext: com.vaadin.ui.Component): com.vaadin.ui.Field = {
     uiContext match {
 
       case mixin: ScaladinMixin if mixin.wrapper.get.isInstanceOf[Table] => {
         val contextWrapper: Table = uiContext.asInstanceOf[Table]
-        tableFieldFactoryDelegate.createField(TableFieldIngredients(contextWrapper.container.get, itemId, propertyId, contextWrapper)).p
+        wrapper.asInstanceOf[TableFieldFactory].createField(TableFieldIngredients(contextWrapper.container.get, itemId, propertyId, contextWrapper)).p
       }
 
       case _ => null
@@ -74,9 +71,10 @@ trait TableFieldFactoryDelegator extends com.vaadin.ui.TableFieldFactory with Ta
 
 object DefaultFieldFactory extends FormFieldFactory with TableFieldFactory {
 
-  override def p: com.vaadin.ui.FormFieldFactory with FormFieldFactoryMixin with com.vaadin.ui.TableFieldFactory = new FormFieldFactoryDelegator with TableFieldFactoryDelegator {
+  override val p: com.vaadin.ui.FormFieldFactory with FormFieldFactoryMixin with com.vaadin.ui.TableFieldFactory = new FormFieldFactoryDelegator with TableFieldFactoryDelegator {
     val tableFieldFactoryDelegate = DefaultFieldFactory.this
     val formFieldFactoryDelegate = DefaultFieldFactory.this
+    wrapper = DefaultFieldFactory.this
   }
 
   val Item = classOf[Item]

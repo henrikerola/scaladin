@@ -38,5 +38,5 @@ class Form(override val p: com.vaadin.ui.Form with FormMixin = new com.vaadin.ui
 
   //form footer cannot be None
   def footer: Layout = wrapperFor[Layout](p.getFooter) get
-  def footer_=(layout: Layout): Unit = p.setLayout(layout.p)
+  def footer_=(footer: Layout): Unit = p.setFooter(footer.p)
 }
