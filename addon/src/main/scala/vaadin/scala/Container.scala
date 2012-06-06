@@ -77,7 +77,8 @@ trait Container extends Wrapper {
 
   protected def wrapItem(unwrapped: com.vaadin.data.Item): Item
 
-  protected def wrapProperty(unwrapped: com.vaadin.data.Property): Property
+  //override if needed
+  protected def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new BasicProperty(unwrapped)
 
   protected def optionalWrapItem(item: com.vaadin.data.Item): Option[Item] = item match {
     case i: com.vaadin.data.Item => Some(wrapItem(i))

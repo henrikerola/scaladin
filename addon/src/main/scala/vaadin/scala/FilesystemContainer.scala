@@ -55,7 +55,7 @@ class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContain
 
   def wrapItem(unwrapped: com.vaadin.data.Item): Item = new FileItem(unwrapped.asInstanceOf[com.vaadin.data.util.FilesystemContainer#FileItem])
 
-  def wrapProperty(unwrapped: com.vaadin.data.Property): Property = FilesystemContainer.wrapProperty(unwrapped)
+  override def wrapProperty(unwrapped: com.vaadin.data.Property): Property = FilesystemContainer.wrapProperty(unwrapped)
 }
 
 class FileItem(override val p: com.vaadin.data.util.FilesystemContainer#FileItem) extends Item {

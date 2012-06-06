@@ -52,5 +52,4 @@ abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with 
 
   // Container.Container:
   protected def wrapItem(unwrapped: com.vaadin.data.Item): Item = new IndexedContainerItem(unwrapped)
-  protected def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new BasicProperty(unwrapped)
 }

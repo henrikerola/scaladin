@@ -43,7 +43,6 @@ class FilterableContainerWrap(wrapped: com.vaadin.data.Container with ContainerM
   def p: com.vaadin.data.Container with ContainerMixin = wrapped
 
   def wrapItem(unwrapped: com.vaadin.data.Item) = new FilterableItemWrap(unwrapped)
-  def wrapProperty(unwrapped: com.vaadin.data.Property) = new BasicProperty(unwrapped)
 }
 
 class FilterableItemWrap(wrapped: com.vaadin.data.Item) extends FilterableItem {

@@ -9,6 +9,8 @@ trait ContainerTest extends FunSuite {
 
   def container: Container
 
+  def addItem: Option[Any] = container.addItem
+
   test("addItem with and without id") {
     try {
 
@@ -20,20 +22,20 @@ trait ContainerTest extends FunSuite {
 
       assert(None != item2)
     } catch {
-      case uo: UnsupportedOperationException => Console.println("Operation not supported by this container")
+      case uo: UnsupportedOperationException => Console.println("Operation not supported by this container", uo)
     }
   }
 
   test("itemIds and containsId") {
     try {
 
-      val itemId = container.addItem get
+      val itemId = addItem get
 
       assert(container.containsId(itemId), "Container didn't contain item %s".format(itemId))
       assert(container.itemIds.exists(_ == itemId))
       assert(!container.containsId('id2))
     } catch {
-      case uo: UnsupportedOperationException => Console.println("Operation not supported by this container")
+      case uo: UnsupportedOperationException => Console.println("Operation not supported by this container", uo)
     }
   }
 }
@@ -45,28 +47,28 @@ trait ContainerOrderedTest extends ContainerTest {
   test("next/prev itemid") {
     try {
 
-      val itemId1 = container.addItem get
-      val itemId2 = container.addItem get
+      val itemId1 = addItem get
+      val itemId2 = addItem get
 
       assert(container.nextItemId(itemId1) === itemId2)
       assert(container.prevItemId(itemId2) === itemId1)
     } catch {
-      case uo: UnsupportedOperationException => Console.println("Operation not supported by this container")
+      case uo: UnsupportedOperationException => Console.println("Operation not supported by this container", uo)
     }
   }
 
   test("last/first itemid") {
     try {
 
-      val itemId1 = container.addItem get
-      val itemId2 = container.addItem get
+      val itemId1 = addItem get
+      val itemId2 = addItem get
 
       assert(container.firstItemId === itemId1)
       assert(container.lastItemId === itemId2)
       assert(container.isFirstId(itemId1))
       assert(container.isLastId(itemId2))
     } catch {
-      case uo: UnsupportedOperationException => Console.println("Operation not supported by this container")
+      case uo: UnsupportedOperationException => Console.println("Operation not supported by this container", uo)
     }
   }
 }
@@ -78,15 +80,15 @@ trait ContainerIndexedTest extends ContainerOrderedTest {
   test("indexOf/getByIndex") {
     try {
 
-      val itemId1 = container.addItem get
-      val itemId2 = container.addItem get
+      val itemId1 = addItem get
+      val itemId2 = addItem get
 
       assert(container.indexOfId(itemId1) === 0)
       assert(container.indexOfId(itemId2) === 1)
       assert(container.getIdByIndex(0) === itemId1)
       assert(container.getIdByIndex(1) === itemId2)
     } catch {
-      case uo: UnsupportedOperationException => Console.println("Operation not supported by this container")
+      case uo: UnsupportedOperationException => Console.println("Operation not supported by this container", uo)
     }
   }
 }
