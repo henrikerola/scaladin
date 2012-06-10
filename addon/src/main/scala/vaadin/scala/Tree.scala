@@ -5,6 +5,8 @@ import vaadin.scala.mixins.TreeMixin
 import vaadin.scala.mixins.AbstractSelectMixin
 import vaadin.scala.mixins.ContainerHierarchicalMixin
 import vaadin.scala.internal.ItemStyleGenerator
+import vaadin.scala.listeners.ExpandListener
+import vaadin.scala.listeners.CollapseListener
 
 package mixins {
   trait TreeMixin extends AbstractSelectMixin with ContainerHierarchicalMixin
@@ -20,7 +22,7 @@ object Tree {
  * @author Henri Kerola / Vaadin
  */
 class Tree(override val p: com.vaadin.ui.Tree with TreeMixin = new com.vaadin.ui.Tree with TreeMixin)
-  extends AbstractSelect(p) with ContainerHierarchical with ItemDescriptionGeneratorOwner with ItemClickNotifier {
+  extends AbstractSelect(p) with ContainerHierarchical with ItemDescriptionGeneratorOwner with ItemClickNotifier with ExpandNotifier with CollapseNotifier {
 
   def expanded(itemId: Any): Boolean = p.isExpanded(itemId)
 
