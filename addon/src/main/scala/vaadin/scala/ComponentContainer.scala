@@ -18,12 +18,13 @@ trait ComponentContainer extends Component {
 
   override def p: com.vaadin.ui.ComponentContainer with ComponentContainerMixin
 
-  // TODO: remove Component part from methods => add, remove, removeAll... ?
 
+  // provide add or addComponent or both?
   def add[C <: Component](component: C): C = {
     p.addComponent(component.p)
     component
   }
+  def addComponent[C <: Component](component: C): C = add(component)
 
   def removeComponent(c: Component): Unit = {
     p.removeComponent(c.p)
@@ -52,8 +53,8 @@ trait ComponentContainer extends Component {
     def iterator: Iterator[Component] = {
       p.getComponentIterator.map(wrapperFor[Component](_).get)
     }
-    def +=(elem: Component) = { p.addComponent(elem.p); this }
-    def -=(elem: Component) = { p.removeComponent(elem.p); this }
+    def +=(elem: Component) = { addComponent(elem); this }
+    def -=(elem: Component) = { removeComponent(elem); this }
   }
 
   // TODO: listeners
