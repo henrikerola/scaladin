@@ -68,7 +68,8 @@ trait Component extends Wrapper {
   def id_=(id: Option[String]) = p.setDebugId(id.getOrElse(null))
   def id_=(id: String) = p.setDebugId(id)
 
-  def requestRepaint() = p.requestRepaint()
+  // Doesn't work with ScaladinWrapper
+  // def requestRepaint() = p.requestRepaint()
 
   //override def toString = p.toString
 
