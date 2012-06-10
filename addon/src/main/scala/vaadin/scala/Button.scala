@@ -12,6 +12,21 @@ package mixins {
 }
 
 object Button {
+
+  def apply(caption: String, clickListener: => Unit): Button = {
+    val button = new Button
+    button.caption = caption
+    button.clickListeners += clickListener
+    button
+  }
+
+  def apply(caption: String, clickListener: Button.ClickEvent => Unit): Button = {
+    val button = new Button
+    button.caption = caption
+    button.clickListeners += clickListener
+    button
+  }
+
   case class ClickEvent(button: Button, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends Event
 }
 
@@ -35,7 +50,7 @@ class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaa
     if (action != null) clickListeners += action
   }*/
 
-  def disableOnClick = p.isDisableOnClick()
+  def disableOnClick = p.isDisableOnClick
   def disableOnClick_=(disableOnClick: Boolean) = p.setDisableOnClick(disableOnClick)
 
   //def addListener(action: Button.ClickEvent => Unit): Unit = p.addListener(new ButtonClickListener(action))
