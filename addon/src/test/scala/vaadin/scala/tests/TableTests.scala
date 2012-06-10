@@ -68,8 +68,11 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
     table.columnHeaders = Some("Header 1") :: None :: Nil
     Mockito.verify(spy).setColumnHeaders(Array("Header 1", null))
-
     assert(table.columnHeaders === Some("Header 1") :: None :: Nil)
+    
+    table.columnHeaders = "Header 1" :: "Header 2" :: Nil
+    assert(table.columnHeaders === Some("Header 1") :: Some("Header 2") :: Nil)
+    
   }
 
   test("columnIcons") {

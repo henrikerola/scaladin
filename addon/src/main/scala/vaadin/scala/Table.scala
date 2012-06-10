@@ -4,7 +4,12 @@ import com.vaadin.ui.AbstractSelect.MultiSelectMode._
 import vaadin.scala.mixins.TableMixin
 import vaadin.scala.mixins.ContainerOrderedMixin
 import vaadin.scala.mixins.ContainerSortableMixin
-import vaadin.scala.internal.ItemClickListener
+import vaadin.scala.internal.HeaderClickListener
+import vaadin.scala.internal.FooterClickListener
+import vaadin.scala.internal.ColumnReorderListener
+import vaadin.scala.internal.ColumnResizeListener
+import vaadin.scala.internal.TableColumnGenerator
+import vaadin.scala.internal.CellStyleGenerator
 
 package mixins {
   trait TableMixin extends AbstractSelectMixin with ContainerOrderedMixin with ContainerSortableMixin
@@ -37,6 +42,13 @@ object Table {
     val Center = Value(ALIGN_CENTER)
     val Right = Value(ALIGN_RIGHT)
   }
+
+  case class HeaderClickEvent(component: Component, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
+  case class FooterClickEvent(component: Component, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
+  case class ColumnResizeEvent(component: Component, propertyId: Any, previousWidth: Int, currentWidth: Int) extends Event
+  case class ColumnReorderEvent(component: Component) extends Event
+  case class ColumnGenerationEvent(table: Table, itemId: Any, propertyId: Any) extends Event
+  case class CellStyleGenerationEvent(itemId: Any, propertyId: Any) extends Event
 }
 
 class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin.ui.Table with TableMixin)
@@ -49,12 +61,14 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
     case null => None
     case header => Some(header)
   }
+  def columnHeaders_=(columnHeaders: => Seq[String]) = p.setColumnHeaders(columnHeaders toArray)
   def columnHeaders_=(columnHeaders: Seq[Option[String]]) = p.setColumnHeaders(columnHeaders map {
     case None => null
     case Some(header) => header
   } toArray)
 
   def columnIcons: Seq[Option[Resource]] = p.getColumnIcons map { wrapperFor[Resource](_) }
+  def columnIcons_=(columnIcons: => Seq[Resource]) = p.setColumnIcons(columnIcons map { _.p } toArray)
   def columnIcons_=(columnIcons: Seq[Option[Resource]]) = p.setColumnIcons(columnIcons map {
     case None => null
     case Some(icon) => icon.p
@@ -157,45 +171,40 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
     case None => p.setTableFieldFactory(null)
   }
 
-  lazy val headerClickListeners = new ListenersTrait[HeaderClickEvent, HeaderClickListener] {
+  lazy val headerClickListeners = new ListenersTrait[Table.HeaderClickEvent, HeaderClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.HeaderClickListener])
-    override def addListener(elem: HeaderClickEvent => Unit) = p.addListener(new HeaderClickListener(elem))
+    override def addListener(elem: Table.HeaderClickEvent => Unit) = p.addListener(new HeaderClickListener(elem))
     override def removeListener(elem: HeaderClickListener) = p.removeListener(elem)
   }
 
-  lazy val footerClickListeners = new ListenersTrait[FooterClickEvent, FooterClickListener] {
+  lazy val footerClickListeners = new ListenersTrait[Table.FooterClickEvent, FooterClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.FooterClickListener])
-    override def addListener(elem: FooterClickEvent => Unit) = p.addListener(new FooterClickListener(elem))
+    override def addListener(elem: Table.FooterClickEvent => Unit) = p.addListener(new FooterClickListener(elem))
     override def removeListener(elem: FooterClickListener) = p.removeListener(elem)
   }
 
-  lazy val columnResizeListeners = new ListenersTrait[ColumnResizeEvent, ColumnResizeListener] {
+  lazy val columnResizeListeners = new ListenersTrait[Table.ColumnResizeEvent, ColumnResizeListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.ColumnReorderListener])
-    override def addListener(elem: ColumnResizeEvent => Unit) = p.addListener(new ColumnResizeListener(elem))
+    override def addListener(elem: Table.ColumnResizeEvent => Unit) = p.addListener(new ColumnResizeListener(elem))
     override def removeListener(elem: ColumnResizeListener) = p.removeListener(elem)
   }
 
-  lazy val columnReorderListeners = new ListenersTrait[ColumnReorderEvent, ColumnReorderListener] {
+  lazy val columnReorderListeners = new ListenersTrait[Table.ColumnReorderEvent, ColumnReorderListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.ColumnReorderListener])
-    override def addListener(elem: ColumnReorderEvent => Unit) = p.addListener(new ColumnReorderListener(elem))
+    override def addListener(elem: Table.ColumnReorderEvent => Unit) = p.addListener(new ColumnReorderListener(elem))
     override def removeListener(elem: ColumnReorderListener) = p.removeListener(elem)
   }
 
-  private class CellStyleGenerator(val generator: (Any, Any) => String) extends com.vaadin.ui.Table.CellStyleGenerator {
-    def getStyle(itemId: Any, propertyId: Any) = generator(itemId, propertyId)
-
-  }
-
-  def cellStyleGenerator: Option[(Any, Any) => String] = p.getCellStyleGenerator match {
+  def cellStyleGenerator: Option[Table.CellStyleGenerationEvent => Option[String]] = p.getCellStyleGenerator match {
     case null => None
     case generator: CellStyleGenerator => Some(generator.generator)
   }
 
-  def cellStyleGenerator_=(generator: (Any, Any) => String): Unit = {
+  def cellStyleGenerator_=(generator: Table.CellStyleGenerationEvent => Option[String]): Unit = {
     p.setCellStyleGenerator(new CellStyleGenerator(generator))
   }
 
-  def cellStyleGenerator_=(generator: Option[(Any, Any) => String]): Unit = generator match {
+  def cellStyleGenerator_=(generator: Option[Table.CellStyleGenerationEvent => Option[String]]): Unit = generator match {
     case None => p.setCellStyleGenerator(null)
     case Some(generator) => cellStyleGenerator = generator
   }
@@ -204,26 +213,30 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
 
 }
 
-case class HeaderClickEvent(component: Component, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
+package internal {
 
-class HeaderClickListener(val action: HeaderClickEvent => Unit) extends com.vaadin.ui.Table.HeaderClickListener with Listener {
-  def headerClick(e: com.vaadin.ui.Table.HeaderClickEvent) = action(HeaderClickEvent(wrapperFor[Table](e.getComponent).get, e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
-}
+  class FooterClickListener(val action: Table.FooterClickEvent => Unit) extends com.vaadin.ui.Table.FooterClickListener with Listener {
+    def footerClick(e: com.vaadin.ui.Table.FooterClickEvent) = action(Table.FooterClickEvent(wrapperFor[Table](e.getComponent).get, e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
+  }
 
-case class FooterClickEvent(component: Component, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
+  class HeaderClickListener(val action: Table.HeaderClickEvent => Unit) extends com.vaadin.ui.Table.HeaderClickListener with Listener {
+    def headerClick(e: com.vaadin.ui.Table.HeaderClickEvent) = action(Table.HeaderClickEvent(wrapperFor[Table](e.getComponent).get, e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
+  }
 
-class FooterClickListener(val action: FooterClickEvent => Unit) extends com.vaadin.ui.Table.FooterClickListener with Listener {
-  def footerClick(e: com.vaadin.ui.Table.FooterClickEvent) = action(FooterClickEvent(wrapperFor[Table](e.getComponent).get, e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
-}
+  class ColumnResizeListener(val action: Table.ColumnResizeEvent => Unit) extends com.vaadin.ui.Table.ColumnResizeListener with Listener {
+    def columnResize(e: com.vaadin.ui.Table.ColumnResizeEvent) = action(Table.ColumnResizeEvent(wrapperFor[Table](e.getComponent).get, e.getPropertyId, e.getPreviousWidth, e.getCurrentWidth))
+  }
 
-case class ColumnResizeEvent(component: Component, propertyId: Any, previousWidth: Int, currentWidth: Int) extends Event
+  class ColumnReorderListener(val action: Table.ColumnReorderEvent => Unit) extends com.vaadin.ui.Table.ColumnReorderListener with Listener {
+    def columnReorder(e: com.vaadin.ui.Table.ColumnReorderEvent) = action(Table.ColumnReorderEvent(wrapperFor[Table](e.getComponent).get))
+  }
 
-class ColumnResizeListener(val action: ColumnResizeEvent => Unit) extends com.vaadin.ui.Table.ColumnResizeListener with Listener {
-  def columnResize(e: com.vaadin.ui.Table.ColumnResizeEvent) = action(ColumnResizeEvent(wrapperFor[Table](e.getComponent).get, e.getPropertyId, e.getPreviousWidth, e.getCurrentWidth))
-}
+  class TableColumnGenerator(val action: Table.ColumnGenerationEvent => Any) extends com.vaadin.ui.Table.ColumnGenerator with Listener {
+    def generateCell(table: com.vaadin.ui.Table, itemId: Any, columnId: Any): Object = action(Table.ColumnGenerationEvent(wrapperFor[Table](table).get, itemId, columnId)).asInstanceOf[AnyRef]
+  }
 
-case class ColumnReorderEvent(component: Component) extends Event
+  class CellStyleGenerator(val generator: Table.CellStyleGenerationEvent => Option[String]) extends com.vaadin.ui.Table.CellStyleGenerator {
+    def getStyle(itemId: Any, propertyId: Any) = generator(Table.CellStyleGenerationEvent(itemId, propertyId)).getOrElse(null)
 
-class ColumnReorderListener(val action: ColumnReorderEvent => Unit) extends com.vaadin.ui.Table.ColumnReorderListener with Listener {
-  def columnReorder(e: com.vaadin.ui.Table.ColumnReorderEvent) = action(ColumnReorderEvent(wrapperFor[Table](e.getComponent).get))
+  }
 }
