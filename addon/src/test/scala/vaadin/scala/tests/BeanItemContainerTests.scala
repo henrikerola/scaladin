@@ -7,7 +7,11 @@ import org.scalatest.BeforeAndAfter
 import org.scalatest.FunSuite
 
 @RunWith(classOf[JUnitRunner])
-class BeanItemContainerTests extends FunSuite with BeforeAndAfter with ContainerTestAddItemWithId {
+class BeanItemContainerTests extends FunSuite
+  with BeforeAndAfter
+  with ContainerTestAddItemWithId
+  with ContainerTestItemIdsAndContainsId
+  with ContainerTestIndexed {
 
   var container: BeanItemContainer[Any] = _
 

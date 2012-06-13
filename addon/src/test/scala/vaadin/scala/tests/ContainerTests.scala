@@ -40,7 +40,7 @@ trait ContainerTestItemIdsAndContainsId extends ContainerTest {
   }
 }
 
-trait ContainerOrderedTest extends ContainerTest {
+trait ContainerTestOrdered extends ContainerTest {
 
   override def container: ContainerOrdered
 
@@ -65,7 +65,7 @@ trait ContainerOrderedTest extends ContainerTest {
   }
 }
 
-trait ContainerIndexedTest extends ContainerOrderedTest {
+trait ContainerTestIndexed extends ContainerTestOrdered {
 
   override def container: ContainerIndexed
 

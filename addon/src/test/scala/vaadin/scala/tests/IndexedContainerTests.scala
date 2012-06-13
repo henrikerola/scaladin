@@ -9,7 +9,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.BeforeAndAfter
 
 @RunWith(classOf[JUnitRunner])
-class IndexedContainerTests extends ContainerIndexedTest with BeforeAndAfter {
+class IndexedContainerTests extends ContainerTestIndexed with BeforeAndAfter {
 
   var container: IndexedContainer = _
 
