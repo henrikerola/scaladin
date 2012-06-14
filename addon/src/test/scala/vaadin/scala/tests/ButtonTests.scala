@@ -11,6 +11,41 @@ class ButtonTests extends FunSuite {
   val listener1 = (e: Button.ClickEvent) => println("1")
   val listener2 = (e: Button.ClickEvent) => println(e)
 
+  test("disableOnClick") {
+    val button = new Button
+
+    assert(!button.disableOnClick)
+    button.disableOnClick = true
+    assert(button.disableOnClick)
+  }
+
+  test("clickShortcut") {
+    val button = new Button
+
+    val clickShortcut = ClickShortcut(com.vaadin.event.ShortcutAction.KeyCode.ENTER);
+
+    assert(button.clickShortcut === None)
+
+    button.clickShortcut = clickShortcut
+    assert(button.clickShortcut === Some(clickShortcut))
+
+    button.clickShortcut = None
+    assert(button.clickShortcut === None)
+
+    button.clickShortcut = Some(clickShortcut)
+    assert(button.clickShortcut === Some(clickShortcut))
+  }
+
+  test("htmlContentAllowed") {
+    val button = new Button
+    
+    assert(!button.htmlContentAllowed)
+    
+    button.htmlContentAllowed = true
+    assert(button.htmlContentAllowed)
+    
+  }
+
   test("clickListeners, add a clicklistener") {
     val button = new Button
 

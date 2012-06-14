@@ -38,22 +38,23 @@ package listeners {
 
 class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin) extends AbstractField(p) {
 
-  /*-
-  def this(caption: String = null, action: ButtonClickEvent => Unit = null, icon: Resource = null, style: String = null, enabled: Boolean = true) = {
-    this(new com.vaadin.ui.Button)
+  private var _clickShortcut: Option[ClickShortcut] = None
 
-    this.caption = caption
-    this.icon = icon
-    p.setStyleName(style)
-    this.enabled = enabled
+  def clickShortcut: Option[ClickShortcut] = _clickShortcut
+  def clickShortcut_=(clickShortcut: Option[ClickShortcut]): Unit = {
+    _clickShortcut = clickShortcut
+    clickShortcut match {
+      case None => p.removeClickShortcut
+      case Some(clickShortcut) => p.setClickShortcut(clickShortcut.keyCode, clickShortcut.modifiers: _*)
+    }
+  }
+  def clickShortcut_=(clickShortcut: ClickShortcut): Unit = this.clickShortcut = Option(clickShortcut)
 
-    if (action != null) clickListeners += action
-  }*/
-
-  def disableOnClick = p.isDisableOnClick
+  def disableOnClick: Boolean = p.isDisableOnClick
   def disableOnClick_=(disableOnClick: Boolean) = p.setDisableOnClick(disableOnClick)
-
-  //def addListener(action: Button.ClickEvent => Unit): Unit = p.addListener(new ButtonClickListener(action))
+  
+  def htmlContentAllowed: Boolean = p.isHtmlContentAllowed
+  def htmlContentAllowed_=(htmlContentAllowed: Boolean) = p.setHtmlContentAllowed(htmlContentAllowed)
 
   lazy val clickListeners = new ListenersTrait[Button.ClickEvent, ButtonClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Button#ClickEvent])
