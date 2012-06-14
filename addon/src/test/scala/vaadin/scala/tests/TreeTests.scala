@@ -22,6 +22,31 @@ class TreeTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     spy = Mockito.spy(vaadinTree)
     tree = new Tree(spy)
   }
+  
+  test("expanded") {
+    assert(!tree.expanded('itemId))
+    Mockito.verify(spy).isExpanded('itemId)
+  }
+  
+  test("expandItem") {
+    assert(!tree.expandItem('itemId))
+    Mockito.verify(spy).expandItem('itemId)
+  }
+  
+  test("expandItemsRecursively") {
+	  assert(tree.expandItemsRecursively('itemId))
+	  Mockito.verify(spy).expandItemsRecursively('itemId)
+  }
+  
+  test("collapseItem") {
+    assert(tree.collapseItem('itemId))
+    Mockito.verify(spy).collapseItem('itemId)
+  }
+  
+  test("collapseItemsRecursively") {
+	  assert(tree.collapseItemsRecursively('itemId))
+	  Mockito.verify(spy).collapseItemsRecursively('itemId)
+  }
 
   test("itemStyleGenerator") {
     val generator = { e: Tree.ItemStyleEvent =>
