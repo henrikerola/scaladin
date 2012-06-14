@@ -23,6 +23,10 @@ trait Field extends Component with Property with Focusable with Wrapper {
   def requiredError: Option[String] = Option(p.getRequiredError)
   def requiredError_=(requiredError: String): Unit = p.setRequiredError(requiredError)
   def requiredError_=(requiredError: Option[String]): Unit = p.setRequiredError(requiredError.getOrElse(null))
+  
+  // BufferedValidatable:
+  def invalidCommitted = p.isInvalidCommitted
+  def invalidCommitted_=(invalidCommitted: Boolean) = p.setInvalidCommitted(invalidCommitted)
 }
 
 abstract class AbstractField(override val p: com.vaadin.ui.AbstractField with AbstractFieldMixin) extends AbstractComponent(p) with Field with PropertyViewer with Focusable {
@@ -31,10 +35,7 @@ abstract class AbstractField(override val p: com.vaadin.ui.AbstractField with Ab
   override def description: Option[String] = Option(p.getDescription)
   override def description_=(description: String): Unit = p.setDescription(description)
   override def description_=(description: Option[String]): Unit = p.setDescription(description.getOrElse(null))
-
-  def invalidCommitted = p.isInvalidCommitted
-  def invalidCommitted_=(invalidCommitted: Boolean) = p.setInvalidCommitted(invalidCommitted)
-
+  
   def writeThrough = p.isWriteThrough
   def writeThrough_=(writeThrough: Boolean) = p.setWriteThrough(writeThrough)
 
