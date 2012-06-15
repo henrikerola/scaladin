@@ -4,8 +4,6 @@ import com.vaadin.ui.themes.BaseTheme
 import vaadin.scala.mixins.ButtonMixin
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.listeners.ButtonClickListener
-import vaadin.scala.listeners.BlurListeners
-import vaadin.scala.listeners.FocusListeners
 
 package mixins {
   trait ButtonMixin extends AbstractFieldMixin
@@ -36,7 +34,8 @@ package listeners {
   }
 }
 
-class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin) extends AbstractField(p) {
+class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin)
+  extends AbstractField(p) with BlurNotifier with FocusNotifier {
 
   private var _clickShortcut: Option[ClickShortcut] = None
 
@@ -52,7 +51,7 @@ class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaa
 
   def disableOnClick: Boolean = p.isDisableOnClick
   def disableOnClick_=(disableOnClick: Boolean) = p.setDisableOnClick(disableOnClick)
-  
+
   def htmlContentAllowed: Boolean = p.isHtmlContentAllowed
   def htmlContentAllowed_=(htmlContentAllowed: Boolean) = p.setHtmlContentAllowed(htmlContentAllowed)
 
@@ -61,9 +60,6 @@ class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaa
     override def addListener(elem: Button.ClickEvent => Unit) = p.addListener(new ButtonClickListener(elem))
     override def removeListener(elem: ButtonClickListener) = p.removeListener(elem)
   }
-
-  lazy val blurListeners = new BlurListeners(p)
-  lazy val focusListeners = new FocusListeners(p)
 }
 
 class LinkButton(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin) extends Button(p) {

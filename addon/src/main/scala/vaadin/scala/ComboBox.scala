@@ -1,8 +1,6 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.ComboBoxMixin
-import vaadin.scala.listeners.BlurListeners
-import vaadin.scala.listeners.FocusListeners
 
 package mixins {
   trait ComboBoxMixin extends AbstractSelectMixin
@@ -18,7 +16,8 @@ object ComboBox {
 }
 
 // In Vaadin ComboBox extends Select, here just extend AbstractSelect directly and add methods from Select to ComboBox
-class ComboBox(override val p: com.vaadin.ui.ComboBox with ComboBoxMixin = new com.vaadin.ui.ComboBox with ComboBoxMixin) extends AbstractSelect(p) {
+class ComboBox(override val p: com.vaadin.ui.ComboBox with ComboBoxMixin = new com.vaadin.ui.ComboBox with ComboBoxMixin)
+  extends AbstractSelect(p) with BlurNotifier with FocusNotifier {
 
   def inputPrompt: Option[String] = Option(p.getInputPrompt)
   def inputPrompt_=(inputPrompt: Option[String]) = p.setInputPrompt(inputPrompt.getOrElse(null))
@@ -34,7 +33,4 @@ class ComboBox(override val p: com.vaadin.ui.ComboBox with ComboBoxMixin = new c
 
   def scrollToSelectedItem = p.isScrollToSelectedItem
   def scrollToSelectedItem_=(scrollToSelectedItem: Boolean) = p.setScrollToSelectedItem(scrollToSelectedItem)
-
-  lazy val blurListeners = new BlurListeners(p)
-  lazy val focusListeners = new FocusListeners(p)
 }

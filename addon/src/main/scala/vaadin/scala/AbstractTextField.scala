@@ -1,8 +1,6 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.AbstractTextFieldMixin
-import vaadin.scala.listeners.BlurListeners
-import vaadin.scala.listeners.FocusListeners
 import vaadin.scala.listeners.TextChangeListener
 import com.vaadin.event.FieldEvents
 
@@ -21,7 +19,8 @@ object AbstractTextField {
   case class TextChangeEvent(textField: AbstractTextField, text: String, cursorPosition: Int) extends Event
 }
 
-abstract class AbstractTextField(override val p: com.vaadin.ui.AbstractTextField with AbstractTextFieldMixin) extends AbstractField(p) {
+abstract class AbstractTextField(override val p: com.vaadin.ui.AbstractTextField with AbstractTextFieldMixin)
+  extends AbstractField(p) with BlurNotifier with FocusNotifier {
 
   def prompt: Option[String] = Option(p.getInputPrompt)
   def prompt_=(prompt: Option[String]) = p.setInputPrompt(prompt.getOrElse(null))
@@ -58,9 +57,6 @@ abstract class AbstractTextField(override val p: com.vaadin.ui.AbstractTextField
     override def addListener(elem: AbstractTextField.TextChangeEvent => Unit) = p.addListener(new TextChangeListener(elem))
     override def removeListener(elem: TextChangeListener) = p.removeListener(elem)
   }
-
-  lazy val blurListeners = new BlurListeners(p)
-  lazy val focusListeners = new FocusListeners(p)
 }
 
 package listeners {

@@ -9,7 +9,33 @@ package mixins {
   trait FieldMixin extends ComponentMixin
 }
 
-trait Field extends Component with Property with Focusable with Wrapper {
+trait Buffered {
+  
+  def p: com.vaadin.data.Buffered
+  
+  def commit() = p.commit()
+  
+  def discard() = p.discard()
+  
+  def writeThrough: Boolean = p.isWriteThrough
+  def writeThrough_=(writeThrough: Boolean) = p.setWriteThrough(writeThrough)
+
+  def readThrough: Boolean = p.isReadThrough
+  def readThrough_=(readThrough: Boolean) = p.setReadThrough(readThrough)
+  
+  def modified() = p.isModified
+  
+}
+
+trait BufferedValidatable extends Buffered {
+  
+  def p: com.vaadin.data.BufferedValidatable
+  
+  def invalidCommitted = p.isInvalidCommitted
+  def invalidCommitted_=(invalidCommitted: Boolean) = p.setInvalidCommitted(invalidCommitted)
+}
+
+trait Field extends Component with BufferedValidatable with Property with Focusable with Wrapper {
 
   def p: com.vaadin.ui.Field with FieldMixin
 
@@ -23,10 +49,6 @@ trait Field extends Component with Property with Focusable with Wrapper {
   def requiredError: Option[String] = Option(p.getRequiredError)
   def requiredError_=(requiredError: String): Unit = p.setRequiredError(requiredError)
   def requiredError_=(requiredError: Option[String]): Unit = p.setRequiredError(requiredError.getOrElse(null))
-  
-  // BufferedValidatable:
-  def invalidCommitted = p.isInvalidCommitted
-  def invalidCommitted_=(invalidCommitted: Boolean) = p.setInvalidCommitted(invalidCommitted)
 }
 
 abstract class AbstractField(override val p: com.vaadin.ui.AbstractField with AbstractFieldMixin) extends AbstractComponent(p) with Field with PropertyViewer with Focusable {
@@ -35,12 +57,6 @@ abstract class AbstractField(override val p: com.vaadin.ui.AbstractField with Ab
   override def description: Option[String] = Option(p.getDescription)
   override def description_=(description: String): Unit = p.setDescription(description)
   override def description_=(description: Option[String]): Unit = p.setDescription(description.getOrElse(null))
-  
-  def writeThrough = p.isWriteThrough
-  def writeThrough_=(writeThrough: Boolean) = p.setWriteThrough(writeThrough)
-
-  def readThrough = p.isReadThrough
-  def readThrough_=(readThrough: Boolean) = p.setReadThrough(readThrough)
 
   lazy val valueChangeListeners = new ListenersTrait[ValueChangeEvent, ValueChangeListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.data.Property.ValueChangeEvent])
