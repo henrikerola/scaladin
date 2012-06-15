@@ -8,7 +8,10 @@ import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
 import vaadin.scala.mixins.TabSheetMixin
 import vaadin.scala.mixins.TabSheetMixin
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
   class VaadinTabSheet extends com.vaadin.ui.TabSheet with TabSheetMixin
@@ -22,15 +25,12 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   var tab2: TabSheet.Tab = _
 
   var spy: VaadinTabSheet = _
-  var tabSheetWithSpy: TabSheet = _
 
   before {
-    tabSheet = new TabSheet
+    spy = Mockito.spy(new VaadinTabSheet)
+    tabSheet = new TabSheet(spy)
     tab = tabSheet.addTab(label)
     tab2 = tabSheet.addTab(label2)
-
-    spy = Mockito.spy(new VaadinTabSheet)
-    tabSheetWithSpy = new TabSheet(spy)
   }
 
   test("Tab.visible") {
@@ -112,71 +112,104 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(tab.styleName === Some("styleName"))
   }
 
+  test("removeComponent") {
+    assert(tabSheet.tabs.size === 2)
+    tabSheet.removeComponent(label)
+
+    assert(tabSheet.tab(label) === None)
+    assert(tabSheet.tabs.size === 1)
+  }
+
+  test("removeComponent, try to remove a Component that's not in the TabSheet") {
+    assert(tabSheet.tabs.size === 2)
+    tabSheet.removeComponent(new Label)
+    assert(tabSheet.tabs.size === 2)
+  }
+
+  test("components.-= must remove Tab from the tabs map") {
+    assert(tabSheet.tabs.size === 2)
+    tabSheet.components -= label
+    assert(tabSheet.tabs.size === 1)
+  }
+
   test("removeTab") {
-    tabSheetWithSpy.removeTab(tab)
+    assert(tabSheet.tabs.size === 2)
+
+    tabSheet.removeTab(tab)
     Mockito.verify(spy).removeTab(tab.p)
+    assert(tabSheet.tab(label) === None)
+    assert(tabSheet.tabs.size === 1)
+  }
+
+  test("removeTab, try to remove a Tab from another TabSheet") {
+    assert(tabSheet.tabs.size === 2)
+
+    val tabFromAnotherTabSheet = new TabSheet().addTab(new Label)
+
+    tabSheet.removeTab(tabFromAnotherTabSheet)
+    assert(tabSheet.tabs.size === 2)
   }
 
   test("addTab(component)") {
     val labelToBeAdded = new Label
 
-    assert(tabSheetWithSpy.tabs.size === 0)
-    val addedTab: TabSheet.Tab = tabSheetWithSpy.addTab(labelToBeAdded)
+    assert(tabSheet.tabs.size === 2)
+    val addedTab: TabSheet.Tab = tabSheet.addTab(labelToBeAdded)
     Mockito.verify(spy).addTab(labelToBeAdded.p)
-    assert(tabSheetWithSpy.tabs.size === 1)
-    assert(tabSheetWithSpy.tabs.contains(addedTab.p))
-    assert(tabSheetWithSpy.tabs.get(addedTab.p) === Some(addedTab))
+    assert(tabSheet.tabs.size === 3)
+    assert(tabSheet.tabs.contains(addedTab.p))
+    assert(tabSheet.tabs.get(addedTab.p) === Some(addedTab))
   }
 
   test("addTab(component, caption)") {
     val labelToBeAdded = new Label
 
-    assert(tabSheetWithSpy.tabs.size === 0)
-    val addedTab: TabSheet.Tab = tabSheetWithSpy.addTab(labelToBeAdded, "my caption")
+    assert(tabSheet.tabs.size === 2)
+    val addedTab: TabSheet.Tab = tabSheet.addTab(labelToBeAdded, "my caption")
     Mockito.verify(spy).addTab(labelToBeAdded.p, "my caption")
-    assert(tabSheetWithSpy.tabs.size === 1)
-    assert(tabSheetWithSpy.tabs.contains(addedTab.p))
-    assert(tabSheetWithSpy.tabs.get(addedTab.p) === Some(addedTab))
+    assert(tabSheet.tabs.size === 3)
+    assert(tabSheet.tabs.contains(addedTab.p))
+    assert(tabSheet.tabs.get(addedTab.p) === Some(addedTab))
   }
 
   test("addTab(component, caption, icon)") {
     val labelToBeAdded = new Label
     val icon = new ThemeResource("icon.png")
 
-    assert(tabSheetWithSpy.tabs.size === 0)
-    val addedTab: TabSheet.Tab = tabSheetWithSpy.addTab(labelToBeAdded, "my caption", icon)
+    assert(tabSheet.tabs.size === 2)
+    val addedTab: TabSheet.Tab = tabSheet.addTab(labelToBeAdded, "my caption", icon)
     Mockito.verify(spy).addTab(labelToBeAdded.p, "my caption", icon.p)
-    assert(tabSheetWithSpy.tabs.size === 1)
-    assert(tabSheetWithSpy.tabs.contains(addedTab.p))
-    assert(tabSheetWithSpy.tabs.get(addedTab.p) === Some(addedTab))
+    assert(tabSheet.tabs.size === 3)
+    assert(tabSheet.tabs.contains(addedTab.p))
+    assert(tabSheet.tabs.get(addedTab.p) === Some(addedTab))
   }
 
   test("addTab(component, caption, icon, position)") {
     val labelToBeAdded = new Label
     val icon = new ThemeResource("icon.png")
 
-    assert(tabSheetWithSpy.tabs.size === 0)
-    val addedTab: TabSheet.Tab = tabSheetWithSpy.addTab(labelToBeAdded, "my caption", icon, 0)
+    assert(tabSheet.tabs.size === 2)
+    val addedTab: TabSheet.Tab = tabSheet.addTab(labelToBeAdded, "my caption", icon, 0)
     Mockito.verify(spy).addTab(labelToBeAdded.p, "my caption", icon.p, 0)
-    assert(tabSheetWithSpy.tabs.size === 1)
-    assert(tabSheetWithSpy.tabs.contains(addedTab.p))
-    assert(tabSheetWithSpy.tabs.get(addedTab.p) === Some(addedTab))
+    assert(tabSheet.tabs.size === 3)
+    assert(tabSheet.tabs.contains(addedTab.p))
+    assert(tabSheet.tabs.get(addedTab.p) === Some(addedTab))
   }
 
   test("addTab(component, position)") {
     val labelToBeAdded = new Label
-    
-    assert(tabSheetWithSpy.tabs.size === 0)
-    val addedTab: TabSheet.Tab = tabSheetWithSpy.addTab(labelToBeAdded, 0)
+
+    assert(tabSheet.tabs.size === 2)
+    val addedTab: TabSheet.Tab = tabSheet.addTab(labelToBeAdded, 0)
     Mockito.verify(spy).addTab(labelToBeAdded.p, 0)
-    assert(tabSheetWithSpy.tabs.size === 1)
-    assert(tabSheetWithSpy.tabs.contains(addedTab.p))
-    assert(tabSheetWithSpy.tabs.get(addedTab.p) === Some(addedTab))
+    assert(tabSheet.tabs.size === 3)
+    assert(tabSheet.tabs.contains(addedTab.p))
+    assert(tabSheet.tabs.get(addedTab.p) === Some(addedTab))
   }
-  
+
   ignore("addComponent") {
     val labelToBeAdded = new Label
-    
+
     tabSheet.components += label
     assert(tabSheet.tab(labelToBeAdded) != None)
   }

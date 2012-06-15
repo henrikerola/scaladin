@@ -49,7 +49,6 @@ object TabSheet {
 
 class TabSheet(override val p: com.vaadin.ui.TabSheet with TabSheetMixin = new com.vaadin.ui.TabSheet with TabSheetMixin) extends AbstractComponentContainer(p) {
 
-  // TODO: Tab should be removed from the map when removed from the TabSheet
   // TODO: change to protected/private
   val tabs = scala.collection.mutable.Map.empty[com.vaadin.ui.TabSheet.Tab, TabSheet.Tab]
   protected def register(vaadinTab: com.vaadin.ui.TabSheet.Tab): TabSheet.Tab = {
@@ -57,8 +56,19 @@ class TabSheet(override val p: com.vaadin.ui.TabSheet with TabSheetMixin = new c
     tabs += vaadinTab -> tab
     tab
   }
-
-  def removeTab(tab: TabSheet.Tab) = p.removeTab(tab.p)
+  
+  def removeTab(tab: TabSheet.Tab) = {
+    tabs -= tab.p
+    p.removeTab(tab.p)
+  } 
+  
+  override def removeComponent(component: Component) = {
+    tab(component) match {
+      case Some(tab) => tabs -= tab.p
+      case None =>
+    }
+    super.removeComponent(component)
+  }
 
   def addTab(component: Component) = register(p.addTab(component.p))
   def addTab(component: Component, caption: String) = register(p.addTab(component.p, caption))
