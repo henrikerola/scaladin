@@ -14,9 +14,9 @@ class AbsoluteLayout(override val p: com.vaadin.ui.AbsoluteLayout with AbsoluteL
     component
   }
 
-  def position(component: Component) = p.getPosition(component.p) match {
-    case null => throw new RuntimeException("Component is not attached to the layout")
-    case position => new ComponentPosition(position)
+  def position(component: Component): Option[ComponentPosition] = p.getPosition(component.p) match {
+    case null => None
+    case position => Some(new ComponentPosition(position))
   }
 
   class ComponentPosition(val p: com.vaadin.ui.AbsoluteLayout#ComponentPosition) extends Wrapper {
