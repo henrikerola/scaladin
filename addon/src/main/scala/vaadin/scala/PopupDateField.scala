@@ -3,7 +3,9 @@ package vaadin.scala
 import vaadin.scala.mixins.PopupDateFieldMixin
 
 package mixins {
-  trait PopupDateFieldMixin extends DateFieldMixin
+  trait PopupDateFieldMixin extends DateFieldMixin { self: com.vaadin.ui.PopupDateField =>
+    
+  }
 }
 
 class PopupDateField(override val p: com.vaadin.ui.PopupDateField with PopupDateFieldMixin = new com.vaadin.ui.PopupDateField with PopupDateFieldMixin) extends DateField(p) {

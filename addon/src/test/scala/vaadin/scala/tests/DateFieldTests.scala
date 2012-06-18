@@ -20,6 +20,47 @@ class DateFieldTests extends FunSuite {
     assert(DateField.Resolution.Year.id === com.vaadin.ui.DateField.RESOLUTION_YEAR)
   }
 
+  test("unparsableDateStringHandler") {
+    val dateField = new DateField
+
+    val date = new java.util.Date
+    val handler = { e: DateField.UnparsableDateStringEvent =>
+      Some(date)
+    }
+
+    assert(dateField.unparsableDateStringHandler === Some(DateField.DefaultUnparsableDateStringHandler))
+    intercept[RuntimeException] {
+      dateField.p.handleUnparsableDateString("test")
+    }
+
+    dateField.unparsableDateStringHandler = handler
+    assert(dateField.unparsableDateStringHandler === Some(handler))
+    assert(dateField.p.handleUnparsableDateString("test") === date)
+
+    dateField.unparsableDateStringHandler = None
+    assert(dateField.unparsableDateStringHandler === None)
+    assert(dateField.p.handleUnparsableDateString("test") === null)
+
+    dateField.unparsableDateStringHandler = Some(handler)
+    assert(dateField.unparsableDateStringHandler === Some(handler))
+    assert(dateField.p.handleUnparsableDateString("test") === date)
+  }
+
+  test("DateField.UnparsableDateStringEvent") {
+    val dateField = new DateField
+    var dateFieldFromHandlerEvent: Option[DateField] = None
+    var dateStringFromHandlerEvent: Option[String] = None
+    dateField.unparsableDateStringHandler = { e: DateField.UnparsableDateStringEvent =>
+      dateFieldFromHandlerEvent = Option(e.dateField)
+      dateStringFromHandlerEvent = Option(e.dateString)
+      None
+    }
+    dateField.p.handleUnparsableDateString("dateString")
+    assert(dateFieldFromHandlerEvent === Some(dateField))
+    assert(dateStringFromHandlerEvent === Some("dateString"))
+
+  }
+
   test("resolution") {
     val dateField = new DateField
     assert(dateField.resolution === DateField.Resolution.Second)
@@ -85,5 +126,16 @@ class DateFieldTests extends FunSuite {
 
     dateField.timeZone = Some(timeZone)
     assert(dateField.timeZone === Some(timeZone))
+  }
+
+  test("Example") {
+    new DateField {
+      immediate = true
+      resolution = DateField.Resolution.Day
+      showISOWeekNumbers = true
+      unparsableDateStringHandler = { e =>
+        None
+      }
+    }
   }
 }

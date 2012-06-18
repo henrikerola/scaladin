@@ -24,4 +24,15 @@ class PopupDateFieldTests extends FunSuite {
     popupDateField.prompt = Some("input date")
     assert(popupDateField.prompt === Some("input date"))
   }
+  
+  test("unparsableDateStringHandler") {
+    var i = 0;
+    val dateField = new PopupDateField
+    dateField.unparsableDateStringHandler = { e =>
+      i = i + 1
+      None
+    }
+    dateField.p.handleUnparsableDateString("test")
+    assert(i === 1)
+  }
 }

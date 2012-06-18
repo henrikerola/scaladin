@@ -1,9 +1,18 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.DateFieldMixin
+import internal.WrapperUtil
 
 package mixins {
-  trait DateFieldMixin extends AbstractFieldMixin
+  trait DateFieldMixin extends AbstractFieldMixin { self: com.vaadin.ui.DateField =>
+    override def handleUnparsableDateString(dateString: String): java.util.Date = {
+      // FIXME: asInstanceOf
+      wrapper.get.asInstanceOf[DateField].unparsableDateStringHandler match {
+        case Some(handler) => handler(new DateField.UnparsableDateStringEvent(WrapperUtil.wrapperFor[DateField](this).get, dateString)).getOrElse(null)
+        case None => null
+      }
+    }
+  }
 }
 
 object DateField {
@@ -17,14 +26,23 @@ object DateField {
     val Month = Value(RESOLUTION_MONTH)
     val Year = Value(RESOLUTION_YEAR)
   }
+  
+  case class UnparsableDateStringEvent(dateField: DateField, dateString: String) extends Event
+  
+  val DefaultUnparsableDateStringHandler: (UnparsableDateStringEvent => Option[java.util.Date]) = e => {
+    throw new RuntimeException(e.dateField.parseErrorMessage.getOrElse(""))
+  }
 }
 
-class DateField(override val p: com.vaadin.ui.DateField with DateFieldMixin = new com.vaadin.ui.DateField with DateFieldMixin) 
-extends AbstractField(p) with BlurNotifier with FocusNotifier {
+class DateField(override val p: com.vaadin.ui.DateField with DateFieldMixin = new com.vaadin.ui.DateField with DateFieldMixin)
+  extends AbstractField(p) with BlurNotifier with FocusNotifier {
 
   resolution = DateField.Resolution.Second
 
-  // TODO: handleUnparsableDateString
+  var unparsableDateStringHandler: Option[DateField.UnparsableDateStringEvent => Option[java.util.Date]] = Some(DateField.DefaultUnparsableDateStringHandler)
+  def unparsableDateStringHandler_=(handler: DateField.UnparsableDateStringEvent => Option[java.util.Date]) {
+	  unparsableDateStringHandler = Option(handler)
+  }
 
   def resolution = DateField.Resolution(p.getResolution)
   def resolution_=(resolution: DateField.Resolution.Value) = p.setResolution(resolution.id)
