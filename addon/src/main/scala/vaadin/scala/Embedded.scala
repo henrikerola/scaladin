@@ -17,7 +17,14 @@ object Embedded {
 
 class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new com.vaadin.ui.Embedded with EmbeddedMixin) extends AbstractComponent(p) {
 
-  // TODO: parameters, click listener
+  // TODO: parameters
+
+  // TODO: the same clickListeners can be found from Panel, use a trait instead of copy-pasting? 
+  lazy val clickListeners = new ListenersTrait[ClickEvent, ClickListener] {
+    override def listeners = p.getListeners(classOf[com.vaadin.event.MouseEvents.ClickListener])
+    override def addListener(elem: ClickEvent => Unit) = p.addListener(new ClickListener(elem))
+    override def removeListener(elem: ClickListener) = p.removeListener(elem)
+  }
 
   // TODO: better name than objectType?
   def objectType = Embedded.Type(p.getType)

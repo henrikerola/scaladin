@@ -15,13 +15,13 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
   extends Panel(p) with BlurNotifier with FocusNotifier {
 
   def positionX_=(positionX: Int) = p.setPositionX(positionX)
-  def positionX = p.getPositionX
+  def positionX: Int = p.getPositionX
 
   def positionY_=(positionY: Int) = p.setPositionY(positionY)
-  def positionY = p.getPositionY
+  def positionY: Int = p.getPositionY
 
   def resizable_=(resizable: Boolean) = p.setResizable(resizable)
-  def resizable = p.isResizable
+  def resizable: Boolean = p.isResizable
 
   def childWindows: mutable.Set[Window] = new mutable.Set[Window] {
     import scala.collection.JavaConversions.asScalaIterator
@@ -38,17 +38,37 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
 
   //not a property
   def setCloseShortcut(keyCode: Int, modifiers: Int*): Unit = { p.setCloseShortcut(keyCode, modifiers.map(_.asInstanceOf[Int]): _*) }
+  
+  // TODO: return wrapped Terminal
+  def terminal = Option(p.getTerminal)
+  
+  override def parent: Option[Window] = wrapperFor[Window](p.getParent)
+  
+  def theme: Option[String] = Option(p.getTheme)
+  def theme_=(theme: Option[String]) = p.setTheme(theme.getOrElse(null))
+  def theme_=(theme: String) = p.setTheme(theme)
 
   def center() = p.center()
 
   def modal_=(modal: Boolean) = p.setModal(modal)
-  def modal = p.isModal
+  def modal: Boolean = p.isModal
 
   def closable_=(closable: Boolean) = p.setClosable(modal)
-  def closable = p.isClosable
+  def closable: Boolean = p.isClosable
 
   def draggable_=(draggable: Boolean) = p.setDraggable(draggable)
-  def draggable = p.isDraggable
+  def draggable: Boolean = p.isDraggable
+  
+  def name: Option[String] = Option(p.getName)
+  def name_=(name: Option[String]) = p.setName(name.getOrElse(null))
+  def name_=(name: String) = p.setName(name)
+  
+  def scrollIntoView(component: Component) = p.scrollIntoView(component.p)
+  
+  def browserWindowHeight: Int = p.getBrowserWindowHeight
+  def browserWindowWidth: Int = p.getBrowserWindowWidth
+  
+  def executeJavaScript(javaScript: String) = p.executeJavaScript(javaScript)
 
   def showNotification(caption: String) = p.showNotification(caption)
   def showNotification(caption: String, notificationType: Notification.Type.Value) = p.showNotification(caption, notificationType.id)
