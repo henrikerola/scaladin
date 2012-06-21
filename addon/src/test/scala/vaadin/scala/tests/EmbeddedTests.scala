@@ -13,6 +13,21 @@ class EmbeddedTests extends FunSuite {
     assert(Embedded.Type.image.id === com.vaadin.ui.Embedded.TYPE_IMAGE)
     assert(Embedded.Type.browser.id === com.vaadin.ui.Embedded.TYPE_BROWSER)
   }
+  
+  test("alternateText") {
+	  val embedded = new Embedded
+	  assert(embedded.alternateText === None)
+	  
+	  embedded.alternateText = "alternate"
+	  assert(embedded.alternateText === Some("alternate"))
+	  
+	  embedded.alternateText = None
+	  assert(embedded.alternateText === None)
+	  
+	  embedded.alternateText = Some("alternate")
+	  assert(embedded.alternateText === Some("alternate"))
+    
+  }
 
   test("objectType") {
     val embedded = new Embedded

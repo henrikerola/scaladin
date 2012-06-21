@@ -34,6 +34,30 @@ class AbstractSplitPanelTests extends FunSuite {
     assert(splitPanel.p.getSplitPosition === 50)
     assert(splitPanel.p.getSplitPositionUnit() === com.vaadin.terminal.Sizeable.UNITS_PERCENTAGE)
   }
+  
+  test("minSplitPosition") {
+    val splitPanel = new VerticalSplitPanel
+    
+    assert(Some(splitPanel.minSplitPosition) === (0 pct))
+    
+    splitPanel.minSplitPosition = 10 px;
+    assert(Some(splitPanel.minSplitPosition) === (10 px))
+    
+    splitPanel.minSplitPosition = None
+    assert(Some(splitPanel.minSplitPosition) === (0 pct))
+  }
+  
+  test("maxSplitPosition") {
+    val splitPanel = new VerticalSplitPanel
+    
+    assert(Some(splitPanel.maxSplitPosition) === (100 pct))
+    
+    splitPanel.maxSplitPosition = 10 px;
+    assert(Some(splitPanel.maxSplitPosition) === (10 px))
+    
+    splitPanel.maxSplitPosition = None
+    assert(Some(splitPanel.maxSplitPosition) === (100 pct))
+  }
 
   val splitClickListener1 = (e: SplitterClickEvent) => println(e.component)
   val splitClickListener2 = (e: SplitterClickEvent) => println

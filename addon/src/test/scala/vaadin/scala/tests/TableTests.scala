@@ -180,6 +180,13 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     table.columnCollapsingAllowed = true
     assert(table.columnCollapsingAllowed)
   }
+  
+  test("columnCollapsible") {
+    assert(table.columnCollapsible("col1"))
+
+    table.columnCollapsible("col1", false)
+    assert(!table.columnCollapsible("col1"))
+  }
 
   test("columnReorderingAllowed") {
     assert(!table.columnReorderingAllowed)

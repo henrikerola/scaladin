@@ -36,9 +36,21 @@ abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPan
   }
   def splitPosition_=(position: Measure): Unit = splitPosition = Some(position)
 
+  def minSplitPosition: Measure = Measure(p.getMinSplitPosition, Units(p.getMinSplitPositionUnit))
+  def minSplitPosition_=(minSplitPosition: Option[Measure]) = minSplitPosition match {
+    case None => p.setMinSplitPosition(0, Units.pct.id)
+    case Some(pos) => p.setMinSplitPosition(pos.value.floatValue, pos.unit.id)
+  }
+  
+  def maxSplitPosition: Measure = Measure(p.getMaxSplitPosition, Units(p.getMaxSplitPositionUnit))
+  def maxSplitPosition_=(maxSplitPosition: Option[Measure]) = maxSplitPosition match {
+    case None => p.setMaxSplitPosition(100, Units.pct.id)
+    case Some(pos) => p.setMaxSplitPosition(pos.value.floatValue, pos.unit.id)
+  }
+
   def locked = p.isLocked
   def locked_=(locked: Boolean) = p.setLocked(locked)
-  
+
   lazy val splitterClickListeners = new ListenersTrait[SplitterClickEvent, SplitterClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.AbstractSplitPanel#SplitterClickEvent])
     override def addListener(elem: SplitterClickEvent => Unit) = p.addListener(new SplitterClickListener(elem))

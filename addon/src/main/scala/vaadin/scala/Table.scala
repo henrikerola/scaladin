@@ -109,6 +109,9 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
 
   def columnCollapsingAllowed = p.isColumnCollapsingAllowed
   def columnCollapsingAllowed_=(columnCollapsingAllowed: Boolean) = p.setColumnCollapsingAllowed(columnCollapsingAllowed)
+  
+  def columnCollapsible(propertyId: Any): Boolean = p.isColumnCollapsible(propertyId)
+  def columnCollapsible(propertyId: Any, collabsible: Boolean) = p.setColumnCollapsible(propertyId, collabsible)
 
   def columnReorderingAllowed = p.isColumnReorderingAllowed
   def columnReorderingAllowed_=(columnReorderingAllowed: Boolean) = p.setColumnReorderingAllowed(columnReorderingAllowed)

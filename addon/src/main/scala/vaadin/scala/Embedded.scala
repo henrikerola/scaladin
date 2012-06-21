@@ -26,6 +26,10 @@ class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new c
     override def removeListener(elem: ClickListener) = p.removeListener(elem)
   }
 
+  def alternateText: Option[String] = Option(p.getAlternateText)
+  def alternateText_=(alternateText: String) = p.setAlternateText(alternateText)
+  def alternateText_=(alternateText: Option[String]) = p.setAlternateText(alternateText.getOrElse(null))
+
   // TODO: better name than objectType?
   def objectType = Embedded.Type(p.getType)
   def objectType_=(objectType: Embedded.Type.Value) = p.setType(objectType.id)
