@@ -10,9 +10,15 @@ import vaadin.scala.internal.ColumnReorderListener
 import vaadin.scala.internal.ColumnResizeListener
 import vaadin.scala.internal.TableColumnGenerator
 import vaadin.scala.internal.CellStyleGenerator
+import vaadin.scala.internal.WrapperUtil
 
 package mixins {
-  trait TableMixin extends AbstractSelectMixin with ContainerOrderedMixin with ContainerSortableMixin
+  trait TableMixin extends AbstractSelectMixin with ContainerOrderedMixin with ContainerSortableMixin { self: com.vaadin.ui.Table =>
+    override protected def formatPropertyValue(rowId: Any, colId: Any, property: com.vaadin.data.Property): String = wrapper.get.asInstanceOf[Table].propertyValueFormatter match {
+      case Some(formatter) => formatter(Table.FormatPropertyEvent(WrapperUtil.wrapperFor[Table](this).get, rowId, colId)).getOrElse(null)
+      case None => self.formatPropertyValue(rowId, colId, property)
+    }
+  }
 }
 
 object Table {
@@ -49,8 +55,14 @@ object Table {
   case class ColumnReorderEvent(component: Component) extends Event
   case class ColumnGenerationEvent(table: Table, itemId: Any, propertyId: Any) extends Event
   case class CellStyleGenerationEvent(itemId: Any, propertyId: Any) extends Event
+  case class FormatPropertyEvent(table: Table, itemId: Any, propertyId: Any) extends Event
+
 }
 
+/**
+ * @see com.vaadin.ui.Table
+ * @author Henri Kerola / Vaadin
+ */
 class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin.ui.Table with TableMixin)
   extends AbstractSelect(p) with ContainerOrdered with ContainerSortable with ItemDescriptionGeneratorOwner with ItemClickNotifier {
 
@@ -104,12 +116,15 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def cacheRate = p.getCacheRate
   def cacheRate_=(cacheRate: Double) = p.setCacheRate(cacheRate)
 
-  def currentPageFirstItemId: Any = p.getCurrentPageFirstItemId
-  def currentPageFirstItemId(currentPageFirstItemId: Any) = p.setCurrentPageFirstItemId(currentPageFirstItemId)
+  def currentPageFirstItemIndex: Int = p.getCurrentPageFirstItemIndex
+  def currentPageFirstItemIndex_=(currentPageFirstItemIndex: Int) = p.setCurrentPageFirstItemIndex(currentPageFirstItemIndex)
+
+  def currentPageFirstItemId: Option[Any] = Option(p.getCurrentPageFirstItemId)
+  def currentPageFirstItemId_=(currentPageFirstItemId: Any) = p.setCurrentPageFirstItemId(currentPageFirstItemId)
 
   def columnCollapsingAllowed = p.isColumnCollapsingAllowed
   def columnCollapsingAllowed_=(columnCollapsingAllowed: Boolean) = p.setColumnCollapsingAllowed(columnCollapsingAllowed)
-  
+
   def columnCollapsible(propertyId: Any): Boolean = p.isColumnCollapsible(propertyId)
   def columnCollapsible(propertyId: Any, collabsible: Boolean) = p.setColumnCollapsible(propertyId, collabsible)
 
@@ -122,8 +137,9 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def sortable = !p.isSortDisabled
   def sortable_=(sortable: Boolean) = p.setSortDisabled(!sortable)
 
-  // TODO: sortContainerPropertyId: Any = p.getSortContainerPropertyId 
-  // TODO: setSortContainerPropertyId
+  def sortContainerPropertyId: Option[Any] = Option(p.getSortContainerPropertyId)
+  def sortContainerPropertyId_=(sortContainerPropertyId: Option[Any]) = p.setSortContainerPropertyId(sortContainerPropertyId.getOrElse(null))
+  def sortContainerPropertyId_=(sortContainerPropertyId: Any) = p.setSortContainerPropertyId(sortContainerPropertyId)
 
   def sortAscending = p.isSortAscending
   def sortAscending_=(sortAscending: Boolean) = p.setSortAscending(true)
@@ -173,6 +189,9 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
     case Some(factory) => p.setTableFieldFactory(factory.p)
     case None => p.setTableFieldFactory(null)
   }
+
+  var propertyValueFormatter: Option[Table.FormatPropertyEvent => Option[String]] = None
+  def propertyValueFormatter_=(propertyValueFormatter: Table.FormatPropertyEvent => Option[String]): Unit = this.propertyValueFormatter = Some(propertyValueFormatter)
 
   lazy val headerClickListeners = new ListenersTrait[Table.HeaderClickEvent, HeaderClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.HeaderClickListener])

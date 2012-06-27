@@ -4,11 +4,9 @@ import vaadin.scala.mixins.TreeTableMixin
 import vaadin.scala.mixins.ContainerHierarchicalMixin
 
 package mixins {
-  trait TreeTableMixin extends TableMixin with ContainerHierarchicalMixin
-}
-
-object TreeTable {
-
+  trait TreeTableMixin extends TableMixin with ContainerHierarchicalMixin { self: com.vaadin.ui.TreeTable =>
+    
+  }
 }
 
 /**

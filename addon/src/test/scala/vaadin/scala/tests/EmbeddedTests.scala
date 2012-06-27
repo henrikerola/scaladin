@@ -13,20 +13,35 @@ class EmbeddedTests extends FunSuite {
     assert(Embedded.Type.image.id === com.vaadin.ui.Embedded.TYPE_IMAGE)
     assert(Embedded.Type.browser.id === com.vaadin.ui.Embedded.TYPE_BROWSER)
   }
-  
+
+  test("parameters") {
+    val embedded = new Embedded
+    embedded.parameters += "param1" -> "value1"
+    embedded.parameters += "param2" -> "value2"
+    embedded.parameters += "param3" -> "value3"
+    assert(embedded.parameters.size === 3)
+    assert(embedded.parameters === Map("param1" -> "value1", "param2" -> "value2", "param3" -> "value3"))
+
+    embedded.parameters += "param2" -> "new value 2"
+    assert(embedded.parameters === Map("param1" -> "value1", "param2" -> "new value 2", "param3" -> "value3"))
+
+    embedded.parameters -= "param1"
+    assert(embedded.parameters.size === 2)
+    assert(embedded.parameters === Map("param2" -> "new value 2", "param3" -> "value3"))
+  }
+
   test("alternateText") {
-	  val embedded = new Embedded
-	  assert(embedded.alternateText === None)
-	  
-	  embedded.alternateText = "alternate"
-	  assert(embedded.alternateText === Some("alternate"))
-	  
-	  embedded.alternateText = None
-	  assert(embedded.alternateText === None)
-	  
-	  embedded.alternateText = Some("alternate")
-	  assert(embedded.alternateText === Some("alternate"))
-    
+    val embedded = new Embedded
+    assert(embedded.alternateText === None)
+
+    embedded.alternateText = "alternate"
+    assert(embedded.alternateText === Some("alternate"))
+
+    embedded.alternateText = None
+    assert(embedded.alternateText === None)
+
+    embedded.alternateText = Some("alternate")
+    assert(embedded.alternateText === Some("alternate"))
   }
 
   test("objectType") {
