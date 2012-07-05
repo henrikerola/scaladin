@@ -31,7 +31,7 @@ trait FormFieldFactoryDelegator extends com.vaadin.ui.FormFieldFactory with Form
     uiContext: com.vaadin.ui.Component): com.vaadin.ui.Field = {
     uiContext match {
 
-      case mixin: ScaladinMixin if mixin.wrapper.get.isInstanceOf[Form] => {
+      case mixin: ScaladinMixin if mixin.wrapper.isInstanceOf[Form] => {
         val contextWrapper: Form = uiContext.asInstanceOf[Form]
         val ingredients = FormFieldIngredients(contextWrapper.item.get, propertyId, contextWrapper)
         wrapper.asInstanceOf[FormFieldFactory].createField(ingredients).p
@@ -59,7 +59,7 @@ trait TableFieldFactoryDelegator extends com.vaadin.ui.TableFieldFactory with Ta
     uiContext: com.vaadin.ui.Component): com.vaadin.ui.Field = {
     uiContext match {
 
-      case mixin: ScaladinMixin if mixin.wrapper.get.isInstanceOf[Table] => {
+      case mixin: ScaladinMixin if mixin.wrapper.isInstanceOf[Table] => {
         val contextWrapper: Table = uiContext.asInstanceOf[Table]
         wrapper.asInstanceOf[TableFieldFactory].createField(TableFieldIngredients(contextWrapper.container.get, itemId, propertyId, contextWrapper)).p
       }

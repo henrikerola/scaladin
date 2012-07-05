@@ -8,13 +8,13 @@ import vaadin.scala.mixins.ScaladinMixin
 package mixins {
 
   trait ScaladinMixin {
-    private[this] var _wrapper: Option[Wrapper] = None
+    private[this] var _wrapper: Wrapper = _
     def wrapper = _wrapper
     def wrapper_=(wrapper: Wrapper) = {
-      if (_wrapper.isDefined)
+      if (_wrapper != null)
         throw new RuntimeException("wrapper cannot be reset once set")
       else
-        _wrapper = Some(wrapper)
+        _wrapper = wrapper
     }
   }
 

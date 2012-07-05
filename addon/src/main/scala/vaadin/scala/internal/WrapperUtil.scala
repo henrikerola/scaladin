@@ -8,6 +8,9 @@ object WrapperUtil {
     if (vaadinComponent == null)
       None
     else
-      vaadinComponent.asInstanceOf[ScaladinMixin].wrapper.map { _.asInstanceOf[T] }
+      vaadinComponent.asInstanceOf[ScaladinMixin].wrapper match {
+        case null => None
+        case wrapper => Some(wrapper.asInstanceOf[T])
+      }
   }
 }
