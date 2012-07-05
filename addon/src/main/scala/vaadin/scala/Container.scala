@@ -51,7 +51,7 @@ trait Container extends Wrapper {
 
   def item(id: Any): Option[Item] = optionalWrapItem(p.getItem(id))
 
-  def itemIds(): Iterable[Any] = p.getItemIds.asScala
+  def itemIds: Iterable[Any] = p.getItemIds.asScala
 
   def removeAllItems(): Boolean = p.removeAllItems
 
@@ -67,7 +67,7 @@ trait Container extends Wrapper {
 
   def containsId(itemId: Any): Boolean = p.containsId(itemId)
 
-  def size(): Int = p.size()
+  def size: Int = p.size()
 
   def property(itemId: Any, propertyId: Any): Option[Property] = optionalWrapProperty(p.getContainerProperty(itemId, propertyId))
 
@@ -95,20 +95,22 @@ trait ContainerHierarchical extends Container {
 
   def p: com.vaadin.data.Container.Hierarchical with ContainerHierarchicalMixin
 
-  def children(itemId: Any) = p.getChildren(itemId)
+  import scala.collection.JavaConverters._
+
+  def children(itemId: Any): Iterable[Any] = p.getChildren(itemId).asScala
 
   def parent(itemId: Any): Any = p.getParent(itemId)
   def parent_=(itemId: Any, newParentId: Any): Unit = p.setParent(itemId, newParentId)
 
-  def rootItemIds = p.rootItemIds
+  def rootItemIds: Iterable[Any] = p.rootItemIds.asScala
 
-  def areChildrenAllowed(itemId: Any) = p.areChildrenAllowed(itemId)
+  def childrenAllowed(itemId: Any): Boolean = p.areChildrenAllowed(itemId)
 
-  def setChildrenAllowed(itemId: Any, areChildrenAllowed: Boolean) = p.setChildrenAllowed(itemId, areChildrenAllowed)
+  def setChildrenAllowed(itemId: Any, areChildrenAllowed: Boolean): Unit = p.setChildrenAllowed(itemId, areChildrenAllowed)
 
-  def isRoot(itemId: Any) = p.isRoot(itemId)
+  def isRoot(itemId: Any): Boolean = p.isRoot(itemId)
 
-  def hasChildren(itemId: Any) = p.hasChildren(itemId)
+  def hasChildren(itemId: Any): Boolean = p.hasChildren(itemId)
 }
 
 trait ContainerOrdered extends Container {
@@ -119,9 +121,9 @@ trait ContainerOrdered extends Container {
 
   def prevItemId(itemId: Any): Any = p.prevItemId(itemId)
 
-  def firstItemId(): Any = p.firstItemId
+  def firstItemId: Any = p.firstItemId
 
-  def lastItemId(): Any = p.lastItemId
+  def lastItemId: Any = p.lastItemId
 
   def isFirstId(itemId: Any): Boolean = p.isFirstId(itemId)
 
@@ -135,7 +137,7 @@ trait ContainerOrdered extends Container {
 trait ContainerViewer extends Wrapper {
   def p: com.vaadin.data.Container.Viewer with ContainerViewerMixin
 
-  def container_=(container: Container) = p.setContainerDataSource(container.p)
+  def container_=(container: Container): Unit = p.setContainerDataSource(container.p)
   def container: Option[Container] = wrapperFor[Container](p)
 }
 
@@ -144,7 +146,7 @@ trait ContainerSortable extends ContainerOrdered {
 
   def p: com.vaadin.data.Container.Sortable with ContainerSortableMixin
 
-  def sort(propertyId: Array[AnyRef], ascending: Array[Boolean]) = p.sort(propertyId, ascending)
+  def sort(propertyId: Array[AnyRef], ascending: Array[Boolean]): Unit = p.sort(propertyId, ascending)
 
   def sortableContainerPropertyIds(): Iterable[Any] = p.getSortableContainerPropertyIds.asScala
 }
