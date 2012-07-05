@@ -17,7 +17,7 @@ class LabelTests extends FunSuite {
     assert(Label.ContentMode.Xml.id === com.vaadin.ui.Label.CONTENT_XML)
     assert(Label.ContentMode.Raw.id === com.vaadin.ui.Label.CONTENT_RAW)
   }
-  
+
   test("constructor") {
     val label = new Label
     assert(label.value === Some(""))
@@ -79,4 +79,8 @@ class LabelTests extends FunSuite {
     assert(label.property.get.value === option.get.value)
   }
 
+  test("object constructor for undefined size") {
+    val label = Label.undefinedSized("testValue")
+    assert(Some("testValue") === label.value)
+  }
 }

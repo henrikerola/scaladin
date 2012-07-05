@@ -17,6 +17,11 @@ object Label {
     val Xml = Value(CONTENT_XML, "xml")
     val Raw = Value(CONTENT_RAW, "raw")
   }
+
+  def undefinedSized(newValue: String): Label = new Label {
+    value = newValue
+    sizeUndefined()
+  }
 }
 
 // TODO: implement interfaces
