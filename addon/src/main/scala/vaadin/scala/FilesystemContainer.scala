@@ -24,6 +24,22 @@ object FilesystemContainer {
   val FileProperties: Iterable[String] = com.vaadin.data.util.FilesystemContainer.FILE_PROPERTIES.asScala
 
   def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new FileProperty(unwrapped)
+
+  class FileItem(override val p: com.vaadin.data.util.FilesystemContainer#FileItem) extends Item {
+    def lastModified: Date = p.lastModified
+    def name: String = p.getName
+    def icon: Resource = new ThemeResource(p.getIcon.asInstanceOf[com.vaadin.terminal.ThemeResource].getResourceId)
+    def size: Long = p.getSize
+
+    protected override def wrapProperty(unwrapped: com.vaadin.data.Property): Property = FilesystemContainer.wrapProperty(unwrapped)
+  }
+
+  class FileProperty(override val p: com.vaadin.data.Property) extends BasicProperty(p) {
+    override def value = super.value match {
+      case Some(r: com.vaadin.terminal.Resource) => Resource.mapResource(Some(r))
+      case other => other
+    }
+  }
 }
 
 class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContainer with FilesystemContainerMixin) extends ContainerHierarchical {
@@ -53,23 +69,7 @@ class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContain
   def recursive: Boolean = p.isRecursive
   def recursive_=(isRecursive: Boolean): Unit = p.setRecursive(isRecursive)
 
-  def wrapItem(unwrapped: com.vaadin.data.Item): Item = new FileItem(unwrapped.asInstanceOf[com.vaadin.data.util.FilesystemContainer#FileItem])
+  def wrapItem(unwrapped: com.vaadin.data.Item): Item = new FilesystemContainer.FileItem(unwrapped.asInstanceOf[com.vaadin.data.util.FilesystemContainer#FileItem])
 
   override def wrapProperty(unwrapped: com.vaadin.data.Property): Property = FilesystemContainer.wrapProperty(unwrapped)
-}
-
-class FileItem(override val p: com.vaadin.data.util.FilesystemContainer#FileItem) extends Item {
-  def lastModified: Date = p.lastModified
-  def name: String = p.getName
-  def icon: Resource = new ThemeResource(p.getIcon.asInstanceOf[com.vaadin.terminal.ThemeResource].getResourceId)
-  def size: Long = p.getSize
-
-  protected override def wrapProperty(unwrapped: com.vaadin.data.Property): Property = FilesystemContainer.wrapProperty(unwrapped)
-}
-
-class FileProperty(override val p: com.vaadin.data.Property) extends BasicProperty(p) {
-  override def value = super.value match {
-    case Some(r: com.vaadin.terminal.Resource) => Resource.mapResource(Some(r))
-    case other => other
-  }
 }
