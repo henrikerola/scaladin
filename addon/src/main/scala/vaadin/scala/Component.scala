@@ -68,9 +68,6 @@ trait Component extends Wrapper {
   def id_=(id: Option[String]) = p.setDebugId(id.getOrElse(null))
   def id_=(id: String) = p.setDebugId(id)
 
-  // Doesn't work with ScaladinWrapper
-  // def requestRepaint() = p.requestRepaint()
-
   //override def toString = p.toString
 
   // TODO: ..
@@ -108,6 +105,8 @@ abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with Abs
 
   def data_=(data: Any) = p.setData(data)
   def data = p.getData
+  
+  def requestRepaint() = p.requestRepaint()
 }
 
 trait Focusable extends Component {

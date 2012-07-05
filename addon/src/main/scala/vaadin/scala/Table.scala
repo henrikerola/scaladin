@@ -234,31 +234,3 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   // RowGenerator
 
 }
-
-package internal {
-
-  class FooterClickListener(val action: Table.FooterClickEvent => Unit) extends com.vaadin.ui.Table.FooterClickListener with Listener {
-    def footerClick(e: com.vaadin.ui.Table.FooterClickEvent) = action(Table.FooterClickEvent(wrapperFor[Table](e.getComponent).get, e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
-  }
-
-  class HeaderClickListener(val action: Table.HeaderClickEvent => Unit) extends com.vaadin.ui.Table.HeaderClickListener with Listener {
-    def headerClick(e: com.vaadin.ui.Table.HeaderClickEvent) = action(Table.HeaderClickEvent(wrapperFor[Table](e.getComponent).get, e.getPropertyId, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
-  }
-
-  class ColumnResizeListener(val action: Table.ColumnResizeEvent => Unit) extends com.vaadin.ui.Table.ColumnResizeListener with Listener {
-    def columnResize(e: com.vaadin.ui.Table.ColumnResizeEvent) = action(Table.ColumnResizeEvent(wrapperFor[Table](e.getComponent).get, e.getPropertyId, e.getPreviousWidth, e.getCurrentWidth))
-  }
-
-  class ColumnReorderListener(val action: Table.ColumnReorderEvent => Unit) extends com.vaadin.ui.Table.ColumnReorderListener with Listener {
-    def columnReorder(e: com.vaadin.ui.Table.ColumnReorderEvent) = action(Table.ColumnReorderEvent(wrapperFor[Table](e.getComponent).get))
-  }
-
-  class TableColumnGenerator(val action: Table.ColumnGenerationEvent => Any) extends com.vaadin.ui.Table.ColumnGenerator with Listener {
-    def generateCell(table: com.vaadin.ui.Table, itemId: Any, columnId: Any): Object = action(Table.ColumnGenerationEvent(wrapperFor[Table](table).get, itemId, columnId)).asInstanceOf[AnyRef]
-  }
-
-  class CellStyleGenerator(val generator: Table.CellStyleGenerationEvent => Option[String]) extends com.vaadin.ui.Table.CellStyleGenerator {
-    def getStyle(itemId: Any, propertyId: Any) = generator(Table.CellStyleGenerationEvent(itemId, propertyId)).getOrElse(null)
-
-  }
-}
