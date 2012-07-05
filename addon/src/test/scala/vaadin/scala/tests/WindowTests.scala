@@ -166,4 +166,21 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     window.showNotification(notification)
     Mockito.verify(vaadinWindowSpy).showNotification(notification.p)
   }
+  
+  test("closeShortcut") {
+    val window = new Window
+
+    val clickShortcut = KeyShortcut(com.vaadin.event.ShortcutAction.KeyCode.ENTER);
+
+    assert(window.closeShortcut === None)
+
+    window.closeShortcut = clickShortcut
+    assert(window.closeShortcut === Some(clickShortcut))
+
+    window.closeShortcut = None
+    assert(window.closeShortcut === None)
+
+    window.closeShortcut = Some(clickShortcut)
+    assert(window.closeShortcut === Some(clickShortcut))
+  }
 }

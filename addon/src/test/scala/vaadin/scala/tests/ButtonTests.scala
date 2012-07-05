@@ -22,7 +22,7 @@ class ButtonTests extends FunSuite {
   test("clickShortcut") {
     val button = new Button
 
-    val clickShortcut = ClickShortcut(com.vaadin.event.ShortcutAction.KeyCode.ENTER);
+    val clickShortcut = KeyShortcut(com.vaadin.event.ShortcutAction.KeyCode.ENTER);
 
     assert(button.clickShortcut === None)
 

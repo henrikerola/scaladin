@@ -36,8 +36,18 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
     def -=(elem: Window) = { p.removeWindow(elem.p); this }
   }
 
-  //not a property
-  def setCloseShortcut(keyCode: Int, modifiers: Int*): Unit = { p.setCloseShortcut(keyCode, modifiers.map(_.asInstanceOf[Int]): _*) }
+  private var _closeShortcut: Option[KeyShortcut] = None
+
+  def closeShortcut: Option[KeyShortcut] = _closeShortcut
+  def closeShortcut_=(cs: Option[KeyShortcut]): Unit = {
+    _closeShortcut = cs
+    closeShortcut match {
+      case None => p.removeCloseShortcut()
+      case Some(closeShortcut) => p.setCloseShortcut(closeShortcut.keyCode, closeShortcut.modifiers: _*)
+    }
+  }
+  def closeShortcut_=(cs: KeyShortcut): Unit = this.closeShortcut = Option(cs)
+
   
   // TODO: return wrapped Terminal
   def terminal = Option(p.getTerminal)

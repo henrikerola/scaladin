@@ -68,9 +68,6 @@ trait Component extends Wrapper {
   def id_=(id: Option[String]) = p.setDebugId(id.getOrElse(null))
   def id_=(id: String) = p.setDebugId(id)
 
-  // Doesn't work with ScaladinWrapper
-  // def requestRepaint() = p.requestRepaint()
-
   //override def toString = p.toString
 
   // TODO: ..
@@ -83,11 +80,11 @@ trait ScaladinWrapper extends com.vaadin.ui.Component with Component with Compon
 
 trait Sizeable extends Component {
 
-  def width: Option[Measure] = if (p.getWidth < 0) None else Option(new Measure(p.getWidth, Units(p.getWidthUnits)))
+  def width: Option[Measure] = if (p.getWidth < 0) None else Option(Measure(p.getWidth, Units(p.getWidthUnits)))
   def width_=(width: Option[Measure]) = p.setWidth(if (width.isDefined) width.get.toString else null)
   def width_=(width: Measure) = p.setWidth(if (width != null) width.toString else null)
 
-  def height: Option[Measure] = if (p.getHeight() < 0) None else Option(new Measure(p.getHeight(), Units(p.getHeightUnits)))
+  def height: Option[Measure] = if (p.getHeight() < 0) None else Option(Measure(p.getHeight(), Units(p.getHeightUnits)))
   def height_=(height: Option[Measure]) = p.setHeight(if (height.isDefined) height.get.toString else null)
   def height_=(height: Measure) = p.setHeight(if (height != null) height.toString else null)
 
@@ -108,6 +105,8 @@ abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with Abs
 
   def data_=(data: Any) = p.setData(data)
   def data = p.getData
+  
+  def requestRepaint() = p.requestRepaint()
 }
 
 trait Focusable extends Component {

@@ -82,19 +82,19 @@ class LayoutTests extends FunSuite {
   test("CssLayout, add") {
     val layout = new CssLayout
     val label = new Label
-    
+
     layout.add(label, "my invalid css")
     assert(layout.components(label))
-    
+
     assert(layout.p.getCss(label.p) === "my invalid css")
     assert(layout.css(label) === Some("my invalid css"))
-    
+
     val label2 = new Label
     layout.add(label2)
     assert(layout.p.getCss(label2.p) === null)
     assert(layout.css(label2) === None)
   }
-  
+
   test("CssLayout, function literal for css") {
     val layout = new CssLayout
     val label = new Label
@@ -106,27 +106,57 @@ class LayoutTests extends FunSuite {
     assert(layout.css(label) === Some("2"))
     assert(layout.css(label) === Some("2"))
   }
-  
+
   test("CssLayout, CSS must be removed from cssMap when component is removed from the layout") {
     val layout = new CssLayout
     val label = new Label
     val label2 = new Label
-    
+
     layout.add(label, "my invalid css")
     assert(layout.cssMap.size === 1)
-    
+
     layout.add(label2, "my invalid css")
     assert(layout.cssMap.size === 2)
-    
+
     layout.add(new Label)
     assert(layout.cssMap.size === 2)
-    
-    
+
     layout.removeComponent(label)
     assert(layout.cssMap.size === 1)
-    
+
     layout.components -= label2
     assert(layout.cssMap.size === 0)
   }
-  
+
+  test("full size object constructor") {
+    val layout = VerticalLayout.fullSized()
+    assert(100.pct === layout.width)
+    assert(100.pct === layout.height)
+  }
+
+  test("full size object constructor with components") {
+    val component1 = new TextField
+    val component2 = new Button
+    val layout = VerticalLayout.fullSized(component1, component2)
+    assert(100.pct === layout.width)
+    assert(100.pct === layout.height)
+    assert(component1 === layout.components.head)
+    assert(component2 === layout.components.tail.head)
+  }
+
+  test("undefined size object constructor") {
+    val layout = VerticalLayout.undefinedSized()
+    assert(None === layout.width)
+    assert(None === layout.height)
+  }
+
+  test("undefined size object constructor with components") {
+    val component1 = new TextField
+    val component2 = new Button
+    val layout = VerticalLayout.undefinedSized(component1, component2)
+    assert(None === layout.width)
+    assert(None === layout.height)
+    assert(component1 === layout.components.head)
+    assert(component2 === layout.components.tail.head)
+  }
 }

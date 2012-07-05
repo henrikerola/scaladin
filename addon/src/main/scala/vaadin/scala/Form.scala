@@ -31,7 +31,7 @@ class Form(override val p: com.vaadin.ui.Form with FormMixin = new com.vaadin.ui
 
   import scala.collection.JavaConverters._
 
-  def setItemDataSource(newDataSource: Item, propertyIds: Iterable[Any]): Unit = p.setItemDataSource(newDataSource.p, propertyIds.asJavaCollection)
+  def itemDataSource(newDataSource: Item, propertyIds: Iterable[Any]): Unit = p.setItemDataSource(newDataSource.p, propertyIds.asJavaCollection)
 
   def visibleItemProperties: Iterable[Any] = p.getVisibleItemProperties.asScala
   def visibleItemProperties_=(visibleItemProperties: Iterable[Any]): Unit = p.setVisibleItemProperties(visibleItemProperties.asJavaCollection)
