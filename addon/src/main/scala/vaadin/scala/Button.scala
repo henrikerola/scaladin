@@ -37,17 +37,17 @@ package listeners {
 class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin)
   extends AbstractField(p) with BlurNotifier with FocusNotifier {
 
-  private var _clickShortcut: Option[ClickShortcut] = None
+  private var _clickShortcut: Option[KeyShortcut] = None
 
-  def clickShortcut: Option[ClickShortcut] = _clickShortcut
-  def clickShortcut_=(clickShortcut: Option[ClickShortcut]): Unit = {
+  def clickShortcut: Option[KeyShortcut] = _clickShortcut
+  def clickShortcut_=(clickShortcut: Option[KeyShortcut]): Unit = {
     _clickShortcut = clickShortcut
     clickShortcut match {
       case None => p.removeClickShortcut
       case Some(clickShortcut) => p.setClickShortcut(clickShortcut.keyCode, clickShortcut.modifiers: _*)
     }
   }
-  def clickShortcut_=(clickShortcut: ClickShortcut): Unit = this.clickShortcut = Option(clickShortcut)
+  def clickShortcut_=(clickShortcut: KeyShortcut): Unit = this.clickShortcut = Option(clickShortcut)
 
   def disableOnClick: Boolean = p.isDisableOnClick
   def disableOnClick_=(disableOnClick: Boolean) = p.setDisableOnClick(disableOnClick)
