@@ -6,8 +6,8 @@ import vaadin.scala.mixins.ValidatableMixin
 import scala.collection.mutable
 
 package mixins {
-  class ValidatorMixin extends ScaladinMixin
-  class ValidatableMixin extends ScaladinMixin
+  trait ValidatorMixin extends ScaladinMixin
+  trait ValidatableMixin extends ScaladinMixin
 }
 
 abstract sealed class ValidationResult
@@ -20,19 +20,18 @@ object Validator {
   }
 }
 
-class Validators(val p: com.vaadin.data.Validatable with ValidatableMixin) extends mutable.Set[Any => ValidationResult] {
+class Validators(p: com.vaadin.data.Validatable with ValidatableMixin) extends mutable.Set[Validator] {
+
+  def contains(key: Validator) = iterator.contains(key)
 
   import scala.collection.JavaConverters._
-
-  def contains(key: Any => ValidationResult) = iterator.contains(key)
-
   def iterator(): Iterator[Validator] =
     p.getValidators.asScala.filter(_.isInstanceOf[ValidatorMixin]).flatMap(_.asInstanceOf[ValidatorMixin].wrapper).map(_.asInstanceOf[Validator]).iterator
 
   def +=(elem: Any => ValidationResult) = { p.addValidator(Validator(elem).p); this }
   def +=(elem: Validator) = { p.addValidator(elem.p); this }
-  def -=(elem: Validatable => Unit) = {
-     iterator.foreach { e =>
+  def -=(elem: Validator) = {
+    iterator.foreach { e =>
       if (e == elem) {
         p.removeValidator(e.p)
       }
@@ -40,11 +39,17 @@ class Validators(val p: com.vaadin.data.Validatable with ValidatableMixin) exten
     this
   }
 }
-
 trait Validatable extends Wrapper {
   def p: com.vaadin.data.Validatable with ValidatableMixin
 
-  lazy val validators = new Validators(p)
+  lazy val validators: Validators = new Validators(p)
+
+  def validate: ValidationResult = try {
+    p.validate
+    Valid //no exception -> valid
+  } catch {
+    case e: com.vaadin.data.Validator.InvalidValueException => Invalid(e.getMessage)
+  }
 }
 
 class ValidatorDelegator extends com.vaadin.data.Validator with ValidatorMixin {
