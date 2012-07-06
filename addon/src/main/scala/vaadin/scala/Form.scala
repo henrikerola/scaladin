@@ -13,7 +13,7 @@ class Form(override val p: com.vaadin.ui.Form with FormMixin = new com.vaadin.ui
 
   def formFieldFactory: Option[FormFieldFactory] = wrapperFor[FormFieldFactory](p.getFormFieldFactory)
   def formFieldFactory_=(factory: FormFieldFactory) = p.setFormFieldFactory(factory.p)
-  def formFieldFactory_=(factoryFunction: FormFieldIngredients => Field) = p.setFormFieldFactory(FormFieldFactory(factoryFunction).p)
+  def formFieldFactory_=(factoryFunction: FormFieldIngredients => Option[Field]) = p.setFormFieldFactory(FormFieldFactory(factoryFunction).p)
   def formFieldFactory_=(factory: Option[FormFieldFactory]) = factory match {
     case Some(factory) => p.setFormFieldFactory(factory.p)
     case None => p.setFormFieldFactory(null)

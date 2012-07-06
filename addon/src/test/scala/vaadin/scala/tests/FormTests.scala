@@ -26,7 +26,7 @@ class FormTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     form.formFieldFactory = Option(factory)
     assertSameFactory(factory, form.formFieldFactory)
 
-    val factoryFunctionMock = mock[Function1[FormFieldIngredients, Field]]
+    val factoryFunctionMock = mock[Function1[FormFieldIngredients, Option[Field]]]
     val itemMock = mock[Item]
     form.formFieldFactory = factoryFunctionMock
 
@@ -38,7 +38,7 @@ class FormTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
     verify(factoryFunctionMock)(testIngredients)
   }
-  
+
   test("add field") {
     val field = new TextField
     form.addField('testId, field)
@@ -54,21 +54,21 @@ class FormTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(layout === form.layout)
     assert(layout.p === form.layout.p)
   }
-  
+
   test("visible item properties") {
     form.visibleItemProperties = List('test1, 'test2)
     assert(form.visibleItemProperties === List('test1, 'test2))
   }
-  
+
   test("footer") {
     val footer = new VerticalLayout
     form.footer = footer
     assert(footer === form.footer)
     assert(footer.p === form.footer.p)
   }
-  
+
   test("item datasource")(pending)
-    
+
   private def assertSameFactory(expected: FormFieldFactory, result: Option[FormFieldFactory]) = {
     assert(result.isDefined, "No fieldfactory as result")
     assert(expected === result.get)

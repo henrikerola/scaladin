@@ -184,7 +184,7 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
 
   def tableFieldFactory: Option[TableFieldFactory] = wrapperFor[TableFieldFactory](p.getTableFieldFactory)
   def tableFieldFactory_=(factory: TableFieldFactory) = p.setTableFieldFactory(factory.p)
-  def tableFieldFactory_=(factoryFunction: (TableFieldIngredients) => Field) = p.setTableFieldFactory(TableFieldFactory(factoryFunction).p)
+  def tableFieldFactory_=(factoryFunction: (TableFieldIngredients) => Option[Field]) = p.setTableFieldFactory(TableFieldFactory(factoryFunction).p)
   def tableFieldFactory_=(factory: Option[TableFieldFactory]) = factory match {
     case Some(factory) => p.setTableFieldFactory(factory.p)
     case None => p.setTableFieldFactory(null)
