@@ -85,30 +85,3 @@ class Upload(override val p: com.vaadin.ui.Upload with UploadMixin = new com.vaa
     override def removeListener(elem: UploadSucceededListener) = p.removeListener(elem)
   }
 }
-
-package internal {
-  class UploadReceiver(val receiver: Upload.ReceiveEvent => java.io.OutputStream) extends com.vaadin.ui.Upload.Receiver {
-    def receiveUpload(filename: String, mimeType: String): java.io.OutputStream = receiver(Upload.ReceiveEvent(filename, mimeType))
-  }
-
-  class UploadProgressListener(val action: Upload.ProgressEvent => Unit) extends com.vaadin.ui.Upload.ProgressListener with Listener {
-    def updateProgress(readBytes: Long, contentLength: Long) = action(Upload.ProgressEvent(readBytes, contentLength))
-  }
-
-  class UploadStartedListener(val action: Upload.StartedEvent => Unit) extends com.vaadin.ui.Upload.StartedListener with Listener {
-    def uploadStarted(e: com.vaadin.ui.Upload.StartedEvent) = action(Upload.StartedEvent(wrapperFor[Upload](e.getUpload).get, e.getFilename, e.getMIMEType, e.getContentLength))
-  }
-
-  class UploadFinishedListener(val action: Upload.FinishedEvent => Unit) extends com.vaadin.ui.Upload.FinishedListener with Listener {
-    def uploadFinished(e: com.vaadin.ui.Upload.FinishedEvent) = action(Upload.FinishedEvent(wrapperFor[Upload](e.getUpload).get, e.getFilename, e.getMIMEType, e.getLength))
-  }
-
-  class UploadFailedListener(val action: Upload.FailedEvent => Unit) extends com.vaadin.ui.Upload.FailedListener with Listener {
-    def uploadFailed(e: com.vaadin.ui.Upload.FailedEvent) = action(Upload.FailedEvent(wrapperFor[Upload](e.getUpload).get, e.getFilename, e.getMIMEType, e.getLength, e.getReason))
-  }
-
-  class UploadSucceededListener(val action: Upload.SucceededEvent => Unit) extends com.vaadin.ui.Upload.SucceededListener with Listener {
-    def uploadSucceeded(e: com.vaadin.ui.Upload.SucceededEvent) = action(Upload.SucceededEvent(wrapperFor[Upload](e.getUpload).get, e.getFilename, e.getMIMEType, e.getLength))
-  }
-}
-

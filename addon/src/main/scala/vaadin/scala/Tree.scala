@@ -5,8 +5,8 @@ import vaadin.scala.mixins.TreeMixin
 import vaadin.scala.mixins.AbstractSelectMixin
 import vaadin.scala.mixins.ContainerHierarchicalMixin
 import vaadin.scala.internal.ItemStyleGenerator
-import vaadin.scala.listeners.ExpandListener
-import vaadin.scala.listeners.CollapseListener
+import vaadin.scala.internal.ExpandListener
+import vaadin.scala.internal.CollapseListener
 
 package mixins {
   trait TreeMixin extends AbstractSelectMixin with ContainerHierarchicalMixin
@@ -78,11 +78,3 @@ class Tree(override val p: com.vaadin.ui.Tree with TreeMixin = new com.vaadin.ui
   // TODO: ...
 
 }
-
-package internal {
-  // FIXME: should not extend Listener?
-  class ItemStyleGenerator(val action: Tree.ItemStyleEvent => Option[String]) extends com.vaadin.ui.Tree.ItemStyleGenerator with Listener {
-    def getStyle(itemId: Any) = action(Tree.ItemStyleEvent(itemId)).getOrElse(null)
-  }
-}
-

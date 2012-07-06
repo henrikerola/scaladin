@@ -10,6 +10,8 @@ package mixins {
 
 class BeanItemContainer[BT](override val p: com.vaadin.data.util.BeanItemContainer[BT] with BeanItemContainerMixin) extends Wrapper with ContainerIndexed {
 
+  p.wrapper = this
+
   def this()(implicit m: Manifest[BT]) = {
     this(new com.vaadin.data.util.BeanItemContainer[BT](m.erasure.asInstanceOf[Class[BT]]) with BeanItemContainerMixin)
   }
