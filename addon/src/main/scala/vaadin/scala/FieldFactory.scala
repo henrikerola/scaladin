@@ -30,11 +30,11 @@ trait FormFieldFactoryDelegator extends com.vaadin.ui.FormFieldFactory with Form
   def createField(container: com.vaadin.data.Item, propertyId: Any, uiContext: com.vaadin.ui.Component): com.vaadin.ui.Field = {
     uiContext match {
 
-      case mixin: ScaladinMixin if mixin.wrapper.get.isInstanceOf[Form] => {
-        val contextWrapper: Form = mixin.wrapper.get.asInstanceOf[Form]
+      case mixin: ScaladinMixin if mixin.wrapper.isInstanceOf[Form] => {
+        val contextWrapper: Form = mixin.wrapper.asInstanceOf[Form]
         val ingredients = FormFieldIngredients(contextWrapper.item.get, propertyId, contextWrapper)
 
-        wrapper.get.asInstanceOf[FormFieldFactory].createField(ingredients) match {
+        wrapper.asInstanceOf[FormFieldFactory].createField(ingredients) match {
           case Some(field) => field.p
           case _ => null
         }
@@ -62,9 +62,9 @@ trait TableFieldFactoryDelegator extends com.vaadin.ui.TableFieldFactory with Ta
                   uiContext: com.vaadin.ui.Component): com.vaadin.ui.Field = {
     uiContext match {
 
-      case mixin: ScaladinMixin if mixin.wrapper.get.isInstanceOf[Table] => {
-        val contextWrapper: Table = mixin.wrapper.get.asInstanceOf[Table]
-        val newField = wrapper.get.asInstanceOf[TableFieldFactory].createField(TableFieldIngredients(contextWrapper.container.get, itemId, propertyId, contextWrapper))
+      case mixin: ScaladinMixin if mixin.wrapper.isInstanceOf[Table] => {
+        val contextWrapper: Table = mixin.wrapper.asInstanceOf[Table]
+        val newField = wrapper.asInstanceOf[TableFieldFactory].createField(TableFieldIngredients(contextWrapper.container.get, itemId, propertyId, contextWrapper))
         newField match {
           case Some(field) => field.p
           case _ => null

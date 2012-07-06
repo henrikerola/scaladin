@@ -2,7 +2,7 @@ package vaadin.scala
 
 import vaadin.scala.mixins.TabSheetMixin
 import vaadin.scala.internal.WrapperUtil
-import vaadin.scala.listeners.SelectedTabChangeListener
+import vaadin.scala.internal.SelectedTabChangeListener
 
 package mixins {
   trait TabSheetMixin extends AbstractComponentContainerMixin
@@ -112,11 +112,5 @@ class TabSheet(override val p: com.vaadin.ui.TabSheet with TabSheetMixin = new c
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Button#ClickEvent])
     override def addListener(elem: TabSheet.SelectedTabChangeEvent => Unit) = p.addListener(new SelectedTabChangeListener(elem))
     override def removeListener(elem: SelectedTabChangeListener) = p.removeListener(elem)
-  }
-}
-
-package listeners {
-  class SelectedTabChangeListener(val action: TabSheet.SelectedTabChangeEvent => Unit) extends com.vaadin.ui.TabSheet.SelectedTabChangeListener with Listener {
-    def selectedTabChange(e: com.vaadin.ui.TabSheet#SelectedTabChangeEvent) = action(TabSheet.SelectedTabChangeEvent(wrapperFor[TabSheet](e.getTabSheet).get))
   }
 }

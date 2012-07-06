@@ -14,7 +14,7 @@ import vaadin.scala.internal.WrapperUtil
 
 package mixins {
   trait TableMixin extends AbstractSelectMixin with ContainerOrderedMixin with ContainerSortableMixin { self: com.vaadin.ui.Table =>
-    override protected def formatPropertyValue(rowId: Any, colId: Any, property: com.vaadin.data.Property): String = wrapper.get.asInstanceOf[Table].propertyValueFormatter match {
+    override protected def formatPropertyValue(rowId: Any, colId: Any, property: com.vaadin.data.Property): String = wrapper.asInstanceOf[Table].propertyValueFormatter match {
       case Some(formatter) => formatter(Table.FormatPropertyEvent(WrapperUtil.wrapperFor[Table](this).get, rowId, colId)).getOrElse(null)
       case None => self.formatPropertyValue(rowId, colId, property)
     }
