@@ -26,7 +26,7 @@ class Validators(p: com.vaadin.data.Validatable with ValidatableMixin) extends m
 
   import scala.collection.JavaConverters._
   def iterator(): Iterator[Validator] =
-    p.getValidators.asScala.filter(_.isInstanceOf[ValidatorMixin]).flatMap(_.asInstanceOf[ValidatorMixin].wrapper).map(_.asInstanceOf[Validator]).iterator
+    p.getValidators.asScala.filter(_.isInstanceOf[ValidatorMixin]).map(_.asInstanceOf[ValidatorMixin].wrapper).map(_.asInstanceOf[Validator]).iterator
 
   def +=(elem: Any => ValidationResult) = { p.addValidator(Validator(elem).p); this }
   def +=(elem: Validator) = { p.addValidator(elem.p); this }
@@ -39,8 +39,9 @@ class Validators(p: com.vaadin.data.Validatable with ValidatableMixin) extends m
     this
   }
 }
+
 trait Validatable extends Wrapper {
-  def p: com.vaadin.data.Validatable with ValidatableMixin
+  override def p: com.vaadin.data.Validatable with ValidatableMixin
 
   lazy val validators: Validators = new Validators(p)
 
@@ -60,11 +61,10 @@ class ValidatorDelegator extends com.vaadin.data.Validator with ValidatorMixin {
     case Invalid(message) => throw new com.vaadin.data.Validator.InvalidValueException(message)
   }
 
-  protected def internalValidate(value: Any): ValidationResult = wrapper.get.asInstanceOf[Validator].validate(value)
+  protected def internalValidate(value: Any): ValidationResult = wrapper.asInstanceOf[Validator].validate(value)
 }
 
-trait Validator extends Wrapper with Function1[Any, ValidationResult] {
+trait Validator extends Wrapper {
   override val p: com.vaadin.data.Validator = new ValidatorDelegator { wrapper = Validator.this }
   def validate(value: Any): ValidationResult
-  def apply(value: Any): ValidationResult = validate(value)
 }
