@@ -22,7 +22,7 @@ class ButtonTests extends FunSuite {
   test("clickShortcut") {
     val button = new Button
 
-    val clickShortcut = KeyShortcut(com.vaadin.event.ShortcutAction.KeyCode.ENTER);
+    val clickShortcut = KeyShortcut(KeyCode.ENTER, KeyModifier.SHIFT);
 
     assert(button.clickShortcut === None)
 
@@ -38,12 +38,12 @@ class ButtonTests extends FunSuite {
 
   test("htmlContentAllowed") {
     val button = new Button
-    
+
     assert(!button.htmlContentAllowed)
-    
+
     button.htmlContentAllowed = true
     assert(button.htmlContentAllowed)
-    
+
   }
 
   test("clickListeners, add a clicklistener") {

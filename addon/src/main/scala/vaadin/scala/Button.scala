@@ -35,7 +35,7 @@ package listeners {
 }
 
 class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin)
-  extends AbstractField(p) with BlurNotifier with FocusNotifier {
+    extends AbstractField(p) with BlurNotifier with FocusNotifier {
 
   private var _clickShortcut: Option[KeyShortcut] = None
 
@@ -44,7 +44,7 @@ class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaa
     _clickShortcut = clickShortcut
     clickShortcut match {
       case None => p.removeClickShortcut
-      case Some(clickShortcut) => p.setClickShortcut(clickShortcut.keyCode, clickShortcut.modifiers: _*)
+      case Some(clickShortcut) => p.setClickShortcut(clickShortcut.keyCode.value, clickShortcut.modifiers.map(_.value): _*)
     }
   }
   def clickShortcut_=(clickShortcut: KeyShortcut): Unit = this.clickShortcut = Option(clickShortcut)

@@ -12,7 +12,7 @@ class WindowCloseListener(action: com.vaadin.ui.Window#CloseEvent => Unit) exten
 }
 
 class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaadin.ui.Window with WindowMixin)
-  extends Panel(p) with BlurNotifier with FocusNotifier {
+    extends Panel(p) with BlurNotifier with FocusNotifier {
 
   def positionX_=(positionX: Int) = p.setPositionX(positionX)
   def positionX: Int = p.getPositionX
@@ -43,17 +43,16 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
     _closeShortcut = cs
     closeShortcut match {
       case None => p.removeCloseShortcut()
-      case Some(closeShortcut) => p.setCloseShortcut(closeShortcut.keyCode, closeShortcut.modifiers: _*)
+      case Some(closeShortcut) => p.setCloseShortcut(closeShortcut.keyCode.value, closeShortcut.modifiers.map(_.value): _*)
     }
   }
   def closeShortcut_=(cs: KeyShortcut): Unit = this.closeShortcut = Option(cs)
 
-  
   // TODO: return wrapped Terminal
   def terminal = Option(p.getTerminal)
-  
+
   override def parent: Option[Window] = wrapperFor[Window](p.getParent)
-  
+
   def theme: Option[String] = Option(p.getTheme)
   def theme_=(theme: Option[String]) = p.setTheme(theme.getOrElse(null))
   def theme_=(theme: String) = p.setTheme(theme)
@@ -68,16 +67,16 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
 
   def draggable_=(draggable: Boolean) = p.setDraggable(draggable)
   def draggable: Boolean = p.isDraggable
-  
+
   def name: Option[String] = Option(p.getName)
   def name_=(name: Option[String]) = p.setName(name.getOrElse(null))
   def name_=(name: String) = p.setName(name)
-  
+
   def scrollIntoView(component: Component) = p.scrollIntoView(component.p)
-  
+
   def browserWindowHeight: Int = p.getBrowserWindowHeight
   def browserWindowWidth: Int = p.getBrowserWindowWidth
-  
+
   def executeJavaScript(javaScript: String) = p.executeJavaScript(javaScript)
 
   def showNotification(caption: String) = p.showNotification(caption)

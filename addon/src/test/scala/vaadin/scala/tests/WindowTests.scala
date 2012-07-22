@@ -130,7 +130,7 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     window.browserWindowWidth
     Mockito.verify(vaadinWindowSpy).getBrowserWindowWidth
   }
-  
+
   test("javascript") {
     window.executeJavaScript("javascript")
     Mockito.verify(vaadinWindowSpy).executeJavaScript("javascript")
@@ -166,11 +166,11 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     window.showNotification(notification)
     Mockito.verify(vaadinWindowSpy).showNotification(notification.p)
   }
-  
+
   test("closeShortcut") {
     val window = new Window
 
-    val clickShortcut = KeyShortcut(com.vaadin.event.ShortcutAction.KeyCode.ENTER);
+    val clickShortcut = KeyShortcut(KeyCode.ENTER, KeyModifier.ALT);
 
     assert(window.closeShortcut === None)
 
