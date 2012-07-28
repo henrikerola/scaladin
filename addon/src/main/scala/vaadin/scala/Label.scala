@@ -22,6 +22,8 @@ object Label {
     value = newValue
     sizeUndefined()
   }
+
+  def html(htmlValue: Node) = new Label { value = htmlValue.toString }
 }
 
 // TODO: implement interfaces
@@ -50,11 +52,5 @@ class Label(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin
 
   // TODO: valuechangelistener
   // TODO: getType
-}
-
-class HtmlLabel(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin.ui.Label with LabelMixin) extends Label(p) {
-  contentMode = Label.ContentMode.Xhtml
-
-  def value_=(value: Node) = p.setValue(value.toString)
 }
 

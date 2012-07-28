@@ -29,9 +29,9 @@ class ComponentTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     Mockito.when(mockedVaadinComponent.getDebugId).thenReturn("test-id")
     assert(component.id === Some("test-id"))
     Mockito.verify(mockedVaadinComponent).getDebugId
-    
+
     Mockito.reset(mockedVaadinComponent)
-    
+
     Mockito.when(mockedVaadinComponent.getDebugId).thenReturn(null)
     assert(component.id === None)
     Mockito.verify(mockedVaadinComponent).getDebugId
@@ -115,18 +115,6 @@ class ComponentTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     label.styleNames += "style3"
 
     assert(label.styleNames.size === 3)
-  }
-
-  test("HtmlLabel, default constructor") {
-    val label = new HtmlLabel
-    assert(label.value === Some(""))
-    assert(label.p.getWidth == 100)
-    assert(label.p.getWidthUnits == Sizeable.UNITS_PERCENTAGE)
-    assert(label.p.getHeight == -1)
-    assert(label.p.getHeightUnits == Sizeable.UNITS_PIXELS)
-    assert(label.p.getPropertyDataSource != null)
-    assert(label.contentMode == Label.ContentMode.Xhtml)
-    assert(label.p.getStyleName == "")
   }
 
   test("width, defined size") {
