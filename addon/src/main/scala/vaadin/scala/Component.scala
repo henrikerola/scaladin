@@ -9,7 +9,7 @@ package mixins {
 
   trait ScaladinMixin {
     private[this] var _wrapper: Wrapper = _
-    def wrapper = _wrapper
+    def wrapper: Wrapper = _wrapper
     def wrapper_=(wrapper: Wrapper) = {
       if (_wrapper != null)
         throw new RuntimeException("wrapper cannot be reset once set")
@@ -105,7 +105,7 @@ abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with Abs
 
   def data_=(data: Any) = p.setData(data)
   def data = p.getData
-  
+
   def requestRepaint() = p.requestRepaint()
 }
 
