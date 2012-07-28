@@ -40,7 +40,7 @@ class ComponentContainerTests extends FunSuite {
   }
 
   test("filtering empty component container returns empty list") {
-    val layout = new VerticalLayout with FilterableComponentContainer[VerticalLayout]
+    val layout = new VerticalLayout with FilterableComponentContainer
 
     val result = layout filter (c => true)
 
@@ -48,7 +48,7 @@ class ComponentContainerTests extends FunSuite {
   }
 
   ignore("filtering component container with matches returns results") {
-    val layout = new VerticalLayout with FilterableComponentContainer[VerticalLayout] {
+    val layout = new VerticalLayout with FilterableComponentContainer {
       val one = add(new Label { styleNames += "one" })
       val two = add(new Label { styleNames += "two" })
       val three = add(new Label { styleNames += "three" })
@@ -78,7 +78,7 @@ class ComponentContainerTests extends FunSuite {
   }
 
   ignore("filtering component container with matches from children returns results") {
-    val layout = new VerticalLayout with FilterableComponentContainer[VerticalLayout]
+    val layout = new VerticalLayout with FilterableComponentContainer
     layout.add(createTestLayout)
 
     val result = layout filterRecursive (_.getStyleName == "one")
@@ -87,8 +87,8 @@ class ComponentContainerTests extends FunSuite {
     result.foreach(c => assert(c.isInstanceOf[com.vaadin.ui.Label] === true))
   }
 
-  def createTestLayout: VerticalLayout with FilterableComponentContainer[VerticalLayout] = {
-    new VerticalLayout with FilterableComponentContainer[VerticalLayout] {
+  def createTestLayout: VerticalLayout with FilterableComponentContainer = {
+    new VerticalLayout with FilterableComponentContainer {
       val one = add(new Label { styleNames += "one" })
       val two = add(new Label { styleNames += "two" })
       val three = add(new Label { styleNames += "three" })

@@ -4,7 +4,7 @@ import com.vaadin.ui.{ ComponentContainer => VaadinComponentContainer }
 import com.vaadin.ui.{ Component => VaadinComponent }
 import scala.collection.JavaConverters._
 
-trait FilterableComponentContainer[C <: ComponentContainer] extends ComponentContainer {
+trait FilterableComponentContainer extends ComponentContainer {
 
   def filter(filterFunction: VaadinComponent => Boolean): List[VaadinComponent] = p.getComponentIterator.asScala.filter(filterFunction).toList
 
@@ -14,7 +14,7 @@ trait FilterableComponentContainer[C <: ComponentContainer] extends ComponentCon
       if (filterFunction(component))
         newList = component :: newList
       if (component.isInstanceOf[VaadinComponentContainer]) {
-        newList = component.asInstanceOf[FilterableComponentContainer[_]].filterRecursive(filterFunction) ::: newList
+        newList = component.asInstanceOf[FilterableComponentContainer].filterRecursive(filterFunction) ::: newList
       }
     }
     newList
