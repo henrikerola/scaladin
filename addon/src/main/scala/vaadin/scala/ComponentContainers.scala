@@ -1,19 +1,15 @@
 package vaadin.scala
 
-import com.vaadin.ui.{ ComponentContainer => VaadinComponentContainer }
-import com.vaadin.ui.{ Component => VaadinComponent }
-import scala.collection.JavaConverters._
-
 trait FilterableComponentContainer extends ComponentContainer {
 
-  def filter(filterFunction: VaadinComponent => Boolean): List[VaadinComponent] = p.getComponentIterator.asScala.filter(filterFunction).toList
+  def filter(filterFunction: Component => Boolean): List[Component] = components.filter(filterFunction).toList
 
-  def filterRecursive(filterFunction: VaadinComponent => Boolean): List[VaadinComponent] = {
-    var newList: List[VaadinComponent] = Nil
-    for (component <- p.getComponentIterator.asScala) {
+  def filterRecursive(filterFunction: Component => Boolean): List[Component] = {
+    var newList: List[Component] = Nil
+    for (component <- components) {
       if (filterFunction(component))
         newList = component :: newList
-      if (component.isInstanceOf[VaadinComponentContainer]) {
+      if (component.isInstanceOf[ComponentContainer]) {
         newList = component.asInstanceOf[FilterableComponentContainer].filterRecursive(filterFunction) ::: newList
       }
     }
