@@ -46,6 +46,7 @@ class Label(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin
   def value: Option[String] = Option(if (p.getValue() != null) p.getValue().toString else null)
   def value_=(value: Option[String]): Unit = p.setValue(value.getOrElse(null))
   def value_=(value: String): Unit = p.setValue(value)
+  def value_=(value: Node): Unit = p.setValue(value.toString)
 
   def contentMode = Label.ContentMode(p.getContentMode)
   def contentMode_=(contentMode: Label.ContentMode.Value) = p.setContentMode(contentMode.id)
