@@ -1,25 +1,18 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.GridLayoutMixin
+import vaadin.scala.internal.WrapperUtil
 
 package mixins {
   trait GridLayoutMixin extends AbstractLayoutMixin
 }
 
-class GridLayout(override val p: com.vaadin.ui.GridLayout with GridLayoutMixin = new com.vaadin.ui.GridLayout with GridLayoutMixin)
-  extends AbstractLayout(p) with SpacingHandler with AlignmentHandler with LayoutClickNotifier {
+object GridLayout {
+  case class Area(component: Component, column1: Int, row1: Int, column2: Int, row2: Int)
+}
 
-  def this(width: Option[Measure] = None, height: Option[Measure] = None, margin: Boolean = false, spacing: Boolean = false, caption: String = null, style: String = null, columns: Int = 1, rows: Int = 1) = {
-    this(new com.vaadin.ui.GridLayout with GridLayoutMixin)
-    this.width = width
-    this.height = height
-    this.margin = margin
-    this.spacing = spacing
-    p.setStyleName(style)
-    this.caption = caption
-    p.setColumns(columns)
-    p.setRows(rows)
-  }
+class GridLayout(override val p: com.vaadin.ui.GridLayout with GridLayoutMixin = new com.vaadin.ui.GridLayout with GridLayoutMixin)
+    extends AbstractLayout(p) with SpacingHandler with AlignmentHandler with LayoutClickNotifier {
 
   def add[C <: Component](component: C = null, col: Int = -1, row: Int = -1, col2: Int = -1, row2: Int = -1, alignment: Alignment.Value = null): C = {
     if (col >= 0 && row >= 0)
@@ -60,6 +53,14 @@ class GridLayout(override val p: com.vaadin.ui.GridLayout with GridLayoutMixin =
 
   def component(x: Int, y: Int) = p.getComponent(x, y)
 
-  // TODO return wrapped Area
-  def componentArea(component: Component) = p.getComponentArea(component.p)
+  def componentArea(component: Component): Option[GridLayout.Area] = p.getComponentArea(component.p) match {
+    case area: com.vaadin.ui.GridLayout#Area => Some(mapVaadinArea(area))
+    case _ => None
+  }
+
+  protected def mapVaadinArea(area: com.vaadin.ui.GridLayout#Area): GridLayout.Area =
+    GridLayout.Area(WrapperUtil.wrapperFor[Component](area.getComponent).get,
+      area.getColumn1, area.getRow1, area.getColumn2, area.getRow2)
+
 }
+
