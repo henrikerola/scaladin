@@ -18,7 +18,10 @@ package mixins {
     }
   }
 
-  trait ComponentMixin extends ScaladinMixin
+  trait ComponentMixin extends ScaladinMixin {
+    def wrapperComponent: Component = wrapper.asInstanceOf[Component]
+  }
+
   trait AbstractComponentMixin extends ComponentMixin
 }
 
