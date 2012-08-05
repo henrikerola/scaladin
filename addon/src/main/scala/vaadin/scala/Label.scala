@@ -23,24 +23,12 @@ object Label {
     sizeUndefined()
   }
 
-  def html(htmlValue: Node) = new Label { value = htmlValue.toString }
+  def html(htmlValue: Node) = new Label { value = htmlValue.toString; contentMode = ContentMode.Xhtml }
+  def apply(labelValue: String) = new Label { value = labelValue }
 }
 
 // TODO: implement interfaces
 class Label(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin.ui.Label with LabelMixin) extends AbstractComponent(p) with PropertyViewer {
-
-  // icon, caption as constructor parameters?
-  /*-
-  def this(content: String = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, property: Property = null, contentMode: Label.ContentMode.Value = Label.ContentMode(com.vaadin.ui.Label.CONTENT_DEFAULT), style: String = null) = {
-    this(new com.vaadin.ui.Label)
-
-    this.width = width
-    this.height = height
-    if (property != null) p.setPropertyDataSource(property.p)
-    if (content != null) p.setValue(content)
-    p.setContentMode(contentMode.id)
-    p.setStyleName(style)
-  }*/
 
   // TODO: should we call value as content instead?
   def value: Option[String] = Option(if (p.getValue() != null) p.getValue().toString else null)
