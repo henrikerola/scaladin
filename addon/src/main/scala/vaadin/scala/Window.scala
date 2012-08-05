@@ -11,6 +11,14 @@ class WindowCloseListener(action: com.vaadin.ui.Window#CloseEvent => Unit) exten
   def windowClose(event: com.vaadin.ui.Window#CloseEvent) { action(event) }
 }
 
+object Window {
+  val BORDER_NONE: Int = 0
+
+  val BORDER_MINIMAL: Int = 1
+
+  val BORDER_DEFAULT: Int = 2
+}
+
 class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaadin.ui.Window with WindowMixin)
     extends Panel(p) with BlurNotifier with FocusNotifier {
 
@@ -85,4 +93,6 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
   def showNotification(caption: String, description: String, notificationType: Notification.Type.Value) = p.showNotification(caption, description, notificationType.id)
   def showNotification(caption: String, description: String, notificationType: Notification.Type.Value, htmlContentAllowed: Boolean) = p.showNotification(caption, description, notificationType.id, htmlContentAllowed)
   def showNotification(notification: Notification) = p.showNotification(notification.p)
+
+  def open(resource: Resource, windowName: String = null, width: Int = -1, height: Int = -1, border: Int = Window.BORDER_DEFAULT): Unit = p.open(resource.p, windowName, width, height, border)
 }
