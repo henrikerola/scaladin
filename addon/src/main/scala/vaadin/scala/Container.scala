@@ -137,8 +137,8 @@ trait ContainerOrdered extends Container {
 trait ContainerViewer extends Wrapper {
   def p: com.vaadin.data.Container.Viewer with ContainerViewerMixin
 
-  //TODO use option
-  def container_=(container: Container): Unit = p.setContainerDataSource(container.p)
+  def container_=(container: Option[Container]): Unit = if (container.isDefined) p.setContainerDataSource(container.get.p) else p.setContainerDataSource(null)
+  def container_=(container: Container): Unit = if (container != null) p.setContainerDataSource(container.p) else p.setContainerDataSource(null)
   def container: Option[Container] = wrapperFor[Container](p.getContainerDataSource)
 }
 
