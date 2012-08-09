@@ -18,6 +18,21 @@ object Item {
   def filterable(properties: Tuple2[Any, Any]*): FilterableItem = fill(new PropertysetItem with FilterableItem, properties: _*)
 
   def getProperties(item: Item): Iterable[Property] = item.propertyIds.flatMap(item.property)
+
+  trait Viewer {
+    def p: com.vaadin.data.Item.Viewer
+
+    def item: Option[Item] = p.getItemDataSource match {
+      case null => None
+      case i => Some(new BasicItem(i))
+    }
+
+    def item_=(item: Item) = p.setItemDataSource(item.p)
+    def item_=(item: Option[Item]) = item match {
+      case Some(item) => p.setItemDataSource(item.p)
+      case None => p.setItemDataSource(null)
+    }
+  }
 }
 
 trait Item extends Wrapper {
@@ -41,21 +56,6 @@ trait Item extends Wrapper {
 
   //override if needed
   protected def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new BasicProperty(unwrapped)
-}
-
-trait ItemViewer {
-  def p: com.vaadin.data.Item.Viewer
-
-  def item: Option[Item] = p.getItemDataSource match {
-    case null => None
-    case i => Some(new BasicItem(i))
-  }
-
-  def item_=(item: Item) = p.setItemDataSource(item.p)
-  def item_=(item: Option[Item]) = item match {
-    case Some(item) => p.setItemDataSource(item.p)
-    case None => p.setItemDataSource(null)
-  }
 }
 
 class PropertysetItem(override val p: com.vaadin.data.util.PropertysetItem = new com.vaadin.data.util.PropertysetItem) extends Item {
