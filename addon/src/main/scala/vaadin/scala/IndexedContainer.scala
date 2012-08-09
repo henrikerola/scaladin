@@ -7,7 +7,7 @@ package mixins {
 }
 
 class IndexedContainer(override val p: com.vaadin.data.util.IndexedContainer with IndexedContainerMixin = new com.vaadin.data.util.IndexedContainer with IndexedContainerMixin)
-    extends Container with ContainerSortable with ContainerIndexed {
+    extends Container.Sortable with Container.Indexed {
 
   p.wrapper = this
 

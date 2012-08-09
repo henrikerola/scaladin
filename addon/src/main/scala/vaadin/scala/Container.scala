@@ -17,32 +17,7 @@ package mixins {
   trait ContainerIndexedMixin extends ContainerOrderedMixin
 }
 
-object Container {
-  def apply(items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): Container = fill(new IndexedContainer, items: _*)
-
-  def filterable(items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): FilterableContainer = fill(new IndexedContainer with FilterableContainer, items: _*)
-
-  def fill[C <: Container](container: C, items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): C = {
-    for (item <- items) {
-      container.addItem(item._1) match {
-
-        case Some(containerItem: Item) => {
-          for (property <- item._2) {
-            container.addContainerProperty(property._1, property._2.getClass, null)
-            containerItem.property(property._1) match {
-              case Some(p: Property) => p.value = (property._2)
-              case None =>
-            }
-          }
-        }
-
-        case None =>
-      }
-    }
-    container
-  }
-}
-
+//Base Container trait is outside the companion object so extending classes can have nicer syntax
 trait Container extends Wrapper {
 
   import scala.collection.JavaConverters._
@@ -91,77 +66,102 @@ trait Container extends Wrapper {
   }
 }
 
-trait ContainerHierarchical extends Container {
+object Container {
+  def apply(items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): Container = fill(new IndexedContainer, items: _*)
 
-  def p: com.vaadin.data.Container.Hierarchical with ContainerHierarchicalMixin
+  def filterable(items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): FilterableContainer = fill(new IndexedContainer with FilterableContainer, items: _*)
 
-  import scala.collection.JavaConverters._
+  def fill[C <: Container](container: C, items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): C = {
+    for (item <- items) {
+      container.addItem(item._1) match {
 
-  def children(itemId: Any): Iterable[Any] = p.getChildren(itemId).asScala
+        case Some(containerItem: Item) => {
+          for (property <- item._2) {
+            container.addContainerProperty(property._1, property._2.getClass, null)
+            containerItem.property(property._1) match {
+              case Some(p: Property) => p.value = (property._2)
+              case None =>
+            }
+          }
+        }
 
-  def parent(itemId: Any): Any = p.getParent(itemId)
-  def parent_=(itemId: Any, newParentId: Any): Unit = p.setParent(itemId, newParentId)
+        case None =>
+      }
+    }
+    container
+  }
 
-  def rootItemIds: Iterable[Any] = p.rootItemIds.asScala
+  trait Hierarchical extends Container {
 
-  def childrenAllowed(itemId: Any): Boolean = p.areChildrenAllowed(itemId)
+    def p: com.vaadin.data.Container.Hierarchical with ContainerHierarchicalMixin
 
-  def setChildrenAllowed(itemId: Any, areChildrenAllowed: Boolean): Unit = p.setChildrenAllowed(itemId, areChildrenAllowed)
+    import scala.collection.JavaConverters._
 
-  def isRoot(itemId: Any): Boolean = p.isRoot(itemId)
+    def children(itemId: Any): Iterable[Any] = p.getChildren(itemId).asScala
 
-  def hasChildren(itemId: Any): Boolean = p.hasChildren(itemId)
-}
+    def parent(itemId: Any): Any = p.getParent(itemId)
+    def parent_=(itemId: Any, newParentId: Any): Unit = p.setParent(itemId, newParentId)
 
-trait ContainerOrdered extends Container {
+    def rootItemIds: Iterable[Any] = p.rootItemIds.asScala
 
-  def p: com.vaadin.data.Container.Ordered with ContainerOrderedMixin
+    def childrenAllowed(itemId: Any): Boolean = p.areChildrenAllowed(itemId)
 
-  def nextItemId(itemId: Any): Any = p.nextItemId(itemId)
+    def setChildrenAllowed(itemId: Any, areChildrenAllowed: Boolean): Unit = p.setChildrenAllowed(itemId, areChildrenAllowed)
 
-  def prevItemId(itemId: Any): Any = p.prevItemId(itemId)
+    def isRoot(itemId: Any): Boolean = p.isRoot(itemId)
 
-  def firstItemId: Any = p.firstItemId
+    def hasChildren(itemId: Any): Boolean = p.hasChildren(itemId)
+  }
 
-  def lastItemId: Any = p.lastItemId
+  trait Ordered extends Container {
 
-  def isFirstId(itemId: Any): Boolean = p.isFirstId(itemId)
+    def p: com.vaadin.data.Container.Ordered with ContainerOrderedMixin
 
-  def isLastId(itemId: Any): Boolean = p.isLastId(itemId)
+    def nextItemId(itemId: Any): Any = p.nextItemId(itemId)
 
-  def addItemAfter(previousItemId: Any): Any = p.addItemAfter(previousItemId)
+    def prevItemId(itemId: Any): Any = p.prevItemId(itemId)
 
-  def addItemAfter(previousItemId: Any, newItemId: Any): Item = wrapItem(p.addItemAfter(previousItemId, newItemId))
-}
+    def firstItemId: Any = p.firstItemId
 
-trait ContainerViewer extends Wrapper {
-  def p: com.vaadin.data.Container.Viewer with ContainerViewerMixin
+    def lastItemId: Any = p.lastItemId
 
-  def container_=(container: Option[Container]): Unit = if (container.isDefined) p.setContainerDataSource(container.get.p) else p.setContainerDataSource(null)
-  def container_=(container: Container): Unit = if (container != null) p.setContainerDataSource(container.p) else p.setContainerDataSource(null)
-  def container: Option[Container] = wrapperFor[Container](p.getContainerDataSource)
-}
+    def isFirstId(itemId: Any): Boolean = p.isFirstId(itemId)
 
-trait ContainerSortable extends ContainerOrdered {
-  import scala.collection.JavaConverters._
+    def isLastId(itemId: Any): Boolean = p.isLastId(itemId)
 
-  def p: com.vaadin.data.Container.Sortable with ContainerSortableMixin
+    def addItemAfter(previousItemId: Any): Any = p.addItemAfter(previousItemId)
 
-  def sort(propertyId: Array[AnyRef], ascending: Array[Boolean]): Unit = p.sort(propertyId, ascending)
+    def addItemAfter(previousItemId: Any, newItemId: Any): Item = wrapItem(p.addItemAfter(previousItemId, newItemId))
+  }
 
-  def sortableContainerPropertyIds(): Iterable[Any] = p.getSortableContainerPropertyIds.asScala
-}
+  trait Viewer extends Wrapper {
+    def p: com.vaadin.data.Container.Viewer with ContainerViewerMixin
 
-trait ContainerIndexed extends ContainerOrdered {
+    def container_=(container: Option[Container]): Unit = if (container.isDefined) p.setContainerDataSource(container.get.p) else p.setContainerDataSource(null)
+    def container_=(container: Container): Unit = if (container != null) p.setContainerDataSource(container.p) else p.setContainerDataSource(null)
+    def container: Option[Container] = wrapperFor[Container](p.getContainerDataSource)
+  }
 
-  def p: com.vaadin.data.Container.Indexed with ContainerIndexedMixin
+  trait Sortable extends Ordered {
+    import scala.collection.JavaConverters._
 
-  def indexOfId(itemId: Any): Int = p.indexOfId(itemId)
+    def p: com.vaadin.data.Container.Sortable with ContainerSortableMixin
 
-  def getIdByIndex(index: Int): Any = p.getIdByIndex(index)
+    def sort(propertyId: Array[AnyRef], ascending: Array[Boolean]): Unit = p.sort(propertyId, ascending)
 
-  def addItemAt(index: Int): Any = p.addItemAt(index)
+    def sortableContainerPropertyIds(): Iterable[Any] = p.getSortableContainerPropertyIds.asScala
+  }
 
-  def addItemAt(index: Int, newItemId: Any): Item = wrapItem(p.addItemAt(index, newItemId))
+  trait Indexed extends Ordered {
 
+    def p: com.vaadin.data.Container.Indexed with ContainerIndexedMixin
+
+    def indexOfId(itemId: Any): Int = p.indexOfId(itemId)
+
+    def getIdByIndex(index: Int): Any = p.getIdByIndex(index)
+
+    def addItemAt(index: Int): Any = p.addItemAt(index)
+
+    def addItemAt(index: Int, newItemId: Any): Item = wrapItem(p.addItemAt(index, newItemId))
+  }
 }

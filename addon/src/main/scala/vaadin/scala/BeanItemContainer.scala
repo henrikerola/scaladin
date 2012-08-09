@@ -9,7 +9,7 @@ package mixins {
   trait BeanItemContainerMixin extends ContainerIndexedMixin
 }
 
-class BeanItemContainer[BT](override val p: com.vaadin.data.util.BeanItemContainer[BT] with BeanItemContainerMixin) extends Wrapper with ContainerIndexed {
+class BeanItemContainer[BT](override val p: com.vaadin.data.util.BeanItemContainer[BT] with BeanItemContainerMixin) extends Wrapper with Container.Indexed {
 
   p.wrapper = this
 

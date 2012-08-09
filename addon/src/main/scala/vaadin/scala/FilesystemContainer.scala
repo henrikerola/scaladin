@@ -42,7 +42,7 @@ object FilesystemContainer {
   }
 }
 
-class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContainer with FilesystemContainerMixin) extends ContainerHierarchical {
+class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContainer with FilesystemContainerMixin) extends Container.Hierarchical {
 
   def this(root: File, extension: String = null, filenameFilter: FilenameFilter = null, recursiveFromRoot: Boolean = true) {
     this(new com.vaadin.data.util.FilesystemContainer(root) with FilesystemContainerMixin)

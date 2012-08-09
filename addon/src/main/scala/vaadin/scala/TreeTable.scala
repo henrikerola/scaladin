@@ -5,7 +5,7 @@ import vaadin.scala.mixins.ContainerHierarchicalMixin
 
 package mixins {
   trait TreeTableMixin extends TableMixin with ContainerHierarchicalMixin { self: com.vaadin.ui.TreeTable =>
-    
+
   }
 }
 
@@ -14,7 +14,7 @@ package mixins {
  * @author Henri Kerola / Vaadin
  */
 class TreeTable(override val p: com.vaadin.ui.TreeTable with TreeTableMixin = new com.vaadin.ui.TreeTable with TreeTableMixin)
-  extends Table(p) with ContainerHierarchical with ExpandNotifier with CollapseNotifier {
+    extends Table(p) with Container.Hierarchical with ExpandNotifier with CollapseNotifier {
 
   def collapsed(itemId: Any, collapsed: Boolean) = p.setCollapsed(itemId, collapsed)
 

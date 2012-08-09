@@ -10,7 +10,7 @@ package mixins {
 }
 
 object AbstractSelect {
-  
+
   object ItemCaptionMode extends Enumeration {
     import com.vaadin.ui.AbstractSelect._
     val Id = Value(ITEM_CAPTION_MODE_ID)
@@ -24,7 +24,7 @@ object AbstractSelect {
 }
 
 abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with AbstractSelectMixin)
-  extends AbstractField(p) with Container with ContainerViewer {
+    extends AbstractField(p) with Container with Container.Viewer {
 
   // NewItemHandler
 

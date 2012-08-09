@@ -64,7 +64,7 @@ object Table {
  * @author Henri Kerola / Vaadin
  */
 class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin.ui.Table with TableMixin)
-  extends AbstractSelect(p) with ContainerOrdered with ContainerSortable with ItemDescriptionGeneratorOwner with ItemClickNotifier {
+    extends AbstractSelect(p) with Container.Ordered with Container.Sortable with ItemDescriptionGeneratorOwner with ItemClickNotifier {
 
   def visibleColumns: Seq[Any] = p.getVisibleColumns
   def visibleColumns_=(visibleColumns: Seq[Any]) = p.setVisibleColumns(visibleColumns map { _.asInstanceOf[Object] } toArray)

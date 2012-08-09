@@ -22,7 +22,7 @@ object Tree {
  * @author Henri Kerola / Vaadin
  */
 class Tree(override val p: com.vaadin.ui.Tree with TreeMixin = new com.vaadin.ui.Tree with TreeMixin)
-  extends AbstractSelect(p) with ContainerHierarchical with ItemDescriptionGeneratorOwner with ItemClickNotifier with ExpandNotifier with CollapseNotifier {
+    extends AbstractSelect(p) with Container.Hierarchical with ItemDescriptionGeneratorOwner with ItemClickNotifier with ExpandNotifier with CollapseNotifier {
 
   def expanded(itemId: Any): Boolean = p.isExpanded(itemId)
 
