@@ -7,7 +7,7 @@ package mixins {
 }
 
 class AbsoluteLayout(override val p: com.vaadin.ui.AbsoluteLayout with AbsoluteLayoutMixin = new com.vaadin.ui.AbsoluteLayout with AbsoluteLayoutMixin)
-  extends AbstractLayout(p) with LayoutClickNotifier {
+    extends AbstractLayout(p) with LayoutClickNotifier {
 
   def add[C <: Component](component: C, location: String): C = {
     p.addComponent(component.p, location)
@@ -19,7 +19,7 @@ class AbsoluteLayout(override val p: com.vaadin.ui.AbsoluteLayout with AbsoluteL
     case position => Some(new ComponentPosition(position))
   }
 
-  class ComponentPosition(val p: com.vaadin.ui.AbsoluteLayout#ComponentPosition) extends Wrapper {
+  class ComponentPosition(override val p: com.vaadin.ui.AbsoluteLayout#ComponentPosition) extends Wrapper {
 
     def cssString = p.getCSSString()
     def cssString_=(cssString: String) = p.setCSSString(cssString)
