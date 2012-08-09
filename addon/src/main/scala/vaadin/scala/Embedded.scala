@@ -24,19 +24,23 @@ class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new c
 
   lazy val parameters: mutable.Map[String, String] = new mutable.Map[String, String] {
     def -=(name: String): this.type = { p.removeParameter(name); this }
+
     def +=(parameter: (String, String)): this.type = { update(parameter._1, parameter._2); this }
+
     override def update(name: String, value: String) {
       p.setParameter(name, value)
-      this
     }
+
     def get(name: String) = Option(p.getParameter(name))
+
     override def size = {
-      import scala.collection.JavaConversions._
-      p.getParameterNames.size
+      import scala.collection.JavaConverters._
+      p.getParameterNames.asScala.size
     }
+
     def iterator: Iterator[(String, String)] = {
-      import scala.collection.JavaConversions._
-      p.getParameterNames.map { name =>
+      import scala.collection.JavaConverters._
+      p.getParameterNames.asScala.map { name =>
         (name, p.getParameter(name))
       }
     }
