@@ -1,6 +1,5 @@
 package vaadin.scala
 
-import com.vaadin.ui.themes.BaseTheme
 import vaadin.scala.mixins.ButtonMixin
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.listeners.ButtonClickListener
