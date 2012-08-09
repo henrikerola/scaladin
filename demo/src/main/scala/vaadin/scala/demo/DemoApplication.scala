@@ -373,19 +373,19 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
         mainWindow.childWindows += (normalWindow, notResizableWindow, lightWindow, blackWindow)
 
       } else {
-        if (normalWindow.parent.get == mainWindow) {
+        if (normalWindow.parent.exists(_ == mainWindow)) {
           mainWindow.childWindows -= normalWindow
         }
 
-        if (notResizableWindow.parent.get == mainWindow) {
+        if (notResizableWindow.parent.exists(_ == mainWindow)) {
           mainWindow.childWindows -= notResizableWindow
         }
 
-        if (lightWindow.parent.get == mainWindow) {
+        if (lightWindow.parent.exists(_ == mainWindow)) {
           mainWindow.childWindows -= lightWindow
         }
 
-        if (blackWindow.parent.get == mainWindow) {
+        if (blackWindow.parent.exists(_ == mainWindow)) {
           mainWindow.childWindows -= blackWindow
         }
       }
