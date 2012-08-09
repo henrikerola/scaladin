@@ -10,36 +10,36 @@ package mixins {
 
 object TabSheet {
 
-  class Tab(val p: com.vaadin.ui.TabSheet.Tab) {
+  class Tab(override val p: com.vaadin.ui.TabSheet.Tab) extends Wrapper {
 
-    def visible = p.isVisible
-    def visible_=(visible: Boolean) = p.setVisible(visible)
+    def visible: Boolean = p.isVisible
+    def visible_=(visible: Boolean): Unit = p.setVisible(visible)
 
-    def closable = p.isClosable
-    def closable_=(closable: Boolean) = p.setClosable(closable)
+    def closable: Boolean = p.isClosable
+    def closable_=(closable: Boolean): Unit = p.setClosable(closable)
 
-    def enabled = p.isEnabled
-    def enabled_=(enabled: Boolean) = p.setEnabled(enabled)
+    def enabled: Unit = p.isEnabled
+    def enabled_=(enabled: Boolean): Unit = p.setEnabled(enabled)
 
-    def caption = Option(p.getCaption)
-    def caption_=(caption: Option[String]) = p.setCaption(caption.getOrElse(null))
-    def caption_=(caption: String) = p.setCaption(caption)
+    def caption: Option[String] = Option(p.getCaption)
+    def caption_=(caption: Option[String]): Unit = p.setCaption(caption.getOrElse(null))
+    def caption_=(caption: String): Unit = p.setCaption(caption)
 
     def icon: Option[Resource] = WrapperUtil.wrapperFor[Resource](p.getIcon)
-    def icon_=(icon: Option[Resource]) = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
-    def icon_=(icon: Resource) = if (icon == null) p.setIcon(null) else p.setIcon(icon.p)
+    def icon_=(icon: Option[Resource]): Unit = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
+    def icon_=(icon: Resource): Unit = if (icon == null) p.setIcon(null) else p.setIcon(icon.p)
 
-    def description = Option(p.getDescription)
-    def description_=(description: Option[String]) = p.setDescription(description.getOrElse(null))
-    def description_=(description: String) = p.setDescription(description)
+    def description: Option[String] = Option(p.getDescription)
+    def description_=(description: Option[String]): Unit = p.setDescription(description.getOrElse(null))
+    def description_=(description: String): Unit = p.setDescription(description)
 
     // TODO: component error
 
-    def component = WrapperUtil.wrapperFor[Component](p.getComponent).get
+    def component: Component = WrapperUtil.wrapperFor[Component](p.getComponent).get
 
-    def styleName = Option(p.getStyleName)
-    def styleName_=(styleName: Option[String]) = p.setStyleName(styleName.getOrElse(null))
-    def styleName_=(styleName: String) = p.setStyleName(styleName)
+    def styleName: Option[String] = Option(p.getStyleName)
+    def styleName_=(styleName: Option[String]): Unit = p.setStyleName(styleName.getOrElse(null))
+    def styleName_=(styleName: String): Unit = p.setStyleName(styleName)
   }
 
   case class TabCloseEvent(tabSheet: TabSheet, component: Component, tab: TabSheet.Tab) extends Event
@@ -56,13 +56,13 @@ class TabSheet(override val p: com.vaadin.ui.TabSheet with TabSheetMixin = new c
     tabs += vaadinTab -> tab
     tab
   }
-  
-  def removeTab(tab: TabSheet.Tab) = {
+
+  def removeTab(tab: TabSheet.Tab): Unit = {
     tabs -= tab.p
     p.removeTab(tab.p)
-  } 
-  
-  override def removeComponent(component: Component) = {
+  }
+
+  override def removeComponent(component: Component): Unit = {
     tab(component) match {
       case Some(tab) => tabs -= tab.p
       case None =>
@@ -70,29 +70,31 @@ class TabSheet(override val p: com.vaadin.ui.TabSheet with TabSheetMixin = new c
     super.removeComponent(component)
   }
 
-  def addTab(component: Component) = register(p.addTab(component.p))
-  def addTab(component: Component, caption: String) = register(p.addTab(component.p, caption))
-  def addTab(component: Component, caption: String, icon: Resource) = register(p.addTab(component.p, caption, icon.p))
-  def addTab(component: Component, caption: String, icon: Resource, position: Int) = register(p.addTab(component.p, caption, icon.p, position))
-  def addTab(component: Component, position: Int) = register(p.addTab(component.p, position))
+  def addTab(component: Component): TabSheet.Tab = register(p.addTab(component.p))
+  def addTab(component: Component, caption: String): TabSheet.Tab = register(p.addTab(component.p, caption))
+  def addTab(component: Component, caption: String, icon: Resource): TabSheet.Tab = register(p.addTab(component.p, caption, icon.p))
+  def addTab(component: Component, caption: String, icon: Resource, position: Int): TabSheet.Tab = register(p.addTab(component.p, caption, icon.p, position))
+  def addTab(component: Component, position: Int): TabSheet.Tab = register(p.addTab(component.p, position))
 
-  def tabsVisible = !p.areTabsHidden
-  def tabsVisible_=(tabsVisible: Boolean) = p.hideTabs(!tabsVisible)
+  override def add[C <: Component](component: C): C = addTab(component).component.asInstanceOf[C]
+
+  def tabsVisible: Boolean = !p.areTabsHidden
+  def tabsVisible_=(tabsVisible: Boolean): Unit = p.hideTabs(!tabsVisible)
 
   def tab(component: Component): Option[TabSheet.Tab] = tabs.get(p.getTab(component.p))
   def tab(position: Int): Option[TabSheet.Tab] = tabs.get(p.getTab(position))
 
-  def selectedComponent = wrapperFor[Component](p.getSelectedTab).get
-  def selectedComponent_=(component: Component) = p.setSelectedTab(component.p)
+  def selectedComponent: Component = wrapperFor[Component](p.getSelectedTab).get
+  def selectedComponent_=(component: Component): Unit = p.setSelectedTab(component.p)
 
   def selectedTab: TabSheet.Tab = tab(selectedComponent).get
   def selectedTab_=(tab: TabSheet.Tab) = { selectedComponent = tab.component }
 
-  def tabPosition(tab: TabSheet.Tab) = p.getTabPosition(tab.p)
-  def tabPosition(tab: TabSheet.Tab, position: Int) = p.setTabPosition(tab.p, position)
+  def tabPosition(tab: TabSheet.Tab): Int = p.getTabPosition(tab.p)
+  def tabPosition(tab: TabSheet.Tab, position: Int): Unit = p.setTabPosition(tab.p, position)
 
   private class TabCloseHandler(val action: TabSheet.TabCloseEvent => Unit) extends com.vaadin.ui.TabSheet.CloseHandler {
-    def onTabClose(tabsheet: com.vaadin.ui.TabSheet, tabContent: com.vaadin.ui.Component) = {
+    def onTabClose(tabsheet: com.vaadin.ui.TabSheet, tabContent: com.vaadin.ui.Component): Unit = {
       val component = wrapperFor[Component](tabContent).get
       action(TabSheet.TabCloseEvent(wrapperFor[TabSheet](tabsheet).get, component, tab(component).get))
     }
@@ -109,7 +111,7 @@ class TabSheet(override val p: com.vaadin.ui.TabSheet with TabSheetMixin = new c
   }
 
   lazy val selectedTabChangeListeners = new ListenersTrait[TabSheet.SelectedTabChangeEvent, SelectedTabChangeListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.Button#ClickEvent])
+    override def listeners = p.getListeners(classOf[com.vaadin.ui.TabSheet#SelectedTabChangeEvent])
     override def addListener(elem: TabSheet.SelectedTabChangeEvent => Unit) = p.addListener(new SelectedTabChangeListener(elem))
     override def removeListener(elem: SelectedTabChangeListener) = p.removeListener(elem)
   }
