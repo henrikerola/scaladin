@@ -30,7 +30,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     tabs.add(buildTextFields)
     tabs.add(buildSelects)
     tabs.add(buildDateFields)
-    //tabs.add(buildTabSheets) // FIXME
+    tabs.add(buildTabSheets)
     tabs.add(buildPanels)
     tabs.add(buildTables)
     tabs.add(buildWindows(tabs))
@@ -108,37 +108,25 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
 
   def buildTextFields(): Layout = new GridLayout {
     columns = 2
-
     rows = 1
-
     caption = "Text fields"
-
     margin = true
-
     columnExpandRatio(0, 1)
-
     spacing = true
-
     styleName = Reindeer.LAYOUT_WHITE
-
     width = 400 px
 
     add(Label.html(<span>Normal TextField</span>))
-
     add(new TextField { prompt = "Enter text" })
 
     add(Label.html(<span>Small Style (<code>Reindeer.TEXTFIELD_SMALL</code>)</span>))
-
     add(new TextField { styleName = Reindeer.TEXTFIELD_SMALL; prompt = "Enter text" })
 
     add(Label.html(<span>Normal TextArea</span>))
-
     add(new TextArea { height = 5 em; prompt = "Enter text" })
 
     add(Label.html(<span>Small Style TextArea (<code>Reindeer.TEXTFIELD_SMALL</code>)</span>))
-
     add(new TextArea { height = 5 em; styleName = Reindeer.TEXTFIELD_SMALL; prompt = "Enter text" })
-
   }
 
   def buildSelects(): Layout = new VerticalLayout {
@@ -164,21 +152,19 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
 
   }
 
-  def buildDateFields(): Layout = {
-    val hl = new HorizontalLayout {
+  def buildDateFields(): Layout = new VerticalLayout {
+    caption = "Date fields"
+    margin = true
+    spacing = true
+
+    components += Label("Date fields don't currently have any additional style names, but here you can see how they behave with the different background colors.")
+
+    components += new HorizontalLayout {
       spacing = true
       margin(top = true)
       add(new PopupDateField { value = DATE; resolution = DateField.Resolution.Minute })
       add(new InlineDateField { value = DATE; resolution = DateField.Resolution.Day })
       add(new InlineDateField { value = DATE; resolution = DateField.Resolution.Year })
-    }
-
-    new VerticalLayout {
-      caption = "Date fields"
-      margin = true
-      spacing = true
-      add(new Label { value = "Date fields don't currently have any additional style names, but here you can see how they behave with the different background colors." })
-      add(hl)
     }
   }
 
@@ -341,8 +327,8 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     }
   }
 
-  def buildWindows(tabs: TabSheet): Layout = {
-    val windowLayout = new CssLayout { caption = "Windows" }
+  def buildWindows(tabs: TabSheet): Layout = new CssLayout {
+    caption = "Windows"
 
     val normalWindow = new Window {
       caption = "Normal window"
@@ -382,31 +368,28 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       components += Label.html(<span><code>Reindeer.WINDOW_BLACK</code></span>)
     }
 
-    /*- FIXME:
-    tabs.addListener(event => {
-      if (event.getTabSheet.getSelectedTab == windowLayout.p) {
+    tabs.selectedTabChangeListeners += (event => {
+      if (event.tabSheet.selectedTab.component == this) {
         mainWindow.childWindows += (normalWindow, notResizableWindow, lightWindow, blackWindow)
 
       } else {
-        if (normalWindow.parent == mainWindow) {
+        if (normalWindow.parent.get == mainWindow) {
           mainWindow.childWindows -= normalWindow
         }
 
-        if (notResizableWindow.parent == mainWindow) {
+        if (notResizableWindow.parent.get == mainWindow) {
           mainWindow.childWindows -= notResizableWindow
         }
 
-        if (lightWindow.parent == mainWindow) {
+        if (lightWindow.parent.get == mainWindow) {
           mainWindow.childWindows -= lightWindow
         }
 
-        if (blackWindow.parent == mainWindow) {
+        if (blackWindow.parent.get == mainWindow) {
           mainWindow.childWindows -= blackWindow
         }
       }
-    })*/
-
-    windowLayout
+    })
   }
 
   def buildSplitPanels(): Layout = new GridLayout {
@@ -476,7 +459,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
       add(Label.html(<span><p><strong><code>Reindeer.LAYOUT_BLACK</code></strong></p><p>Reserved for small parts of the application. Or alternatively, use for the whole application.</p><p><strong>This style is non-overridable</strong>, meaning that everything you place inside it will transform to their corresponding black styles when available, excluding Labels.</p></span>))
     }
 
-    colors.components ++= List(whiteLayout, blueLayout, blackLayout)
+    colors.components += (whiteLayout, blueLayout, blackLayout)
 
     val note = Label.html(<span><p>Note, that you cannot nest the layout styles infinitely inside each other. After a couple levels, the result will be undefined, due to limitations in CSS (which are in fact caused by Internet Explorer 6).</p></span>)
 
@@ -495,11 +478,10 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     }
   }
 
-  def getTopMenu(): MenuBar = {
-    val menubar = new MenuBar {
-      width = 100 percent
-    }
-    val file = menubar.addItem("File")
+  def getTopMenu(): MenuBar = new MenuBar {
+    width = 100 percent
+
+    val file = addItem("File")
     val newItem = file.addItem("New")
     file.addItem("Open file...")
     file.addSeparator
@@ -516,7 +498,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     file.addItem("Save As...")
     file.addItem("Save All")
 
-    val edit = menubar.addItem("Edit")
+    val edit = addItem("Edit")
     edit.addItem("Undo")
     edit.addItem("Redo").enabled = false
     edit.addSeparator()
@@ -534,7 +516,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     find.addItem("Find Next")
     find.addItem("Find Previous")
 
-    val view = menubar.addItem("View")
+    val view = addItem("View")
     val statusBarItem = view.addCheckableItem("Show/Hide Status Bar")
     statusBarItem.checked = true
     view.addItem("Customize Toolbar...")
@@ -543,8 +525,6 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     view.addItem("Actual Size")
     view.addItem("Zoom In")
     view.addItem("Zoom Out")
-
-    menubar
   }
 
   def getHeader(mainLayout: Layout, tabs: TabSheet): Layout = {
@@ -566,39 +546,37 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     colors.p.addItem("Blue")
     colors.p.addItem("Black")
     colors.immediate = true
-    // FIXME:
-    //colors.addListener(event => mainLayout.p.setStyleName(event.getProperty.getValue.toString.toLowerCase))
+    colors.valueChangeListeners += (event => mainLayout.p.setStyleName(event.property.value.get.toString.toLowerCase))
 
     colors.value = "Blue"
     toggles.add(colors)
     val transparent = new CheckBox {
       caption = "Transparent tabs"
       immediate = true
-      /*- FIXME
-        action = event =>
-        if (event.getButton.booleanValue) {
+      description = "Set style Reindeer.TABSHEET_MINIMAL to the main tab sheet (preview components on different background colors)."
+
+      valueChangeListeners += (event => {
+        if (value.get) {
           tabs.styleNames += Reindeer.TABSHEET_MINIMAL
         } else {
           tabs.styleNames -= Reindeer.TABSHEET_MINIMAL
         }
 
         tabs.components.foreach(c => {
-          if (event.getButton.booleanValue) {
+          if (value.get) {
             c.styleNames -= Reindeer.LAYOUT_WHITE
           } else {
             c.styleNames += Reindeer.LAYOUT_WHITE
           }
         })
         // Force refresh
-        getMainWindow.open(new ExternalResource(getURL))
+        mainWindow.open(new ExternalResource(getURL toString))
       })
-         */
-      description = "Set style Reindeer.TABSHEET_MINIMAL to the main tab sheet (preview components on different background colors)."
     }
     toggles.add(transparent)
 
     val userLayout = new CssLayout()
-    val user = new Label { value = "Welcome, Guest" }
+    val user = Label("Welcome, Guest")
     user.sizeUndefined()
     userLayout.add(user)
 
@@ -613,7 +591,7 @@ class DemoApplication extends Application(title = "Vaadin Reindeer Theme", appli
     userLayout.add(buttons)
 
     new HorizontalLayout {
-      width = 100 percent;
+      width = (100 percent)
       margin = true
       spacing = true
       add(titleLayout)
