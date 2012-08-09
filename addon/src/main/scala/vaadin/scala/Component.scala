@@ -49,9 +49,8 @@ trait Component extends Wrapper {
   // TODO parent setter?
   def parent: Option[Component] = wrapperFor[Component](p.getParent())
 
-  //FIXME: also defined in property, figure out what to do
-  //  def readOnly = p.isReadOnly
-  //  def readOnly_=(readOnly: Boolean) = p.setReadOnly(readOnly)
+  def readOnly = p.isReadOnly
+  def readOnly_=(readOnly: Boolean) = p.setReadOnly(readOnly)
 
   def caption = Option(p.getCaption)
   def caption_=(caption: Option[String]) = p.setCaption(caption.getOrElse(null))
@@ -116,9 +115,9 @@ trait Focusable extends Component {
 
   def p: com.vaadin.ui.Component.Focusable with ComponentMixin
 
-  def focus() = p.focus()
+  def focus(): Unit = p.focus()
 
-  def tabIndex = p.getTabIndex()
-  def tabIndex_=(tabIndex: Int) = p.setTabIndex(tabIndex)
+  def tabIndex: Int = p.getTabIndex()
+  def tabIndex_=(tabIndex: Int): Unit = p.setTabIndex(tabIndex)
 }
 

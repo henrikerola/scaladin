@@ -14,6 +14,10 @@ trait Field extends Component with BufferedValidatable with Property with Focusa
 
   def p: com.vaadin.ui.Field with FieldMixin
 
+  //readOnly is inherited from Component and Property, needs override
+  override def readOnly: Boolean = p.isReadOnly
+  override def readOnly_=(readOnly: Boolean): Unit = p.setReadOnly(readOnly)
+
   def description: Option[String] = Option(p.getDescription)
   def description_=(description: String): Unit = p.setDescription(description)
   def description_=(description: Option[String]): Unit = p.setDescription(description.getOrElse(null))
