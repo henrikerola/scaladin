@@ -3,6 +3,7 @@ package vaadin.scala
 import vaadin.scala.mixins.ContainerIndexedMixin
 import vaadin.scala.mixins.BeanItemContainerMixin
 import scala.collection.JavaConverters._
+import scala.reflect.ClassTag
 
 package mixins {
   trait BeanItemContainerMixin extends ContainerIndexedMixin
@@ -12,12 +13,12 @@ class BeanItemContainer[BT](override val p: com.vaadin.data.util.BeanItemContain
 
   p.wrapper = this
 
-  def this()(implicit m: Manifest[BT]) = {
-    this(new com.vaadin.data.util.BeanItemContainer[BT](m.erasure.asInstanceOf[Class[BT]]) with BeanItemContainerMixin)
+  def this()(implicit m: ClassTag[BT]) = {
+    this(new com.vaadin.data.util.BeanItemContainer[BT](m.runtimeClass.asInstanceOf[Class[BT]]) with BeanItemContainerMixin)
   }
 
-  def this(beans: Iterable[BT])(implicit m: Manifest[BT]) = {
-    this(new com.vaadin.data.util.BeanItemContainer[BT](m.erasure.asInstanceOf[Class[BT]], beans.asJavaCollection) with BeanItemContainerMixin)
+  def this(beans: Iterable[BT])(implicit m: ClassTag[BT]) = {
+    this(new com.vaadin.data.util.BeanItemContainer[BT](m.runtimeClass.asInstanceOf[Class[BT]], beans.asJavaCollection) with BeanItemContainerMixin)
   }
 
   def addBean(bean: BT): BeanItem[BT] = new BeanItem[BT](bean)
@@ -35,5 +36,5 @@ class BeanItem[BT](override val p: com.vaadin.data.util.BeanItem[BT]) extends It
     this(new com.vaadin.data.util.BeanItem[BT](bean, propertyIds.asJavaCollection))
   }
 
-  val bean = p.getBean
+  val bean: BT = p.getBean
 }

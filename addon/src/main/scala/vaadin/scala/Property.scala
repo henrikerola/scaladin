@@ -1,5 +1,7 @@
 package vaadin.scala
 
+import scala.reflect.ClassTag
+
 object Property {
   def apply[T](value: T): Property = new ObjectProperty[T](value)
 
@@ -61,7 +63,7 @@ class VaadinPropertyDelegator(scaladinProperty: Property) extends com.vaadin.dat
   def setReadOnly(ro: Boolean) = scaladinProperty.readOnly = ro
 }
 
-class FunctionProperty[T](getter: Unit => T, setter: T => Unit = null)(implicit m: Manifest[T]) extends Property {
+class FunctionProperty[T](getter: Unit => T, setter: T => Unit = null)(implicit m: ClassTag[T]) extends Property {
   //delegate
   val p = new VaadinPropertyDelegator(this)
 
@@ -69,7 +71,7 @@ class FunctionProperty[T](getter: Unit => T, setter: T => Unit = null)(implicit 
 
   override def value_=(value: Any) = setter(value.asInstanceOf[T])
 
-  override def getType: Class[T] = m.erasure.asInstanceOf[Class[T]]
+  override def getType: Class[T] = m.runtimeClass.asInstanceOf[Class[T]]
 
   override def readOnly: Boolean = setter != null
 
