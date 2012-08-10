@@ -8,7 +8,7 @@ object BuildSettings {
   val buildOrganization = "vaadin.scala"
   val buildName = "Scaladin"
   val buildVersion = "2.0.0-SNAPSHOT"
-  val buildScalaVersion = "2.9.1"
+  val buildScalaVersion = "2.9.2"
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
     organization := buildOrganization,
@@ -27,7 +27,7 @@ object BuildSettings {
 object Dependencies {
   val vaadinVersion = "6.8.0"
   val jettyVersion = "7.3.0.v20110203"
-  val scalaTestVersion = "2.0.M2"
+  val scalaTestVersion = "2.0.M3"
   val junitVersion = "4.9"
   val mockitoVersion = "1.9.0"
 
