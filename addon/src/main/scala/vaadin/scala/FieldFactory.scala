@@ -14,7 +14,7 @@ case class FormFieldIngredients(item: Item, propertyId: Any, uiContext: Componen
 case class TableFieldIngredients(container: Container, itemId: Any, propertyId: Any, uiContext: Component)
 
 object FormFieldFactory {
-  def apply(formFieldFunction: (FormFieldIngredients) => Option[Field]): FormFieldFactory = new FormFieldFactory {
+  def apply(formFieldFunction: FormFieldIngredients => Option[Field]): FormFieldFactory = new FormFieldFactory {
     def createField(ingredients: FormFieldIngredients): Option[Field] = formFieldFunction(ingredients)
   }
 }
@@ -46,7 +46,7 @@ trait FormFieldFactoryDelegator extends com.vaadin.ui.FormFieldFactory with Form
 }
 
 object TableFieldFactory {
-  def apply(tableFieldFunction: (TableFieldIngredients) => Option[Field]): TableFieldFactory = new TableFieldFactory {
+  def apply(tableFieldFunction: TableFieldIngredients => Option[Field]): TableFieldFactory = new TableFieldFactory {
     def createField(ingredients: TableFieldIngredients): Option[Field] = tableFieldFunction(ingredients)
   }
 }
