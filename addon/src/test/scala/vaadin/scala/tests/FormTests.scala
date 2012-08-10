@@ -67,7 +67,19 @@ class FormTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(footer.p === form.footer.p)
   }
 
-  test("item datasource")(pending)
+  test("item datasource"){
+    val item = new IndexedContainer().addItem('id).get
+    form.item = item
+    assert(form.item.get.p === item.p)
+
+    form.item = Some(item)
+    assert(form.item.get.p === item.p)
+  }
+  
+  test("item datasource, None") {
+    form.item = None
+    assert(form.item == None)
+  }
 
   private def assertSameFactory(expected: FormFieldFactory, result: Option[FormFieldFactory]) = {
     assert(result.isDefined, "No fieldfactory as result")

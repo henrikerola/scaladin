@@ -13,10 +13,19 @@ class AbstractSelectTests extends FunSuite with BeforeAndAfter {
     select = new ComboBox
   }
 
-  test("NewItemHandler default") {
+  test("NewItemHandler default set correctly") {
     val newItemHandler = select.newItemHandler
     assert(newItemHandler.get.isInstanceOf[DefaultNewItemHandler], "Default NewItemHandler was %s instead".format(newItemHandler))
   }
 
-  //TODO newitemhandler tests
+  test("NewItemHandler delegatates calls to Scala layer") {
+    var called = false
+    val testCaption = "test"
+    select.newItemHandler = new NewItemHandler {
+      def addNewItem(newItemCaption: String) = { called = true; assert(testCaption === newItemCaption, "Wrong caption: %s".format(newItemCaption)) }
+    }
+
+    select.newItemHandler.get.p.addNewItem(testCaption)
+    assert(called, "Scaladin newItemHandler never called")
+  }
 }
