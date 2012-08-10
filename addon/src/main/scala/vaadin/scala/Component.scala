@@ -18,6 +18,17 @@ package mixins {
     }
   }
 
+  trait TypedScaladinMixin[C <: Wrapper] {
+    private[this] var _wrapper: C = _
+    def wrapper: C = _wrapper
+    def wrapper_=(wrapper: C) = {
+      if (_wrapper != null)
+        throw new RuntimeException("wrapper cannot be reset once set")
+      else
+        _wrapper = wrapper
+    }
+  }
+
   trait ComponentMixin extends ScaladinMixin {
     def wrapperComponent: Component = wrapper.asInstanceOf[Component]
   }
