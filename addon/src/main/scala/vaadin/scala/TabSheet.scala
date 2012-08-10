@@ -18,7 +18,7 @@ object TabSheet {
     def closable: Boolean = p.isClosable
     def closable_=(closable: Boolean): Unit = p.setClosable(closable)
 
-    def enabled: Unit = p.isEnabled
+    def enabled: Boolean = p.isEnabled
     def enabled_=(enabled: Boolean): Unit = p.setEnabled(enabled)
 
     def caption: Option[String] = Option(p.getCaption)

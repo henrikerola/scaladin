@@ -2,8 +2,8 @@ package vaadin.scala.tests
 
 import org.scalatest.FunSuite
 import vaadin.scala.Container
-import vaadin.scala.ContainerIndexed
-import vaadin.scala.ContainerOrdered
+import vaadin.scala.Container.Indexed
+import vaadin.scala.Container.Ordered
 
 trait ContainerTest extends FunSuite {
 
@@ -42,7 +42,7 @@ trait ContainerTestItemIdsAndContainsId extends ContainerTest {
 
 trait ContainerTestOrdered extends ContainerTest {
 
-  override def container: ContainerOrdered
+  override def container: Container.Ordered
 
   test("next/prev itemid") {
 
@@ -67,7 +67,7 @@ trait ContainerTestOrdered extends ContainerTest {
 
 trait ContainerTestIndexed extends ContainerTestOrdered {
 
-  override def container: ContainerIndexed
+  override def container: Container.Indexed
 
   test("indexOf/getByIndex") {
 
