@@ -18,7 +18,6 @@ trait ComponentContainer extends Component {
 
   override def p: com.vaadin.ui.ComponentContainer with ComponentContainerMixin
 
-
   // provide add or addComponent or both?
   def add[C <: Component](component: C): C = {
     p.addComponent(component.p)
@@ -62,7 +61,6 @@ trait ComponentContainer extends Component {
 
 abstract class AbstractComponentContainer(override val p: com.vaadin.ui.AbstractComponentContainer with AbstractComponentContainerMixin) extends AbstractComponent(p) with ComponentContainer
 
-
 case class Margin(top: Boolean = false, right: Boolean = false, bottom: Boolean = false, left: Boolean = false)
 
 trait Layout extends ComponentContainer {
@@ -98,4 +96,5 @@ trait AlignmentHandler {
   def alignment(component: Component) = Alignment(p.getComponentAlignment(component.p).getBitMask())
 
   def alignment(component: Component, alignment: Alignment.Value) = p.setComponentAlignment(component.p, new com.vaadin.ui.Alignment(alignment.id))
+  def alignment(componentAlignment: Tuple2[Component, Alignment.Value]) = p.setComponentAlignment(componentAlignment._1.p, new com.vaadin.ui.Alignment(componentAlignment._2.id))
 }
