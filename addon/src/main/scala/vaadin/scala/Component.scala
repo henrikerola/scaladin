@@ -96,6 +96,16 @@ trait Sizeable extends Component {
 
   def sizeFull() = p.setSizeFull
   def sizeUndefined() = p.setSizeUndefined
+
+  def size(width: Measure, height: Measure) = {
+    this.width = width
+    this.height = height
+  }
+
+  def size(width: Option[Measure], height: Option[Measure]) = {
+    this.width = width
+    this.height = height
+  }
 }
 
 abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with AbstractComponentMixin) extends Component with Sizeable {

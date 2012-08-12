@@ -155,4 +155,17 @@ class ComponentTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(label.height === None)
   }
 
+  test("size(width, height)") {
+    val label = new Label
+    label.size(Measure(200, Units.px), Measure(50, Units.pct))
+    assert(label.width.get === Measure(200, Units.px))
+    assert(label.height.get === Measure(50, Units.pct))
+  }
+
+  test("size(Option[width], Option[height])") {
+    val label = new Label
+    label.size(200 px, None)
+    assert(label.width.get === Measure(200, Units.px))
+    assert(label.height === None)
+  }
 }
