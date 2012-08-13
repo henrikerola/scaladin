@@ -30,7 +30,7 @@ trait Container extends Wrapper {
 
   def removeAllItems(): Boolean = p.removeAllItems
 
-  def addContainerProperty(propertyId: Any, propertyType: Class[_], defaultValue: Any): Boolean = p.addContainerProperty(propertyId, propertyType, defaultValue)
+  def addContainerProperty(propertyId: Any, propertyType: Class[_], defaultValue: Option[Any] = None): Boolean = p.addContainerProperty(propertyId, propertyType, defaultValue.getOrElse(null))
 
   def removeContainerProperty(propertyId: Any): Boolean = p.removeContainerProperty(propertyId)
 
@@ -77,7 +77,7 @@ object Container {
 
         case Some(containerItem: Item) => {
           for (property <- item._2) {
-            container.addContainerProperty(property._1, property._2.getClass, null)
+            container.addContainerProperty(property._1, property._2.getClass, None)
             containerItem.property(property._1) match {
               case Some(p: Property) => p.value = (property._2)
               case None =>
