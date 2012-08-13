@@ -92,7 +92,7 @@ object DefaultFieldFactory extends FormFieldFactory with TableFieldFactory {
     case Some(property) => {
       val propertyType: Class[_] = property.getType
       val field: Field = createFieldByPropertyType(propertyType);
-      field.caption = com.vaadin.ui.DefaultFieldFactory.createCaptionByPropertyId(ingredients.propertyId)
+      field.caption = createCaptionByPropertyId(ingredients.propertyId)
       Option(field)
     }
 
@@ -103,7 +103,7 @@ object DefaultFieldFactory extends FormFieldFactory with TableFieldFactory {
     case Some(property) => {
       val propertyType: Class[_] = property.getType;
       val field: Field = createFieldByPropertyType(propertyType);
-      field.caption = com.vaadin.ui.DefaultFieldFactory.createCaptionByPropertyId(ingredients.propertyId)
+      field.caption = createCaptionByPropertyId(ingredients.propertyId)
       Option(field)
     }
 
@@ -117,4 +117,6 @@ object DefaultFieldFactory extends FormFieldFactory with TableFieldFactory {
     case Bool => new CheckBox
     case _ => new TextField
   }
+
+  def createCaptionByPropertyId(propertyId: Any): String = com.vaadin.ui.DefaultFieldFactory.createCaptionByPropertyId(propertyId)
 }
