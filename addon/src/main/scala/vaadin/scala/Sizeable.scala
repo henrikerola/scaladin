@@ -1,17 +1,17 @@
 package vaadin.scala
 
 object Units extends Enumeration {
-  import com.vaadin.terminal.Sizeable._
+  import com.vaadin.terminal.Sizeable.Unit._
 
-  val px = Value(UNITS_PIXELS, "px")
-  val pt = Value(UNITS_POINTS, "pt")
-  val pc = Value(UNITS_PICAS, "pc")
-  val em = Value(UNITS_EM, "em")
-  val ex = Value(UNITS_EX, "ex")
-  val mm = Value(UNITS_MM, "mm")
-  val cm = Value(UNITS_CM, "cm")
-  val in = Value(UNITS_INCH, "in")
-  val pct = Value(UNITS_PERCENTAGE, "%")
+  val px = Value(PIXELS.ordinal, "px")
+  val pt = Value(POINTS.ordinal, "pt")
+  val pc = Value(PICAS.ordinal, "pc")
+  val em = Value(EM.ordinal, "em")
+  val ex = Value(EX.ordinal, "ex")
+  val mm = Value(MM.ordinal, "mm")
+  val cm = Value(CM.ordinal, "cm")
+  val in = Value(INCH.ordinal, "in")
+  val pct = Value(PERCENTAGE.ordinal, "%")
 }
 
 case class Measure(value: Number, unit: Units.Value) {
