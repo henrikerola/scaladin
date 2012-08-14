@@ -16,6 +16,7 @@ object BuildSettings {
     version := buildVersion,
     scalaVersion := buildScalaVersion,
     scalacOptions ++= Seq("-deprecation", "-unchecked", "-encoding", "UTF-8"),
+    resolvers := Seq("Vaadin Snapshots" at "https://oss.sonatype.org/content/repositories/vaadin-snapshots/"),
     autoScalaLibrary := true)
 
   val manifestAttributes = Seq(Package.ManifestAttributes(
@@ -26,7 +27,7 @@ object BuildSettings {
 }
 
 object Dependencies {
-  val vaadinVersion = "6.8.2"
+  val vaadinVersion = "7.0-SNAPSHOT"
   val jettyVersion = "7.3.0.v20110203"
   val scalaTestVersion = "2.0.M3"
   val junitVersion = "4.9"
