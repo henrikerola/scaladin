@@ -15,7 +15,7 @@ class ValidationTests extends FunSuite with MockitoSugar {
 
   test("add/remove") {
     val field = new TextField
-    field.value = 'test
+    field.value = "test"
 
     field.validators += invalidValidator
     assert(Invalid(List("reason")) === field.validate)
