@@ -15,8 +15,8 @@ case object Valid extends ValidationResult
 case class Invalid(reason: String = "") extends ValidationResult
 
 object Validator {
-  def apply(validatorFunction: Any => ValidationResult): Validator = {
-    new Validator() { def validate(value: Any) = validatorFunction(value) }
+  def apply(validatorFunction: Option[Any] => ValidationResult): Validator = {
+    new Validator() { def validate(value: Option[Any]) = validatorFunction(value) }
   }
 }
 
@@ -61,10 +61,10 @@ class ValidatorDelegator extends com.vaadin.data.Validator with ValidatorMixin {
     case Invalid(message) => throw new com.vaadin.data.Validator.InvalidValueException(message)
   }
 
-  protected def internalValidate(value: Any): ValidationResult = wrapper.asInstanceOf[Validator].validate(value)
+  protected def internalValidate(value: Any): ValidationResult = wrapper.asInstanceOf[Validator].validate(Option(value))
 }
 
 trait Validator extends Wrapper {
   override val p: com.vaadin.data.Validator = new ValidatorDelegator { wrapper = Validator.this }
-  def validate(value: Any): ValidationResult
+  def validate(value: Option[Any]): ValidationResult
 }
