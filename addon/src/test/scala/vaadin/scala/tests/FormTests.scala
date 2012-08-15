@@ -81,6 +81,16 @@ class FormTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(form.item == None)
   }
 
+  test("set visible item properties") {
+    val container = new IndexedContainer
+    container.addContainerProperty("test2", classOf[String])
+    container.addContainerProperty("test1", classOf[String])
+    form.item = container.addItem('id)
+    form.visibleItemProperties = Seq("test1","test2")
+    assert("test1" === form.visibleItemProperties.head)
+    assert("test2" === form.visibleItemProperties.tail.head)
+  }
+  
   private def assertSameFactory(expected: FormFieldFactory, result: Option[FormFieldFactory]) = {
     assert(result.isDefined, "No fieldfactory as result")
     assert(expected === result.get)
