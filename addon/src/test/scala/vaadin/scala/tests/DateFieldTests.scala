@@ -12,12 +12,12 @@ import org.scalatest.junit.JUnitRunner
 class DateFieldTests extends FunSuite {
 
   test("Resolutions") {
-    assert(DateField.Resolution.Second.id === com.vaadin.ui.DateField.RESOLUTION_SEC)
-    assert(DateField.Resolution.Minute.id === com.vaadin.ui.DateField.RESOLUTION_MIN)
-    assert(DateField.Resolution.Hour.id === com.vaadin.ui.DateField.RESOLUTION_HOUR)
-    assert(DateField.Resolution.Day.id === com.vaadin.ui.DateField.RESOLUTION_DAY)
-    assert(DateField.Resolution.Month.id === com.vaadin.ui.DateField.RESOLUTION_MONTH)
-    assert(DateField.Resolution.Year.id === com.vaadin.ui.DateField.RESOLUTION_YEAR)
+    assert(DateField.Resolution.Second.id === com.vaadin.ui.DateField.Resolution.SECOND.ordinal)
+    assert(DateField.Resolution.Minute.id === com.vaadin.ui.DateField.Resolution.MINUTE.ordinal)
+    assert(DateField.Resolution.Hour.id === com.vaadin.ui.DateField.Resolution.HOUR.ordinal)
+    assert(DateField.Resolution.Day.id === com.vaadin.ui.DateField.Resolution.DAY.ordinal)
+    assert(DateField.Resolution.Month.id === com.vaadin.ui.DateField.Resolution.MONTH.ordinal)
+    assert(DateField.Resolution.Year.id === com.vaadin.ui.DateField.Resolution.YEAR.ordinal)
   }
 
   test("unparsableDateStringHandler") {
