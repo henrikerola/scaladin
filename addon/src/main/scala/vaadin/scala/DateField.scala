@@ -17,14 +17,14 @@ package mixins {
 
 object DateField {
   object Resolution extends Enumeration {
-    import com.vaadin.ui.DateField._
+    import com.vaadin.ui.DateField.Resolution._
     // Support for milliseconds is dropped in Vaadin 7 so not adding here either
-    val Second = Value(RESOLUTION_SEC)
-    val Minute = Value(RESOLUTION_MIN)
-    val Hour = Value(RESOLUTION_HOUR)
-    val Day = Value(RESOLUTION_DAY)
-    val Month = Value(RESOLUTION_MONTH)
-    val Year = Value(RESOLUTION_YEAR)
+    val Second = Value(SECOND.ordinal)
+    val Minute = Value(MINUTE.ordinal)
+    val Hour = Value(HOUR.ordinal)
+    val Day = Value(DAY.ordinal)
+    val Month = Value(MONTH.ordinal)
+    val Year = Value(YEAR.ordinal)
   }
   
   case class UnparsableDateStringEvent(dateField: DateField, dateString: String) extends Event
@@ -44,8 +44,8 @@ class DateField(override val p: com.vaadin.ui.DateField with DateFieldMixin = ne
 	  unparsableDateStringHandler = Option(handler)
   }
 
-  def resolution = DateField.Resolution(p.getResolution)
-  def resolution_=(resolution: DateField.Resolution.Value) = p.setResolution(resolution.id)
+  def resolution = DateField.Resolution(p.getResolution.ordinal)
+  def resolution_=(resolution: DateField.Resolution.Value) = p.setResolution(com.vaadin.ui.DateField.Resolution.values.apply(resolution.id))
 
   def dateFormat = Option(p.getDateFormat)
   def dateFormat_=(dateFormat: Option[String]) = p.setDateFormat(dateFormat.orNull)

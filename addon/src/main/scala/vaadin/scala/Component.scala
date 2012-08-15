@@ -64,7 +64,7 @@ trait Component extends Wrapper {
   def icon_=(icon: Option[Resource]) = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
   def icon_=(icon: Resource) = if (icon == null) p.setIcon(null) else p.setIcon(icon.p)
 
-  def window = wrapperFor[Window](p.getWindow)
+  //def root = wrapperFor[Root](p.getRoot)
 
   def application = Option(p.getApplication)
 

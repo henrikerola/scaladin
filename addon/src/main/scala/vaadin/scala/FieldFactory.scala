@@ -14,20 +14,20 @@ case class FormFieldIngredients(item: Item, propertyId: Any, uiContext: Componen
 case class TableFieldIngredients(container: Container, itemId: Any, propertyId: Any, uiContext: Component)
 
 object FormFieldFactory {
-  def apply(formFieldFunction: FormFieldIngredients => Option[Field]): FormFieldFactory = new FormFieldFactory {
-    def createField(ingredients: FormFieldIngredients): Option[Field] = formFieldFunction(ingredients)
+  def apply(formFieldFunction: FormFieldIngredients => Option[Field[_]]): FormFieldFactory = new FormFieldFactory {
+    def createField(ingredients: FormFieldIngredients): Option[Field[_]] = formFieldFunction(ingredients)
   }
 }
 
 trait FormFieldFactory extends Wrapper {
   override val p: com.vaadin.ui.FormFieldFactory with FormFieldFactoryMixin = new FormFieldFactoryDelegator { wrapper = FormFieldFactory.this }
 
-  def createField(ingredients: FormFieldIngredients): Option[Field]
+  def createField(ingredients: FormFieldIngredients): Option[Field[_]]
 }
 
 trait FormFieldFactoryDelegator extends com.vaadin.ui.FormFieldFactory with FormFieldFactoryMixin {
 
-  def createField(container: com.vaadin.data.Item, propertyId: Any, uiContext: com.vaadin.ui.Component): com.vaadin.ui.Field = {
+  def createField(container: com.vaadin.data.Item, propertyId: Any, uiContext: com.vaadin.ui.Component): com.vaadin.ui.Field[_] = {
     uiContext match {
 
       case mixin: ScaladinMixin if mixin.wrapper.isInstanceOf[Form] => {
@@ -46,20 +46,20 @@ trait FormFieldFactoryDelegator extends com.vaadin.ui.FormFieldFactory with Form
 }
 
 object TableFieldFactory {
-  def apply(tableFieldFunction: TableFieldIngredients => Option[Field]): TableFieldFactory = new TableFieldFactory {
-    def createField(ingredients: TableFieldIngredients): Option[Field] = tableFieldFunction(ingredients)
+  def apply(tableFieldFunction: TableFieldIngredients => Option[Field[_]]): TableFieldFactory = new TableFieldFactory {
+    def createField(ingredients: TableFieldIngredients): Option[Field[_]] = tableFieldFunction(ingredients)
   }
 }
 
 trait TableFieldFactory extends Wrapper {
   override val p: com.vaadin.ui.TableFieldFactory with TableFieldFactoryMixin = new TableFieldFactoryDelegator { wrapper = TableFieldFactory.this }
 
-  def createField(ingredients: TableFieldIngredients): Option[Field]
+  def createField(ingredients: TableFieldIngredients): Option[Field[_]]
 }
 
 trait TableFieldFactoryDelegator extends com.vaadin.ui.TableFieldFactory with TableFieldFactoryMixin {
   def createField(container: com.vaadin.data.Container, itemId: Any, propertyId: Any,
-                  uiContext: com.vaadin.ui.Component): com.vaadin.ui.Field = {
+                  uiContext: com.vaadin.ui.Component): com.vaadin.ui.Field[_] = {
     uiContext match {
 
       case mixin: ScaladinMixin if mixin.wrapper.isInstanceOf[Table] => {
@@ -88,10 +88,10 @@ object DefaultFieldFactory extends FormFieldFactory with TableFieldFactory {
   val Date = classOf[Date]
   val Bool = classOf[Boolean]
 
-  def createField(ingredients: FormFieldIngredients): Option[Field] = ingredients.item.property(ingredients.propertyId) match {
+  def createField(ingredients: FormFieldIngredients): Option[Field[_]] = ingredients.item.property(ingredients.propertyId) match {
     case Some(property) => {
       val propertyType: Class[_] = property.getType
-      val field: Field = createFieldByPropertyType(propertyType);
+      val field: Field[_] = createFieldByPropertyType(propertyType);
       field.caption = createCaptionByPropertyId(ingredients.propertyId)
       Option(field)
     }
@@ -99,10 +99,10 @@ object DefaultFieldFactory extends FormFieldFactory with TableFieldFactory {
     case None => None
   }
 
-  def createField(ingredients: TableFieldIngredients): Option[Field] = ingredients.container.property(ingredients.itemId, ingredients.propertyId) match {
+  def createField(ingredients: TableFieldIngredients): Option[Field[_]] = ingredients.container.property(ingredients.itemId, ingredients.propertyId) match {
     case Some(property) => {
       val propertyType: Class[_] = property.getType;
-      val field: Field = createFieldByPropertyType(propertyType);
+      val field: Field[_] = createFieldByPropertyType(propertyType);
       field.caption = createCaptionByPropertyId(ingredients.propertyId)
       Option(field)
     }
@@ -110,7 +110,7 @@ object DefaultFieldFactory extends FormFieldFactory with TableFieldFactory {
     case None => None
   }
 
-  def createFieldByPropertyType(propertyType: Class[_]): Field = propertyType match {
+  def createFieldByPropertyType(propertyType: Class[_]): Field[_] = propertyType match {
     case null => null
     case Item => new Form
     case Date => new DateField { resolution = DateField.Resolution.Day }

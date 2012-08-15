@@ -23,7 +23,7 @@ object FilesystemContainer {
   import scala.collection.JavaConverters._
   val FileProperties: Iterable[String] = com.vaadin.data.util.FilesystemContainer.FILE_PROPERTIES.asScala
 
-  def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new FileProperty(unwrapped)
+  def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_] = new FileProperty(unwrapped)
 
   class FileItem(override val p: com.vaadin.data.util.FilesystemContainer#FileItem) extends Item {
     def lastModified: Date = p.lastModified
@@ -31,12 +31,12 @@ object FilesystemContainer {
     def icon: Resource = new ThemeResource(p.getIcon.asInstanceOf[com.vaadin.terminal.ThemeResource].getResourceId)
     def size: Long = p.getSize
 
-    protected override def wrapProperty(unwrapped: com.vaadin.data.Property): Property = FilesystemContainer.wrapProperty(unwrapped)
+    protected override def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_] = FilesystemContainer.wrapProperty(unwrapped)
   }
 
-  class FileProperty(override val p: com.vaadin.data.Property) extends BasicProperty(p) {
+  class FileProperty(override val p: com.vaadin.data.Property[_]) extends BasicProperty(p) {
     override def value = super.value match {
-      case Some(r: com.vaadin.terminal.Resource) => Resource.mapResource(Some(r))
+      //case Some(r: com.vaadin.terminal.Resource) => Resource.mapResource(Some(r)) // FIXME ??
       case other => other
     }
   }
@@ -71,5 +71,5 @@ class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContain
 
   def wrapItem(unwrapped: com.vaadin.data.Item): Item = new FilesystemContainer.FileItem(unwrapped.asInstanceOf[com.vaadin.data.util.FilesystemContainer#FileItem])
 
-  override def wrapProperty(unwrapped: com.vaadin.data.Property): Property = FilesystemContainer.wrapProperty(unwrapped)
+  override def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_] = FilesystemContainer.wrapProperty(unwrapped)
 }

@@ -3,7 +3,7 @@ package vaadin.scala
 object Notification {
 
   object Type extends Enumeration {
-    import com.vaadin.ui.Window.Notification._
+    import com.vaadin.ui.Notification._
     val Humanized = Value(TYPE_HUMANIZED_MESSAGE)
     val Warning = Value(TYPE_WARNING_MESSAGE)
     val Error = Value(TYPE_ERROR_MESSAGE)
@@ -11,7 +11,7 @@ object Notification {
   }
 
   object Position extends Enumeration {
-    import com.vaadin.ui.Window.Notification._
+    import com.vaadin.ui.Notification._
     val Centered = Value(POSITION_CENTERED)
     val CenteredTop = Value(POSITION_CENTERED_TOP)
     val CenteredBottom = Value(POSITION_CENTERED_BOTTOM)
@@ -24,24 +24,27 @@ object Notification {
   // TODO: Delay constants
 
   def apply(caption: String): Notification = {
-    new Notification(new com.vaadin.ui.Window.Notification(caption))
+    new Notification(new com.vaadin.ui.Notification(caption))
   }
 
   def apply(caption: String, notificationType: Notification.Type.Value): Notification = {
-    new Notification(new com.vaadin.ui.Window.Notification(caption, notificationType.id))
+    new Notification(new com.vaadin.ui.Notification(caption, notificationType.id))
   }
 
   def apply(caption: String, description: String): Notification = {
-    new Notification(new com.vaadin.ui.Window.Notification(caption, description))
+    new Notification(new com.vaadin.ui.Notification(caption, description))
   }
 
   def apply(caption: String, description: String, notificationType: Notification.Type.Value): Notification = {
-    new Notification(new com.vaadin.ui.Window.Notification(caption, description, notificationType.id))
+    new Notification(new com.vaadin.ui.Notification(caption, description, notificationType.id))
   }
 
   def apply(caption: String, description: String, notificationType: Notification.Type.Value, htmlContentAllowed: Boolean): Notification = {
-    new Notification(new com.vaadin.ui.Window.Notification(caption, description, notificationType.id, htmlContentAllowed))
+    new Notification(new com.vaadin.ui.Notification(caption, description, notificationType.id, htmlContentAllowed))
   }
+
+  def show(caption: String) =  com.vaadin.ui.Notification.show(caption)
+  def show(caption: String, notificationType: Notification.Type.Value) = com.vaadin.ui.Notification.show(caption, notificationType.id)
 
 }
 
@@ -49,7 +52,7 @@ object Notification {
  * @see com.vaadin.ui.Window.Notification
  * @author Henri Kerola / Vaadin
  */
-class Notification(val p: com.vaadin.ui.Window.Notification = new com.vaadin.ui.Window.Notification(null)) extends Wrapper {
+class Notification(val p: com.vaadin.ui.Notification = new com.vaadin.ui.Notification(null)) extends Wrapper {
 
   def caption = Option(p.getCaption)
   def caption_=(caption: Option[String]) = p.setCaption(caption.orNull)
@@ -75,5 +78,7 @@ class Notification(val p: com.vaadin.ui.Window.Notification = new com.vaadin.ui.
 
   def htmlContentAllowed = p.isHtmlContentAllowed
   def htmlContentAllowed_=(htmlContentAllowed: Boolean) = p.setHtmlContentAllowed(htmlContentAllowed)
+  
+  def show(page: com.vaadin.terminal.Page) = p.show(page)
 
 }

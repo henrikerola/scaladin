@@ -83,7 +83,7 @@ trait CollapseNotifier { self: { def p: { def getListeners(eventType: Class[_]):
   }
 }
 
-case class ValueChangeEvent(property: Property) extends Event
+case class ValueChangeEvent(property: Property[_]) extends Event
 
 trait ValueChangeNotifier { self: { def p: { def getListeners(eventType: Class[_]): java.util.Collection[_]; def addListener(l: com.vaadin.data.Property.ValueChangeListener); def removeListener(l: com.vaadin.data.Property.ValueChangeListener) } } =>
 

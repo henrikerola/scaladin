@@ -27,7 +27,7 @@ class FormTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     form.formFieldFactory = Option(factory)
     assertSameFactory(factory, form.formFieldFactory)
 
-    val factoryFunctionMock = mock[Function1[FormFieldIngredients, Option[Field]]]
+    val factoryFunctionMock = mock[Function1[FormFieldIngredients, Option[Field[_]]]]
     val itemMock = mock[Item]
     form.formFieldFactory = factoryFunctionMock
 

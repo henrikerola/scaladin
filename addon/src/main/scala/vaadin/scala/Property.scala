@@ -1,22 +1,22 @@
 package vaadin.scala
 
 object Property {
-  def apply[T](value: T): Property = new ObjectProperty[T](value)
+  def apply[T](value: T): Property[_] = new ObjectProperty[T](value)
 
-  def unapply(property: Property): Option[Any] = {
+  def unapply(property: Property[_]): Option[Any] = {
     if (property != null) property.value
     else None
   }
 }
 
-trait Property extends Wrapper {
-  def p: com.vaadin.data.Property
+trait Property[T] extends Wrapper {
+  def p: com.vaadin.data.Property[_]
 
   def value: Option[Any] = Option(p.getValue())
   def value_=(value: Option[Any]): Unit = value_=(value.orNull)
   def value_=(value: Any): Unit = p.setValue(value)
-  def getType: Class[_] = p.getType()
-  def readOnly: Boolean = p.isReadOnly()
+  def getType: Class[_] = p.getType // FIXME: _ <: T
+  def readOnly: Boolean = p.isReadOnly
   def readOnly_=(ro: Boolean): Unit = p.setReadOnly(ro)
   override def toString: String = p.toString
 }
@@ -25,17 +25,17 @@ trait PropertyViewer extends Wrapper {
 
   def p: com.vaadin.data.Property.Viewer
 
-  def property: Option[Property] = p.getPropertyDataSource() match {
-    case p: com.vaadin.data.Property => Some(new BasicProperty(p))
+  def property: Option[Property[_]] = p.getPropertyDataSource() match {
+    case p: com.vaadin.data.Property[_] => Some(new BasicProperty(p))
     case null => None
   }
 
-  def property_=(property: Option[Property]) = property match {
+  def property_=(property: Option[Property[_]]) = property match {
     case Some(prop) => p.setPropertyDataSource(prop.p)
     case None => p.setPropertyDataSource(null)
   }
 
-  def property_=(property: Property) = p.setPropertyDataSource(property.p)
+  def property_=(property: Property[_]) = p.setPropertyDataSource(property.p)
 }
 
 trait PropertyEditor extends PropertyViewer {
@@ -45,25 +45,25 @@ trait PropertyEditor extends PropertyViewer {
 /**
  * Basic property wrapper, wraps any instance of com.vaadin.data.Property
  */
-class BasicProperty(override val p: com.vaadin.data.Property) extends Property
+class BasicProperty[T](override val p: com.vaadin.data.Property[_]) extends Property[T]
 
-class ObjectProperty[T](value: T) extends Property {
+class ObjectProperty[T](value: T) extends Property[T] {
   val p = new com.vaadin.data.util.ObjectProperty[T](value)
 }
 
-class VaadinPropertyDelegator(scaladinProperty: Property) extends com.vaadin.data.Property {
-  def getValue = scaladinProperty.value.get.asInstanceOf[AnyRef]
+class VaadinPropertyDelegator[T](scaladinProperty: Property[_]) extends com.vaadin.data.Property[T] {
+  def getValue: T = scaladinProperty.value.get.asInstanceOf[T]
   def setValue(v: Any) = scaladinProperty.value = v
-  def getType = scaladinProperty.getType
+  def getType: Class[_ <: T] = null //scaladinProperty.getType // FIXME
   def isReadOnly = scaladinProperty.readOnly
   def setReadOnly(ro: Boolean) = scaladinProperty.readOnly = ro
 }
 
-class FunctionProperty[T](getter: Unit => T, setter: T => Unit = null)(implicit m: Manifest[T]) extends Property {
+class FunctionProperty[T](getter: Unit => T, setter: T => Unit = null)(implicit m: Manifest[T]) extends Property[T] {
   //delegate
   val p = new VaadinPropertyDelegator(this)
 
-  override def value: Option[Any] = Option(getter())
+  override def value: Option[T] = Option(getter())
 
   override def value_=(value: Any) = setter(value.asInstanceOf[T])
 
@@ -76,6 +76,6 @@ class FunctionProperty[T](getter: Unit => T, setter: T => Unit = null)(implicit 
   override def toString = "Value: " + value
 }
 
-class TextFileProperty(file: Option[java.io.File]) extends Property {
+class TextFileProperty(file: Option[java.io.File]) extends Property[String] {
   override val p: com.vaadin.data.util.TextFileProperty = new com.vaadin.data.util.TextFileProperty(file.orNull)
 }

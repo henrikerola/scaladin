@@ -26,9 +26,6 @@ class Panel(override val p: com.vaadin.ui.Panel with PanelMixin = new com.vaadin
   def content: ComponentContainer = wrapperFor[ComponentContainer](p.getContent).get
   def content_=(content: ComponentContainer) = p.setContent(content.p)
 
-  def scrollable = p.isScrollable
-  def scrollable_=(scrollable: Boolean) = p.setScrollable(scrollable)
-
   def scrollLeft = p.getScrollLeft
   def scrollLeft_=(scrollLeft: Int) = p.setScrollLeft(scrollLeft)
 

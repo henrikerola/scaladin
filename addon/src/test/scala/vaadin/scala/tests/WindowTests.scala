@@ -48,33 +48,6 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(!window.resizable)
   }
 
-  test("child window handling") {
-    val anotherWindow = new Window
-
-    assert(window.childWindows.isEmpty)
-
-    window.childWindows += anotherWindow
-
-    assert(window.childWindows.contains(anotherWindow))
-
-    window.childWindows -= anotherWindow
-
-    assert(window.childWindows.isEmpty)
-  }
-
-  test("theme") {
-    assert(window.theme === None)
-
-    window.theme = "mytheme"
-    assert(window.theme === Some("mytheme"))
-
-    window.theme = None
-    assert(window.theme === None)
-
-    window.theme = Some("mytheme")
-    assert(window.theme === Some("mytheme"))
-  }
-
   test("center()") {
     window.center()
     Mockito.verify(vaadinWindowSpy).center()
@@ -99,72 +72,6 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
     window.draggable = false
     assert(!window.draggable)
-  }
-
-  test("name") {
-    assert(window.name === None)
-
-    window.name = "mywindow"
-    assert(window.name === Some("mywindow"))
-
-    window.name = None
-    assert(window.name === None)
-
-    window.name = Some("mywindow")
-    assert(window.name === Some("mywindow"))
-  }
-
-  test("scrollIntoView") {
-    val label = new Label
-    window.addComponent(label)
-    window.scrollIntoView(label)
-    Mockito.verify(vaadinWindowSpy).scrollIntoView(label.p)
-  }
-
-  test("browserWindowHeight") {
-    window.browserWindowHeight
-    Mockito.verify(vaadinWindowSpy).getBrowserWindowHeight
-  }
-
-  test("browserWindowWidth") {
-    window.browserWindowWidth
-    Mockito.verify(vaadinWindowSpy).getBrowserWindowWidth
-  }
-
-  test("javascript") {
-    window.executeJavaScript("javascript")
-    Mockito.verify(vaadinWindowSpy).executeJavaScript("javascript")
-  }
-
-  test("showNotification(caption)") {
-    window.showNotification("Caption")
-    Mockito.verify(vaadinWindowSpy).showNotification("Caption")
-  }
-
-  test("showNotification(caption, notificationType)") {
-    window.showNotification("Caption", Notification.Type.Warning)
-    Mockito.verify(vaadinWindowSpy).showNotification("Caption", com.vaadin.ui.Window.Notification.TYPE_WARNING_MESSAGE)
-  }
-
-  test("showNotification(caption, description)") {
-    window.showNotification("Caption", "Some text...")
-    Mockito.verify(vaadinWindowSpy).showNotification("Caption", "Some text...")
-  }
-
-  test("showNotification(caption, description, notificationType)") {
-    window.showNotification("Caption", "Some text...", Notification.Type.Warning)
-    Mockito.verify(vaadinWindowSpy).showNotification("Caption", "Some text...", com.vaadin.ui.Window.Notification.TYPE_WARNING_MESSAGE)
-  }
-
-  test("showNotification(caption, description, notificationType, htmlContentAllowed)") {
-    window.showNotification("Caption", "Some text...", Notification.Type.Warning, true)
-    Mockito.verify(vaadinWindowSpy).showNotification("Caption", "Some text...", com.vaadin.ui.Window.Notification.TYPE_WARNING_MESSAGE, true)
-  }
-
-  test("showNotification(notification)") {
-    val notification = Notification("Caption")
-    window.showNotification(notification)
-    Mockito.verify(vaadinWindowSpy).showNotification(notification.p)
   }
 
   test("closeShortcut") {

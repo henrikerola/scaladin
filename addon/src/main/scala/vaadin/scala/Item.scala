@@ -5,7 +5,7 @@ import vaadin.scala.mixins.ScaladinMixin
 object Item {
   def apply(properties: Tuple2[Any, Any]*): Item = fill(new PropertysetItem, properties: _*)
 
-  def unapplySeq(item: Item): Option[Seq[Property]] = {
+  def unapplySeq(item: Item): Option[Seq[Property[_]]] = {
     if (item != null) Some(item.propertyIds.map(item.property).flatten.toSeq)
     else None
   }
@@ -17,22 +17,21 @@ object Item {
 
   def filterable(properties: Tuple2[Any, Any]*): FilterableItem = fill(new PropertysetItem with FilterableItem, properties: _*)
 
-  def getProperties(item: Item): Iterable[Property] = item.propertyIds.flatMap(item.property)
-
+  def getProperties(item: Item): Iterable[Property[_]] = item.propertyIds.flatMap(item.property)
+  
   trait Viewer {
     def p: com.vaadin.data.Item.Viewer
 
-    //make sure that the Item wrapper instance is the same (type) all the time
-    protected var itemWrapper: Option[Item] = None
-    protected def internalSetItem(optionWrap: Option[Item]): Unit = optionWrap match {
-      case Some(wrapper) => itemWrapper = optionWrap; p.setItemDataSource(wrapper.p)
-      case None => itemWrapper = None; p.setItemDataSource(null)
+    def item: Option[Item] = p.getItemDataSource match {
+      case null => None
+      case i => Some(new BasicItem(i))
     }
 
-    def item: Option[Item] = itemWrapper
-
-    def item_=(item: Item) = internalSetItem(Some(item))
-    def item_=(item: Option[Item]) = internalSetItem(item)
+    def item_=(item: Item) = p.setItemDataSource(item.p)
+    def item_=(item: Option[Item]) = item match {
+      case Some(item) => p.setItemDataSource(item.p)
+      case None => p.setItemDataSource(null)
+    }
   }
 }
 
@@ -42,21 +41,21 @@ trait Item extends Wrapper {
 
   def p: com.vaadin.data.Item
 
-  def property(id: Any): Option[Property] = optionalWrapProperty(p.getItemProperty(id))
+  def property(id: Any): Option[Property[_]] = optionalWrapProperty(p.getItemProperty(id))
 
   def propertyIds(): Iterable[Any] = p.getItemPropertyIds().asScala
 
-  def addItemProperty(id: Any, property: Property): Boolean = p.addItemProperty(id, property.p)
+  def addItemProperty(id: Any, property: Property[_]): Boolean = p.addItemProperty(id, property.p)
 
   def removeItemProperty(id: Any): Boolean = p.removeItemProperty(id)
 
-  protected def optionalWrapProperty(property: com.vaadin.data.Property): Option[Property] = property match {
-    case p: com.vaadin.data.Property => Some(wrapProperty(p))
+  protected def optionalWrapProperty(property: com.vaadin.data.Property[_]): Option[Property[_]] = property match {
+    case p: com.vaadin.data.Property[_] => Some(wrapProperty(p))
     case _ => None
   }
 
   //override if needed
-  protected def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new BasicProperty(unwrapped)
+  protected def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_] = new BasicProperty(unwrapped)
 }
 
 class PropertysetItem(override val p: com.vaadin.data.util.PropertysetItem = new com.vaadin.data.util.PropertysetItem) extends Item {

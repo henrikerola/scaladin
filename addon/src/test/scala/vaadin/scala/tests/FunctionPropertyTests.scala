@@ -10,14 +10,14 @@ import org.scalatest.junit.JUnitRunner
 class FunctionPropertyTests extends FunSuite {
 
   test("function property with getter") {
-    val fp: Property = new FunctionProperty(_ => "testValue")
+    val fp: Property[String] = new FunctionProperty(_ => "testValue")
     assert(Some("testValue") === fp.value)
   }
 
   test("function property with getter and setter") {
     var y: String = "Start"
 
-    val fp: Property = new FunctionProperty[String](_ => "testValue", x => (y += x))
+    val fp: Property[String] = new FunctionProperty[String](_ => "testValue", x => (y += x))
 
     fp.value = "End"
 

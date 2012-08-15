@@ -1,6 +1,9 @@
 package vaadin.scala
 
 import com.vaadin.ui.AbstractSelect.MultiSelectMode._
+import com.vaadin.ui.Table.ColumnHeaderMode
+import com.vaadin.ui.Table.RowHeaderMode
+import com.vaadin.ui.Table.Align
 import vaadin.scala.mixins.TableMixin
 import vaadin.scala.mixins.ContainerOrderedMixin
 import vaadin.scala.mixins.ContainerSortableMixin
@@ -28,30 +31,30 @@ package mixins {
 
 object Table {
   object ColumnHeaderMode extends Enumeration {
-    import com.vaadin.ui.Table._
-    val Hidden = Value(COLUMN_HEADER_MODE_HIDDEN)
-    val Id = Value(COLUMN_HEADER_MODE_ID)
-    val Explicit = Value(COLUMN_HEADER_MODE_EXPLICIT)
-    val ExplicitDefaultsId = Value(COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
+    import com.vaadin.ui.Table.ColumnHeaderMode._
+    val Hidden = Value(HIDDEN.ordinal)
+    val Id = Value(ID.ordinal)
+    val Explicit = Value(EXPLICIT.ordinal)
+    val ExplicitDefaultsId = Value(EXPLICIT_DEFAULTS_ID.ordinal)
   }
 
   object RowHeaderMode extends Enumeration {
-    import com.vaadin.ui.Table._
-    val Hidden = Value(ROW_HEADER_MODE_HIDDEN)
-    val Id = Value(ROW_HEADER_MODE_ID)
-    val Item = Value(ROW_HEADER_MODE_ITEM)
-    val Index = Value(ROW_HEADER_MODE_INDEX)
-    val Explicit = Value(ROW_HEADER_MODE_EXPLICIT)
-    val Property = Value(ROW_HEADER_MODE_PROPERTY)
-    val IconOnly = Value(ROW_HEADER_MODE_ICON_ONLY)
-    val ExplicitDefaultsId = Value(ROW_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
+    import com.vaadin.ui.Table.RowHeaderMode._
+    val Hidden = Value(HIDDEN.ordinal)
+    val Id = Value(ID.ordinal)
+    val Item = Value(ITEM.ordinal)
+    val Index = Value(INDEX.ordinal)
+    val ExplicitDefaultsId = Value(EXPLICIT_DEFAULTS_ID.ordinal)
+    val Explicit = Value(EXPLICIT.ordinal)
+    val IconOnly = Value(ICON_ONLY.ordinal)
+    val Property = Value(PROPERTY.ordinal)
   }
 
   object ColumnAlignment extends Enumeration {
-    import com.vaadin.ui.Table._
-    val Left = Value(ALIGN_LEFT)
-    val Center = Value(ALIGN_CENTER)
-    val Right = Value(ALIGN_RIGHT)
+    import com.vaadin.ui.Table.Align._
+    val Left = Value(LEFT.ordinal)
+    val Center = Value(CENTER.ordinal)
+    val Right = Value(RIGHT.ordinal)
   }
 
   case class HeaderClickEvent(component: Component, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
@@ -91,8 +94,8 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
     case Some(icon) => icon.p
   } toArray)
 
-  def columnAlignments: Seq[Table.ColumnAlignment.Value] = p.getColumnAlignments map { Table.ColumnAlignment.withName(_) }
-  def columnAlignments_=(columnAlignments: Seq[Table.ColumnAlignment.Value]) = p.setColumnAlignments(columnAlignments map { _.toString } toArray)
+  def columnAlignments: Seq[Table.ColumnAlignment.Value] = p.getColumnAlignments map { align => Table.ColumnAlignment(align.ordinal) }
+  def columnAlignments_=(columnAlignments: Seq[Table.ColumnAlignment.Value]) = p.setColumnAlignments(columnAlignments map { align => Align.values.apply(align.id) }: _*)
 
   def columnExpandRatio(propertyId: Any) = p.getColumnExpandRatio(propertyId)
   def columnExpandRatio(propertyId: Any, ratio: Float) = p.setColumnExpandRatio(propertyId, ratio)
@@ -112,8 +115,8 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def columnFooter(propertyId: Any, footer: Option[String]) = p.setColumnFooter(propertyId, footer.orNull)
   def columnFooter(propertyId: Any, footer: String) = p.setColumnFooter(propertyId, footer)
 
-  def columnAlignment(propertyId: Any) = Table.ColumnAlignment.withName(p.getColumnAlignment(propertyId))
-  def columnAlignment(propertyId: Any, alignment: Table.ColumnAlignment.Value) = p.setColumnAlignment(propertyId, alignment.toString)
+  def columnAlignment(propertyId: Any) = Table.ColumnAlignment(p.getColumnAlignment(propertyId).ordinal)
+  def columnAlignment(propertyId: Any, alignment: Table.ColumnAlignment.Value) = p.setColumnAlignment(propertyId, Align.values.apply(alignment.id))
 
   def pageLength = p.getPageLength
   def pageLength_=(pageLength: Int) = p.setPageLength(pageLength)
@@ -139,8 +142,8 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def editable = p.isEditable;
   def editable_=(editable: Boolean) = p.setEditable(editable)
 
-  def sortable = !p.isSortDisabled
-  def sortable_=(sortable: Boolean) = p.setSortDisabled(!sortable)
+  def sortable = p.isSortEnabled
+  def sortable_=(sortable: Boolean) = p.setSortEnabled(sortable)
 
   def sortContainerPropertyId: Option[Any] = Option(p.getSortContainerPropertyId)
   def sortContainerPropertyId_=(sortContainerPropertyId: Option[Any]) = p.setSortContainerPropertyId(sortContainerPropertyId.orNull)
@@ -176,11 +179,11 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
       p.setMultiSelectMode(SIMPLE)
   }
 
-  def columnHeaderMode = Table.ColumnHeaderMode(p.getColumnHeaderMode)
-  def columnHeaderMode_=(columnHeaderMode: Table.ColumnHeaderMode.Value) = p.setColumnHeaderMode(columnHeaderMode.id)
+  def columnHeaderMode = Table.ColumnHeaderMode(p.getColumnHeaderMode.ordinal)
+  def columnHeaderMode_=(columnHeaderMode: Table.ColumnHeaderMode.Value) = p.setColumnHeaderMode(ColumnHeaderMode.values.apply(columnHeaderMode.id))
 
-  def rowHeaderMode = Table.RowHeaderMode(p.getRowHeaderMode)
-  def rowHeaderMode_=(rowHeaderMode: Table.RowHeaderMode.Value) = p.setRowHeaderMode(rowHeaderMode.id)
+  def rowHeaderMode = Table.RowHeaderMode(p.getRowHeaderMode.ordinal)
+  def rowHeaderMode_=(rowHeaderMode: Table.RowHeaderMode.Value) = p.setRowHeaderMode(RowHeaderMode.values.apply(rowHeaderMode.id))
 
   def refreshRowCache() = p.refreshRowCache()
 
@@ -189,7 +192,7 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
 
   def tableFieldFactory: Option[TableFieldFactory] = wrapperFor[TableFieldFactory](p.getTableFieldFactory)
   def tableFieldFactory_=(factory: TableFieldFactory) = p.setTableFieldFactory(factory.p)
-  def tableFieldFactory_=(factoryFunction: (TableFieldIngredients) => Option[Field]) = p.setTableFieldFactory(TableFieldFactory(factoryFunction).p)
+  def tableFieldFactory_=(factoryFunction: (TableFieldIngredients) => Option[Field[_]]) = p.setTableFieldFactory(TableFieldFactory(factoryFunction).p)
   def tableFieldFactory_=(factory: Option[TableFieldFactory]) = factory match {
     case Some(factory) => p.setTableFieldFactory(factory.p)
     case None => p.setTableFieldFactory(null)

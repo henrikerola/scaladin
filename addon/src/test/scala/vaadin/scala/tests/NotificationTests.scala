@@ -11,43 +11,43 @@ import org.mockito.Mockito
 @RunWith(classOf[JUnitRunner])
 class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
-  var vaadinNotificationSpy: com.vaadin.ui.Window.Notification = _
+  var vaadinNotificationSpy: com.vaadin.ui.Notification = _
   var notification: Notification = _
 
   before {
-    vaadinNotificationSpy = Mockito.spy(new com.vaadin.ui.Window.Notification(null))
+    vaadinNotificationSpy = Mockito.spy(new com.vaadin.ui.Notification(null))
     notification = new Notification(vaadinNotificationSpy)
   }
   
   test("Types") {
-    assert(Notification.Type.Humanized.id === com.vaadin.ui.Window.Notification.TYPE_HUMANIZED_MESSAGE)
-    assert(Notification.Type.Warning.id === com.vaadin.ui.Window.Notification.TYPE_WARNING_MESSAGE)
-    assert(Notification.Type.Error.id === com.vaadin.ui.Window.Notification.TYPE_ERROR_MESSAGE)
-    assert(Notification.Type.Tray.id === com.vaadin.ui.Window.Notification.TYPE_TRAY_NOTIFICATION)
+    assert(Notification.Type.Humanized.id === com.vaadin.ui.Notification.TYPE_HUMANIZED_MESSAGE)
+    assert(Notification.Type.Warning.id === com.vaadin.ui.Notification.TYPE_WARNING_MESSAGE)
+    assert(Notification.Type.Error.id === com.vaadin.ui.Notification.TYPE_ERROR_MESSAGE)
+    assert(Notification.Type.Tray.id === com.vaadin.ui.Notification.TYPE_TRAY_NOTIFICATION)
   }
   
   test("Positions") {
-    assert(Notification.Position.Centered.id === com.vaadin.ui.Window.Notification.POSITION_CENTERED)
-    assert(Notification.Position.CenteredTop.id === com.vaadin.ui.Window.Notification.POSITION_CENTERED_TOP)
-    assert(Notification.Position.CenteredBottom.id === com.vaadin.ui.Window.Notification.POSITION_CENTERED_BOTTOM)
-    assert(Notification.Position.TopLeft.id === com.vaadin.ui.Window.Notification.POSITION_TOP_LEFT)
-    assert(Notification.Position.TopRight.id === com.vaadin.ui.Window.Notification.POSITION_TOP_RIGHT)
-    assert(Notification.Position.BottomLeft.id === com.vaadin.ui.Window.Notification.POSITION_BOTTOM_LEFT)
-    assert(Notification.Position.BottomRight.id === com.vaadin.ui.Window.Notification.POSITION_BOTTOM_RIGHT)
+    assert(Notification.Position.Centered.id === com.vaadin.ui.Notification.POSITION_CENTERED)
+    assert(Notification.Position.CenteredTop.id === com.vaadin.ui.Notification.POSITION_CENTERED_TOP)
+    assert(Notification.Position.CenteredBottom.id === com.vaadin.ui.Notification.POSITION_CENTERED_BOTTOM)
+    assert(Notification.Position.TopLeft.id === com.vaadin.ui.Notification.POSITION_TOP_LEFT)
+    assert(Notification.Position.TopRight.id === com.vaadin.ui.Notification.POSITION_TOP_RIGHT)
+    assert(Notification.Position.BottomLeft.id === com.vaadin.ui.Notification.POSITION_BOTTOM_LEFT)
+    assert(Notification.Position.BottomRight.id === com.vaadin.ui.Notification.POSITION_BOTTOM_RIGHT)
   }
 
   test("Notification(caption)") {
     val notification: Notification = Notification("Caption")
     assert(notification.caption === Some("Caption"))
     assert(notification.styleName === None)
-    assert(notification.htmlContentAllowed)
+    assert(!notification.htmlContentAllowed)
   }
 
   test("Notification(caption, notificationType)") {
     val notification: Notification = Notification("Caption", Notification.Type.Error)
     assert(notification.caption === Some("Caption"))
     assert(notification.styleName === Some("error"))
-    assert(notification.htmlContentAllowed)
+    assert(!notification.htmlContentAllowed)
   }
 
   test("Notification(caption, description)") {
@@ -55,7 +55,7 @@ class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(notification.caption === Some("Caption"))
     assert(notification.styleName === None)
     assert(notification.description === Some("Some text..."))
-    assert(notification.htmlContentAllowed)
+    assert(!notification.htmlContentAllowed)
   }
 
   test("Notification(caption, description, notificationType)") {
@@ -63,15 +63,15 @@ class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(notification.caption === Some("Caption"))
     assert(notification.styleName === Some("error"))
     assert(notification.description === Some("Some text..."))
-    assert(notification.htmlContentAllowed)
+    assert(!notification.htmlContentAllowed)
   }
 
   test("Notification(caption, description, notificationType, htmlContentAllowed)") {
-    val notification: Notification = Notification("Caption", "Some text...", Notification.Type.Error, false)
+    val notification: Notification = Notification("Caption", "Some text...", Notification.Type.Error, true)
     assert(notification.caption === Some("Caption"))
     assert(notification.styleName === Some("error"))
     assert(notification.description === Some("Some text..."))
-    assert(!notification.htmlContentAllowed)
+    assert(notification.htmlContentAllowed)
   }
   
   test("caption") {
@@ -146,9 +146,9 @@ class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   }
   
   test("htmlContentAllowed") {
-    assert(notification.htmlContentAllowed)
-    notification.htmlContentAllowed = false
     assert(!notification.htmlContentAllowed)
+    notification.htmlContentAllowed = true
+    assert(notification.htmlContentAllowed)
   }
   
 }

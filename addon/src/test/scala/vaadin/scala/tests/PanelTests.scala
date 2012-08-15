@@ -23,15 +23,6 @@ class PanelTests extends FunSuite {
     assert(panel.content === layout)
   }
 
-  test("scrollable") {
-    val panel = new Panel
-
-    assert(!panel.scrollable)
-
-    panel.scrollable = true
-    assert(panel.scrollable)
-  }
-
   test("scrollLeft") {
     val panel = new Panel
 

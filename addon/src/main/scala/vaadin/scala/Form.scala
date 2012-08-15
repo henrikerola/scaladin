@@ -14,16 +14,16 @@ class Form(override val p: com.vaadin.ui.Form with FormMixin = new com.vaadin.ui
 
   def formFieldFactory: Option[FormFieldFactory] = wrapperFor[FormFieldFactory](p.getFormFieldFactory)
   def formFieldFactory_=(factory: FormFieldFactory) = p.setFormFieldFactory(factory.p)
-  def formFieldFactory_=(factoryFunction: FormFieldIngredients => Option[Field]) = p.setFormFieldFactory(FormFieldFactory(factoryFunction).p)
+  def formFieldFactory_=(factoryFunction: FormFieldIngredients => Option[Field[_]]) = p.setFormFieldFactory(FormFieldFactory(factoryFunction).p)
   def formFieldFactory_=(factory: Option[FormFieldFactory]) = factory match {
     case Some(factory) => p.setFormFieldFactory(factory.p)
     case None => p.setFormFieldFactory(null)
   }
 
-  def addField(propertyId: Any, field: Field): Unit = p.addField(propertyId, field.p)
-  def addField(propertyId: Option[Any], field: Option[Field]): Unit = p.addField(propertyId.orNull, field.map(_.p).orNull)
+  def addField(propertyId: Any, field: Field[_]): Unit = p.addField(propertyId, field.p)
+  def addField(propertyId: Option[Any], field: Option[Field][_]): Unit = p.addField(propertyId.orNull, field.map(_.p).orNull)
 
-  def field(propertyId: Any): Option[Field] = wrapperFor[Field](p.getField(propertyId))
+  def field(propertyId: Any): Option[Field[_]] = wrapperFor[Field[_]](p.getField(propertyId))
 
   def removeAllProperties: Boolean = p.removeAllProperties()
 

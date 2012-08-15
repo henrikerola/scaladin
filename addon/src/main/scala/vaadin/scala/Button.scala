@@ -5,7 +5,7 @@ import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.listeners.ButtonClickListener
 
 package mixins {
-  trait ButtonMixin extends AbstractFieldMixin
+  trait ButtonMixin extends AbstractComponentMixin
 }
 
 object Button {
@@ -34,7 +34,7 @@ package listeners {
 }
 
 class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin)
-    extends AbstractField(p) with BlurNotifier with FocusNotifier {
+    extends AbstractComponent(p) with BlurNotifier with FocusNotifier {
 
   private var _clickShortcut: Option[KeyShortcut] = None
 

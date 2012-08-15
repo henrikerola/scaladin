@@ -13,7 +13,7 @@ import org.mockito.Mockito
 class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
   class VaadinTable extends com.vaadin.ui.Table with TableMixin {
-    override def formatPropertyValue(rowId: Any, colId: Any, property: com.vaadin.data.Property): String = super.formatPropertyValue(rowId, colId, property)
+    override def formatPropertyValue(rowId: Any, colId: Any, property: com.vaadin.data.Property[_]): String = super.formatPropertyValue(rowId, colId, property)
   }
 
   var table: Table = _
@@ -23,32 +23,32 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     val vaadinTable = new VaadinTable
     spy = Mockito.spy(vaadinTable)
     table = new Table(spy)
-    table.p.addContainerProperty("col1", classOf[String], "")
+    table.p.addContainerProperty("col1", classOf[String], "")	
     table.p.addContainerProperty("col2", classOf[String], "")
   }
 
   test("ColumnHeaderModes") {
-    assert(Table.ColumnHeaderMode.Hidden.id === com.vaadin.ui.Table.COLUMN_HEADER_MODE_HIDDEN)
-    assert(Table.ColumnHeaderMode.Id.id === com.vaadin.ui.Table.COLUMN_HEADER_MODE_ID)
-    assert(Table.ColumnHeaderMode.Explicit.id === com.vaadin.ui.Table.COLUMN_HEADER_MODE_EXPLICIT)
-    assert(Table.ColumnHeaderMode.ExplicitDefaultsId.id === com.vaadin.ui.Table.COLUMN_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
+    assert(Table.ColumnHeaderMode.Hidden.id === com.vaadin.ui.Table.ColumnHeaderMode.HIDDEN.ordinal)
+    assert(Table.ColumnHeaderMode.Id.id === com.vaadin.ui.Table.ColumnHeaderMode.ID.ordinal)
+    assert(Table.ColumnHeaderMode.Explicit.id === com.vaadin.ui.Table.ColumnHeaderMode.EXPLICIT.ordinal)
+    assert(Table.ColumnHeaderMode.ExplicitDefaultsId.id === com.vaadin.ui.Table.ColumnHeaderMode.EXPLICIT_DEFAULTS_ID.ordinal)
   }
 
   test("RowHeaderModes") {
-    assert(Table.RowHeaderMode.Hidden.id === com.vaadin.ui.Table.ROW_HEADER_MODE_HIDDEN)
-    assert(Table.RowHeaderMode.Id.id === com.vaadin.ui.Table.ROW_HEADER_MODE_ID)
-    assert(Table.RowHeaderMode.Item.id === com.vaadin.ui.Table.ROW_HEADER_MODE_ITEM)
-    assert(Table.RowHeaderMode.Index.id === com.vaadin.ui.Table.ROW_HEADER_MODE_INDEX)
-    assert(Table.RowHeaderMode.Explicit.id === com.vaadin.ui.Table.ROW_HEADER_MODE_EXPLICIT)
-    assert(Table.RowHeaderMode.Property.id === com.vaadin.ui.Table.ROW_HEADER_MODE_PROPERTY)
-    assert(Table.RowHeaderMode.IconOnly.id === com.vaadin.ui.Table.ROW_HEADER_MODE_ICON_ONLY)
-    assert(Table.RowHeaderMode.ExplicitDefaultsId.id === com.vaadin.ui.Table.ROW_HEADER_MODE_EXPLICIT_DEFAULTS_ID)
+    assert(Table.RowHeaderMode.Hidden.id === com.vaadin.ui.Table.RowHeaderMode.HIDDEN.ordinal)
+    assert(Table.RowHeaderMode.Id.id === com.vaadin.ui.Table.RowHeaderMode.ID.ordinal)
+    assert(Table.RowHeaderMode.Item.id === com.vaadin.ui.Table.RowHeaderMode.ITEM.ordinal)
+    assert(Table.RowHeaderMode.Index.id === com.vaadin.ui.Table.RowHeaderMode.INDEX.ordinal)
+    assert(Table.RowHeaderMode.Explicit.id === com.vaadin.ui.Table.RowHeaderMode.EXPLICIT.ordinal)
+    assert(Table.RowHeaderMode.Property.id === com.vaadin.ui.Table.RowHeaderMode.PROPERTY.ordinal)
+    assert(Table.RowHeaderMode.IconOnly.id === com.vaadin.ui.Table.RowHeaderMode.ICON_ONLY.ordinal)
+    assert(Table.RowHeaderMode.ExplicitDefaultsId.id === com.vaadin.ui.Table.RowHeaderMode.EXPLICIT_DEFAULTS_ID.ordinal)
   }
 
   test("ColumnAlignments") {
-    assert(Table.ColumnAlignment.Left.toString === com.vaadin.ui.Table.ALIGN_LEFT)
-    assert(Table.ColumnAlignment.Center.toString === com.vaadin.ui.Table.ALIGN_CENTER)
-    assert(Table.ColumnAlignment.Right.toString === com.vaadin.ui.Table.ALIGN_RIGHT)
+    assert(Table.ColumnAlignment.Left.id === com.vaadin.ui.Table.Align.LEFT.ordinal)
+    assert(Table.ColumnAlignment.Center.id === com.vaadin.ui.Table.Align.CENTER.ordinal)
+    assert(Table.ColumnAlignment.Right.id === com.vaadin.ui.Table.Align.RIGHT.ordinal)
   }
 
   test("visibleColumns") {
@@ -90,12 +90,12 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
   test("columnAlignments") {
     import Table.ColumnAlignment._
-    import com.vaadin.ui.Table._
+    import com.vaadin.ui.Table.Align._
 
     assert(table.columnAlignments === Left :: Left :: Nil)
 
     table.columnAlignments = Center :: Right :: Nil
-    Mockito.verify(spy).setColumnAlignments(Array(ALIGN_CENTER, ALIGN_RIGHT))
+    Mockito.verify(spy).setColumnAlignments(CENTER, RIGHT)
 
     assert(table.columnAlignments === Center :: Right :: Nil)
   }

@@ -122,10 +122,10 @@ class ContainerFilter extends FunSuite {
     val item = Item.filterable('propertyId1 -> "value1", 'propertyId2 -> "value2")
     val container = Container.filterable('itemId1 -> List('propertyId1 -> "value1", 'propertyId2 -> "value2"), 'itemId2 -> List())
 
-    val itemProperty: Property = item \ 'propertyId1 get
-    val itemProperties: List[Property] = item filterProperties (_.value.get.asInstanceOf[String].startsWith("value"))
-    val property2: Property = container \ 'itemId1 \ 'propertyId1 get
-    val containerProperties: List[Property] = container \\ 'propertyId1
+    val itemProperty: Property[_] = item \ 'propertyId1 get
+    val itemProperties: List[Property[_]] = item filterProperties (_.value.get.asInstanceOf[String].startsWith("value"))
+    val property2: Property[_] = container \ 'itemId1 \ 'propertyId1 get
+    val containerProperties: List[Property[_]] = container \\ 'propertyId1
 
     val itemPropertyValues: List[Any] = item filterProperties (_.value.get.asInstanceOf[String].startsWith("value")) values
     val containerPropertyValues: List[Any] = container \\ 'propertyId1 values

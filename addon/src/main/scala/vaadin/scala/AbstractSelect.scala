@@ -15,14 +15,14 @@ package mixins {
 object AbstractSelect {
 
   object ItemCaptionMode extends Enumeration {
-    import com.vaadin.ui.AbstractSelect._
-    val Id = Value(ITEM_CAPTION_MODE_ID)
-    val Item = Value(ITEM_CAPTION_MODE_ITEM)
-    val Index = Value(ITEM_CAPTION_MODE_INDEX)
-    val ExplicitDefaultsId = Value(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID)
-    val Explicit = Value(ITEM_CAPTION_MODE_EXPLICIT)
-    val IconOnly = Value(ITEM_CAPTION_MODE_ICON_ONLY)
-    val Property = Value(ITEM_CAPTION_MODE_PROPERTY)
+    import com.vaadin.ui.AbstractSelect.ItemCaptionMode._
+    val Id = Value(ID.ordinal)
+    val Item = Value(ITEM.ordinal)
+    val Index = Value(INDEX.ordinal)
+    val ExplicitDefaultsId = Value(EXPLICIT_DEFAULTS_ID.ordinal)
+    val Explicit = Value(EXPLICIT.ordinal)
+    val IconOnly = Value(ICON_ONLY.ordinal)
+    val Property = Value(PROPERTY.ordinal)
   }
 }
 
@@ -36,8 +36,8 @@ abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with 
   def newItemHandler_=(newItemHandler: NewItemHandler): Unit = p.setNewItemHandler(newItemHandler.p)
   def newItemHandler_=(newItemHandler: Option[NewItemHandler]): Unit = if (newItemHandler.isDefined) p.setNewItemHandler(newItemHandler.get.p) else p.setNewItemHandler(null)
 
-  def itemCaptionMode = AbstractSelect.ItemCaptionMode(p.getItemCaptionMode)
-  def itemCaptionMode_=(itemCaptionMode: AbstractSelect.ItemCaptionMode.Value) = p.setItemCaptionMode(itemCaptionMode.id)
+  def itemCaptionMode = AbstractSelect.ItemCaptionMode(p.getItemCaptionMode.ordinal)
+  def itemCaptionMode_=(itemCaptionMode: AbstractSelect.ItemCaptionMode.Value) = p.setItemCaptionMode(com.vaadin.ui.AbstractSelect.ItemCaptionMode.values.apply(itemCaptionMode.id))
 
   def itemCaptionPropertyId: Option[Any] = Option(p.getItemCaptionPropertyId)
   def itemCaptionPropertyId_=(itemCaptionPropertyId: Option[Any]) = p.setItemCaptionPropertyId(itemCaptionPropertyId.orNull)
@@ -82,12 +82,13 @@ class DefaultNewItemHandler(select: AbstractSelect) extends NewItemHandler {
 
       // Sets the caption property, if used
       if (select.itemCaptionPropertyId.isDefined) {
-        try {
+        //try {
           select.property(newItemCaption, select.itemCaptionPropertyId.get).get.value = newItemCaption
-        } catch {
-          case ignored: com.vaadin.data.Property.ConversionException =>
+        //} catch {
+          // TODO
+          //case ignored: com.vaadin.data.Property.ConversionException =>
           // The conversion exception is safely ignored, the caption is just missing
-        }
+        //}
       }
       if (select.isInstanceOf[MultiSelectable] && select.asInstanceOf[MultiSelectable].multiSelect) {
         var values: Set[Any] = select.value.get.asInstanceOf[Iterable[Any]].toSet
