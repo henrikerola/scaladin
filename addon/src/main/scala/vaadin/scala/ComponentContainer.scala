@@ -2,22 +2,37 @@ package vaadin.scala
 
 import scala.collection.mutable
 import com.vaadin.ui.Layout.MarginHandler
+import vaadin.scala.mixins.HasComponentsMixin
 import vaadin.scala.mixins.AbstractComponentContainerMixin
 import vaadin.scala.mixins.AbstractLayoutMixin
 import vaadin.scala.mixins.ComponentContainerMixin
 import vaadin.scala.mixins.LayoutMixin
 
 package mixins {
-  trait ComponentContainerMixin extends ComponentMixin
+  trait HasComponentsMixin extends ComponentMixin
+  trait ComponentContainerMixin extends HasComponentsMixin
   trait AbstractComponentContainerMixin extends AbstractComponentMixin with ComponentContainerMixin
   trait LayoutMixin extends ComponentContainerMixin
   trait AbstractLayoutMixin extends AbstractComponentContainerMixin with LayoutMixin
 }
 
-trait ComponentContainer extends Component {
+trait HasComponents extends Component {
 
-  override def p: com.vaadin.ui.ComponentContainer with ComponentContainerMixin
+  override def p: com.vaadin.ui.HasComponents with HasComponentsMixin
 
+  def componentVisible(childComponent: Component) = p.isComponentVisible(childComponent.p)
+
+  def components: Iterable[Component] = new Iterable[Component] {
+    def iterator: Iterator[Component] = {
+      import scala.collection.JavaConverters._
+      p.iterator.asScala.map(wrapperFor[Component](_).get)
+    }
+  }
+}
+
+trait ComponentContainer extends HasComponents {
+
+  override def p: com.vaadin.ui.ComponentContainer with ComponentContainerMixin with HasComponentsMixin
   // provide add or addComponent or both?
   def add[C <: Component](component: C): C = {
     p.addComponent(component.p)
@@ -37,20 +52,17 @@ trait ComponentContainer extends Component {
     p.replaceComponent(oldComponent.p, newComponent.p)
   }
 
-  //    public void requestRepaintAll();
-  //
-
   def moveComponentsFrom(source: ComponentContainer): Unit = {
     p.moveComponentsFrom(source.p)
   }
 
-  def components: mutable.Set[Component] = new mutable.Set[Component] {
+  override def components: mutable.Set[Component] = new mutable.Set[Component] {
     import scala.collection.JavaConversions.asScalaIterator
     def contains(key: Component) = {
-      p.getComponentIterator.contains(key.p)
+      p.iterator.contains(key.p)
     }
     def iterator: Iterator[Component] = {
-      p.getComponentIterator.map(wrapperFor[Component](_).get)
+      p.iterator.map(wrapperFor[Component](_).get)
     }
     def +=(elem: Component) = { addComponent(elem); this }
     def -=(elem: Component) = { removeComponent(elem); this }

@@ -16,7 +16,7 @@ import vaadin.scala.internal.CellStyleGenerator
 import vaadin.scala.internal.WrapperUtil
 
 package mixins {
-  trait TableMixin extends AbstractSelectMixin with ContainerOrderedMixin with ContainerSortableMixin
+  trait TableMixin extends AbstractSelectMixin with ContainerOrderedMixin with ContainerSortableMixin with HasComponentsMixin
 
   /* Property value formatter is disabled because of SI-2296. Re-enable it when fixed in the 2.9.x line 
    * or after upgrading to 2.10
@@ -72,7 +72,7 @@ object Table {
  * @author Henri Kerola / Vaadin
  */
 class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin.ui.Table with TableMixin)
-    extends AbstractSelect(p) with Container.Ordered with Container.Sortable with ItemDescriptionGeneratorOwner with ItemClickNotifier {
+    extends AbstractSelect(p) with Container.Ordered with Container.Sortable with ItemDescriptionGeneratorOwner with ItemClickNotifier with HasComponents {
 
   def visibleColumns: Seq[Any] = p.getVisibleColumns
   def visibleColumns_=(visibleColumns: Seq[Any]) = p.setVisibleColumns(visibleColumns map { _.asInstanceOf[Object] } toArray)

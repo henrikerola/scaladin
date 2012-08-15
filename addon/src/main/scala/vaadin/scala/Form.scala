@@ -1,12 +1,13 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.FormMixin
+import vaadin.scala.mixins.HasComponentsMixin
 
 package mixins {
-  trait FormMixin extends AbstractFieldMixin
+  trait FormMixin extends AbstractFieldMixin with HasComponentsMixin
 }
 
-class Form(override val p: com.vaadin.ui.Form with FormMixin = new com.vaadin.ui.Form with FormMixin) extends AbstractField(p) with Item.Viewer with Buffered {
+class Form(override val p: com.vaadin.ui.Form with FormMixin = new com.vaadin.ui.Form with FormMixin) extends AbstractField(p) with Item.Viewer with Buffered with HasComponents {
 
   //override default implementation with a wrapper
   formFieldFactory = DefaultFieldFactory
