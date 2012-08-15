@@ -1,0 +1,76 @@
+package vaadin.scala
+
+import java.util.Locale
+import java.io.InputStream
+import java.util.Date
+
+object WrappedRequest {
+
+  trait BrowserDetails { browserDetails =>
+
+    val p: com.vaadin.terminal.WrappedRequest.BrowserDetails
+
+    def uriFragment: String = p.getUriFragment // TODO: can be null?
+
+    def windowName: String = p.getWindowName // TODO: can be null?
+
+    // TODO: WebBrowser
+  }
+
+  trait DeploymentConfiguration {
+
+    val p: com.vaadin.terminal.DeploymentConfiguration
+
+    def staticFileLocation(wrappedRequest: WrappedRequest): String = p.getStaticFileLocation(wrappedRequest.p)
+
+    def configuredWidgetset(wrappedRequest: WrappedRequest): String = p.getConfiguredWidgetset(wrappedRequest.p)
+
+    def configuredTheme(wrappedRequest: WrappedRequest): String = p.getConfiguredTheme(wrappedRequest.p)
+
+    def standalone(wrappedRequest: WrappedRequest): Boolean = p.isStandalone(wrappedRequest.p)
+
+    def applicationOrSystemProperty(propertyName: String, defaultValue: String): String = p.getApplicationOrSystemProperty(propertyName, defaultValue)
+
+    def classLoader: Option[ClassLoader] = Option(p.getClassLoader)
+  }
+}
+
+trait WrappedRequest { wrappedRequest =>
+
+  val p: com.vaadin.terminal.WrappedRequest
+
+  // TODO: getParameter
+  // TODO: getParameterMap()
+
+  def contentLength: Int = p.getContentLength
+
+  // TODO: getInputStream can throw IOException handle somehow more Scala-way?
+  def inputStream: InputStream = p.getInputStream
+
+  // TODO: get/setAttribute
+
+  def requestPathInfo: Option[String] = Option(p.getRequestPathInfo)
+
+  def sessionMaxInactiveInterval: Int = p.getSessionMaxInactiveInterval
+
+  // TODO: get/setSessionAttribute
+
+  def contentType: Option[String] = Option(p.getContentType)
+  
+  def browserDetails: WrappedRequest.BrowserDetails = new WrappedRequest.BrowserDetails {
+    val p = wrappedRequest.p.getBrowserDetails
+  }
+
+  def locale: Option[Locale] = Option(p.getLocale)
+
+  def remoteAddr: Option[String] = Option(p.getRemoteAddr)
+
+  def secure: Boolean = p.isSecure
+
+  // TODO: getHeader
+
+  def deploymentConfiguration: WrappedRequest.DeploymentConfiguration = new WrappedRequest.DeploymentConfiguration {
+    val p = wrappedRequest.p.getDeploymentConfiguration
+  }
+
+}
