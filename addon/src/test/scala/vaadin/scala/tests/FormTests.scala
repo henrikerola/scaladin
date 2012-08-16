@@ -91,6 +91,24 @@ class FormTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert("test2" === form.visibleItemProperties.tail.head)
   }
   
+  test("form layout") {
+    assert(form.layout.isInstanceOf[FormLayout])
+    form.layout = new VerticalLayout
+    assert(form.layout.isInstanceOf[VerticalLayout])
+  }
+  
+  test("add field option") {
+    val field = new TextField
+    //these shouldn't throw exceptions
+    form.addField(None,None)
+    form.addField(Some('id),None)
+    form.addField(None, Some(new TextField))
+    form.addField(Some('id), Some(field))
+    
+    assert(1 === form.layout.components.size)
+    assert(Some(field) === form.field('id) )
+  }
+  
   private def assertSameFactory(expected: FormFieldFactory, result: Option[FormFieldFactory]) = {
     assert(result.isDefined, "No fieldfactory as result")
     assert(expected === result.get)

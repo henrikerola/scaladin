@@ -10,6 +10,7 @@ class Form(override val p: com.vaadin.ui.Form with FormMixin = new com.vaadin.ui
 
   //override default implementation with a wrapper
   formFieldFactory = DefaultFieldFactory
+  layout = new FormLayout
 
   def formFieldFactory: Option[FormFieldFactory] = wrapperFor[FormFieldFactory](p.getFormFieldFactory)
   def formFieldFactory_=(factory: FormFieldFactory) = p.setFormFieldFactory(factory.p)
@@ -20,6 +21,7 @@ class Form(override val p: com.vaadin.ui.Form with FormMixin = new com.vaadin.ui
   }
 
   def addField(propertyId: Any, field: Field): Unit = p.addField(propertyId, field.p)
+  def addField(propertyId: Option[Any], field: Option[Field]): Unit = p.addField(propertyId.getOrElse(null), field.map(_.p).getOrElse(null))
 
   def field(propertyId: Any): Option[Field] = wrapperFor[Field](p.getField(propertyId))
 
