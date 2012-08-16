@@ -18,20 +18,21 @@ object Item {
   def filterable(properties: Tuple2[Any, Any]*): FilterableItem = fill(new PropertysetItem with FilterableItem, properties: _*)
 
   def getProperties(item: Item): Iterable[Property[_]] = item.propertyIds.flatMap(item.property)
-  
+
   trait Viewer {
     def p: com.vaadin.data.Item.Viewer
 
-    def item: Option[Item] = p.getItemDataSource match {
-      case null => None
-      case i => Some(new BasicItem(i))
+    //make sure that the Item wrapper instance is the same (type) all the time
+    protected var itemWrapper: Option[Item] = None
+    protected def internalSetItem(optionWrap: Option[Item]): Unit = optionWrap match {
+      case Some(wrapper) => itemWrapper = optionWrap; p.setItemDataSource(wrapper.p)
+      case None => itemWrapper = None; p.setItemDataSource(null)
     }
 
-    def item_=(item: Item) = p.setItemDataSource(item.p)
-    def item_=(item: Option[Item]) = item match {
-      case Some(item) => p.setItemDataSource(item.p)
-      case None => p.setItemDataSource(null)
-    }
+    def item: Option[Item] = itemWrapper
+
+    def item_=(item: Item) = internalSetItem(Some(item))
+    def item_=(item: Option[Item]) = internalSetItem(item)
   }
 }
 

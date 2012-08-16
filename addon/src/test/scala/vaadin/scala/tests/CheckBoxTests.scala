@@ -16,7 +16,7 @@ class CheckBoxTests extends FunSuite {
     assert(checkBox.icon === None)
     assert(checkBox.p.getStyleName === "")
     assert(checkBox.enabled === true)
-    assert(checkBox.description === None)
+    assert(checkBox.description === Some(""))
   }
 
   test("value") {
