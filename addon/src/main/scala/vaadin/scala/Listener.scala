@@ -5,7 +5,7 @@ import vaadin.scala.internal.BlurListener
 import vaadin.scala.internal.FocusListener
 import vaadin.scala.internal.ExpandListener
 import vaadin.scala.internal.CollapseListener
-
+import vaadin.scala.internal.ValueChangeListener
 trait Listener {
   def action: Any
 
@@ -80,5 +80,16 @@ trait CollapseNotifier { self: { def p: { def getListeners(eventType: Class[_]):
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Tree.CollapseEvent])
     override def addListener(elem: CollapseEvent => Unit) = p.addListener(new CollapseListener(elem))
     override def removeListener(elem: CollapseListener) = p.removeListener(elem)
+  }
+}
+
+case class ValueChangeEvent(property: Property) extends Event
+
+trait ValueChangeNotifier { self: { def p: { def getListeners(eventType: Class[_]): java.util.Collection[_]; def addListener(l: com.vaadin.data.Property.ValueChangeListener); def removeListener(l: com.vaadin.data.Property.ValueChangeListener) } } =>
+
+  lazy val valueChangeListeners = new ListenersTrait[ValueChangeEvent, ValueChangeListener] {
+    override def listeners = p.getListeners(classOf[com.vaadin.data.Property.ValueChangeEvent])
+    override def addListener(elem: ValueChangeEvent => Unit) = p.addListener(new ValueChangeListener(elem))
+    override def removeListener(elem: ValueChangeListener) = p.removeListener(elem)
   }
 }

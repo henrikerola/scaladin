@@ -61,3 +61,7 @@ class UploadFailedListener(val action: Upload.FailedEvent => Unit) extends com.v
 class UploadSucceededListener(val action: Upload.SucceededEvent => Unit) extends com.vaadin.ui.Upload.SucceededListener with Listener {
   def uploadSucceeded(e: com.vaadin.ui.Upload.SucceededEvent) = action(Upload.SucceededEvent(wrapperFor[Upload](e.getUpload).get, e.getFilename, e.getMIMEType, e.getLength))
 }
+
+class ValueChangeListener(val action: ValueChangeEvent => Unit) extends com.vaadin.data.Property.ValueChangeListener with Listener {
+  def valueChange(e: com.vaadin.data.Property.ValueChangeEvent) = action(ValueChangeEvent(new BasicProperty(e.getProperty)))
+}

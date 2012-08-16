@@ -27,19 +27,13 @@ object Label {
   def apply(labelValue: String) = new Label { value = labelValue }
 }
 
-// TODO: implement interfaces
-class Label(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin.ui.Label with LabelMixin) extends AbstractComponent(p) with PropertyViewer {
-
-  // TODO: should we call value as content instead?
-  def value: Option[String] = Option(if (p.getValue() != null) p.getValue().toString else null)
-  def value_=(value: Option[String]): Unit = p.setValue(value.getOrElse(null))
-  def value_=(value: String): Unit = p.setValue(value)
-  def value_=(value: Node): Unit = p.setValue(value.toString)
+class Label(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin.ui.Label with LabelMixin) extends AbstractComponent(p) with PropertyViewer with Property with ValueChangeNotifier {
 
   def contentMode = Label.ContentMode(p.getContentMode)
   def contentMode_=(contentMode: Label.ContentMode.Value) = p.setContentMode(contentMode.id)
 
-  // TODO: valuechangelistener
-  // TODO: getType
+  //readOnly is inherited from Component and Property, needs override
+  override def readOnly: Boolean = p.isReadOnly
+  override def readOnly_=(readOnly: Boolean): Unit = p.setReadOnly(readOnly)
 }
 

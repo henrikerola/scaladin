@@ -42,8 +42,6 @@ trait PropertyEditor extends PropertyViewer {
   def p: com.vaadin.data.Property.Editor
 }
 
-case class ValueChangeEvent(property: Property)
-
 /**
  * Basic property wrapper, wraps any instance of com.vaadin.data.Property
  */
