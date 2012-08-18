@@ -52,7 +52,7 @@ abstract class Root extends com.vaadin.ui.Root { root =>
   def content_=(content: ComponentContainer) = setContent(content.p)
 
   def resizeLazy: Boolean = isResizeLazy
-  def resizeLazy(resizeLazy: Boolean): Unit = setResizeLazy(resizeLazy)
+  def resizeLazy_=(resizeLazy: Boolean): Unit = setResizeLazy(resizeLazy)
 
   // TODO: the same clickListeners can be found from Panel and Embedded, use a trait instead of copy-pasting? 
   lazy val clickListeners = new ListenersTrait[ClickEvent, ClickListener] {
