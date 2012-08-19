@@ -3,6 +3,7 @@ import Keys._
 import com.github.siasia.WebPlugin._
 import de.johoop.jacoco4sbt._
 import JacocoPlugin._
+import java.util.jar.{Attributes, Manifest}
 
 object BuildSettings {
   val buildOrganization = "vaadin.scala"
@@ -17,11 +18,11 @@ object BuildSettings {
     scalacOptions ++= Seq("-deprecation", "-unchecked", "-encoding", "UTF-8"),
     autoScalaLibrary := true)
 
-  var manifestAttributes = Seq(
-    Package.ManifestAttributes("Implementation-Title" -> buildName),
-    Package.ManifestAttributes("Implementation-Version" -> buildVersion),
-    Package.ManifestAttributes("Vaadin-Package-Version" -> "1"),
-    Package.ManifestAttributes("Vaadin-License-Title" -> "Apache License 2.0"))
+  val manifestAttributes = Seq(Package.ManifestAttributes(
+    ("Implementation-Title" -> buildName),
+    ("Implementation-Version" -> buildVersion),
+    ("Vaadin-Package-Version" -> "1"),
+    ("Vaadin-License-Title" -> "Apache License 2.0")))
 }
 
 object Dependencies {
@@ -42,18 +43,50 @@ object ScalaWrappersForVaadinBuild extends Build {
   import Dependencies._
   import BuildSettings._
 
-  val addonSettings = buildSettings ++ jacoco.settings ++ Seq(
+  lazy val addonSettings = buildSettings ++ jacoco.settings ++ Seq(
     name := buildName,
     libraryDependencies := Seq(vaadin, scalaTest, junitInterface, mockito),
     packageConfiguration in Compile in packageBin ~= { 
       (config: Package.Configuration) => new Package.Configuration(config.sources, config.jar, manifestAttributes) 
     },
-    unmanagedResourceDirectories in Compile <<= Seq(resourceDirectory in Compile, scalaSource in Compile).join)
+    unmanagedResourceDirectories in Compile <<= Seq(resourceDirectory in Compile, scalaSource in Compile).join,
+    dist)
 
-  val demoSettings = buildSettings ++ webSettings ++ Seq(
+  lazy val demoSettings = buildSettings ++ webSettings ++ Seq(
     name := buildName + "-demo",
     libraryDependencies := Seq(jetty))
 
   lazy val addon = Project("addon", file("addon"), settings = addonSettings)
   lazy val demo = Project("demo", file("demo"), settings = demoSettings) dependsOn (addon)
+  
+  val dist = TaskKey[Unit]("dist", "Produces a zip for Vaadin Directory") <<= {
+    (baseDirectory, target, packageBin in Compile, packageSrc in Compile) map { (base, target, addonBin, addonSrc) =>
+      IO.withTemporaryDirectory { tmpDir =>
+        
+        val metaInf = tmpDir / "META-INF"
+        IO.createDirectories(Seq(metaInf))
+
+        // Create a manifest file for zip, needed by Vaadin Directory
+        val manifest = new Manifest
+        val mainAttributes = manifest.getMainAttributes
+        // Manifest-Version is needed, see: http://bugs.sun.com/view_bug.do?bug_id=4271239
+        mainAttributes.put(Attributes.Name.MANIFEST_VERSION, "1.0")
+        mainAttributes.put(new Attributes.Name("Vaadin-Addon"), addonBin.getName)
+        manifestAttributes.foreach {
+          _.attributes.foreach { attr =>
+            mainAttributes.put(attr._1, attr._2)
+          }
+        }
+        val fos = new java.io.FileOutputStream(metaInf / "MANIFEST.MF");
+        manifest.write(fos)
+        fos.close()
+        
+        IO.copyFile(addonBin, tmpDir / addonBin.getName)
+        IO.copyFile(addonSrc, tmpDir / addonSrc.getName)
+            
+        val output = target / ("%s-%s.zip" format (buildName, buildVersion))
+        IO.zip((tmpDir ** (-DirectoryFilter)) x relativeTo(tmpDir), output)
+      }
+    }
+  }
 }
