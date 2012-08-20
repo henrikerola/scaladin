@@ -170,7 +170,7 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   test("closeShortcut") {
     val window = new Window
 
-    val clickShortcut = KeyShortcut(KeyCode.ENTER, KeyModifier.ALT);
+    val clickShortcut = KeyShortcut(KeyCode.Enter, KeyModifier.Alt);
 
     assert(window.closeShortcut === None)
 

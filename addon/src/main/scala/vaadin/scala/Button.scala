@@ -62,5 +62,5 @@ class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaa
 }
 
 class LinkButton(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin) extends Button(p) {
-  p.setStyleName(BaseTheme.BUTTON_LINK)
+  p.setStyleName(BaseTheme.ButtonLink)
 }

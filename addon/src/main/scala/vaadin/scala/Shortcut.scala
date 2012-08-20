@@ -6,34 +6,34 @@ case class KeyCode(value: Int)
 case class KeyModifier(value: Int)
 
 object KeyCode {
-  //FIXME: case correct
-  val ENTER = KeyCode(13)
+  
+  val Enter = KeyCode(13)
 
-  val ESCAPE = KeyCode(27)
+  val Escape = KeyCode(27)
 
-  val PAGE_UP = KeyCode(33)
+  val PageUp = KeyCode(33)
 
-  val PAGE_DOWN = KeyCode(34)
+  val PageDown = KeyCode(34)
 
-  val TAB = KeyCode(9)
+  val Tab = KeyCode(9)
 
-  val ARROW_LEFT = KeyCode(37)
+  val ArrowLeft = KeyCode(37)
 
-  val ARROW_UP = KeyCode(38)
+  val ArrowUp = KeyCode(38)
 
-  val ARROW_RIGHT = KeyCode(39)
+  val ArrowRight = KeyCode(39)
 
-  val ARROW_DOWN = KeyCode(40)
+  val ArrowDown = KeyCode(40)
 
-  val BACKSPACE = KeyCode(8)
+  val Backspace = KeyCode(8)
 
-  val DELETE = KeyCode(46)
+  val Delete = KeyCode(46)
 
-  val INSERT = KeyCode(45)
+  val Insert = KeyCode(45)
 
-  val END = KeyCode(35)
+  val End = KeyCode(35)
 
-  val HOME = KeyCode(36)
+  val Home = KeyCode(36)
 
   val F1 = KeyCode(112)
 
@@ -111,36 +111,35 @@ object KeyCode {
 
   val Z = KeyCode(90)
 
-  val NUM0 = KeyCode(48)
+  val Num0 = KeyCode(48)
 
-  val NUM1 = KeyCode(49)
+  val Num1 = KeyCode(49)
 
-  val NUM2 = KeyCode(50)
+  val Num2 = KeyCode(50)
 
-  val NUM3 = KeyCode(51)
+  val Num3 = KeyCode(51)
 
-  val NUM4 = KeyCode(52)
+  val Num4 = KeyCode(52)
 
-  val NUM5 = KeyCode(53)
+  val Num5 = KeyCode(53)
 
-  val NUM6 = KeyCode(54)
+  val Num6 = KeyCode(54)
 
-  val NUM7 = KeyCode(55)
+  val Num7 = KeyCode(55)
 
-  val NUM8 = KeyCode(56)
+  val Num8 = KeyCode(56)
 
-  val NUM9 = KeyCode(57)
+  val Num9 = KeyCode(57)
 
-  val SPACEBAR = KeyCode(32)
+  val Spacebar = KeyCode(32)
 }
 
 object KeyModifier {
-  //FIXME: case correct
-  val SHIFT = KeyModifier(16)
+  val Shift = KeyModifier(16)
 
-  val CTRL = KeyModifier(17)
+  val Ctrl = KeyModifier(17)
 
-  val ALT = KeyModifier(18)
+  val Alt = KeyModifier(18)
 
-  val META = KeyModifier(91)
+  val Meta = KeyModifier(91)
 }
