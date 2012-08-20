@@ -39,7 +39,7 @@ object Dependencies {
   val mockito = "org.mockito" % "mockito-all" % mockitoVersion % "test" 
 }
 
-object ScalaWrappersForVaadinBuild extends Build {
+object ScaladinBuild extends Build {
   import Dependencies._
   import BuildSettings._
 
