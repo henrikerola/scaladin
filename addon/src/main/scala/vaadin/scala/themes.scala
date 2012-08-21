@@ -4,57 +4,57 @@ object BaseTheme extends BaseTheme
 
 class BaseTheme {
 
-  val THEME_NAME = "base"
+  val ThemeName: String = "base"
 
-  val BUTTON_LINK: String = "link"
+  val ButtonLink: String = "link"
 
-  val PANEL_LIGHT: String = "light"
+  val PanelLight: String = "light"
 
-  val TREE_CONNECTORS: String = "connectors"
+  val TreeConnectors: String = "connectors"
 }
 
 object Reindeer extends Reindeer
 
 class Reindeer extends BaseTheme {
-  override val THEME_NAME: String = "reindeer"
+  override val ThemeName: String = "reindeer"
 
-  val LABEL_H1: String = "h1"
+  val LabelH1: String = "h1"
 
-  val LABEL_H2: String = "h2"
+  val LabelH2: String = "h2"
 
-  val LABEL_SMALL: String = "light"
+  val LabelSmall: String = "light"
 
-  val BUTTON_DEFAULT: String = "primary"
+  val ButtonDefault: String = "primary"
 
-  val BUTTON_SMALL: String = "small"
+  val ButtonSmall: String = "small"
 
-  val TEXTFIELD_SMALL: String = "small"
+  val TextfieldSmall: String = "small"
 
-  override val PANEL_LIGHT: String = "light"
+  override val PanelLight: String = "light"
 
-  val SPLITPANEL_SMALL: String = "small"
+  val SplitpanelSmall: String = "small"
 
-  val TABSHEET_BORDERLESS: String = "borderless"
+  val TabSheetBorderless: String = "borderless"
 
-  val TABSHEET_SMALL: String = "bar"
+  val TabSheetSmall: String = "bar"
 
-  val TABSHEET_MINIMAL: String = "minimal"
+  val TabSheetMinimal: String = "minimal"
 
-  val TABSHEET_HOVER_CLOSABLE: String = "hover-closable"
+  val TabSheetHoverClosable: String = "hover-closable"
 
-  val TABSHEET_SELECTED_CLOSABLE: String = "selected-closable"
+  val TabsheetSelectedClosable: String = "selected-closable"
 
-  val TABLE_BORDERLESS: String = "borderless"
+  val TableBorderless: String = "borderless"
 
-  val TABLE_STRONG: String = "strong"
+  val TableStrong: String = "strong"
 
-  val LAYOUT_WHITE: String = "white"
+  val LayoutWhite: String = "white"
 
-  val LAYOUT_BLUE: String = "blue"
+  val LayoutBlue: String = "blue"
 
-  val LAYOUT_BLACK: String = "black"
+  val LayoutBlack: String = "black"
 
-  val WINDOW_LIGHT: String = "light"
+  val WindowLight: String = "light"
 
-  val WINDOW_BLACK: String = "black"
+  val WindowBlack: String = "black"
 }
