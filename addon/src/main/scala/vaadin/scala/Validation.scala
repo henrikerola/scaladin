@@ -11,6 +11,16 @@ package mixins {
   trait ValidatableMixin extends ScaladinMixin
 }
 
+object Validation {
+  def exceptionToInvalid(e: com.vaadin.data.Validator.InvalidValueException): Validation = Invalid(e.getMessage :: e.getCauses().toList.map(_.getMessage))
+  def wrapToValidation(f: () => Unit): Validation = try {
+    f()
+    Valid //no exception -> valid
+  } catch {
+    case e: com.vaadin.data.Validator.InvalidValueException => exceptionToInvalid(e)
+  }
+}
+
 sealed abstract class Validation(val isValid: Boolean, val errorMessages: List[String] = List.empty) {
   def ::(other: Validation): Validation = (this, other) match {
     case (Valid, Valid) => Valid
@@ -54,12 +64,7 @@ trait Validatable extends Wrapper {
 
   lazy val validators: Validators = new Validators(p)
 
-  def validate: Validation = try {
-    p.validate
-    Valid //no exception -> valid
-  } catch {
-    case e: com.vaadin.data.Validator.InvalidValueException => Invalid(e.getMessage :: e.getCauses().toList.map(_.getMessage))
-  }
+  def validate: Validation = Validation.wrapToValidation(p.validate)
 }
 
 class ValidatorDelegator extends com.vaadin.data.Validator with ValidatorMixin {
@@ -67,7 +72,12 @@ class ValidatorDelegator extends com.vaadin.data.Validator with ValidatorMixin {
 
   def validate(value: Any): Unit = internalValidate(value) match {
     case Valid =>
-    case Invalid(reasons) => throw new com.vaadin.data.Validator.InvalidValueException(reasons.head, reasons.tail.map(new com.vaadin.data.Validator.InvalidValueException(_)).toArray)
+    case Invalid(reasons) => {
+      if (reasons.isEmpty)
+        throw new com.vaadin.data.Validator.InvalidValueException("")
+      else
+        throw new com.vaadin.data.Validator.InvalidValueException(reasons.head, reasons.tail.map(new com.vaadin.data.Validator.InvalidValueException(_)).toArray)
+    }
   }
 
   protected def internalValidate(value: Any): Validation = wrapper.asInstanceOf[Validator].validate(Option(value))
