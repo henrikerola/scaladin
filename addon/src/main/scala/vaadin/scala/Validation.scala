@@ -4,18 +4,27 @@ import vaadin.scala.mixins.ScaladinMixin
 import vaadin.scala.mixins.ValidatorMixin
 import vaadin.scala.mixins.ValidatableMixin
 import scala.collection.mutable
+import scala.collection.immutable.List
 
 package mixins {
   trait ValidatorMixin extends ScaladinMixin
   trait ValidatableMixin extends ScaladinMixin
 }
 
-abstract sealed class ValidationResult
-case object Valid extends ValidationResult
-case class Invalid(reason: String = "") extends ValidationResult
+sealed abstract class Validation(val isValid: Boolean, val errorMessages: List[String] = List.empty) {
+  def ::(other: Validation): Validation = (this, other) match {
+    case (Valid, Valid) => Valid
+    case (Invalid(reasons), Valid) => Invalid(reasons)
+    case (Valid, Invalid(reasons)) => Invalid(reasons)
+    case (Invalid(reasons1), Invalid(reasons2)) => Invalid(reasons1 ::: reasons2)
+  }
+}
+
+case object Valid extends Validation(true)
+case class Invalid(reasons: List[String]) extends Validation(false, reasons)
 
 object Validator {
-  def apply(validatorFunction: Option[Any] => ValidationResult): Validator = {
+  def apply(validatorFunction: Option[Any] => Validation): Validator = {
     new Validator() { def validate(value: Option[Any]) = validatorFunction(value) }
   }
 }
@@ -28,7 +37,7 @@ class Validators(p: com.vaadin.data.Validatable with ValidatableMixin) extends m
   def iterator(): Iterator[Validator] =
     p.getValidators.asScala.filter(_.isInstanceOf[ValidatorMixin]).map(_.asInstanceOf[ValidatorMixin].wrapper).map(_.asInstanceOf[Validator]).iterator
 
-  def +=(elem: Any => ValidationResult) = { p.addValidator(Validator(elem).p); this }
+  def +=(elem: Option[Any] => Validation) = { p.addValidator(Validator(elem).p); this }
   def +=(elem: Validator) = { p.addValidator(elem.p); this }
   def -=(elem: Validator) = {
     iterator.foreach { e =>
@@ -45,11 +54,11 @@ trait Validatable extends Wrapper {
 
   lazy val validators: Validators = new Validators(p)
 
-  def validate: ValidationResult = try {
+  def validate: Validation = try {
     p.validate
     Valid //no exception -> valid
   } catch {
-    case e: com.vaadin.data.Validator.InvalidValueException => Invalid(e.getMessage)
+    case e: com.vaadin.data.Validator.InvalidValueException => Invalid(e.getMessage :: e.getCauses().toList.map(_.getMessage))
   }
 }
 
@@ -58,13 +67,13 @@ class ValidatorDelegator extends com.vaadin.data.Validator with ValidatorMixin {
 
   def validate(value: Any): Unit = internalValidate(value) match {
     case Valid =>
-    case Invalid(message) => throw new com.vaadin.data.Validator.InvalidValueException(message)
+    case Invalid(reasons) => throw new com.vaadin.data.Validator.InvalidValueException(reasons.head, reasons.tail.map(new com.vaadin.data.Validator.InvalidValueException(_)).toArray)
   }
 
-  protected def internalValidate(value: Any): ValidationResult = wrapper.asInstanceOf[Validator].validate(Option(value))
+  protected def internalValidate(value: Any): Validation = wrapper.asInstanceOf[Validator].validate(Option(value))
 }
 
 trait Validator extends Wrapper {
   override val p: com.vaadin.data.Validator = new ValidatorDelegator { wrapper = Validator.this }
-  def validate(value: Option[Any]): ValidationResult
+  def validate(value: Option[Any]): Validation
 }
