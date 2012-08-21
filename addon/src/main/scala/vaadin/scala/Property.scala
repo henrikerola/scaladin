@@ -76,6 +76,6 @@ class FunctionProperty[T](getter: Unit => T, setter: T => Unit = null)(implicit 
   override def toString = "Value: " + value
 }
 
-class TextFileProperty(file: java.io.File) extends Property {
-  val p = new com.vaadin.data.util.TextFileProperty(file)
+class TextFileProperty(file: Option[java.io.File]) extends Property {
+  override val p: com.vaadin.data.util.TextFileProperty = new com.vaadin.data.util.TextFileProperty(file.getOrElse(null))
 }
