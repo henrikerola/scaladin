@@ -22,7 +22,7 @@ object TabSheet {
     def enabled_=(enabled: Boolean): Unit = p.setEnabled(enabled)
 
     def caption: Option[String] = Option(p.getCaption)
-    def caption_=(caption: Option[String]): Unit = p.setCaption(caption.getOrElse(null))
+    def caption_=(caption: Option[String]): Unit = p.setCaption(caption.orNull)
     def caption_=(caption: String): Unit = p.setCaption(caption)
 
     def icon: Option[Resource] = WrapperUtil.wrapperFor[Resource](p.getIcon)
@@ -30,7 +30,7 @@ object TabSheet {
     def icon_=(icon: Resource): Unit = if (icon == null) p.setIcon(null) else p.setIcon(icon.p)
 
     def description: Option[String] = Option(p.getDescription)
-    def description_=(description: Option[String]): Unit = p.setDescription(description.getOrElse(null))
+    def description_=(description: Option[String]): Unit = p.setDescription(description.orNull)
     def description_=(description: String): Unit = p.setDescription(description)
 
     // TODO: component error
@@ -38,7 +38,7 @@ object TabSheet {
     def component: Component = WrapperUtil.wrapperFor[Component](p.getComponent).get
 
     def styleName: Option[String] = Option(p.getStyleName)
-    def styleName_=(styleName: Option[String]): Unit = p.setStyleName(styleName.getOrElse(null))
+    def styleName_=(styleName: Option[String]): Unit = p.setStyleName(styleName.orNull)
     def styleName_=(styleName: String): Unit = p.setStyleName(styleName)
   }
 

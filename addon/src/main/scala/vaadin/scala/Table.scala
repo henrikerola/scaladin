@@ -19,7 +19,7 @@ package mixins {
    * or after upgrading to 2.10
    * { self: com.vaadin.ui.Table =>
    * override protected def formatPropertyValue(rowId: Any, colId: Any, property: com.vaadin.data.Property): String = wrapper.asInstanceOf[Table].propertyValueFormatter match {
-   *   case Some(formatter) => formatter(Table.FormatPropertyEvent(WrapperUtil.wrapperFor[Table](this).get, rowId, colId)).getOrElse(null)
+   *   case Some(formatter) => formatter(Table.FormatPropertyEvent(WrapperUtil.wrapperFor[Table](this).get, rowId, colId)).orNull
    *   case None => self.formatPropertyValue(rowId, colId, property)
    * }
    * }
@@ -105,11 +105,11 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def columnIcon(propertyId: Any, icon: Resource) = p.setColumnIcon(propertyId, icon.p)
 
   def columnHeader(propertyId: Any) = Option(p.getColumnHeader(propertyId))
-  def columnHeader(propertyId: Any, header: Option[String]) = p.setColumnHeader(propertyId, header.getOrElse(null))
+  def columnHeader(propertyId: Any, header: Option[String]) = p.setColumnHeader(propertyId, header.orNull)
   def columnHeader(propertyId: Any, header: String) = p.setColumnHeader(propertyId, header)
 
   def columnFooter(propertyId: Any) = Option(p.getColumnFooter(propertyId))
-  def columnFooter(propertyId: Any, footer: Option[String]) = p.setColumnFooter(propertyId, footer.getOrElse(null))
+  def columnFooter(propertyId: Any, footer: Option[String]) = p.setColumnFooter(propertyId, footer.orNull)
   def columnFooter(propertyId: Any, footer: String) = p.setColumnFooter(propertyId, footer)
 
   def columnAlignment(propertyId: Any) = Table.ColumnAlignment.withName(p.getColumnAlignment(propertyId))
@@ -143,7 +143,7 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def sortable_=(sortable: Boolean) = p.setSortDisabled(!sortable)
 
   def sortContainerPropertyId: Option[Any] = Option(p.getSortContainerPropertyId)
-  def sortContainerPropertyId_=(sortContainerPropertyId: Option[Any]) = p.setSortContainerPropertyId(sortContainerPropertyId.getOrElse(null))
+  def sortContainerPropertyId_=(sortContainerPropertyId: Option[Any]) = p.setSortContainerPropertyId(sortContainerPropertyId.orNull)
   def sortContainerPropertyId_=(sortContainerPropertyId: Any) = p.setSortContainerPropertyId(sortContainerPropertyId)
 
   def sortAscending = p.isSortAscending

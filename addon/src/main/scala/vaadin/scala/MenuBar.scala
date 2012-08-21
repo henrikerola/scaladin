@@ -71,7 +71,7 @@ object MenuBar {
     def enabled_=(enabled: Boolean) = p.setEnabled(enabled)
 
     def styleName = Option(p.getStyleName)
-    def styleName_=(styleName: Option[String]) = p.setStyleName(styleName.getOrElse(null))
+    def styleName_=(styleName: Option[String]) = p.setStyleName(styleName.orNull)
     def styleName_=(styleName: String) = p.setStyleName(styleName)
   }
 

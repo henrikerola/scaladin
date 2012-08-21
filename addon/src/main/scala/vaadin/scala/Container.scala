@@ -30,7 +30,7 @@ trait Container extends Wrapper {
 
   def removeAllItems(): Boolean = p.removeAllItems
 
-  def addContainerProperty(propertyId: Any, propertyType: Class[_], defaultValue: Option[Any] = None): Boolean = p.addContainerProperty(propertyId, propertyType, defaultValue.getOrElse(null))
+  def addContainerProperty(propertyId: Any, propertyType: Class[_], defaultValue: Option[Any] = None): Boolean = p.addContainerProperty(propertyId, propertyType, defaultValue.orNull)
 
   def removeContainerProperty(propertyId: Any): Boolean = p.removeContainerProperty(propertyId)
 

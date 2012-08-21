@@ -55,7 +55,7 @@ class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new c
 
   def alternateText: Option[String] = Option(p.getAlternateText)
   def alternateText_=(alternateText: String) = p.setAlternateText(alternateText)
-  def alternateText_=(alternateText: Option[String]) = p.setAlternateText(alternateText.getOrElse(null))
+  def alternateText_=(alternateText: Option[String]) = p.setAlternateText(alternateText.orNull)
 
   // TODO: better name than objectType?
   def objectType: Embedded.Type.Value = Embedded.Type(p.getType)
@@ -66,26 +66,26 @@ class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new c
   def source_=(source: Resource) = if (source == null) p.setSource(null) else p.setSource(source.p)
 
   def codebase: Option[String] = Option(p.getCodebase);
-  def codebase_=(codebase: Option[String]) = p.setCodebase(codebase.getOrElse(null))
+  def codebase_=(codebase: Option[String]) = p.setCodebase(codebase.orNull)
   def codebase_=(codebase: String) = p.setCodebase(codebase)
 
   def codetype: Option[String] = Option(p.getCodetype);
-  def codetype_=(codetype: Option[String]) = p.setCodetype(codetype.getOrElse(null))
+  def codetype_=(codetype: Option[String]) = p.setCodetype(codetype.orNull)
   def codetype_=(codetype: String) = p.setCodetype(codetype)
 
   def standby: Option[String] = Option(p.getStandby);
-  def standby_=(standby: Option[String]) = p.setStandby(standby.getOrElse(null))
+  def standby_=(standby: Option[String]) = p.setStandby(standby.orNull)
   def standby_=(standby: String) = p.setStandby(standby)
 
   def mimeType: Option[String] = Option(p.getMimeType);
-  def mimeType_=(mimeType: Option[String]) = p.setMimeType(mimeType.getOrElse(null))
+  def mimeType_=(mimeType: Option[String]) = p.setMimeType(mimeType.orNull)
   def mimeType_=(mimeType: String) = p.setMimeType(mimeType)
 
   def classId: Option[String] = Option(p.getClassId);
-  def classId_=(classId: Option[String]) = p.setClassId(classId.getOrElse(null))
+  def classId_=(classId: Option[String]) = p.setClassId(classId.orNull)
   def classId_=(classId: String) = p.setClassId(classId)
 
   def archive: Option[String] = Option(p.getArchive);
-  def archive_=(archive: Option[String]) = p.setArchive(archive.getOrElse(null))
+  def archive_=(archive: Option[String]) = p.setArchive(archive.orNull)
   def archive_=(archive: String) = p.setArchive(archive)
 }

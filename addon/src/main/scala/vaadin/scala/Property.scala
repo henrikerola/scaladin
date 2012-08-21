@@ -13,7 +13,7 @@ trait Property extends Wrapper {
   def p: com.vaadin.data.Property
 
   def value: Option[Any] = Option(p.getValue())
-  def value_=(value: Option[Any]): Unit = value_=(value.getOrElse(null))
+  def value_=(value: Option[Any]): Unit = value_=(value.orNull)
   def value_=(value: Any): Unit = p.setValue(value)
   def getType: Class[_] = p.getType()
   def readOnly: Boolean = p.isReadOnly()
@@ -77,5 +77,5 @@ class FunctionProperty[T](getter: Unit => T, setter: T => Unit = null)(implicit 
 }
 
 class TextFileProperty(file: Option[java.io.File]) extends Property {
-  override val p: com.vaadin.data.util.TextFileProperty = new com.vaadin.data.util.TextFileProperty(file.getOrElse(null))
+  override val p: com.vaadin.data.util.TextFileProperty = new com.vaadin.data.util.TextFileProperty(file.orNull)
 }

@@ -57,7 +57,7 @@ trait Component extends Wrapper {
   def readOnly_=(readOnly: Boolean) = p.setReadOnly(readOnly)
 
   def caption = Option(p.getCaption)
-  def caption_=(caption: Option[String]) = p.setCaption(caption.getOrElse(null))
+  def caption_=(caption: Option[String]) = p.setCaption(caption.orNull)
   def caption_=(caption: String) = p.setCaption(caption)
 
   def icon: Option[Resource] = wrapperFor[Resource](p.getIcon)
@@ -71,7 +71,7 @@ trait Component extends Wrapper {
   def locale = Option(p.getLocale)
 
   def id = Option(p.getDebugId())
-  def id_=(id: Option[String]) = p.setDebugId(id.getOrElse(null))
+  def id_=(id: Option[String]) = p.setDebugId(id.orNull)
   def id_=(id: String) = p.setDebugId(id)
 
   //override def toString = p.toString
@@ -89,7 +89,7 @@ abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with Abs
   p.wrapper = this
 
   def description = Option(p.getDescription)
-  def description_=(description: Option[String]) = p.setDescription(description.getOrElse(null))
+  def description_=(description: Option[String]) = p.setDescription(description.orNull)
   def description_=(description: String) = p.setDescription(description)
 
   def immediate = p.isImmediate();

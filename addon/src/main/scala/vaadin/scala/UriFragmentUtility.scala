@@ -24,11 +24,11 @@ object UriFragmentUtility {
 class UriFragmentUtility(override val p: com.vaadin.ui.UriFragmentUtility with UriFragmentUtilityMixin = new com.vaadin.ui.UriFragmentUtility with UriFragmentUtilityMixin) extends AbstractComponent(p) {
   
   def fragment = Option(p.getFragment)
-  def fragment_=(fragment: Option[String]) = p.setFragment(fragment.getOrElse(null))
+  def fragment_=(fragment: Option[String]) = p.setFragment(fragment.orNull)
   def fragment_=(fragment: String) = p.setFragment(fragment)
   
   def fragment(fragment: String, fireEvent: Boolean) = p.setFragment(fragment, fireEvent)
-  def fragment(fragment: Option[String], fireEvent: Boolean) = p.setFragment(fragment.getOrElse(null), fireEvent)
+  def fragment(fragment: Option[String], fireEvent: Boolean) = p.setFragment(fragment.orNull, fireEvent)
 
   lazy val fragmentChangedListeners = new ListenersTrait[UriFragmentUtility.FragmentChangedEvent, FragmentChangedListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.UriFragmentUtility#FragmentChangedEvent])

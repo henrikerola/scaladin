@@ -30,7 +30,7 @@ class Link(override val p: com.vaadin.ui.Link with LinkMixin = new com.vaadin.ui
   }*/
   
   def targetName = Option(p.getTargetName)
-  def targetName_=(targetName: Option[String]) = p.setTargetName(caption.getOrElse(null))
+  def targetName_=(targetName: Option[String]) = p.setTargetName(caption.orNull)
   def targetName_=(targetName: String) = p.setTargetName(targetName)
   
   def targetBorder = Link.TargetBorder(p.getTargetBorder)

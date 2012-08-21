@@ -8,7 +8,7 @@ package mixins {
     override def handleUnparsableDateString(dateString: String): java.util.Date = {
       // FIXME: asInstanceOf
       wrapper.asInstanceOf[DateField].unparsableDateStringHandler match {
-        case Some(handler) => handler(new DateField.UnparsableDateStringEvent(WrapperUtil.wrapperFor[DateField](this).get, dateString)).getOrElse(null)
+        case Some(handler) => handler(new DateField.UnparsableDateStringEvent(WrapperUtil.wrapperFor[DateField](this).get, dateString)).orNull
         case None => null
       }
     }
@@ -48,7 +48,7 @@ class DateField(override val p: com.vaadin.ui.DateField with DateFieldMixin = ne
   def resolution_=(resolution: DateField.Resolution.Value) = p.setResolution(resolution.id)
 
   def dateFormat = Option(p.getDateFormat)
-  def dateFormat_=(dateFormat: Option[String]) = p.setDateFormat(dateFormat.getOrElse(null))
+  def dateFormat_=(dateFormat: Option[String]) = p.setDateFormat(dateFormat.orNull)
   def dateFormat_=(dateFormat: String) = p.setDateFormat(dateFormat)
 
   def lenient = p.isLenient
@@ -58,11 +58,11 @@ class DateField(override val p: com.vaadin.ui.DateField with DateFieldMixin = ne
   def showISOWeekNumbers_=(showISOWeekNumbers: Boolean) = p.setShowISOWeekNumbers(showISOWeekNumbers)
 
   def parseErrorMessage = Option(p.getParseErrorMessage)
-  def parseErrorMessage_=(parseErrorMessage: Option[String]) = p.setParseErrorMessage(parseErrorMessage.getOrElse(null))
+  def parseErrorMessage_=(parseErrorMessage: Option[String]) = p.setParseErrorMessage(parseErrorMessage.orNull)
   def parseErrorMessage_=(parseErrorMessage: String) = p.setParseErrorMessage(parseErrorMessage)
 
   def timeZone = Option(p.getTimeZone)
-  def timeZone_=(timeZone: Option[java.util.TimeZone]) = p.setTimeZone(timeZone.getOrElse(null))
+  def timeZone_=(timeZone: Option[java.util.TimeZone]) = p.setTimeZone(timeZone.orNull)
   def timeZone_=(timeZone: java.util.TimeZone) = p.setTimeZone(timeZone)
 
 }

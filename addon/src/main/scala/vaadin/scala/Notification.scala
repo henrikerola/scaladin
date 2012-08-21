@@ -52,11 +52,11 @@ object Notification {
 class Notification(val p: com.vaadin.ui.Window.Notification = new com.vaadin.ui.Window.Notification(null)) extends Wrapper {
 
   def caption = Option(p.getCaption)
-  def caption_=(caption: Option[String]) = p.setCaption(caption.getOrElse(null))
+  def caption_=(caption: Option[String]) = p.setCaption(caption.orNull)
   def caption_=(caption: String) = p.setCaption(caption)
 
   def description = Option(p.getDescription)
-  def description_=(description: Option[String]) = p.setDescription(description.getOrElse(null))
+  def description_=(description: Option[String]) = p.setDescription(description.orNull)
   def description_=(description: String) = p.setDescription(description)
 
   def position = Notification.Position(p.getPosition)
@@ -70,7 +70,7 @@ class Notification(val p: com.vaadin.ui.Window.Notification = new com.vaadin.ui.
   def delayMsec_=(delayMsec: Int) = p.setDelayMsec(delayMsec)
 
   def styleName = Option(p.getStyleName)
-  def styleName_=(styleName: Option[String]) = p.setStyleName(styleName.getOrElse(null))
+  def styleName_=(styleName: Option[String]) = p.setStyleName(styleName.orNull)
   def styleName_=(styleName: String) = p.setStyleName(styleName)
 
   def htmlContentAllowed = p.isHtmlContentAllowed

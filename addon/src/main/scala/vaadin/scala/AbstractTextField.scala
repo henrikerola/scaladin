@@ -23,7 +23,7 @@ abstract class AbstractTextField(override val p: com.vaadin.ui.AbstractTextField
   extends AbstractField(p) with BlurNotifier with FocusNotifier {
 
   def prompt: Option[String] = Option(p.getInputPrompt)
-  def prompt_=(prompt: Option[String]) = p.setInputPrompt(prompt.getOrElse(null))
+  def prompt_=(prompt: Option[String]) = p.setInputPrompt(prompt.orNull)
   def prompt_=(prompt: String) = p.setInputPrompt(prompt)
 
   def nullRepresentation = p.getNullRepresentation

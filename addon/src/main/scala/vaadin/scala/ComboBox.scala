@@ -20,7 +20,7 @@ class ComboBox(override val p: com.vaadin.ui.ComboBox with ComboBoxMixin = new c
   extends AbstractSelect(p) with BlurNotifier with FocusNotifier {
 
   def inputPrompt: Option[String] = Option(p.getInputPrompt)
-  def inputPrompt_=(inputPrompt: Option[String]) = p.setInputPrompt(inputPrompt.getOrElse(null))
+  def inputPrompt_=(inputPrompt: Option[String]) = p.setInputPrompt(inputPrompt.orNull)
   def inputPrompt_=(inputPrompt: String) = p.setInputPrompt(inputPrompt)
 
   def textInputAllowed = p.isTextInputAllowed

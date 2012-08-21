@@ -19,14 +19,14 @@ trait Field extends Component with BufferedValidatable with Property with Focusa
 
   def description: Option[String] = Option(p.getDescription)
   def description_=(description: String): Unit = p.setDescription(description)
-  def description_=(description: Option[String]): Unit = p.setDescription(description.getOrElse(null))
+  def description_=(description: Option[String]): Unit = p.setDescription(description.orNull)
 
   def required: Boolean = p.isRequired
   def required_=(required: Boolean): Unit = p.setRequired(required)
 
   def requiredError: Option[String] = Option(p.getRequiredError)
   def requiredError_=(requiredError: String): Unit = p.setRequiredError(requiredError)
-  def requiredError_=(requiredError: Option[String]): Unit = p.setRequiredError(requiredError.getOrElse(null))
+  def requiredError_=(requiredError: Option[String]): Unit = p.setRequiredError(requiredError.orNull)
 }
 
 abstract class AbstractField(override val p: com.vaadin.ui.AbstractField with AbstractFieldMixin) extends AbstractComponent(p) with Field with PropertyViewer with Focusable with ValueChangeNotifier {
@@ -34,7 +34,7 @@ abstract class AbstractField(override val p: com.vaadin.ui.AbstractField with Ab
   //description is inherited from AbstractComponent and Field, needs override
   override def description: Option[String] = Option(p.getDescription)
   override def description_=(description: String): Unit = p.setDescription(description)
-  override def description_=(description: Option[String]): Unit = p.setDescription(description.getOrElse(null))
+  override def description_=(description: Option[String]): Unit = p.setDescription(description.orNull)
 
 }
 

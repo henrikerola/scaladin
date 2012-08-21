@@ -9,7 +9,7 @@ package mixins {
   trait CssLayoutMixin extends AbstractLayoutMixin { self: com.vaadin.ui.CssLayout =>
     override def getCss(c: com.vaadin.ui.Component): String = {
       // FIXME asInstanceOf
-      wrapper.asInstanceOf[CssLayout].css(WrapperUtil.wrapperFor[Component](c).get).getOrElse(null)
+      wrapper.asInstanceOf[CssLayout].css(WrapperUtil.wrapperFor[Component](c).get).orNull
     }
   }
 }

@@ -62,7 +62,7 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
   override def parent: Option[Window] = wrapperFor[Window](p.getParent)
 
   def theme: Option[String] = Option(p.getTheme)
-  def theme_=(theme: Option[String]) = p.setTheme(theme.getOrElse(null))
+  def theme_=(theme: Option[String]) = p.setTheme(theme.orNull)
   def theme_=(theme: String) = p.setTheme(theme)
 
   def center() = p.center()
@@ -77,7 +77,7 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
   def draggable: Boolean = p.isDraggable
 
   def name: Option[String] = Option(p.getName)
-  def name_=(name: Option[String]) = p.setName(name.getOrElse(null))
+  def name_=(name: Option[String]) = p.setName(name.orNull)
   def name_=(name: String) = p.setName(name)
 
   def scrollIntoView(component: Component) = p.scrollIntoView(component.p)

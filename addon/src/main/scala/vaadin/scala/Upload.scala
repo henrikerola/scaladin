@@ -50,7 +50,7 @@ class Upload(override val p: com.vaadin.ui.Upload with UploadMixin = new com.vaa
   def uploadSize: Long = p.getUploadSize
 
   def buttonCaption = Option(p.getButtonCaption)
-  def buttonCaption_=(buttonCaption: Option[String]) = p.setButtonCaption(buttonCaption.getOrElse(null))
+  def buttonCaption_=(buttonCaption: Option[String]) = p.setButtonCaption(buttonCaption.orNull)
   def buttonCaption_=(buttonCaption: String) = p.setButtonCaption(buttonCaption)
 
   def submitUpload() = p.submitUpload()
