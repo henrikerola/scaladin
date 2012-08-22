@@ -10,7 +10,7 @@ import org.mockito.Mockito._
 import scala.reflect.BeanProperty
 
 @RunWith(classOf[JUnitRunner])
-class FormTests extends FunSuite with BeforeAndAfter with MockitoSugar {
+class FormTest extends FunSuite with BeforeAndAfter with MockitoSugar {
 
   var form: Form = _
 
@@ -113,7 +113,7 @@ class FormTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   test("commit") {
     assert(form.commit.isValid)
 
-    val field = new TextField { value = 'value }
+    val field = new TextField { value = "value" }
     field.validators += (_ => Valid)
     form.addField('id, field)
     assert(form.commit.isValid)

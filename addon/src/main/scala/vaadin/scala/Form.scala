@@ -22,7 +22,7 @@ class Form(override val p: com.vaadin.ui.Form with FormMixin = new com.vaadin.ui
   }
 
   def addField(propertyId: Any, field: Field[_]): Unit = p.addField(propertyId, field.p)
-  def addField(propertyId: Option[Any], field: Option[Field][_]): Unit = p.addField(propertyId.orNull, field.map(_.p).orNull)
+  def addField(propertyId: Option[Any], field: Option[Field[_]]): Unit = p.addField(propertyId.orNull, field.map(_.p).orNull)
 
   def field(propertyId: Any): Option[Field[_]] = wrapperFor[Field[_]](p.getField(propertyId))
 

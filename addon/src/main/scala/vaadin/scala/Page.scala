@@ -26,21 +26,21 @@ trait Page extends Wrapper { page =>
   def fragment: Option[String] = Option(p.getFragment)
   def fragment_=(fragment: String) = p.setFragment(fragment)
 
-  def webBrowser: WebBrowser = new WebBrowser {
-    val p = page.p.getWebBrowser
-  }
+//  def webBrowser: WebBrowser = new WebBrowser {
+//    val p = page.p.getWebBrowser
+//  }
 
   // setBrowserWindowSize
 
   def browserWindowHeight: Int = p.getBrowserWindowHeight
-  def browserWindowHeight_=(browserWindowHeight: Int): Unit = p.setBrowserWindowSize(null, browserWindowHeight)
+  def browserWindowHeight_=(browserWindowHeight: Int): Unit = p.setBrowserWindowSize(browserWindowWidth, browserWindowHeight)
 
   def browserWindowWidth: Int = p.getBrowserWindowWidth
-  def browserWindowWidth_=(browserWindowWidth: Int): Unit = p.setBrowserWindowSize(browserWindowWidth, null)
+  def browserWindowWidth_=(browserWindowWidth: Int): Unit = p.setBrowserWindowSize(browserWindowWidth, browserWindowHeight)
 
-  def javaScript: JavaScript = new JavaScript {
-    val p = page.p.getJavaScript
-  }
+//  def javaScript: JavaScript = new JavaScript {
+//    val p = page.p.getJavaScript
+//  }
 
   def open(resource: Resource): Unit = p.open(resource.p)
 

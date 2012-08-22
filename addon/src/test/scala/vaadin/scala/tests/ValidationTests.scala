@@ -28,23 +28,23 @@ class ValidationTests extends FunSuite with MockitoSugar {
   test("add function as validator") {
     val field = new TextField
     field.validators += (_ => Invalid(List("reason")))
-    field.value = 'test
+    field.value = "test"
     assert(Invalid(List("reason")) === field.validate)
   }
 
   test("validator gets correct value") {
     var called = false
     val field = new TextField
-    val testValidator = Validator(value => { called = true; assert(Some('test) === value); Valid })
+    val testValidator = Validator(value => { called = true; assert(Some("test") === value); Valid })
     field.validators += testValidator
-    field.value = 'test
+    field.value = "test"
     field.validate
     assert(called, "Validator was never called")
   }
 
   test("ValidationResult isValid") {
     val field = new TextField
-    field.value = 'test
+    field.value = "test"
 
     field.validators += validValidator
 
@@ -57,11 +57,11 @@ class ValidationTests extends FunSuite with MockitoSugar {
 
   test("Validation chaining") {
     val field1 = new TextField
-    field1.value = 'test
+    field1.value = "test"
     field1.validators += validValidator
 
     val field2 = new TextField
-    field2.value = 'test
+    field2.value = "test"
     field2.validators += invalidValidator
 
     assert(field1.validate :: field1.validate === Valid)
