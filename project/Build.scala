@@ -8,7 +8,7 @@ import java.util.jar.{Attributes, Manifest}
 object BuildSettings {
   val buildOrganization = "vaadin.scala"
   val buildName = "Scaladin"
-  val buildVersion = "2.0.0"
+  val buildVersion = "2.1.0-SNAPSHOT"
   val buildScalaVersion = "2.9.2"
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
