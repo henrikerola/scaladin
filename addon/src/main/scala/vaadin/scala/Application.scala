@@ -3,7 +3,7 @@ package vaadin.scala
 import scala.collection.mutable
 import vaadin.scala.internal.WrapperUtil
 
-abstract class Application(title: String = "", applicationTheme: String = com.vaadin.ui.themes.Reindeer.THEME_NAME) extends com.vaadin.Application {
+abstract class Application(title: String = "", applicationTheme: String = Reindeer.ThemeName) extends com.vaadin.Application {
 
   def init(): Unit = {
     mainWindow = new Window { caption = Some(title) }
