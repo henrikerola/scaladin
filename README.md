@@ -1,6 +1,6 @@
 Scaladin (formerly known as scala-wrappers) tries to make easier to use [Vaadin Framework](https://vaadin.com) with [Scala](http://www.scala-lang.org/) programming language. The JAR file and a Maven dependency can be found from the [Vaadin Directory](http://vaadin.com/addon/scaladin).
 
-[![Build Status](https://secure.travis-ci.org/henrikerola/scaladin.png?branch=2.0)](http://travis-ci.org/henrikerola/scaladin)
+[![Build Status](https://secure.travis-ci.org/henrikerola/scaladin.png?branch=2.1)](http://travis-ci.org/henrikerola/scaladin)
 ## How to use it?
 
 Take a look at the [wiki](https://github.com/henrikerola/scaladin/wiki).
