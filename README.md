@@ -21,6 +21,18 @@ The following listing shows what Scaladin code looks like:
       }
     }
 
+The easiest way to test Scaladin is to use Risto's [giter8 template](https://github.com/ripla/vaadin-scala.g8) that generates a sbt project:
+
+    > g8 ripla/vaadin-scala
+    <answer questions, enter for defaults>
+    > cd <project dir>
+    > sbt container:start ~aux-compile
+
+After the above commands you have a working Scaladin application running on http://localhost:8080. You can even edit the generated Application class and changes are affected to the browser. In order to import your project into Eclipse, you have to say:
+
+    > sbt eclipse
+
+That generates needed Eclipse configuration files into the project.
 
 ## Authors
 
