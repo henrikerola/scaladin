@@ -73,3 +73,7 @@ class SplitterClickListener(val action: AbstractSplitPanel.SplitterClickEvent =>
 class ButtonClickListener(val action: Button.ClickEvent => Unit) extends com.vaadin.ui.Button.ClickListener with Listener {
   def buttonClick(e: com.vaadin.ui.Button#ClickEvent) = action(Button.ClickEvent(wrapperFor[Button](e.getButton()).get, e.getClientX(), e.getClientY(), e.getRelativeX(), e.getRelativeY(), e.isAltKey(), e.isCtrlKey(), e.isMetaKey(), e.isShiftKey()))
 }
+
+class TextChangeListener(val action: AbstractTextField.TextChangeEvent => Unit) extends com.vaadin.event.FieldEvents.TextChangeListener with Listener {
+  def textChange(e: com.vaadin.event.FieldEvents.TextChangeEvent) = action(AbstractTextField.TextChangeEvent(wrapperFor[AbstractTextField](e.getComponent).get, e.getText, e.getCursorPosition))
+}

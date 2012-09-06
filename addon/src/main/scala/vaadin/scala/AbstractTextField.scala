@@ -1,7 +1,7 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.AbstractTextFieldMixin
-import vaadin.scala.listeners.TextChangeListener
+import vaadin.scala.internal.TextChangeListener
 import com.vaadin.event.FieldEvents
 
 package mixins {
@@ -56,11 +56,5 @@ abstract class AbstractTextField(override val p: com.vaadin.ui.AbstractTextField
     override def listeners = p.getListeners(classOf[com.vaadin.event.FieldEvents.TextChangeEvent])
     override def addListener(elem: AbstractTextField.TextChangeEvent => Unit) = p.addListener(new TextChangeListener(elem))
     override def removeListener(elem: TextChangeListener) = p.removeListener(elem)
-  }
-}
-
-package listeners {
-  class TextChangeListener(val action: AbstractTextField.TextChangeEvent => Unit) extends com.vaadin.event.FieldEvents.TextChangeListener with Listener {
-    def textChange(e: com.vaadin.event.FieldEvents.TextChangeEvent) = action(AbstractTextField.TextChangeEvent(wrapperFor[AbstractTextField](e.getComponent).get, e.getText, e.getCursorPosition))
   }
 }
