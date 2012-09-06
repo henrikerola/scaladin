@@ -58,8 +58,8 @@ class AbstractSplitPanelTests extends FunSuite {
     assert(Some(splitPanel.maxSplitPosition) === (100 pct))
   }
 
-  val splitClickListener1 = (e: SplitterClickEvent) => println(e.component)
-  val splitClickListener2 = (e: SplitterClickEvent) => println
+  val splitClickListener1 = { e: AbstractSplitPanel.SplitterClickEvent => println(e.component) }
+  val splitClickListener2 = { e: AbstractSplitPanel.SplitterClickEvent => println }
 
   test("splitterClickListeners, add and remove of listeners") {
     val splitPanel = new VerticalSplitPanel

@@ -65,3 +65,7 @@ class UploadSucceededListener(val action: Upload.SucceededEvent => Unit) extends
 class ValueChangeListener(val action: ValueChangeEvent => Unit) extends com.vaadin.data.Property.ValueChangeListener with Listener {
   def valueChange(e: com.vaadin.data.Property.ValueChangeEvent) = action(ValueChangeEvent(new BasicProperty(e.getProperty)))
 }
+
+class SplitterClickListener(val action: AbstractSplitPanel.SplitterClickEvent => Unit) extends com.vaadin.ui.AbstractSplitPanel.SplitterClickListener with Listener {
+  def splitterClick(e: com.vaadin.ui.AbstractSplitPanel#SplitterClickEvent) = action(AbstractSplitPanel.SplitterClickEvent(wrapperFor[AbstractSplitPanel](e.getComponent()).get, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
+}
