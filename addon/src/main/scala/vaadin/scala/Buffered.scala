@@ -16,11 +16,8 @@ trait Buffered extends Wrapper {
 
   def discard(): Unit = p.discard()
 
-  def writeThrough: Boolean = p.isWriteThrough
-  def writeThrough_=(writeThrough: Boolean) = p.setWriteThrough(writeThrough)
-
-  def readThrough: Boolean = p.isReadThrough
-  def readThrough_=(readThrough: Boolean) = p.setReadThrough(readThrough)
+  def buffered: Boolean = p.isBuffered
+  def buffered_=(buffered: Boolean) = p.setBuffered(buffered)
 
   def modified(): Boolean = p.isModified
 

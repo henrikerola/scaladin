@@ -13,7 +13,7 @@ class AbstractSplitPanelTests extends FunSuite {
 
     assert(splitPanel.splitPosition === Measure(50, Units.pct))
     assert(splitPanel.p.getSplitPosition === 50)
-    assert(splitPanel.p.getSplitPositionUnit() === com.vaadin.terminal.Sizeable.UNITS_PERCENTAGE)
+    assert(splitPanel.p.getSplitPositionUnit() === com.vaadin.server.Sizeable.UNITS_PERCENTAGE)
   }
 
   test("set splitPosition to 100px") {
@@ -22,7 +22,7 @@ class AbstractSplitPanelTests extends FunSuite {
     splitPanel.splitPosition = 100 px;
     assert(splitPanel.splitPosition === Measure(100, Units.px))
     assert(splitPanel.p.getSplitPosition === 100)
-    assert(splitPanel.p.getSplitPositionUnit() === com.vaadin.terminal.Sizeable.UNITS_PIXELS)
+    assert(splitPanel.p.getSplitPositionUnit() === com.vaadin.server.Sizeable.UNITS_PIXELS)
   }
 
   test("set splitPosition to None") {
@@ -31,7 +31,7 @@ class AbstractSplitPanelTests extends FunSuite {
     splitPanel.splitPosition = None;
     assert(splitPanel.splitPosition === Measure(50, Units.pct))
     assert(splitPanel.p.getSplitPosition === 50)
-    assert(splitPanel.p.getSplitPositionUnit() === com.vaadin.terminal.Sizeable.UNITS_PERCENTAGE)
+    assert(splitPanel.p.getSplitPositionUnit() === com.vaadin.server.Sizeable.UNITS_PERCENTAGE)
   }
 
   test("minSplitPosition") {

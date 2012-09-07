@@ -2,7 +2,6 @@ package vaadin.scala.tests
 
 import org.scalatest.FunSuite
 import vaadin.scala._
-import com.vaadin.terminal.Sizeable
 import org.scalatest.BeforeAndAfter
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner

@@ -3,22 +3,24 @@ package vaadin.scala
 object Notification {
 
   object Type extends Enumeration {
-    import com.vaadin.ui.Notification._
-    val Humanized = Value(TYPE_HUMANIZED_MESSAGE)
-    val Warning = Value(TYPE_WARNING_MESSAGE)
-    val Error = Value(TYPE_ERROR_MESSAGE)
-    val Tray = Value(TYPE_TRAY_NOTIFICATION)
+    import com.vaadin.ui.Notification.Type._
+    val Humanized = Value(HUMANIZED_MESSAGE.ordinal)
+    val Warning = Value(WARNING_MESSAGE.ordinal)
+    val Error = Value(ERROR_MESSAGE.ordinal)
+    val Tray = Value(TRAY_NOTIFICATION.ordinal)
   }
 
   object Position extends Enumeration {
-    import com.vaadin.ui.Notification._
-    val Centered = Value(POSITION_CENTERED)
-    val CenteredTop = Value(POSITION_CENTERED_TOP)
-    val CenteredBottom = Value(POSITION_CENTERED_BOTTOM)
-    val TopLeft = Value(POSITION_TOP_LEFT)
-    val TopRight = Value(POSITION_TOP_RIGHT)
-    val BottomLeft = Value(POSITION_BOTTOM_LEFT)
-    val BottomRight = Value(POSITION_BOTTOM_RIGHT)
+    import com.vaadin.shared.Position._
+    val TopLeft = Value(TOP_LEFT.ordinal)
+    val TopCenter = Value(TOP_CENTER.ordinal)
+    val TopRight = Value(TOP_RIGHT.ordinal)
+    val MiddleLeft = Value(MIDDLE_LEFT.ordinal)
+    val MiddleCenter = Value(MIDDLE_CENTER.ordinal)
+    val MiddleRight = Value(MIDDLE_RIGHT.ordinal)
+    val BottomLeft = Value(BOTTOM_LEFT.ordinal)
+    val BottomCenter = Value(BOTTOM_CENTER.ordinal)
+    val BottomRight = Value(BOTTOM_RIGHT.ordinal)
   }
 
   // TODO: Delay constants
@@ -28,7 +30,7 @@ object Notification {
   }
 
   def apply(caption: String, notificationType: Notification.Type.Value): Notification = {
-    new Notification(new com.vaadin.ui.Notification(caption, notificationType.id))
+    new Notification(new com.vaadin.ui.Notification(caption, com.vaadin.ui.Notification.Type.values.apply(notificationType.id)))
   }
 
   def apply(caption: String, description: String): Notification = {
@@ -36,15 +38,15 @@ object Notification {
   }
 
   def apply(caption: String, description: String, notificationType: Notification.Type.Value): Notification = {
-    new Notification(new com.vaadin.ui.Notification(caption, description, notificationType.id))
+    new Notification(new com.vaadin.ui.Notification(caption, description, com.vaadin.ui.Notification.Type.values.apply(notificationType.id)))
   }
 
   def apply(caption: String, description: String, notificationType: Notification.Type.Value, htmlContentAllowed: Boolean): Notification = {
-    new Notification(new com.vaadin.ui.Notification(caption, description, notificationType.id, htmlContentAllowed))
+    new Notification(new com.vaadin.ui.Notification(caption, description, com.vaadin.ui.Notification.Type.values.apply(notificationType.id), htmlContentAllowed))
   }
 
-  def show(caption: String) =  com.vaadin.ui.Notification.show(caption)
-  def show(caption: String, notificationType: Notification.Type.Value) = com.vaadin.ui.Notification.show(caption, notificationType.id)
+  def show(caption: String) = com.vaadin.ui.Notification.show(caption)
+  def show(caption: String, notificationType: Notification.Type.Value) = com.vaadin.ui.Notification.show(caption, com.vaadin.ui.Notification.Type.values.apply(notificationType.id))
 
 }
 
@@ -62,8 +64,8 @@ class Notification(val p: com.vaadin.ui.Notification = new com.vaadin.ui.Notific
   def description_=(description: Option[String]) = p.setDescription(description.orNull)
   def description_=(description: String) = p.setDescription(description)
 
-  def position = Notification.Position(p.getPosition)
-  def position_=(position: Notification.Position.Value) = p.setPosition(position.id)
+  def position = Notification.Position(p.getPosition.ordinal)
+  def position_=(position: Notification.Position.Value) = p.setPosition(com.vaadin.shared.Position.values.apply(position.id))
 
   def icon: Option[Resource] = wrapperFor[Resource](p.getIcon)
   def icon_=(icon: Option[Resource]) = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
@@ -78,7 +80,7 @@ class Notification(val p: com.vaadin.ui.Notification = new com.vaadin.ui.Notific
 
   def htmlContentAllowed = p.isHtmlContentAllowed
   def htmlContentAllowed_=(htmlContentAllowed: Boolean) = p.setHtmlContentAllowed(htmlContentAllowed)
-  
-  def show(page: com.vaadin.terminal.Page) = p.show(page)
+
+  def show(page: com.vaadin.server.Page) = p.show(page)
 
 }

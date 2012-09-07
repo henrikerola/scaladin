@@ -73,9 +73,9 @@ class TreeTests extends FunSuite with BeforeAndAfter with MockitoSugar {
       }
     }
     
-    assert(tree.p.getItemStyleGenerator.getStyle("test1") === "test1")
-    assert(tree.p.getItemStyleGenerator.getStyle("test2") === null)
-    assert(tree.p.getItemStyleGenerator.getStyle(null) === null)
+    assert(tree.p.getItemStyleGenerator.getStyle(tree.p, "test1") === "test1")
+    assert(tree.p.getItemStyleGenerator.getStyle(tree.p, "test2") === null)
+    assert(tree.p.getItemStyleGenerator.getStyle(tree.p, null) === null)
   }
 
 }

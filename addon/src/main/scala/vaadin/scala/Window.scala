@@ -7,8 +7,8 @@ package mixins {
   trait WindowMixin extends PanelMixin
 }
 
-class WindowCloseListener(action: com.vaadin.ui.Window#CloseEvent => Unit) extends com.vaadin.ui.Window.CloseListener {
-  def windowClose(event: com.vaadin.ui.Window#CloseEvent) { action(event) }
+class WindowCloseListener(action: com.vaadin.ui.Window.CloseEvent => Unit) extends com.vaadin.ui.Window.CloseListener {
+  def windowClose(event: com.vaadin.ui.Window.CloseEvent) { action(event) }
 }
 
 object Window {

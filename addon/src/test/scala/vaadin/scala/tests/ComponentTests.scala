@@ -1,7 +1,6 @@
 package vaadin.scala.tests
 
 import org.scalatest.FunSuite
-import com.vaadin.terminal.Sizeable
 import vaadin.scala._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -26,21 +25,21 @@ class ComponentTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   }
 
   test("id") {
-    Mockito.when(mockedVaadinComponent.getDebugId).thenReturn("test-id")
+    Mockito.when(mockedVaadinComponent.getId).thenReturn("test-id")
     assert(component.id === Some("test-id"))
-    Mockito.verify(mockedVaadinComponent).getDebugId
+    Mockito.verify(mockedVaadinComponent).getId
 
     Mockito.reset(mockedVaadinComponent)
 
-    Mockito.when(mockedVaadinComponent.getDebugId).thenReturn(null)
+    Mockito.when(mockedVaadinComponent.getId).thenReturn(null)
     assert(component.id === None)
-    Mockito.verify(mockedVaadinComponent).getDebugId
+    Mockito.verify(mockedVaadinComponent).getId
 
     component.id = None
-    Mockito.verify(mockedVaadinComponent).setDebugId(null)
+    Mockito.verify(mockedVaadinComponent).setId(null)
 
-    component.id = "myDebugId"
-    Mockito.verify(mockedVaadinComponent).setDebugId("myDebugId")
+    component.id = "myId"
+    Mockito.verify(mockedVaadinComponent).setId("myId")
   }
 
   ignore("requestRepaint()") {

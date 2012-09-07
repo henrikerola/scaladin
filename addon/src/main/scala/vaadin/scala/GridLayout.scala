@@ -12,7 +12,7 @@ object GridLayout {
 }
 
 class GridLayout(override val p: com.vaadin.ui.GridLayout with GridLayoutMixin = new com.vaadin.ui.GridLayout with GridLayoutMixin)
-    extends AbstractLayout(p) with SpacingHandler with AlignmentHandler with LayoutClickNotifier {
+    extends AbstractLayout(p) with SpacingHandler with AlignmentHandler with MarginHandler with LayoutClickNotifier {
 
   def add[C <: Component](component: C = null, col: Int = -1, row: Int = -1, col2: Int = -1, row2: Int = -1, alignment: Alignment.Value = null): C = {
     if (col >= 0 && row >= 0)

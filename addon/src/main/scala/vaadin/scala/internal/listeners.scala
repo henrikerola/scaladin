@@ -35,7 +35,7 @@ class ColumnResizeListener(val action: Table.ColumnResizeEvent => Unit) extends 
 }
 
 class SelectedTabChangeListener(val action: TabSheet.SelectedTabChangeEvent => Unit) extends com.vaadin.ui.TabSheet.SelectedTabChangeListener with Listener {
-  def selectedTabChange(e: com.vaadin.ui.TabSheet#SelectedTabChangeEvent) = action(TabSheet.SelectedTabChangeEvent(wrapperFor[TabSheet](e.getTabSheet).get))
+  def selectedTabChange(e: com.vaadin.ui.TabSheet.SelectedTabChangeEvent) = action(TabSheet.SelectedTabChangeEvent(wrapperFor[TabSheet](e.getTabSheet).get))
 }
 
 class UploadReceiver(val receiver: Upload.ReceiveEvent => java.io.OutputStream) extends com.vaadin.ui.Upload.Receiver {

@@ -62,7 +62,7 @@ object Table {
   case class ColumnResizeEvent(component: Component, propertyId: Any, previousWidth: Int, currentWidth: Int) extends Event
   case class ColumnReorderEvent(component: Component) extends Event
   case class ColumnGenerationEvent(table: Table, itemId: Any, propertyId: Any) extends Event
-  case class CellStyleGenerationEvent(itemId: Any, propertyId: Any) extends Event
+  case class CellStyleGenerationEvent(table: Table, itemId: Any, propertyId: Any) extends Event
   case class FormatPropertyEvent(table: Table, itemId: Any, propertyId: Any) extends Event
 
 }
@@ -229,7 +229,7 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
 
   def cellStyleGenerator: Option[Table.CellStyleGenerationEvent => Option[String]] = p.getCellStyleGenerator match {
     case null => None
-    case generator: CellStyleGenerator => Some(generator.generator)
+    case generator: CellStyleGenerator => Some(generator.action)
   }
 
   def cellStyleGenerator_=(generator: Table.CellStyleGenerationEvent => Option[String]): Unit = {

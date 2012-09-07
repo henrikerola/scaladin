@@ -7,15 +7,6 @@ package mixins {
   trait EmbeddedMixin extends AbstractComponentMixin
 }
 
-object Embedded {
-  object Type extends Enumeration {
-    import com.vaadin.ui.Embedded._
-    val objectType = Value(TYPE_OBJECT)
-    val image = Value(TYPE_IMAGE)
-    val browser = Value(TYPE_BROWSER)
-  }
-}
-
 /**
  * @see com.vaadin.ui.Embedded
  * @author Henri Kerola / Vaadin
@@ -56,10 +47,6 @@ class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new c
   def alternateText: Option[String] = Option(p.getAlternateText)
   def alternateText_=(alternateText: String) = p.setAlternateText(alternateText)
   def alternateText_=(alternateText: Option[String]) = p.setAlternateText(alternateText.orNull)
-
-  // TODO: better name than objectType?
-  def objectType: Embedded.Type.Value = Embedded.Type(p.getType)
-  def objectType_=(objectType: Embedded.Type.Value) = p.setType(objectType.id)
 
   def source: Option[Resource] = wrapperFor[Resource](p.getSource)
   def source_=(source: Option[Resource]) = if (source.isDefined) p.setSource(source.get.p) else p.setSource(null)

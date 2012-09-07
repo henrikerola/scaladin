@@ -1,7 +1,6 @@
 package vaadin.scala
 
 import scala.collection.mutable
-import com.vaadin.ui.Layout.MarginHandler
 import vaadin.scala.mixins.HasComponentsMixin
 import vaadin.scala.mixins.AbstractComponentContainerMixin
 import vaadin.scala.mixins.AbstractLayoutMixin
@@ -79,18 +78,10 @@ trait Layout extends ComponentContainer {
 
   override def p: com.vaadin.ui.Layout with LayoutMixin
 
-  def margin_=(margin: Boolean) = p.setMargin(margin)
-  def margin_=(margin: Margin) = p.setMargin(margin.top, margin.right, margin.bottom, margin.left)
-  def margin(top: Boolean = false, right: Boolean = false, bottom: Boolean = false, left: Boolean = false) = p.setMargin(top, right, bottom, left)
-
 }
 
 abstract class AbstractLayout(override val p: com.vaadin.ui.AbstractLayout with AbstractLayoutMixin) extends AbstractComponentContainer(p) with Layout {
 
-  def margin: Margin = {
-    val margin = p.getMargin()
-    Margin(margin.hasTop, margin.hasRight, margin.hasBottom, margin.hasLeft)
-  }
 }
 
 trait SpacingHandler {
@@ -109,4 +100,17 @@ trait AlignmentHandler {
 
   def alignment(component: Component, alignment: Alignment.Value) = p.setComponentAlignment(component.p, new com.vaadin.ui.Alignment(alignment.id))
   def alignment(componentAlignment: Tuple2[Component, Alignment.Value]) = p.setComponentAlignment(componentAlignment._1.p, new com.vaadin.ui.Alignment(componentAlignment._2.id))
+}
+
+trait MarginHandler {
+
+  def p: com.vaadin.ui.Layout.MarginHandler
+
+  def margin: Margin = {
+    val margin = p.getMargin()
+    Margin(margin.hasTop, margin.hasRight, margin.hasBottom, margin.hasLeft)
+  }
+  def margin_=(margin: Boolean): Unit = p.setMargin(margin)
+  def margin_=(margin: Margin): Unit = p.setMargin(new com.vaadin.shared.ui.MarginInfo(margin.top, margin.right, margin.bottom, margin.left))
+  def margin(top: Boolean = false, right: Boolean = false, bottom: Boolean = false, left: Boolean = false) { margin = (Margin(top, right, bottom, left)) }
 }

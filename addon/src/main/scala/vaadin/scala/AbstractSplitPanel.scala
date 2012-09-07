@@ -14,7 +14,7 @@ package mixins {
 case class SplitterClickEvent(component: Component) extends Event
 
 class SplitterClickListener(val action: SplitterClickEvent => Unit) extends com.vaadin.ui.AbstractSplitPanel.SplitterClickListener with Listener {
-  def splitterClick(e: com.vaadin.ui.AbstractSplitPanel#SplitterClickEvent) = action(SplitterClickEvent(wrapperFor[AbstractSplitPanel](e.getComponent()).get))
+  def splitterClick(e: com.vaadin.ui.AbstractSplitPanel.SplitterClickEvent) = action(SplitterClickEvent(wrapperFor[AbstractSplitPanel](e.getComponent()).get))
 }
 
 abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPanel with AbstractSplitPanelMixin) extends AbstractComponentContainer(p) {
@@ -31,28 +31,28 @@ abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPan
 
   def splitPosition = new Measure(p.getSplitPosition, Units(p.getSplitPositionUnit.ordinal))
   def splitPosition_=(position: Option[Measure]): Unit = position match {
-    case None => p.setSplitPosition(50, com.vaadin.terminal.Sizeable.Unit.PERCENTAGE, reserved)
-    case Some(position) => p.setSplitPosition(position.value.intValue, com.vaadin.terminal.Sizeable.Unit.values.apply(position.unit.id), reserved)
+    case None => p.setSplitPosition(50, com.vaadin.server.Sizeable.Unit.PERCENTAGE, reserved)
+    case Some(position) => p.setSplitPosition(position.value.intValue, com.vaadin.server.Sizeable.Unit.values.apply(position.unit.id), reserved)
   }
   def splitPosition_=(position: Measure): Unit = splitPosition = Some(position)
 
   def minSplitPosition: Measure = Measure(p.getMinSplitPosition, Units(p.getMinSplitPositionUnit.ordinal))
   def minSplitPosition_=(minSplitPosition: Option[Measure]) = minSplitPosition match {
-    case None => p.setMinSplitPosition(0, com.vaadin.terminal.Sizeable.Unit.PERCENTAGE)
-    case Some(pos) => p.setMinSplitPosition(pos.value.intValue, com.vaadin.terminal.Sizeable.Unit.values.apply(pos.unit.id))
+    case None => p.setMinSplitPosition(0, com.vaadin.server.Sizeable.Unit.PERCENTAGE)
+    case Some(pos) => p.setMinSplitPosition(pos.value.intValue, com.vaadin.server.Sizeable.Unit.values.apply(pos.unit.id))
   }
   
   def maxSplitPosition: Measure = Measure(p.getMaxSplitPosition, Units(p.getMaxSplitPositionUnit.ordinal))
   def maxSplitPosition_=(maxSplitPosition: Option[Measure]) = maxSplitPosition match {
-    case None => p.setMaxSplitPosition(100, com.vaadin.terminal.Sizeable.Unit.PERCENTAGE)
-    case Some(pos) => p.setMaxSplitPosition(pos.value.floatValue, com.vaadin.terminal.Sizeable.Unit.values.apply(pos.unit.id))
+    case None => p.setMaxSplitPosition(100, com.vaadin.server.Sizeable.Unit.PERCENTAGE)
+    case Some(pos) => p.setMaxSplitPosition(pos.value.floatValue, com.vaadin.server.Sizeable.Unit.values.apply(pos.unit.id))
   }
 
   def locked = p.isLocked
   def locked_=(locked: Boolean) = p.setLocked(locked)
 
   lazy val splitterClickListeners = new ListenersTrait[SplitterClickEvent, SplitterClickListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.AbstractSplitPanel#SplitterClickEvent])
+    override def listeners = p.getListeners(classOf[com.vaadin.ui.AbstractSplitPanel.SplitterClickEvent])
     override def addListener(elem: SplitterClickEvent => Unit) = p.addListener(new SplitterClickListener(elem))
     override def removeListener(elem: SplitterClickListener) = p.removeListener(elem)
   }

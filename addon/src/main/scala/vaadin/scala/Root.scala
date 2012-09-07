@@ -3,19 +3,19 @@ package vaadin.scala
 import scala.collection.mutable
 import vaadin.scala.internal.WrapperUtil
 
-object Root {
-  def current: Root = com.vaadin.ui.Root.getCurrent.asInstanceOf[Root]
-  def current_=(root: Option[Root]): Unit = com.vaadin.ui.Root.setCurrent(root.getOrElse(null))
-  def current_=(root: Root): Unit = com.vaadin.ui.Root.setCurrent(root)
+object UI {
+  def current: UI = com.vaadin.ui.UI.getCurrent.asInstanceOf[UI]
+  def current_=(root: Option[UI]): Unit = com.vaadin.ui.UI.setCurrent(root.getOrElse(null))
+  def current_=(root: UI): Unit = com.vaadin.ui.UI.setCurrent(root)
 }
 
 /**
- * @see com.vaadin.ui.Root
+ * @see com.vaadin.ui.UI
  * @author Henri Kerola / Vaadin
  */
-abstract class Root extends com.vaadin.ui.Root { root =>
+abstract class UI extends com.vaadin.ui.UI { root =>
 
-  protected def init(request: com.vaadin.terminal.WrappedRequest): Unit = {
+  protected def init(request: com.vaadin.server.WrappedRequest): Unit = {
     init(new WrappedRequest {
       val p = request
     })
@@ -23,11 +23,8 @@ abstract class Root extends com.vaadin.ui.Root { root =>
 
   protected def init(request: WrappedRequest): Unit
 
-  def application: Application = getApplication.asInstanceOf[Application]
-  def application_=(application: Application): Unit = setApplication(application)
-
-  def rootId: Int = getRootId
-  def rootId_=(rootId: Int): Unit = setRootId(rootId)
+  def uiId: Int = getUIId
+  //def rootId_=(rootId: Int): Unit = setUIId(rootId)
 
   def windows: mutable.Set[Window] = new mutable.Set[Window] {
     import scala.collection.JavaConversions.asScalaIterator

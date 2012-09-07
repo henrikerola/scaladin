@@ -1,6 +1,8 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.LinkMixin
+import com.vaadin.shared.ui.BorderStyle
+import com.vaadin.shared.ui.BorderStyle._
 
 package mixins {
   trait LinkMixin extends AbstractComponentMixin
@@ -8,11 +10,9 @@ package mixins {
 
 object Link {
   object TargetBorder extends Enumeration {
-    import com.vaadin.ui.Link._
-    
-    val None = Value(TARGET_BORDER_NONE)
-    val Minimal = Value(TARGET_BORDER_MINIMAL)
-    val Default = Value(TARGET_BORDER_DEFAULT)
+    val None = Value(NONE.ordinal)
+    val Minimal = Value(MINIMAL.ordinal)
+    val Default = Value(DEFAULT.ordinal)
   }
 }
 
@@ -33,8 +33,8 @@ class Link(override val p: com.vaadin.ui.Link with LinkMixin = new com.vaadin.ui
   def targetName_=(targetName: Option[String]) = p.setTargetName(caption.orNull)
   def targetName_=(targetName: String) = p.setTargetName(targetName)
   
-  def targetBorder = Link.TargetBorder(p.getTargetBorder)
-  def targetBorder_=(targetBorder: Link.TargetBorder.Value) = p.setTargetBorder(targetBorder.id)
+  def targetBorder = Link.TargetBorder(p.getTargetBorder.ordinal)
+  def targetBorder_=(targetBorder: Link.TargetBorder.Value) = p.setTargetBorder(BorderStyle.values.apply(targetBorder.id))
 
   def targetWidth = p.getTargetWidth()
   def targetWidth_=(targetWidth: Int) = p.setTargetWidth(targetWidth)

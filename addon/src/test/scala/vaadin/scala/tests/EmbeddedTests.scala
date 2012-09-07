@@ -8,12 +8,6 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class EmbeddedTests extends FunSuite {
 
-  test("Types") {
-    assert(Embedded.Type.objectType.id === com.vaadin.ui.Embedded.TYPE_OBJECT)
-    assert(Embedded.Type.image.id === com.vaadin.ui.Embedded.TYPE_IMAGE)
-    assert(Embedded.Type.browser.id === com.vaadin.ui.Embedded.TYPE_BROWSER)
-  }
-
   test("parameters") {
     val embedded = new Embedded
     embedded.parameters += "param1" -> "value1"
@@ -42,12 +36,6 @@ class EmbeddedTests extends FunSuite {
 
     embedded.alternateText = Some("alternate")
     assert(embedded.alternateText === Some("alternate"))
-  }
-
-  test("objectType") {
-    val embedded = new Embedded
-    embedded.objectType = Embedded.Type.image
-    assert(embedded.objectType === Embedded.Type.image)
   }
 
   test("source, Resource") {

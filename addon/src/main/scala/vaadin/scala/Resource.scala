@@ -7,11 +7,11 @@ package mixins {
 }
 
 object Resource {
-  def mapResource(vaadinResource: Option[com.vaadin.terminal.Resource]): Option[Resource] =
+  def mapResource(vaadinResource: Option[com.vaadin.server.Resource]): Option[Resource] =
     vaadinResource map {
       _ match {
-        case er: com.vaadin.terminal.ExternalResource => new ExternalResource(er.getURL(), er.getMIMEType())
-        case tr: com.vaadin.terminal.ThemeResource => new ThemeResource(tr.getResourceId())
+        case er: com.vaadin.server.ExternalResource => new ExternalResource(er.getURL(), er.getMIMEType())
+        case tr: com.vaadin.server.ThemeResource => new ThemeResource(tr.getResourceId())
         case _ => null
       }
     }
@@ -19,25 +19,25 @@ object Resource {
 
 trait Resource extends Wrapper {
 
-  def p: com.vaadin.terminal.Resource with ResourceMixin
+  def p: com.vaadin.server.Resource with ResourceMixin
   p.wrapper = this
 
   def mimeType = p.getMIMEType
 }
 
-class ExternalResource(override val p: com.vaadin.terminal.ExternalResource with ResourceMixin) extends Resource {
+class ExternalResource(override val p: com.vaadin.server.ExternalResource with ResourceMixin) extends Resource {
 
   def this(sourceUrl: String, mimeType: String = null) {
-    this(new com.vaadin.terminal.ExternalResource(sourceUrl, mimeType) with ResourceMixin)
+    this(new com.vaadin.server.ExternalResource(sourceUrl, mimeType) with ResourceMixin)
   }
 
   def url = p.getURL
 
 }
 
-class ThemeResource(override val p: com.vaadin.terminal.ThemeResource with ResourceMixin) extends Resource {
+class ThemeResource(override val p: com.vaadin.server.ThemeResource with ResourceMixin) extends Resource {
 
   def this(resourceId: String) {
-    this(new com.vaadin.terminal.ThemeResource(resourceId) with ResourceMixin)
+    this(new com.vaadin.server.ThemeResource(resourceId) with ResourceMixin)
   }
 }

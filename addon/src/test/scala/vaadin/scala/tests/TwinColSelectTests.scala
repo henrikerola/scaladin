@@ -2,7 +2,7 @@ package vaadin.scala.tests
 
 import org.scalatest.FunSuite
 import vaadin.scala._
-import com.vaadin.terminal.Sizeable
+import com.vaadin.server.Sizeable
 import com.vaadin.data.util.IndexedContainer
 
 import org.junit.runner.RunWith

@@ -1,7 +1,7 @@
 package vaadin.scala
 
 object Units extends Enumeration {
-  import com.vaadin.terminal.Sizeable.Unit._
+  import com.vaadin.server.Sizeable.Unit._
 
   val px = Value(PIXELS.ordinal, "px")
   val pt = Value(POINTS.ordinal, "pt")

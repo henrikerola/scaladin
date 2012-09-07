@@ -28,7 +28,7 @@ object FilesystemContainer {
   class FileItem(override val p: com.vaadin.data.util.FilesystemContainer#FileItem) extends Item {
     def lastModified: Date = p.lastModified
     def name: String = p.getName
-    def icon: Resource = new ThemeResource(p.getIcon.asInstanceOf[com.vaadin.terminal.ThemeResource].getResourceId)
+    def icon: Resource = new ThemeResource(p.getIcon.asInstanceOf[com.vaadin.server.ThemeResource].getResourceId)
     def size: Long = p.getSize
 
     protected override def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_] = FilesystemContainer.wrapProperty(unwrapped)

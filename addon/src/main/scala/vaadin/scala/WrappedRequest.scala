@@ -8,7 +8,7 @@ object WrappedRequest {
 
   trait BrowserDetails { browserDetails =>
 
-    val p: com.vaadin.terminal.WrappedRequest.BrowserDetails
+    val p: com.vaadin.server.WrappedRequest.BrowserDetails
 
     def uriFragment: String = p.getUriFragment // TODO: can be null?
 
@@ -19,25 +19,25 @@ object WrappedRequest {
 
   trait DeploymentConfiguration {
 
-    val p: com.vaadin.terminal.DeploymentConfiguration
+    val p: com.vaadin.server.DeploymentConfiguration
 
-    def staticFileLocation(wrappedRequest: WrappedRequest): String = p.getStaticFileLocation(wrappedRequest.p)
+    //    def staticFileLocation(wrappedRequest: WrappedRequest): String = p.getStaticFileLocation(wrappedRequest.p)
+    //
+    //    def configuredWidgetset(wrappedRequest: WrappedRequest): String = p.getConfiguredWidgetset(wrappedRequest.p)
+    //
+    //    def configuredTheme(wrappedRequest: WrappedRequest): String = p.getConfiguredTheme(wrappedRequest.p)
+    //
+    //    def standalone(wrappedRequest: WrappedRequest): Boolean = p.isStandalone(wrappedRequest.p)
+    //
+    //    def classLoader: Option[ClassLoader] = Option(p.getClassLoader)
 
-    def configuredWidgetset(wrappedRequest: WrappedRequest): String = p.getConfiguredWidgetset(wrappedRequest.p)
-
-    def configuredTheme(wrappedRequest: WrappedRequest): String = p.getConfiguredTheme(wrappedRequest.p)
-
-    def standalone(wrappedRequest: WrappedRequest): Boolean = p.isStandalone(wrappedRequest.p)
-
-    def applicationOrSystemProperty(propertyName: String, defaultValue: String): String = p.getApplicationOrSystemProperty(propertyName, defaultValue)
-
-    def classLoader: Option[ClassLoader] = Option(p.getClassLoader)
+    // TODO: ...
   }
 }
 
 trait WrappedRequest { wrappedRequest =>
 
-  val p: com.vaadin.terminal.WrappedRequest
+  val p: com.vaadin.server.WrappedRequest
 
   // TODO: getParameter
   // TODO: getParameterMap()
@@ -51,12 +51,10 @@ trait WrappedRequest { wrappedRequest =>
 
   def requestPathInfo: Option[String] = Option(p.getRequestPathInfo)
 
-  def sessionMaxInactiveInterval: Int = p.getSessionMaxInactiveInterval
-
-  // TODO: get/setSessionAttribute
+  // TODO: getWrappedSession
 
   def contentType: Option[String] = Option(p.getContentType)
-  
+
   def browserDetails: WrappedRequest.BrowserDetails = new WrappedRequest.BrowserDetails {
     val p = wrappedRequest.p.getBrowserDetails
   }
@@ -69,8 +67,8 @@ trait WrappedRequest { wrappedRequest =>
 
   // TODO: getHeader
 
-  def deploymentConfiguration: WrappedRequest.DeploymentConfiguration = new WrappedRequest.DeploymentConfiguration {
-    val p = wrappedRequest.p.getDeploymentConfiguration
-  }
+  //  def deploymentConfiguration: WrappedRequest.DeploymentConfiguration = new WrappedRequest.DeploymentConfiguration {
+  //    val p = wrappedRequest.p.getDeploymentConfiguration
+  //  }
 
 }

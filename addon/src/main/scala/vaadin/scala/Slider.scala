@@ -22,10 +22,10 @@ abstract class AbstractSlider(override val p: com.vaadin.ui.Slider with SliderMi
 
 class HorizontalSlider(override val p: com.vaadin.ui.Slider with SliderMixin = new com.vaadin.ui.Slider with SliderMixin) extends AbstractSlider(p) {
 
-  p.setOrientation(com.vaadin.ui.Slider.ORIENTATION_HORIZONTAL)
+  p.setOrientation(com.vaadin.shared.ui.slider.SliderOrientation.HORIZONTAL)
 }
 
 class VerticalSlider(override val p: com.vaadin.ui.Slider with SliderMixin = new com.vaadin.ui.Slider with SliderMixin) extends AbstractSlider(p) {
 
-  p.setOrientation(com.vaadin.ui.Slider.ORIENTATION_VERTICAL)
+  p.setOrientation(com.vaadin.shared.ui.slider.SliderOrientation.VERTICAL)
 }

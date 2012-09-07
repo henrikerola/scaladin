@@ -2,7 +2,7 @@ package vaadin.scala.tests
 
 import org.scalatest.FunSuite
 import vaadin.scala._
-import com.vaadin.terminal.Sizeable
+import com.vaadin.server.Sizeable
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
@@ -74,7 +74,6 @@ class LayoutTests extends FunSuite {
     assert(layout.p.getWidthUnits === Sizeable.UNITS_PIXELS)
     assert(layout.p.getHeight === -1)
     assert(layout.p.getHeightUnits === Sizeable.UNITS_PIXELS)
-    assert(layout.margin === Margin(false, false, false, false))
     assert(layout.caption === None)
     assert(layout.p.getStyleName === "")
   }

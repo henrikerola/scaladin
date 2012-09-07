@@ -64,15 +64,13 @@ trait Component extends Wrapper {
   def icon_=(icon: Option[Resource]) = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
   def icon_=(icon: Resource) = if (icon == null) p.setIcon(null) else p.setIcon(icon.p)
 
-  //def root = wrapperFor[Root](p.getRoot)
-
-  def application = Option(p.getApplication)
+  def ui = wrapperFor[UI](p.getUI)
 
   def locale = Option(p.getLocale)
 
-  def id = Option(p.getDebugId())
-  def id_=(id: Option[String]) = p.setDebugId(id.orNull)
-  def id_=(id: String) = p.setDebugId(id)
+  def id = Option(p.getId)
+  def id_=(id: Option[String]) = p.setId(id.orNull)
+  def id_=(id: String) = p.setId(id)
 
   //override def toString = p.toString
 

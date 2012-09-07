@@ -56,7 +56,7 @@ class Upload(override val p: com.vaadin.ui.Upload with UploadMixin = new com.vaa
   def submitUpload() = p.submitUpload()
 
   lazy val progressListeners = new ListenersTrait[Upload.ProgressEvent, UploadProgressListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.terminal.StreamVariable.StreamingProgressEvent])
+    override def listeners = p.getListeners(classOf[com.vaadin.server.StreamVariable.StreamingProgressEvent])
     override def addListener(elem: Upload.ProgressEvent => Unit) = p.addListener(new UploadProgressListener(elem))
     override def removeListener(elem: UploadProgressListener) = p.removeListener(elem)
   }

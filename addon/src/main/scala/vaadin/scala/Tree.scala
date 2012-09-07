@@ -14,7 +14,7 @@ package mixins {
 
 object Tree {
   // TODO move out from Tree? because possible that used in other components too in future (e.g. ComboBox)
-  case class ItemStyleEvent(itemId: Any) extends Event
+  case class ItemStyleEvent(tree: Tree, itemId: Any) extends Event
 }
 
 /**

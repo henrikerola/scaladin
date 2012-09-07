@@ -122,8 +122,8 @@ class FormTest extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(!form.commit.isValid)
   }
 
-  test("writeThrough") {
-    form.writeThrough = false
+  test("buffered") {
+    form.buffered = true
     val person = Person("test", "tester")
     form.item = new BeanItem(person)
     form.field("firstName").foreach(_.value = "newValue")

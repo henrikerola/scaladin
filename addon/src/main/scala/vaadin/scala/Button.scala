@@ -29,7 +29,7 @@ object Button {
 
 package listeners {
   class ButtonClickListener(val action: Button.ClickEvent => Unit) extends com.vaadin.ui.Button.ClickListener with Listener {
-    def buttonClick(e: com.vaadin.ui.Button#ClickEvent) = action(Button.ClickEvent(wrapperFor[Button](e.getButton()).get, e.getClientX(), e.getClientY(), e.getRelativeX(), e.getRelativeY(), e.isAltKey(), e.isCtrlKey(), e.isMetaKey(), e.isShiftKey()))
+    def buttonClick(e: com.vaadin.ui.Button.ClickEvent) = action(Button.ClickEvent(wrapperFor[Button](e.getButton()).get, e.getClientX(), e.getClientY(), e.getRelativeX(), e.getRelativeY(), e.isAltKey(), e.isCtrlKey(), e.isMetaKey(), e.isShiftKey()))
   }
 }
 
@@ -55,7 +55,7 @@ class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaa
   def htmlContentAllowed_=(htmlContentAllowed: Boolean) = p.setHtmlContentAllowed(htmlContentAllowed)
 
   lazy val clickListeners = new ListenersTrait[Button.ClickEvent, ButtonClickListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.Button#ClickEvent])
+    override def listeners = p.getListeners(classOf[com.vaadin.ui.Button.ClickEvent])
     override def addListener(elem: Button.ClickEvent => Unit) = p.addListener(new ButtonClickListener(elem))
     override def removeListener(elem: ButtonClickListener) = p.removeListener(elem)
   }

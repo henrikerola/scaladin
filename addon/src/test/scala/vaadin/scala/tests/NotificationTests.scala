@@ -20,20 +20,24 @@ class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   }
   
   test("Types") {
-    assert(Notification.Type.Humanized.id === com.vaadin.ui.Notification.TYPE_HUMANIZED_MESSAGE)
-    assert(Notification.Type.Warning.id === com.vaadin.ui.Notification.TYPE_WARNING_MESSAGE)
-    assert(Notification.Type.Error.id === com.vaadin.ui.Notification.TYPE_ERROR_MESSAGE)
-    assert(Notification.Type.Tray.id === com.vaadin.ui.Notification.TYPE_TRAY_NOTIFICATION)
+    assert(Notification.Type.Humanized.id === com.vaadin.ui.Notification.Type.HUMANIZED_MESSAGE.ordinal)
+    assert(Notification.Type.Warning.id === com.vaadin.ui.Notification.Type.WARNING_MESSAGE.ordinal)
+    assert(Notification.Type.Error.id === com.vaadin.ui.Notification.Type.ERROR_MESSAGE.ordinal)
+    assert(Notification.Type.Tray.id === com.vaadin.ui.Notification.Type.TRAY_NOTIFICATION.ordinal)
   }
   
   test("Positions") {
-    assert(Notification.Position.Centered.id === com.vaadin.ui.Notification.POSITION_CENTERED)
-    assert(Notification.Position.CenteredTop.id === com.vaadin.ui.Notification.POSITION_CENTERED_TOP)
-    assert(Notification.Position.CenteredBottom.id === com.vaadin.ui.Notification.POSITION_CENTERED_BOTTOM)
-    assert(Notification.Position.TopLeft.id === com.vaadin.ui.Notification.POSITION_TOP_LEFT)
-    assert(Notification.Position.TopRight.id === com.vaadin.ui.Notification.POSITION_TOP_RIGHT)
-    assert(Notification.Position.BottomLeft.id === com.vaadin.ui.Notification.POSITION_BOTTOM_LEFT)
-    assert(Notification.Position.BottomRight.id === com.vaadin.ui.Notification.POSITION_BOTTOM_RIGHT)
+    assert(Notification.Position.TopLeft.id === com.vaadin.shared.Position.TOP_LEFT.ordinal)
+    assert(Notification.Position.TopCenter.id === com.vaadin.shared.Position.TOP_CENTER.ordinal)
+    assert(Notification.Position.TopRight.id === com.vaadin.shared.Position.TOP_RIGHT.ordinal)
+    
+    assert(Notification.Position.MiddleLeft.id === com.vaadin.shared.Position.MIDDLE_LEFT.ordinal)
+    assert(Notification.Position.MiddleCenter.id === com.vaadin.shared.Position.MIDDLE_CENTER.ordinal)
+    assert(Notification.Position.MiddleRight.id === com.vaadin.shared.Position.MIDDLE_RIGHT.ordinal)
+    
+    assert(Notification.Position.BottomLeft.id === com.vaadin.shared.Position.BOTTOM_LEFT.ordinal)
+    assert(Notification.Position.BottomCenter.id === com.vaadin.shared.Position.BOTTOM_CENTER.ordinal)
+    assert(Notification.Position.BottomRight.id === com.vaadin.shared.Position.BOTTOM_RIGHT.ordinal)
   }
 
   test("Notification(caption)") {
@@ -103,7 +107,7 @@ class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   }
   
   test("position") {
-    assert(notification.position === Notification.Position.Centered)
+    assert(notification.position === Notification.Position.MiddleCenter)
     
     notification.position = Notification.Position.TopLeft
     assert(notification.position === Notification.Position.TopLeft)

@@ -2,7 +2,7 @@ package vaadin.scala.tests
 
 import vaadin.scala._
 import org.scalatest.FunSuite
-import com.vaadin.terminal.Sizeable
+import com.vaadin.server.Sizeable
 import org.scalatest.BeforeAndAfter
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
