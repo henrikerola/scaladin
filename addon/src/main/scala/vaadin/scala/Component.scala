@@ -79,11 +79,6 @@ trait Component extends Wrapper {
   // TODO: ..
 }
 
-trait ScaladinWrapper extends com.vaadin.ui.Component with Component with ComponentMixin {
-  def p: this.type = this
-  p.wrapper = this
-}
-
 abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with AbstractComponentMixin) extends Component with Sizeable {
 
   p.wrapper = this

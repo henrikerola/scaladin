@@ -14,6 +14,7 @@ package mixins {
   trait AbstractLayoutMixin extends AbstractComponentContainerMixin with LayoutMixin
 }
 
+
 trait ComponentContainer extends Component {
 
   override def p: com.vaadin.ui.ComponentContainer with ComponentContainerMixin
