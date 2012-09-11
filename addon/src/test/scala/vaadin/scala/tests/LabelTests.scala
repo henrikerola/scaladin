@@ -12,7 +12,7 @@ class LabelTests extends FunSuite {
   test("ContentModes") {
     assert(Label.ContentMode.Text.id === com.vaadin.shared.ui.label.ContentMode.TEXT.ordinal)
     assert(Label.ContentMode.Preformatted.id === com.vaadin.shared.ui.label.ContentMode.PREFORMATTED.ordinal)
-    assert(Label.ContentMode.Xhtml.id === com.vaadin.shared.ui.label.ContentMode.XHTML.ordinal)
+    assert(Label.ContentMode.Html.id === com.vaadin.shared.ui.label.ContentMode.HTML.ordinal)
   }
 
   test("constructor") {
@@ -52,8 +52,8 @@ class LabelTests extends FunSuite {
 
   test("contentMode: getter should return set content mode") {
     val label = new Label
-    label.contentMode = Label.ContentMode.Xhtml
-    assert(label.contentMode === Label.ContentMode.Xhtml)
+    label.contentMode = Label.ContentMode.Html
+    assert(label.contentMode === Label.ContentMode.Html)
   }
 
   ignore("property: None") { // This setting propertyDataSource to null throws NPE in Vaadin 7?

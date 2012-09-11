@@ -33,7 +33,7 @@ object Dependencies {
   val junitVersion = "4.9"
   val mockitoVersion = "1.9.0"
 
-  val vaadin = "com.vaadin" % "vaadin" % vaadinVersion
+  val vaadin = "com.vaadin" % "vaadin-server" % vaadinVersion
   val servletApi = "javax.servlet" % "javax.servlet-api" % "3.0.1"
   val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
   val scalaTest = "org.scalatest" %% "scalatest" % scalaTestVersion % "test"

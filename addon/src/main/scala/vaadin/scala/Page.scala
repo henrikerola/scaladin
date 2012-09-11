@@ -43,11 +43,11 @@ trait Page extends Wrapper { page =>
 //    val p = page.p.getJavaScript
 //  }
 
-  def open(resource: Resource): Unit = p.open(resource.p)
+  def setLocation(url: String): Unit = p.setLocation(url)
 
-  def open(resource: Resource, windowName: String): Unit = p.open(resource.p, windowName)
+  def open(url: String, windowName: String): Unit = p.open(url, windowName)
 
-  def open(resource: Resource, windowName: String, width: Int, height: Int, border: Page.Border.Value): Unit = p.open(resource.p, windowName, width, height, BorderStyle.values.apply(border.id))
+  def open(url: String, windowName: String, width: Int, height: Int, border: Page.Border.Value): Unit = p.open(url, windowName, width, height, BorderStyle.values.apply(border.id))
 
   // setTitle
 

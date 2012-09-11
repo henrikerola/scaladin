@@ -13,7 +13,7 @@ object Label {
     import com.vaadin.shared.ui.label.ContentMode._
     val Text = Value(TEXT.ordinal, "text")
     val Preformatted = Value(PREFORMATTED.ordinal, "preformatted")
-    val Xhtml = Value(XHTML.ordinal, "xhtml")
+    val Html = Value(HTML.ordinal, "html")
     // Note, XML and RAW are deprecated so not added here
   }
 
@@ -22,7 +22,7 @@ object Label {
     sizeUndefined()
   }
 
-  def html(htmlValue: Node) = new Label { value = htmlValue.toString; contentMode = ContentMode.Xhtml }
+  def html(htmlValue: Node) = new Label { value = htmlValue.toString; contentMode = ContentMode.Html }
   def apply(labelValue: String) = new Label { value = labelValue }
 }
 
