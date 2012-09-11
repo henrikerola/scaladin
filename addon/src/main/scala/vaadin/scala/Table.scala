@@ -11,6 +11,7 @@ import vaadin.scala.internal.ColumnResizeListener
 import vaadin.scala.internal.TableColumnGenerator
 import vaadin.scala.internal.CellStyleGenerator
 import vaadin.scala.internal.WrapperUtil
+import vaadin.scala.internal.ListenersTrait
 import scala.collection.mutable
 
 package mixins {

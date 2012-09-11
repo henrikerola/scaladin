@@ -1,5 +1,7 @@
 package vaadin.scala
 
+import vaadin.scala.internal.ListenersTrait
+import vaadin.scala.internal.ClickListener
 import vaadin.scala.mixins.EmbeddedMixin
 import scala.collection.mutable
 

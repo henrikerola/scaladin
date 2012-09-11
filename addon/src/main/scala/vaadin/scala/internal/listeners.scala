@@ -77,3 +77,7 @@ class ButtonClickListener(val action: Button.ClickEvent => Unit) extends com.vaa
 class TextChangeListener(val action: AbstractTextField.TextChangeEvent => Unit) extends com.vaadin.event.FieldEvents.TextChangeListener with Listener {
   def textChange(e: com.vaadin.event.FieldEvents.TextChangeEvent) = action(AbstractTextField.TextChangeEvent(wrapperFor[AbstractTextField](e.getComponent).get, e.getText, e.getCursorPosition))
 }
+
+class ClickListener(val action: ClickEvent => Unit) extends com.vaadin.event.MouseEvents.ClickListener with Listener {
+  def click(e: com.vaadin.event.MouseEvents.ClickEvent) = action(ClickEvent(wrapperFor[Table](e.getComponent).get, e.getButton, e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
+}

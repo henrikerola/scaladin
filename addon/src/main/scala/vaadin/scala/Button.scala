@@ -3,6 +3,7 @@ package vaadin.scala
 import vaadin.scala.mixins.ButtonMixin
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.internal.ButtonClickListener
+import vaadin.scala.internal.ListenersTrait
 
 package mixins {
   trait ButtonMixin extends AbstractFieldMixin

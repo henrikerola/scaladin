@@ -1,6 +1,7 @@
 package vaadin.scala
 
 import vaadin.scala.internal.FragmentChangedListener
+import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.mixins.UriFragmentUtilityMixin
 
 package mixins {
