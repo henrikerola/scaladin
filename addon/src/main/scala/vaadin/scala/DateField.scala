@@ -17,7 +17,7 @@ package mixins {
 
 object DateField {
   object Resolution extends Enumeration {
-    import com.vaadin.ui.DateField.Resolution._
+    import com.vaadin.shared.ui.datefield.Resolution._
     // Support for milliseconds is dropped in Vaadin 7 so not adding here either
     val Second = Value(SECOND.ordinal)
     val Minute = Value(MINUTE.ordinal)
@@ -45,7 +45,7 @@ class DateField(override val p: com.vaadin.ui.DateField with DateFieldMixin = ne
   }
 
   def resolution = DateField.Resolution(p.getResolution.ordinal)
-  def resolution_=(resolution: DateField.Resolution.Value) = p.setResolution(com.vaadin.ui.DateField.Resolution.values.apply(resolution.id))
+  def resolution_=(resolution: DateField.Resolution.Value) = p.setResolution(com.vaadin.shared.ui.datefield.Resolution.values.apply(resolution.id))
 
   def dateFormat = Option(p.getDateFormat)
   def dateFormat_=(dateFormat: Option[String]) = p.setDateFormat(dateFormat.orNull)

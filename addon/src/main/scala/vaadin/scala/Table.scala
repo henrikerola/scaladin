@@ -1,6 +1,6 @@
 package vaadin.scala
 
-import com.vaadin.ui.AbstractSelect.MultiSelectMode._
+import com.vaadin.shared.ui.MultiSelectMode._
 import com.vaadin.ui.Table.ColumnHeaderMode
 import com.vaadin.ui.Table.RowHeaderMode
 import com.vaadin.ui.Table.Align
@@ -57,8 +57,8 @@ object Table {
     val Right = Value(RIGHT.ordinal)
   }
 
-  case class HeaderClickEvent(component: Component, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
-  case class FooterClickEvent(component: Component, propertyId: Any, button: Int, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
+  case class HeaderClickEvent(component: Component, propertyId: Any, button: MouseButton.Value, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
+  case class FooterClickEvent(component: Component, propertyId: Any, button: MouseButton.Value, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
   case class ColumnResizeEvent(component: Component, propertyId: Any, previousWidth: Int, currentWidth: Int) extends Event
   case class ColumnReorderEvent(component: Component) extends Event
   case class ColumnGenerationEvent(table: Table, itemId: Any, propertyId: Any) extends Event

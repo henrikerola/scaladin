@@ -1,6 +1,6 @@
 package vaadin.scala
 
-import com.vaadin.ui.AbstractSelect.MultiSelectMode._
+import com.vaadin.shared.ui.MultiSelectMode._
 import vaadin.scala.mixins.TreeMixin
 import vaadin.scala.mixins.AbstractSelectMixin
 import vaadin.scala.mixins.ContainerHierarchicalMixin

@@ -8,10 +8,10 @@ package mixins {
 
 object ComboBox {
   object FilterinMode extends Enumeration {
-    import com.vaadin.ui.AbstractSelect.Filtering._
-    val Off = Value(FILTERINGMODE_OFF)
-    val StartsWith = Value(FILTERINGMODE_STARTSWITH)
-    val Contains = Value(FILTERINGMODE_CONTAINS)
+    import com.vaadin.shared.ui.combobox.FilteringMode._
+    val Off = Value(OFF.ordinal)
+    val StartsWith = Value(STARTSWITH.ordinal)
+    val Contains = Value(CONTAINS.ordinal)
   }
 }
 
@@ -28,8 +28,8 @@ class ComboBox(override val p: com.vaadin.ui.ComboBox with ComboBoxMixin = new c
 
   // from Select:
 
-  def filteringMode = ComboBox.FilterinMode(p.getFilteringMode)
-  def filteringMode_=(filteringMode: ComboBox.FilterinMode.Value) = p.setFilteringMode(filteringMode.id)
+  def filteringMode = ComboBox.FilterinMode(p.getFilteringMode.ordinal)
+  def filteringMode_=(filteringMode: ComboBox.FilterinMode.Value) = p.setFilteringMode(com.vaadin.shared.ui.combobox.FilteringMode.values.apply(filteringMode.id))
 
   def scrollToSelectedItem = p.isScrollToSelectedItem
   def scrollToSelectedItem_=(scrollToSelectedItem: Boolean) = p.setScrollToSelectedItem(scrollToSelectedItem)
