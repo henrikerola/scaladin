@@ -4,6 +4,7 @@ import vaadin.scala.mixins.AbstractSplitPanelMixin
 import vaadin.scala.mixins.HorizontalSplitPanelMixin
 import vaadin.scala.mixins.VerticalSplitPanelMixin
 import vaadin.scala.internal.SplitterClickListener
+import vaadin.scala.internal.ListenersTrait
 
 package mixins {
   trait AbstractSplitPanelMixin extends AbstractLayoutMixin

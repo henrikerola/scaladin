@@ -2,6 +2,7 @@ package vaadin.scala
 
 import vaadin.scala.mixins.AbstractTextFieldMixin
 import vaadin.scala.internal.TextChangeListener
+import vaadin.scala.internal.ListenersTrait
 import com.vaadin.event.FieldEvents
 
 package mixins {

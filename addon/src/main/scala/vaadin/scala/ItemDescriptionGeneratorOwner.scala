@@ -1,5 +1,8 @@
 package vaadin.scala
 
+import vaadin.scala.internal.ListenersTrait
+import vaadin.scala.internal.ItemDescriptionGenerator
+
 // TODO: move traits and classes to correct packages
 
 case class ItemDescriptionEvent(component: Component, itemId: Any, propertyId: Any) extends Event
@@ -19,9 +22,4 @@ trait ItemDescriptionGeneratorOwner { self: { def p: { def getItemDescriptionGen
     case Some(generator) => itemDescriptionGenerator = generator
   }
 
-}
-
-// FIXME: should not extend Listener?
-class ItemDescriptionGenerator(val action: ItemDescriptionEvent => String) extends com.vaadin.ui.AbstractSelect.ItemDescriptionGenerator with Listener {
-  def generateDescription(source: com.vaadin.ui.Component, itemId: Any, propertyId: Any) = action(ItemDescriptionEvent(wrapperFor[Component](source).get, itemId, propertyId))
 }
