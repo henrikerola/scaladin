@@ -9,11 +9,11 @@
 	</context-param>
 	<servlet>
 		<servlet-name>Demo Application</servlet-name>
-		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+		<servlet-class>vaadin.scala.ScaladinServlet</servlet-class>
 		<init-param>
 			<description>
 			Vaadin application class to start</description>
-			<param-name>application</param-name>
+			<param-name>ScaladinUI</param-name>
 			<param-value>vaadin.scala.demo.DemoApplication</param-value>
 		</init-param>
 	</servlet>

@@ -19,7 +19,7 @@ class UITests extends FunSuite with BeforeAndAfter {
     }
   }
 
-  test("UI.current") {
+  /*test("UI.current") {
     val ui = new UI {
       def init(request: ScaladinRequest) {
       }
@@ -32,7 +32,7 @@ class UITests extends FunSuite with BeforeAndAfter {
 
     UI.current = None
     assert(UI.current === null)
-  }
+  }*/
 
   test("uiId") {
     assert(ui.uiId === -1)

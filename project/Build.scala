@@ -34,6 +34,8 @@ object Dependencies {
   val mockitoVersion = "1.9.0"
 
   val vaadin = "com.vaadin" % "vaadin-server" % vaadinVersion
+  val vaadinClientCompiled = "com.vaadin" % "vaadin-client-compiled" % vaadinVersion
+  val vaadinThemes = "com.vaadin" % "vaadin-themes" % vaadinVersion
   val servletApi = "javax.servlet" % "javax.servlet-api" % "3.0.1"
   val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
   val scalaTest = "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
@@ -56,7 +58,7 @@ object ScaladinBuild extends Build {
 
   lazy val demoSettings = buildSettings ++ webSettings ++ Seq(
     name := buildName + "-demo",
-    libraryDependencies := Seq(jetty))
+    libraryDependencies := Seq(jetty, vaadinClientCompiled, vaadinThemes))
 
   lazy val addon = Project("addon", file("addon"), settings = addonSettings)
   lazy val demo = Project("demo", file("demo"), settings = demoSettings) dependsOn (addon)
