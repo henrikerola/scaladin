@@ -4,11 +4,11 @@ import java.util.Locale
 import java.io.InputStream
 import java.util.Date
 
-object WrappedRequest {
+object ScaladinRequest {
 
   trait BrowserDetails { browserDetails =>
 
-    val p: com.vaadin.server.WrappedRequest.BrowserDetails
+    val p: com.vaadin.server.VaadinRequest.BrowserDetails
 
     def uriFragment: String = p.getUriFragment // TODO: can be null?
 
@@ -35,9 +35,9 @@ object WrappedRequest {
   }
 }
 
-trait WrappedRequest { wrappedRequest =>
+trait ScaladinRequest { wrappedRequest =>
 
-  val p: com.vaadin.server.WrappedRequest
+  val p: com.vaadin.server.VaadinRequest
 
   // TODO: getParameter
   // TODO: getParameterMap()
@@ -55,7 +55,7 @@ trait WrappedRequest { wrappedRequest =>
 
   def contentType: Option[String] = Option(p.getContentType)
 
-  def browserDetails: WrappedRequest.BrowserDetails = new WrappedRequest.BrowserDetails {
+  def browserDetails: ScaladinRequest.BrowserDetails = new ScaladinRequest.BrowserDetails {
     val p = wrappedRequest.p.getBrowserDetails
   }
 

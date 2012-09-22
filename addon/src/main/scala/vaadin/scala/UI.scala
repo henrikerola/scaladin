@@ -15,13 +15,13 @@ object UI {
  */
 abstract class UI extends com.vaadin.ui.UI { root =>
 
-  protected def init(request: com.vaadin.server.WrappedRequest): Unit = {
-    init(new WrappedRequest {
+  protected def init(request: com.vaadin.server.VaadinRequest): Unit = {
+    init(new ScaladinRequest {
       val p = request
     })
   }
 
-  protected def init(request: WrappedRequest): Unit
+  protected def init(request: ScaladinRequest): Unit
 
   def uiId: Int = getUIId
   //def rootId_=(rootId: Int): Unit = setUIId(rootId)

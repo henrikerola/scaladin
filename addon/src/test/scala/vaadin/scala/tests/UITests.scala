@@ -14,14 +14,14 @@ class UITests extends FunSuite with BeforeAndAfter {
 
   before {
     ui = new UI {
-      def init(request: WrappedRequest) {
+      def init(request: ScaladinRequest) {
       }
     }
   }
 
   test("UI.current") {
     val ui = new UI {
-      def init(request: WrappedRequest) {
+      def init(request: ScaladinRequest) {
       }
     }
 
