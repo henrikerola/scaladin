@@ -3,6 +3,7 @@ package vaadin.scala
 import vaadin.scala.mixins.TabSheetMixin
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.internal.SelectedTabChangeListener
+import vaadin.scala.internal.ListenersTrait
 
 package mixins {
   trait TabSheetMixin extends AbstractComponentContainerMixin

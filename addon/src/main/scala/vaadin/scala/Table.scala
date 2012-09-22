@@ -14,6 +14,8 @@ import vaadin.scala.internal.ColumnResizeListener
 import vaadin.scala.internal.TableColumnGenerator
 import vaadin.scala.internal.CellStyleGenerator
 import vaadin.scala.internal.WrapperUtil
+import vaadin.scala.internal.ListenersTrait
+import scala.collection.mutable
 
 package mixins {
   trait TableMixin extends AbstractSelectMixin with ContainerOrderedMixin with ContainerSortableMixin with HasComponentsMixin
@@ -225,6 +227,30 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.ColumnReorderListener])
     override def addListener(elem: Table.ColumnReorderEvent => Unit) = p.addListener(new ColumnReorderListener(elem))
     override def removeListener(elem: ColumnReorderListener) = p.removeListener(elem)
+  }
+
+  private val columnGeneratorIds = mutable.HashSet.empty[Any]
+  lazy val columnGenerators: mutable.Map[Any, Table.ColumnGenerationEvent => Option[Any]] = new mutable.Map[Any, Table.ColumnGenerationEvent => Option[Any]] {
+    def -=(id: Any): this.type = {
+      p.removeGeneratedColumn(id)
+      columnGeneratorIds -= id
+      this
+    }
+
+    def +=(parameter: (Any, Table.ColumnGenerationEvent => Option[Any])): this.type = { update(parameter._1, parameter._2); this }
+
+    override def update(id: Any, value: Table.ColumnGenerationEvent => Option[Any]) {
+      columnGeneratorIds += id
+      p.addGeneratedColumn(id, new TableColumnGenerator(value))
+    }
+
+    def get(id: Any) = Option(p.getColumnGenerator(id).asInstanceOf[Table.ColumnGenerationEvent => Option[Any]])
+
+    override def size = columnGeneratorIds.size
+
+    def iterator: Iterator[(Any, Table.ColumnGenerationEvent => Option[Any])] = {
+      columnGeneratorIds.iterator.map { ide => (id, get(id).get) }
+    }
   }
 
   def cellStyleGenerator: Option[Table.CellStyleGenerationEvent => Option[String]] = p.getCellStyleGenerator match {

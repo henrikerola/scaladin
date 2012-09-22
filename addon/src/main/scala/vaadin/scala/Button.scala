@@ -2,7 +2,8 @@ package vaadin.scala
 
 import vaadin.scala.mixins.ButtonMixin
 import vaadin.scala.internal.WrapperUtil
-import vaadin.scala.listeners.ButtonClickListener
+import vaadin.scala.internal.ButtonClickListener
+import vaadin.scala.internal.ListenersTrait
 
 package mixins {
   trait ButtonMixin extends AbstractComponentMixin
@@ -25,12 +26,6 @@ object Button {
   }
 
   case class ClickEvent(button: Button, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends Event
-}
-
-package listeners {
-  class ButtonClickListener(val action: Button.ClickEvent => Unit) extends com.vaadin.ui.Button.ClickListener with Listener {
-    def buttonClick(e: com.vaadin.ui.Button.ClickEvent) = action(Button.ClickEvent(wrapperFor[Button](e.getButton()).get, e.getClientX(), e.getClientY(), e.getRelativeX(), e.getRelativeY(), e.isAltKey(), e.isCtrlKey(), e.isMetaKey(), e.isShiftKey()))
-  }
 }
 
 class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin)

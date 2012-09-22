@@ -2,6 +2,8 @@ package vaadin.scala
 
 import scala.collection.mutable
 import vaadin.scala.internal.WrapperUtil
+import vaadin.scala.internal.ClickListener
+import vaadin.scala.internal.ListenersTrait
 
 object UI {
   def current: UI = com.vaadin.ui.UI.getCurrent.asInstanceOf[UI]

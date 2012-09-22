@@ -12,6 +12,7 @@ class Form(override val p: com.vaadin.ui.Form with FormMixin = new com.vaadin.ui
   //override default implementation with a wrapper
   formFieldFactory = DefaultFieldFactory
   layout = new FormLayout
+  footer = new HorizontalLayout
 
   def formFieldFactory: Option[FormFieldFactory] = wrapperFor[FormFieldFactory](p.getFormFieldFactory)
   def formFieldFactory_=(factory: FormFieldFactory) = p.setFormFieldFactory(factory.p)

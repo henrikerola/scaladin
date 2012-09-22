@@ -29,6 +29,8 @@ object AbstractSelect {
 abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with AbstractSelectMixin)
     extends AbstractField(p) with Container with Container.Viewer {
 
+  // TODO: Move newItemHandler and newItemsAllowed to a trait because not all subclasses of AbstractSelect support new items.
+
   //initial setup of the default newItemHandler
   newItemHandler = new DefaultNewItemHandler(this)
 
@@ -36,6 +38,9 @@ abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with 
   def newItemHandler_=(newItemHandler: NewItemHandler): Unit = p.setNewItemHandler(newItemHandler.p)
   def newItemHandler_=(newItemHandler: Option[NewItemHandler]): Unit = if (newItemHandler.isDefined) p.setNewItemHandler(newItemHandler.get.p) else p.setNewItemHandler(null)
 
+  def newItemsAllowed: Boolean = p.isNewItemsAllowed
+  def newItemsAllowed_=(newItemsAllowed: Boolean): Unit = p.setNewItemsAllowed(newItemsAllowed)
+  
   def itemCaptionMode = AbstractSelect.ItemCaptionMode(p.getItemCaptionMode.ordinal)
   def itemCaptionMode_=(itemCaptionMode: AbstractSelect.ItemCaptionMode.Value) = p.setItemCaptionMode(com.vaadin.ui.AbstractSelect.ItemCaptionMode.values.apply(itemCaptionMode.id))
 

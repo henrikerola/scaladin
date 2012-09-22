@@ -6,6 +6,7 @@ import vaadin.scala.internal.UploadStartedListener
 import vaadin.scala.internal.UploadFinishedListener
 import vaadin.scala.internal.UploadFailedListener
 import vaadin.scala.internal.UploadSucceededListener
+import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.mixins.UploadMixin
 
 package mixins {

@@ -50,6 +50,8 @@ class FormTest extends FunSuite with BeforeAndAfter with MockitoSugar {
   }
 
   test("layout") {
+    form.layout // this should not throw an exception
+    
     val layout = new VerticalLayout
     form.layout = layout
     assert(layout === form.layout)
@@ -62,6 +64,8 @@ class FormTest extends FunSuite with BeforeAndAfter with MockitoSugar {
   }
 
   test("footer") {
+    form.footer // this should not throw an exception
+    
     val footer = new VerticalLayout
     form.footer = footer
     assert(footer === form.footer)

@@ -18,17 +18,6 @@ object Link {
 
 class Link(override val p: com.vaadin.ui.Link with LinkMixin = new com.vaadin.ui.Link with LinkMixin) extends AbstractComponent(p) {
 
-  /*-
-  def this(caption: String = null, resource: Resource = null, targetName: String = null, targetWidth: Int = -1, targetHeight: Int = -1, targetBorder: Link.TargetBorder.Value = Link.TargetBorder.Default) = {
-    this(new com.vaadin.ui.Link)
-    p.setCaption(caption)
-    if (resource != null) p.setResource(resource.p)
-    p.setTargetName(targetName)
-    p.setTargetWidth(targetWidth)
-    p.setTargetHeight(targetHeight)
-    p.setTargetBorder(targetBorder.id)
-  }*/
-  
   def targetName = Option(p.getTargetName)
   def targetName_=(targetName: Option[String]) = p.setTargetName(caption.orNull)
   def targetName_=(targetName: String) = p.setTargetName(targetName)

@@ -1,5 +1,7 @@
 package vaadin.scala
 
+import vaadin.scala.internal.ListenersTrait
+import vaadin.scala.internal.ClickListener
 import vaadin.scala.mixins.PanelMixin
 
 package mixins {
@@ -8,15 +10,6 @@ package mixins {
 
 class Panel(override val p: com.vaadin.ui.Panel with PanelMixin = new com.vaadin.ui.Panel with PanelMixin) extends AbstractComponentContainer(p) with Focusable {
 
-  /*-
-  def this(caption: String = null, width: Option[Measure] = 100 percent, height: Option[Measure] = None, style: String = null) {
-    this()
-    this.caption = caption
-    this.width = width
-    this.height = height
-    p.setStyleName(style)
-  }*/
-  
   // Vaadin Panel sets a default content (VerticalLayout) for Panel but 
   // we must to reset a default content because Panel with PaneMixin is used.
   content = new VerticalLayout {
@@ -39,11 +32,4 @@ class Panel(override val p: com.vaadin.ui.Panel with PanelMixin = new com.vaadin
   }
 
   // TODO: actions
-
-  //  def getComponents(): TraversableOnce[VaadinComponent] = getComponentIterator.asScala.toSeq
-  //
-  //  def add[C <: VaadinComponent](component: C = null): C = {
-  //    addComponent(component)
-  //    component
-  //  }
 }

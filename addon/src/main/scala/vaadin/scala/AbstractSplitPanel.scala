@@ -3,6 +3,8 @@ package vaadin.scala
 import vaadin.scala.mixins.AbstractSplitPanelMixin
 import vaadin.scala.mixins.HorizontalSplitPanelMixin
 import vaadin.scala.mixins.VerticalSplitPanelMixin
+import vaadin.scala.internal.SplitterClickListener
+import vaadin.scala.internal.ListenersTrait
 
 package mixins {
   trait AbstractSplitPanelMixin extends AbstractComponentContainerMixin
@@ -10,11 +12,8 @@ package mixins {
   trait HorizontalSplitPanelMixin extends AbstractSplitPanelMixin
 }
 
-// TODO extend MouseClickEvents.ClickEvent
-case class SplitterClickEvent(component: Component) extends Event
-
-class SplitterClickListener(val action: SplitterClickEvent => Unit) extends com.vaadin.ui.AbstractSplitPanel.SplitterClickListener with Listener {
-  def splitterClick(e: com.vaadin.ui.AbstractSplitPanel.SplitterClickEvent) = action(SplitterClickEvent(wrapperFor[AbstractSplitPanel](e.getComponent()).get))
+object AbstractSplitPanel {
+	case class SplitterClickEvent(component: Component, button: MouseButton.Value, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
 }
 
 abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPanel with AbstractSplitPanelMixin) extends AbstractComponentContainer(p) {
@@ -51,9 +50,9 @@ abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPan
   def locked = p.isLocked
   def locked_=(locked: Boolean) = p.setLocked(locked)
 
-  lazy val splitterClickListeners = new ListenersTrait[SplitterClickEvent, SplitterClickListener] {
+  lazy val splitterClickListeners = new ListenersTrait[AbstractSplitPanel.SplitterClickEvent, SplitterClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.AbstractSplitPanel.SplitterClickEvent])
-    override def addListener(elem: SplitterClickEvent => Unit) = p.addListener(new SplitterClickListener(elem))
+    override def addListener(elem: AbstractSplitPanel.SplitterClickEvent => Unit) = p.addListener(new SplitterClickListener(elem))
     override def removeListener(elem: SplitterClickListener) = p.removeListener(elem)
   }
 

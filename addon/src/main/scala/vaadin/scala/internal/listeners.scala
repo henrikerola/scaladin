@@ -65,3 +65,19 @@ class UploadSucceededListener(val action: Upload.SucceededEvent => Unit) extends
 class ValueChangeListener(val action: ValueChangeEvent => Unit) extends com.vaadin.data.Property.ValueChangeListener with Listener {
   def valueChange(e: com.vaadin.data.Property.ValueChangeEvent) = action(ValueChangeEvent(new BasicProperty(e.getProperty)))
 }
+
+class SplitterClickListener(val action: AbstractSplitPanel.SplitterClickEvent => Unit) extends com.vaadin.ui.AbstractSplitPanel.SplitterClickListener with Listener {
+  def splitterClick(e: com.vaadin.ui.AbstractSplitPanel.SplitterClickEvent) = action(AbstractSplitPanel.SplitterClickEvent(wrapperFor[AbstractSplitPanel](e.getComponent()).get, MouseButton(e.getButton.ordinal), e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
+}
+
+class ButtonClickListener(val action: Button.ClickEvent => Unit) extends com.vaadin.ui.Button.ClickListener with Listener {
+  def buttonClick(e: com.vaadin.ui.Button.ClickEvent) = action(Button.ClickEvent(wrapperFor[Button](e.getButton()).get, e.getClientX(), e.getClientY(), e.getRelativeX(), e.getRelativeY(), e.isAltKey(), e.isCtrlKey(), e.isMetaKey(), e.isShiftKey()))
+}
+
+class TextChangeListener(val action: AbstractTextField.TextChangeEvent => Unit) extends com.vaadin.event.FieldEvents.TextChangeListener with Listener {
+  def textChange(e: com.vaadin.event.FieldEvents.TextChangeEvent) = action(AbstractTextField.TextChangeEvent(wrapperFor[AbstractTextField](e.getComponent).get, e.getText, e.getCursorPosition))
+}
+
+class ClickListener(val action: ClickEvent => Unit) extends com.vaadin.event.MouseEvents.ClickListener with Listener {
+  def click(e: com.vaadin.event.MouseEvents.ClickEvent) = action(ClickEvent(wrapperFor[Table](e.getComponent).get, MouseButton(e.getButton.ordinal), e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
+}

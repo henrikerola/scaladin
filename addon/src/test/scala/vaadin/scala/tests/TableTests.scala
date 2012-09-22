@@ -8,6 +8,7 @@ import org.scalatest.BeforeAndAfter
 import org.scalatest.mock.MockitoSugar
 import vaadin.scala.mixins.TableMixin
 import org.mockito.Mockito
+import org.mockito.ArgumentCaptor
 
 @RunWith(classOf[JUnitRunner])
 class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
@@ -286,6 +287,40 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
     table.footerVisible = true
     assert(table.footerVisible)
+  }
+
+  test("ColumnGenerationEvent") {
+    class ColumnGeneratorFunction extends Function1[Table.ColumnGenerationEvent, Option[Any]] {
+      def apply(x: Table.ColumnGenerationEvent): Option[Any] = None
+    }
+
+    val columnGenerator = new ColumnGeneratorFunction
+    val spy = Mockito.spy(columnGenerator)
+    table.columnGenerators += "colid" -> spy
+
+    table.p.getColumnGenerator("colid").generateCell(table.p, "itemId", "colid")
+
+    val argument = ArgumentCaptor.forClass(classOf[Table.ColumnGenerationEvent]);
+    Mockito.verify(spy).apply(argument.capture())
+    assert(argument.getValue.table === table)
+    assert(argument.getValue.itemId === "itemId")
+    assert(argument.getValue.propertyId === "colid")
+  }
+
+  test("columnGenerators") {
+    val button = new Button
+    
+    table.columnGenerators += "colid1" -> { e => None }
+    table.columnGenerators += "colid2" -> { e => Some("test") }
+    table.columnGenerators += "colid3" -> { e => Some(button) }
+    
+    assert(table.p.getColumnGenerator("colid1").generateCell(table.p, "itemId", "colid1") === null)
+    assert(table.p.getColumnGenerator("colid2").generateCell(table.p, "itemId", "colid2") === "test")
+    assert(table.p.getColumnGenerator("colid3").generateCell(table.p, "itemId", "colid3") === button.p)
+    assert(table.columnGenerators.size === 3)
+    
+    table.columnGenerators -= "colid2"
+    assert(table.columnGenerators.size === 2)
   }
 
   ignore("propertyValueFormatter") {
