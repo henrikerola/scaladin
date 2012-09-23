@@ -18,14 +18,18 @@ object UI {
  * @see com.vaadin.ui.UI
  * @author Henri Kerola / Vaadin
  */
+
 abstract class UI(override val p: WrappedVaadinUI = new WrappedVaadinUI) extends AbstractComponentContainer(p) with DelayedInit {
-  
+
   private var initCode: Option[() => Unit] = None
-  
+
   def delayedInit(body: => Unit) {
+    content = new VerticalLayout {
+      margin = true
+    }
     initCode = Some(() => body)
   }
-  
+
   def doInit(request: ScaladinRequest) {
     for (proc <- initCode) proc()
     init(request)
@@ -51,10 +55,6 @@ abstract class UI(override val p: WrappedVaadinUI = new WrappedVaadinUI) extends
   }
 
   def scrollIntoView(component: Component): Unit = p.scrollIntoView(component.p)
-
-  content = new VerticalLayout {
-    margin = true
-  }
 
   def content: ComponentContainer = WrapperUtil.wrapperFor[ComponentContainer](p.getContent).get
   def content_=(content: ComponentContainer) = p.setContent(content.p)
