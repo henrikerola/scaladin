@@ -5,7 +5,7 @@ import vaadin.scala.ScaladinRequest
 
 class WrappedVaadinUI extends com.vaadin.ui.UI with AbstractComponentContainerMixin {
   protected def init(request: com.vaadin.server.VaadinRequest): Unit = {
-    wrapper.asInstanceOf[vaadin.scala.UI].init(new ScaladinRequest {
+    wrapper.asInstanceOf[vaadin.scala.UI].doInit(new ScaladinRequest {
       val p = request
     })
   }
