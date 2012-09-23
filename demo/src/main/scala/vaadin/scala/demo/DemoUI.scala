@@ -2,6 +2,6 @@ package vaadin.scala.demo
 
 import vaadin.scala._
 
-class DemoApplication extends UI {
+class DemoUI extends UI {
   add(Label("Hello World!"))
 }

@@ -14,7 +14,7 @@
 			<description>
 			Vaadin application class to start</description>
 			<param-name>ScaladinUI</param-name>
-			<param-value>vaadin.scala.demo.DemoApplication</param-value>
+			<param-value>vaadin.scala.demo.DemoUI</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
