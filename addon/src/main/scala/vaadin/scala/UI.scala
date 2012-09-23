@@ -6,6 +6,7 @@ import vaadin.scala.internal.ClickListener
 import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.mixins.AbstractComponentContainerMixin
 import vaadin.scala.internal.WrappedVaadinUI
+import scala.collection.mutable.ListBuffer
 
 object UI {
   //def current: UI = com.vaadin.ui.UI.getCurrent
@@ -17,12 +18,24 @@ object UI {
  * @see com.vaadin.ui.UI
  * @author Henri Kerola / Vaadin
  */
-abstract class UI(override val p: WrappedVaadinUI = new WrappedVaadinUI) extends AbstractComponentContainer(p) {
+abstract class UI(override val p: WrappedVaadinUI = new WrappedVaadinUI) extends AbstractComponentContainer(p) with DelayedInit {
+  
+  private var initCode: Option[() => Unit] = None
+  
+  def delayedInit(body: => Unit) {
+    initCode = Some(() => body)
+  }
+  
+  def doInit(request: ScaladinRequest) {
+    for (proc <- initCode) proc()
+    init(request)
+  }
 
-  def init(request: ScaladinRequest): Unit
+  def init(request: ScaladinRequest) {
+    // This can be overridden in subclass if access to ScaladinRequest is needed in initialization code  
+  }
 
   def uiId: Int = p.getUIId
-  //def rootId_=(rootId: Int): Unit = setUIId(rootId)
 
   def windows: mutable.Set[Window] = new mutable.Set[Window] {
     import scala.collection.JavaConversions.asScalaIterator
