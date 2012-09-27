@@ -64,8 +64,8 @@ abstract class UI(override val p: WrappedVaadinUI = new WrappedVaadinUI) extends
   // TODO: the same clickListeners can be found from Panel and Embedded, use a trait instead of copy-pasting? 
   lazy val clickListeners = new ListenersTrait[ClickEvent, ClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.event.MouseEvents.ClickListener])
-    override def addListener(elem: ClickEvent => Unit) = p.addListener(new ClickListener(elem))
-    override def removeListener(elem: ClickListener) = p.removeListener(elem)
+    override def addListener(elem: ClickEvent => Unit) = p.addClickListener(new ClickListener(elem))
+    override def removeListener(elem: ClickListener) = p.removeClickListener(elem)
   }
 
   // TODO: setScrollTop

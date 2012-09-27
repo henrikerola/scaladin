@@ -55,7 +55,7 @@ abstract class AbstractTextField(override val p: com.vaadin.ui.AbstractTextField
 
   lazy val textChangeListeners = new ListenersTrait[AbstractTextField.TextChangeEvent, TextChangeListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.event.FieldEvents.TextChangeEvent])
-    override def addListener(elem: AbstractTextField.TextChangeEvent => Unit) = p.addListener(new TextChangeListener(elem))
-    override def removeListener(elem: TextChangeListener) = p.removeListener(elem)
+    override def addListener(elem: AbstractTextField.TextChangeEvent => Unit) = p.addTextChangeListener(new TextChangeListener(elem))
+    override def removeListener(elem: TextChangeListener) = p.removeTextChangeListener(elem)
   }
 }

@@ -96,7 +96,7 @@ abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with Abs
   def data_=(data: Any) = p.setData(data)
   def data = p.getData
 
-  def requestRepaint() = p.requestRepaint()
+  def markAsDirty() = p.markAsDirty();
 }
 
 trait Focusable extends Component {

@@ -52,8 +52,8 @@ abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPan
 
   lazy val splitterClickListeners = new ListenersTrait[AbstractSplitPanel.SplitterClickEvent, SplitterClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.AbstractSplitPanel.SplitterClickEvent])
-    override def addListener(elem: AbstractSplitPanel.SplitterClickEvent => Unit) = p.addListener(new SplitterClickListener(elem))
-    override def removeListener(elem: SplitterClickListener) = p.removeListener(elem)
+    override def addListener(elem: AbstractSplitPanel.SplitterClickEvent => Unit) = p.addSplitterClickListener(new SplitterClickListener(elem))
+    override def removeListener(elem: SplitterClickListener) = p.removeSplitterClickListener(elem)
   }
 
 }

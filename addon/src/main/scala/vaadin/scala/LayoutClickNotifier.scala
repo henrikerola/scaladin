@@ -8,7 +8,7 @@ case class LayoutClickEvent(component: Component, clickedComponent: Component, c
 trait LayoutClickNotifier { self: { def p: com.vaadin.ui.AbstractLayout with com.vaadin.event.LayoutEvents.LayoutClickNotifier; } =>
   lazy val layoutClickListeners = new ListenersTrait[LayoutClickEvent, LayoutClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.event.LayoutEvents.LayoutClickEvent])
-    override def addListener(elem: LayoutClickEvent => Unit) = p.addListener(new LayoutClickListener(elem))
-    override def removeListener(elem: LayoutClickListener) = p.removeListener(elem)
+    override def addListener(elem: LayoutClickEvent => Unit) = p.addLayoutClickListener(new LayoutClickListener(elem))
+    override def removeListener(elem: LayoutClickListener) = p.removeLayoutClickListener(elem)
   }
 }

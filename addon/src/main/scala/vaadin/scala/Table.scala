@@ -207,26 +207,26 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
    */
   lazy val headerClickListeners = new ListenersTrait[Table.HeaderClickEvent, HeaderClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.HeaderClickListener])
-    override def addListener(elem: Table.HeaderClickEvent => Unit) = p.addListener(new HeaderClickListener(elem))
-    override def removeListener(elem: HeaderClickListener) = p.removeListener(elem)
+    override def addListener(elem: Table.HeaderClickEvent => Unit) = p.addHeaderClickListener(new HeaderClickListener(elem))
+    override def removeListener(elem: HeaderClickListener) = p.removeHeaderClickListener(elem)
   }
 
   lazy val footerClickListeners = new ListenersTrait[Table.FooterClickEvent, FooterClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.FooterClickListener])
-    override def addListener(elem: Table.FooterClickEvent => Unit) = p.addListener(new FooterClickListener(elem))
-    override def removeListener(elem: FooterClickListener) = p.removeListener(elem)
+    override def addListener(elem: Table.FooterClickEvent => Unit) = p.addFooterClickListener(new FooterClickListener(elem))
+    override def removeListener(elem: FooterClickListener) = p.removeFooterClickListener(elem)
   }
 
   lazy val columnResizeListeners = new ListenersTrait[Table.ColumnResizeEvent, ColumnResizeListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.ColumnReorderListener])
-    override def addListener(elem: Table.ColumnResizeEvent => Unit) = p.addListener(new ColumnResizeListener(elem))
-    override def removeListener(elem: ColumnResizeListener) = p.removeListener(elem)
+    override def addListener(elem: Table.ColumnResizeEvent => Unit) = p.addColumnResizeListener(new ColumnResizeListener(elem))
+    override def removeListener(elem: ColumnResizeListener) = p.removeColumnResizeListener(elem)
   }
 
   lazy val columnReorderListeners = new ListenersTrait[Table.ColumnReorderEvent, ColumnReorderListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.ColumnReorderListener])
-    override def addListener(elem: Table.ColumnReorderEvent => Unit) = p.addListener(new ColumnReorderListener(elem))
-    override def removeListener(elem: ColumnReorderListener) = p.removeListener(elem)
+    override def addListener(elem: Table.ColumnReorderEvent => Unit) = p.addColumnReorderListener(new ColumnReorderListener(elem))
+    override def removeListener(elem: ColumnReorderListener) = p.removeColumnReorderListener(elem)
   }
 
   private val columnGeneratorIds = mutable.HashSet.empty[Any]

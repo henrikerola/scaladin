@@ -27,8 +27,8 @@ class Panel(override val p: com.vaadin.ui.Panel with PanelMixin = new com.vaadin
 
   lazy val clickListeners = new ListenersTrait[ClickEvent, ClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.event.MouseEvents.ClickListener])
-    override def addListener(elem: ClickEvent => Unit) = p.addListener(new ClickListener(elem))
-    override def removeListener(elem: ClickListener) = p.removeListener(elem)
+    override def addListener(elem: ClickEvent => Unit) = p.addClickListener(new ClickListener(elem))
+    override def removeListener(elem: ClickListener) = p.removeClickListener(elem)
   }
 
   // TODO: actions

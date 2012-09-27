@@ -51,8 +51,8 @@ class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaa
 
   lazy val clickListeners = new ListenersTrait[Button.ClickEvent, ButtonClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Button.ClickEvent])
-    override def addListener(elem: Button.ClickEvent => Unit) = p.addListener(new ButtonClickListener(elem))
-    override def removeListener(elem: ButtonClickListener) = p.removeListener(elem)
+    override def addListener(elem: Button.ClickEvent => Unit) = p.addClickListener(new ButtonClickListener(elem))
+    override def removeListener(elem: ButtonClickListener) = p.removeClickListener(elem)
   }
 }
 
