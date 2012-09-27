@@ -2,9 +2,9 @@ package vaadin.scala
 
 import com.vaadin.server.VaadinServlet
 import javax.servlet.ServletConfig
-import com.vaadin.server.VaadinSessionInitializationListener
-import com.vaadin.server.VaadinSessionInitializeEvent
 import vaadin.scala.internal.ScaladinUIProvider
+import com.vaadin.server.SessionInitListener
+import com.vaadin.server.SessionInitEvent
 
 class ScaladinServlet extends VaadinServlet {
 
@@ -14,9 +14,9 @@ class ScaladinServlet extends VaadinServlet {
   }
 
   private def registerUIProvider() {
-    getVaadinService.addVaadinSessionInitializationListener(new VaadinSessionInitializationListener {
-      def vaadinSessionInitialized(e: VaadinSessionInitializeEvent) {
-        e.getVaadinSession.addUIProvider(new ScaladinUIProvider)
+    getService.addSessionInitListener(new SessionInitListener {
+      def sessionInit(e: SessionInitEvent) {
+        e.getService.addUIProvider(e.getSession, new ScaladinUIProvider)
       }
     })
   }
