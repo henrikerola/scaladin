@@ -16,7 +16,7 @@ class ScaladinServlet extends VaadinServlet {
   private def registerUIProvider() {
     getService.addSessionInitListener(new SessionInitListener {
       def sessionInit(e: SessionInitEvent) {
-        e.getService.addUIProvider(e.getSession, new ScaladinUIProvider)
+        e.getSession.addUIProvider(new ScaladinUIProvider)
       }
     })
   }
