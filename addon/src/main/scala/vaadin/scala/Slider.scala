@@ -5,7 +5,7 @@ package mixins {
   trait SliderMixin extends AbstractFieldMixin
 }
 
-abstract class AbstractSlider(override val p: com.vaadin.ui.Slider with SliderMixin) extends AbstractField(p) {
+abstract class AbstractSlider(override val p: com.vaadin.ui.Slider with SliderMixin) extends AbstractField[java.lang.Double](p) {
 
   def min = p.getMin
   def min_=(min: Double) = p.setMin(min)

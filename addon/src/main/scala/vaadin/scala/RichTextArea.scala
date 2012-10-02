@@ -6,7 +6,7 @@ package mixins {
   trait RichTextAreaMixin extends AbstractFieldMixin
 }
 
-class RichTextArea(override val p: com.vaadin.ui.RichTextArea with RichTextAreaMixin = new com.vaadin.ui.RichTextArea with RichTextAreaMixin) extends AbstractField(p) {
+class RichTextArea(override val p: com.vaadin.ui.RichTextArea with RichTextAreaMixin = new com.vaadin.ui.RichTextArea with RichTextAreaMixin) extends AbstractField[String](p) {
 
   def selectAll() = p.selectAll()
 

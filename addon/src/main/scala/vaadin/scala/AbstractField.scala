@@ -11,7 +11,7 @@ package mixins {
 
 trait Field[T] extends Component with BufferedValidatable with Property[T] with Focusable with Wrapper {
 
-  def p: com.vaadin.ui.Field[_] with FieldMixin
+  def p: com.vaadin.ui.Field[T] with FieldMixin
 
   //readOnly is inherited from Component and Property, needs override
   override def readOnly: Boolean = p.isReadOnly
@@ -29,7 +29,7 @@ trait Field[T] extends Component with BufferedValidatable with Property[T] with 
   def requiredError_=(requiredError: Option[String]): Unit = p.setRequiredError(requiredError.orNull)
 }
 
-abstract class AbstractField[T](override val p: com.vaadin.ui.AbstractField[_] with AbstractFieldMixin) extends AbstractComponent(p) with Field[T] with PropertyViewer with Focusable with ValueChangeNotifier {
+abstract class AbstractField[T](override val p: com.vaadin.ui.AbstractField[T] with AbstractFieldMixin) extends AbstractComponent(p) with Field[T] with PropertyViewer with Focusable with ValueChangeNotifier {
 
   //description is inherited from AbstractComponent and Field, needs override
   //  override def description: Option[String] = Option(p.getDescription)

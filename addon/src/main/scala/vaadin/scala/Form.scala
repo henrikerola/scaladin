@@ -7,7 +7,7 @@ package mixins {
   trait FormMixin extends AbstractFieldMixin with HasComponentsMixin
 }
 
-class Form(override val p: com.vaadin.ui.Form with FormMixin = new com.vaadin.ui.Form with FormMixin) extends AbstractField(p) with Item.Viewer with Buffered with HasComponents {
+class Form(override val p: com.vaadin.ui.Form with FormMixin = new com.vaadin.ui.Form with FormMixin) extends AbstractField[Object](p) with Item.Viewer with Buffered with HasComponents {
 
   //override default implementation with a wrapper
   formFieldFactory = DefaultFieldFactory

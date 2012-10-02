@@ -27,7 +27,7 @@ object AbstractSelect {
 }
 
 abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with AbstractSelectMixin)
-    extends AbstractField(p) with Container with Container.Viewer {
+    extends AbstractField[Object](p) with Container with Container.Viewer {
 
   // TODO: Move newItemHandler and newItemsAllowed to a trait because not all subclasses of AbstractSelect support new items.
 

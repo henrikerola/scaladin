@@ -35,7 +35,7 @@ object DateField {
 }
 
 class DateField(override val p: com.vaadin.ui.DateField with DateFieldMixin = new com.vaadin.ui.DateField with DateFieldMixin)
-  extends AbstractField(p) with BlurNotifier with FocusNotifier {
+  extends AbstractField[java.util.Date](p) with BlurNotifier with FocusNotifier {
 
   resolution = DateField.Resolution.Second
 
