@@ -15,10 +15,10 @@ class GridLayout(override val p: com.vaadin.ui.GridLayout with GridLayoutMixin =
     extends AbstractLayout(p) with SpacingHandler with AlignmentHandler with LayoutClickNotifier {
 
   def add[C <: Component](component: C = null, col: Int = -1, row: Int = -1, col2: Int = -1, row2: Int = -1, alignment: Alignment.Value = null): C = {
-    if (col >= 0 && row >= 0)
-      p.addComponent(component.p, col, row)
-    else if (col >= 0 && row >= 0 && col2 >= 0 && row2 >= 0)
+    if (col >= 0 && row >= 0 && col2 >= 0 && row2 >= 0)
       p.addComponent(component.p, col, row, col2, row2)
+    else if (col >= 0 && row >= 0)
+      p.addComponent(component.p, col, row)
     else
       p.addComponent(component.p)
     if (alignment != null) this.alignment(component, alignment)
