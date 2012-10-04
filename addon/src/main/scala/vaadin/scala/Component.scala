@@ -64,9 +64,11 @@ trait Component extends Wrapper {
   def icon_=(icon: Option[Resource]) = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
   def icon_=(icon: Resource) = p.setIcon(icon.p)
 
-  def window = wrapperFor[Window](p.getWindow)
-
-  def application = Option(p.getApplication)
+  // component's window or application is null when it's not attached to an application instance 
+  // but here we assume that the normal situation is that a component is attached to an app instance 
+  // when window or application is called so not using Option here  
+  def window: Window = wrapperFor[Window](p.getWindow).orNull
+  def application: vaadin.scala.Application = p.getApplication.asInstanceOf[vaadin.scala.Application]
 
   def locale = Option(p.getLocale)
 
