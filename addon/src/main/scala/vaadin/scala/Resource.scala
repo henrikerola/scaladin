@@ -25,6 +25,11 @@ trait Resource extends Wrapper {
   def mimeType = p.getMIMEType
 }
 
+object ExternalResource {
+  def apply(sourceUrl: String): ExternalResource = new ExternalResource(sourceUrl)
+  def apply(sourceUrl: String, mimeType: String): ExternalResource = new ExternalResource(sourceUrl, mimeType)
+}
+
 class ExternalResource(override val p: com.vaadin.terminal.ExternalResource with ResourceMixin) extends Resource {
 
   def this(sourceUrl: String, mimeType: String = null) {
@@ -33,6 +38,10 @@ class ExternalResource(override val p: com.vaadin.terminal.ExternalResource with
 
   def url = p.getURL
 
+}
+
+object ThemeResource {
+  def apply(resourceId: String): ThemeResource = new ThemeResource(resourceId)
 }
 
 class ThemeResource(override val p: com.vaadin.terminal.ThemeResource with ResourceMixin) extends Resource {

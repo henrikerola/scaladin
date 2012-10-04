@@ -10,6 +10,12 @@ package mixins {
 }
 
 object Button {
+  
+  def apply(caption: String) {
+    val button = new Button
+    button.caption = caption
+    button
+  }
 
   def apply(caption: String, clickListener: => Unit): Button = {
     val button = new Button
