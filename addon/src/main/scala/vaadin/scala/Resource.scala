@@ -1,6 +1,7 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.ResourceMixin
+import java.io.File
 
 package mixins {
   trait ResourceMixin extends ScaladinMixin
@@ -48,5 +49,17 @@ class ThemeResource(override val p: com.vaadin.terminal.ThemeResource with Resou
 
   def this(resourceId: String) {
     this(new com.vaadin.terminal.ThemeResource(resourceId) with ResourceMixin)
+  }
+}
+
+object FileResource {
+  def apply(sourceFile: File, application: vaadin.scala.Application): FileResource = new FileResource(sourceFile, application)
+}
+
+// TODO: should extend ApplicationResource
+class FileResource(override val p: com.vaadin.terminal.FileResource with ResourceMixin) extends Resource {
+  
+  def this(sourceFile: File, application: vaadin.scala.Application) {
+    this(new com.vaadin.terminal.FileResource(sourceFile, application) with ResourceMixin)
   }
 }
