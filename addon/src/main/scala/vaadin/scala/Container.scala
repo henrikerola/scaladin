@@ -50,7 +50,7 @@ trait Container extends Wrapper {
 
   def getType(propertyId: Any): Class[_] = p.getType(propertyId)
 
-  protected def wrapItem(unwrapped: com.vaadin.data.Item): Item
+  def wrapItem(unwrapped: com.vaadin.data.Item): Item
 
   //override if needed
   protected def wrapProperty(unwrapped: com.vaadin.data.Property): Property = new BasicProperty(unwrapped)
@@ -60,8 +60,8 @@ trait Container extends Wrapper {
     case _ => None
   }
 
-  protected def optionalWrapProperty(item: com.vaadin.data.Property): Option[Property] = item match {
-    case i: com.vaadin.data.Item => Some(wrapProperty(i))
+  protected def optionalWrapProperty(property: com.vaadin.data.Property): Option[Property] = property match {
+    case p: com.vaadin.data.Property => Some(wrapProperty(p))
     case _ => None
   }
 }

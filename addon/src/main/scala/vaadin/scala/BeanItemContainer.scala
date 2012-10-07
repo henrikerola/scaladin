@@ -22,7 +22,7 @@ class BeanItemContainer[BT](override val p: com.vaadin.data.util.BeanItemContain
 
   def addBean(bean: BT): BeanItem[BT] = new BeanItem[BT](bean)
 
-  protected def wrapItem(unwrapped: com.vaadin.data.Item): Item = new BeanItem[Any](unwrapped)
+  def wrapItem(unwrapped: com.vaadin.data.Item): Item = new BeanItem[Any](unwrapped)
 }
 
 class BeanItem[BT](override val p: com.vaadin.data.util.BeanItem[BT]) extends Item {
