@@ -3,7 +3,6 @@ package vaadin.scala.tests
 import org.scalatest.FunSuite
 import vaadin.scala._
 import com.vaadin.terminal.Sizeable
-import com.vaadin.data.util.IndexedContainer
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
@@ -23,6 +22,11 @@ class SelectTests extends FunSuite {
     assert(comboBox.p.getStyleName === "")
     assert(comboBox.p.getInputPrompt === null)
     assert(comboBox.p.isNullSelectionAllowed)
+  }
+  
+  test("container") {
+    val comboBox = new ComboBox
+    assert(comboBox.container.get.isInstanceOf[IndexedContainer])
   }
 
 }

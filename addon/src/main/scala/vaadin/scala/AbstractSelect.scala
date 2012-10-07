@@ -33,6 +33,7 @@ abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with 
 
   //initial setup of the default newItemHandler
   newItemHandler = new DefaultNewItemHandler(this)
+  container = new IndexedContainer
 
   def newItemHandler: Option[NewItemHandler] = WrapperUtil.wrapperFor[NewItemHandler](p.getNewItemHandler)
   def newItemHandler_=(newItemHandler: NewItemHandler): Unit = p.setNewItemHandler(newItemHandler.p)

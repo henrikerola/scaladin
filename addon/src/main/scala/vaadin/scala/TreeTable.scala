@@ -15,6 +15,8 @@ package mixins {
  */
 class TreeTable(override val p: com.vaadin.ui.TreeTable with TreeTableMixin = new com.vaadin.ui.TreeTable with TreeTableMixin)
     extends Table(p) with Container.Hierarchical with ExpandNotifier with CollapseNotifier {
+  
+  // TODO: should set container to wrapped HierarchicalContainer
 
   def collapsed(itemId: Any, collapsed: Boolean) = p.setCollapsed(itemId, collapsed)
 

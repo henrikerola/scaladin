@@ -23,6 +23,8 @@ object Tree {
  */
 class Tree(override val p: com.vaadin.ui.Tree with TreeMixin = new com.vaadin.ui.Tree with TreeMixin)
     extends AbstractSelect(p) with Container.Hierarchical with ItemDescriptionGeneratorOwner with ItemClickNotifier with ExpandNotifier with CollapseNotifier {
+  
+  // TODO: should set container to wrapped HierarchicalContainer
 
   def expanded(itemId: Any): Boolean = p.isExpanded(itemId)
 
