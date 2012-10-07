@@ -6,6 +6,7 @@ import com.vaadin.terminal.Sizeable
 import vaadin.scala.Property
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import scala.xml.NodeBuffer
 
 @RunWith(classOf[JUnitRunner])
 class LabelTests extends FunSuite {
@@ -44,6 +45,21 @@ class LabelTests extends FunSuite {
     val label = new Label
     label.value = Some("test value")
     assert(label.value === Some("test value"))
+  }
+  
+  test("value: XML Node") {
+    val label = new Label
+    label.value = <b>Hello World!</b>
+    assert(label.value === Some("<b>Hello World!</b>"))
+  }
+  
+  test("value: XML NodeBuffer") {
+    val label = new Label
+
+    val nodeBuffer = new NodeBuffer
+    nodeBuffer + <b>Hello World!</b>
+    label.value = nodeBuffer
+    assert(label.value === Some("<b>Hello World!</b>"))
   }
 
   test("contentMode: null content mode throws exception") {
