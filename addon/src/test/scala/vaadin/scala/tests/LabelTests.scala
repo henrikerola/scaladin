@@ -57,7 +57,7 @@ class LabelTests extends FunSuite {
     val label = new Label
 
     val nodeBuffer = new NodeBuffer
-    nodeBuffer + <b>Hello World!</b>
+    nodeBuffer += <b>Hello World!</b>
     label.value = nodeBuffer
     assert(label.value === Some("<b>Hello World!</b>"))
   }
