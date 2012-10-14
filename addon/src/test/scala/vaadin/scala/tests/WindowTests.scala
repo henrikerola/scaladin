@@ -83,8 +83,8 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   test("modal") {
     assert(!window.modal)
 
-    window.modal = false
-    assert(!window.modal)
+    window.modal = true
+    assert(window.modal)
   }
 
   test("closable") {
