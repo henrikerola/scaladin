@@ -52,4 +52,8 @@ class TreeTableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     treeTable.animationsEnabled = true
     assert(treeTable.animationsEnabled)
   }
+  
+  test("container") {
+    assert(treeTable.container.get.getClass === classOf[HierarchicalContainer])
+  }
 }
