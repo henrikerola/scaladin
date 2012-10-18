@@ -16,7 +16,8 @@ object BuildSettings {
     version := buildVersion,
     scalaVersion := buildScalaVersion,
     scalacOptions ++= Seq("-deprecation", "-unchecked", "-encoding", "UTF-8"),
-    autoScalaLibrary := true)
+    autoScalaLibrary := true,
+    offline := false)
 
   val manifestAttributes = Seq(Package.ManifestAttributes(
     ("Implementation-Title" -> buildName),
@@ -32,6 +33,7 @@ object Dependencies {
   val junitVersion = "4.9"
   val mockitoVersion = "1.9.0"
 
+  val scala = "org.scala-lang" % "scala-library" % BuildSettings.buildScalaVersion % "provided"
   val vaadin = "com.vaadin" % "vaadin" % vaadinVersion
   val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
   val scalaTest = "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
@@ -45,7 +47,7 @@ object ScaladinBuild extends Build {
 
   lazy val addonSettings = buildSettings ++ jacoco.settings ++ Seq(
     name := buildName,
-    libraryDependencies := Seq(vaadin, scalaTest, junitInterface, mockito),
+    libraryDependencies := Seq(scala, vaadin, scalaTest, junitInterface, mockito),
     packageConfiguration in Compile in packageBin ~= { 
       (config: Package.Configuration) => new Package.Configuration(config.sources, config.jar, manifestAttributes) 
     },
