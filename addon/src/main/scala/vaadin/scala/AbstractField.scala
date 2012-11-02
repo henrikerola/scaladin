@@ -36,5 +36,7 @@ abstract class AbstractField(override val p: com.vaadin.ui.AbstractField with Ab
   override def description_=(description: String): Unit = p.setDescription(description)
   override def description_=(description: Option[String]): Unit = p.setDescription(description.orNull)
 
+  def validationVisible: Boolean = p.isValidationVisible
+  def validationVisible_=(isValidationVisible: Boolean): Unit = p.setValidationVisible(isValidationVisible)
 }
 
