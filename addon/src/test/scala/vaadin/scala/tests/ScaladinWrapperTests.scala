@@ -6,6 +6,7 @@ import vaadin.scala._
 import vaadin.scala.mixins.ComponentMixin
 import vaadin.scala.mixins.ComponentContainerMixin
 import org.scalatest.FunSuite
+import vaadin.scala.implicits._
 
 @RunWith(classOf[JUnitRunner])
 class ScaladinWrapperTests extends FunSuite {
@@ -15,7 +16,7 @@ class ScaladinWrapperTests extends FunSuite {
     assert(wrapper.p.isInstanceOf[com.vaadin.ui.TextField])
 
     //can call without cast
-    wrapper.p.getInputPrompt()
+    wrapper.getInputPrompt
   }
 
   test("wrapped ComponentContainer has correct wrapped type") {
@@ -23,6 +24,6 @@ class ScaladinWrapperTests extends FunSuite {
     assert(wrapper.p.isInstanceOf[com.vaadin.ui.VerticalLayout])
 
     //can call without cast
-    wrapper.p.getExpandRatio(null)
+    wrapper.getExpandRatio(null)
   }
 }

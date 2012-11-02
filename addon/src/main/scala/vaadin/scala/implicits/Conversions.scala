@@ -12,4 +12,9 @@ package object implicits {
   }
 
   implicit def propertyListToValueWrap[P <: Property](pl: List[P]) = new PropertyListWrap(pl)
+
+  import vaadin.scala.mixins.ComponentMixin
+  import vaadin.scala.mixins.ComponentContainerMixin
+  implicit def wrapperComponentToWrapped[W <: com.vaadin.ui.Component with ComponentMixin](wrapper: ScaladinComponentWrapper[W]): W = wrapper.p.asInstanceOf[W]
+  implicit def wrapperComponentContainerToWrapped[W <: com.vaadin.ui.ComponentContainer with ComponentContainerMixin](wrapper: ScaladinComponentContainerWrapper[W]): W = wrapper.p.asInstanceOf[W]
 }
