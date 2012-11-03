@@ -23,7 +23,7 @@ object FilesystemContainer {
   import scala.collection.JavaConverters._
   val FileProperties: Iterable[String] = com.vaadin.data.util.FilesystemContainer.FILE_PROPERTIES.asScala
 
-  def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_] = new FileProperty(unwrapped)
+  def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_] = new BasicProperty(unwrapped) //TODO: new FileProperty(unwrapped)
 
   class FileItem(override val p: com.vaadin.data.util.FilesystemContainer#FileItem) extends Item {
     def lastModified: Date = p.lastModified
@@ -34,12 +34,12 @@ object FilesystemContainer {
     protected override def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_] = FilesystemContainer.wrapProperty(unwrapped)
   }
 
-  class FileProperty(override val p: com.vaadin.data.Property[_]) extends BasicProperty(p) {
-    override def value = super.value match {
-      //case Some(r: com.vaadin.terminal.Resource) => Resource.mapResource(Some(r)) // FIXME ??
-      case other => other
-    }
-  }
+//  class FileProperty(override val p: com.vaadin.data.Property[_]) extends BasicProperty(p) {
+//    override def value = super.value match {
+//      //case Some(r: com.vaadin.terminal.Resource) => Resource.mapResource(Some(r)) // FIXME ??
+//      case other => other
+//    }
+//  }
 }
 
 class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContainer with FilesystemContainerMixin) extends Container.Hierarchical {

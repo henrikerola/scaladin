@@ -10,7 +10,7 @@ package mixins {
  * @see com.vaadin.ui.ProgressIndicator
  * @author Henri Kerola / Vaadin
  */
-class ProgressIndicator(override val p: com.vaadin.ui.ProgressIndicator with ProgressIndicatorMixin = new com.vaadin.ui.ProgressIndicator with ProgressIndicatorMixin) extends AbstractField[Number](p) {
+class ProgressIndicator(override val p: com.vaadin.ui.ProgressIndicator with ProgressIndicatorMixin = new com.vaadin.ui.ProgressIndicator with ProgressIndicatorMixin) extends AbstractField[java.lang.Float](p) {
 
   def indeterminate: Boolean = p.isIndeterminate
   def indeterminate_=(indeterminate: Boolean) = p.setIndeterminate(indeterminate)

@@ -8,17 +8,6 @@ import scala.collection.mutable
 
 object ScaladinRequest {
 
-  trait BrowserDetails { browserDetails =>
-
-    val p: com.vaadin.server.VaadinRequest.BrowserDetails
-
-    def uriFragment: String = p.getUriFragment // TODO: can be null?
-
-    def windowName: String = p.getWindowName // TODO: can be null?
-
-    // TODO: WebBrowser
-  }
-
   trait DeploymentConfiguration {
 
     val p: com.vaadin.server.DeploymentConfiguration
@@ -62,10 +51,6 @@ trait ScaladinRequest { scaladinRequest =>
   def wrappedSession(allowSessionCreation: Boolean): Option[com.vaadin.server.WrappedSession] = Option(p.getWrappedSession) // TODO: return wrapped WrappedSession
 
   def contentType: Option[String] = Option(p.getContentType)
-
-  def browserDetails: ScaladinRequest.BrowserDetails = new ScaladinRequest.BrowserDetails {
-    val p = scaladinRequest.p.getBrowserDetails
-  }
 
   def locale: Locale = p.getLocale
 
