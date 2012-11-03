@@ -5,6 +5,7 @@ import org.scalatest.junit.JUnitRunner
 import vaadin.scala._
 import org.scalatest.BeforeAndAfter
 import org.scalatest.FunSuite
+import scala.reflect.BeanProperty
 
 @RunWith(classOf[JUnitRunner])
 class BeanItemContainerTests extends FunSuite
@@ -30,5 +31,13 @@ class BeanItemContainerTests extends FunSuite
     val item = new BeanItem(bean)
 
     assert(bean === item.bean)
+  }
+  
+  test("propertyIds should return correct field names") {
+    case class Foo(@BeanProperty var bar: String, @BeanProperty var baz: Int)
+    
+    val bean = new Foo("test", 123)
+    val container = new BeanItemContainer(bean :: Nil)
+    assert(container.item(bean).get.propertyIds.toSeq === List("bar", "baz").toSeq)
   }
 }

@@ -64,6 +64,7 @@ trait Component extends Wrapper {
   def icon_=(icon: Option[Resource]) = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
   def icon_=(icon: Resource) = p.setIcon(icon.p)
 
+  // TODO: return UI instead of Option[UI]?
   def ui = wrapperFor[UI](p.getUI)
 
   def locale = Option(p.getLocale)
@@ -75,11 +76,6 @@ trait Component extends Wrapper {
   //override def toString = p.toString
 
   // TODO: ..
-}
-
-trait ScaladinWrapper extends com.vaadin.ui.Component with Component with ComponentMixin {
-  def p: this.type = this
-  p.wrapper = this
 }
 
 abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with AbstractComponentMixin) extends Component with Sizeable {

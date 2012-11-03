@@ -24,4 +24,22 @@ class ItemTests extends FunSuite with BeforeAndAfter {
     assert(viewer.item != None, "Item was None after setting")
     assert(viewer.item.get.isInstanceOf[BeanItem[_]], "Item was of type %s instead of BeanItem".format(viewer.item))
   }
+
+  test("item creation with one property") {
+    val result = Item('testId -> "foobar")
+    assert(1 === result.propertyIds.size)
+    val property = result.property('testId).get
+    assert(classOf[String] === property.getType)
+    assert(Some("foobar") === property.value)
+  }
+
+  test("item creation with three properties") {
+    val result = Item('testId1 -> "foobar1", 'testId2 -> "foobar2", 'testId3 -> "foobar3")
+    assert(3 === result.propertyIds.size)
+    for (propertyId <- result.propertyIds) {
+      val property = result.property(propertyId).get
+      assert(classOf[String] === property.getType)
+      assert(true === property.value.get.asInstanceOf[String].startsWith("foobar"))
+    }
+  }
 }

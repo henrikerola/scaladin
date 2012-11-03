@@ -50,7 +50,7 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
   def modal_=(modal: Boolean) = p.setModal(modal)
   def modal: Boolean = p.isModal
 
-  def closable_=(closable: Boolean) = p.setClosable(modal)
+  def closable_=(closable: Boolean) = p.setClosable(closable)
   def closable: Boolean = p.isClosable
 
   def draggable_=(draggable: Boolean) = p.setDraggable(draggable)

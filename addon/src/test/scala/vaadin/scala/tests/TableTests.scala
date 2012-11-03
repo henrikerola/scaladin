@@ -24,8 +24,8 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     val vaadinTable = new VaadinTable
     spy = Mockito.spy(vaadinTable)
     table = new Table(spy)
-    table.p.addContainerProperty("col1", classOf[String], "")	
-    table.p.addContainerProperty("col2", classOf[String], "")
+    table.addContainerProperty("col1", classOf[String], Some(""))
+    table.addContainerProperty("col2", classOf[String], Some(""))
   }
 
   test("ColumnHeaderModes") {
@@ -53,6 +53,8 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   }
 
   test("visibleColumns") {
+    Mockito.reset(spy)
+    
     assert(table.visibleColumns === "col1" :: "col2" :: Nil)
 
     table.visibleColumns = "col1" :: Nil
@@ -321,6 +323,10 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     
     table.columnGenerators -= "colid2"
     assert(table.columnGenerators.size === 2)
+  }
+  
+  test("container") {
+    assert(table.container.get.isInstanceOf[IndexedContainer])
   }
 
   ignore("propertyValueFormatter") {

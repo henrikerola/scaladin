@@ -4,8 +4,32 @@ import org.scalatest.FunSuite
 import vaadin.scala.Container
 import vaadin.scala.Container.Indexed
 import vaadin.scala.Container.Ordered
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
-trait ContainerTest extends FunSuite {
+@RunWith(classOf[JUnitRunner])
+class ContainerTests extends FunSuite {
+
+  test("container creation with one item and one property") {
+    val result = Container('itemId -> List('propertyId -> "foobar"))
+
+    assert(1 === result.size)
+    val item = result.item('itemId).get
+    assert(1 === item.propertyIds.size)
+    val property = item.property('propertyId).get
+    assert(classOf[String] === property.getType)
+    assert(Some("foobar") === property.value)
+  }
+
+  test("container creation with one item") {
+    val result = Container('itemId -> List())
+    assert(1 === result.size)
+    val item = result.item('itemId).get
+    assert(0 === item.propertyIds.size)
+  }
+}
+
+trait ContainerTestBase extends FunSuite {
 
   def container: Container
 
@@ -13,7 +37,7 @@ trait ContainerTest extends FunSuite {
 
 }
 
-trait ContainerTestAddItem extends ContainerTest {
+trait ContainerTestAddItem extends ContainerTestBase {
   test("addItem without an id") {
 
     val item1Id = container.addItem
@@ -23,14 +47,14 @@ trait ContainerTestAddItem extends ContainerTest {
   }
 }
 
-trait ContainerTestAddItemWithId extends ContainerTest {
+trait ContainerTestAddItemWithId extends ContainerTestBase {
   test("addItem with and id") {
     val item2 = container.addItem('id)
     assert(None != item2)
   }
 }
 
-trait ContainerTestItemIdsAndContainsId extends ContainerTest {
+trait ContainerTestItemIdsAndContainsId extends ContainerTestBase {
   test("itemIds and containsId") {
     val itemId = addItem get
 
@@ -40,7 +64,7 @@ trait ContainerTestItemIdsAndContainsId extends ContainerTest {
   }
 }
 
-trait ContainerTestOrdered extends ContainerTest {
+trait ContainerTestOrdered extends ContainerTestBase {
 
   override def container: Container.Ordered
 

@@ -22,7 +22,10 @@ class BeanItemContainer[BT](override val p: com.vaadin.data.util.BeanItemContain
 
   def addBean(bean: BT): BeanItem[BT] = new BeanItem[BT](bean)
 
-  protected def wrapItem(unwrapped: com.vaadin.data.Item): Item = new BeanItem[Any](unwrapped)
+  def wrapItem(unwrapped: com.vaadin.data.Item): Item = {
+    // must create BeanItem with the constructor that takes a Vaadin BeanItem not a bean.
+    new BeanItem[BT](unwrapped.asInstanceOf[com.vaadin.data.util.BeanItem[BT]])
+  }
 }
 
 class BeanItem[BT](override val p: com.vaadin.data.util.BeanItem[BT]) extends Item {
@@ -35,5 +38,5 @@ class BeanItem[BT](override val p: com.vaadin.data.util.BeanItem[BT]) extends It
     this(new com.vaadin.data.util.BeanItem[BT](bean, propertyIds.asJavaCollection))
   }
 
-  val bean = p.getBean
+  val bean: BT = p.getBean
 }

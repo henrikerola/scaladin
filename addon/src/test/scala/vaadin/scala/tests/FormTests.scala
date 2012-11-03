@@ -51,7 +51,7 @@ class FormTest extends FunSuite with BeforeAndAfter with MockitoSugar {
 
   test("layout") {
     form.layout // this should not throw an exception
-    
+
     val layout = new VerticalLayout
     form.layout = layout
     assert(layout === form.layout)
@@ -65,7 +65,7 @@ class FormTest extends FunSuite with BeforeAndAfter with MockitoSugar {
 
   test("footer") {
     form.footer // this should not throw an exception
-    
+
     val footer = new VerticalLayout
     form.footer = footer
     assert(footer === form.footer)
@@ -135,6 +135,30 @@ class FormTest extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert("test" === person.firstName)
     assert(form.commit.isValid)
     assert("newValue" === person.firstName)
+  }
+
+  test("validation visible") {
+    assert(!form.validationVisible)
+    form.validationVisible = true
+    assert(form.validationVisible)
+  }
+
+  test("validation visible after commit") {
+    val person = Person(null ,null)
+
+    form.item = new BeanItem(person)
+    assert(!form.validationVisible)
+    
+    form.field("firstName").foreach(_.required = true)
+    form.buffered = false
+    form.commit
+    assert(form.validationVisible)
+    
+    form.validationVisible = false
+    form.validationVisibleOnCommit = false
+    
+    form.commit
+    assert(!form.validationVisible)
   }
 
   private def assertSameFactory(expected: FormFieldFactory, result: Option[FormFieldFactory]) = {

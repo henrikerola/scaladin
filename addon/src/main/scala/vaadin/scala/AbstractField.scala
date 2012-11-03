@@ -32,8 +32,11 @@ trait Field[T] extends Component with BufferedValidatable with Property[T] with 
 abstract class AbstractField[T](override val p: com.vaadin.ui.AbstractField[T] with AbstractFieldMixin) extends AbstractComponent(p) with Field[T] with PropertyViewer with Focusable with ValueChangeNotifier {
 
   //description is inherited from AbstractComponent and Field, needs override
-  //  override def description: Option[String] = Option(p.getDescription)
-  //  override def description_=(description: String): Unit = p.setDescription(description)
-  //  override def description_=(description: Option[String]): Unit = p.setDescription(description.getOrElse(null))
+  // override def description: Option[String] = Option(p.getDescription)
+  // override def description_=(description: String): Unit = p.setDescription(description)
+  // override def description_=(description: Option[String]): Unit = p.setDescription(description.orNull)
+
+  def validationVisible: Boolean = p.isValidationVisible
+  def validationVisible_=(isValidationVisible: Boolean): Unit = p.setValidationVisible(isValidationVisible)
 }
 

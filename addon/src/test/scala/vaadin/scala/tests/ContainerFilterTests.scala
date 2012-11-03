@@ -13,54 +13,6 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class ContainerFilter extends FunSuite {
 
-  test("property creation with a string") {
-    val result = Property("foobar")
-    assert(classOf[String] === result.getType)
-    assert(Some("foobar") === result.value)
-  }
-
-  test("property creation with a symbol") {
-    val result = Property('foobar)
-    assert(classOf[Symbol] === result.getType)
-    assert(Some('foobar) === result.value)
-  }
-
-  test("item creation with one property") {
-    val result = Item('testId -> "foobar")
-    assert(1 === result.propertyIds.size)
-    val property = result.property('testId).get
-    assert(classOf[String] === property.getType)
-    assert(Some("foobar") === property.value)
-  }
-
-  test("item creation with three properties") {
-    val result = Item('testId1 -> "foobar1", 'testId2 -> "foobar2", 'testId3 -> "foobar3")
-    assert(3 === result.propertyIds.size)
-    for (propertyId <- result.propertyIds) {
-      val property = result.property(propertyId).get
-      assert(classOf[String] === property.getType)
-      assert(true === property.value.get.asInstanceOf[String].startsWith("foobar"))
-    }
-  }
-
-  test("container creation with one item and one property") {
-    val result = Container('itemId -> List('propertyId -> "foobar"))
-
-    assert(1 === result.size)
-    val item = result.item('itemId).get
-    assert(1 === item.propertyIds.size)
-    val property = item.property('propertyId).get
-    assert(classOf[String] === property.getType)
-    assert(Some("foobar") === property.value)
-  }
-
-  test("container creation with one item") {
-    val result = Container('itemId -> List())
-    assert(1 === result.size)
-    val item = result.item('itemId).get
-    assert(0 === item.propertyIds.size)
-  }
-
   test("container item id filter with one item") {
     val containerWithOneItem = Container.filterable('itemId -> List())
     val result = containerWithOneItem \ 'itemId
@@ -129,25 +81,6 @@ class ContainerFilter extends FunSuite {
 
     val itemPropertyValues: List[Any] = item filterProperties (_.value.get.asInstanceOf[String].startsWith("value")) values
     val containerPropertyValues: List[Any] = container \\ 'propertyId1 values
-  }
-
-  test("Property pattern matching") {
-    val property1 = Property("test")
-    property1 match {
-      case Property(x: String) => assert("test" === x)
-    }
-
-    property1 match {
-      case Property("test") => //not matching throws exception
-    }
-
-    val item = Item('id1 -> "value1", 'id2 -> 42)
-    val result = item.filterProperties(x => x match {
-      case Property(42) => true
-      case _ => false
-    })
-    assert(1 === result.size)
-    assert(Some(42) == result.head.value)
   }
 
   test("Item property matching") {

@@ -19,6 +19,28 @@ class ButtonTests extends FunSuite {
     assert(button.disableOnClick)
   }
 
+  test("Button.apply(caption)") {
+    val button = Button("Test")
+    assert(button.caption === Some("Test"))
+    assert(button.clickListeners.isEmpty)
+  }
+
+  test("Button.apply(caption, clickListener") {
+    val listener = { e: Button.ClickEvent => }
+    val button = Button("Test", listener)
+    assert(button.caption === Some("Test"))
+    assert(button.clickListeners.size === 1)
+    assert(button.clickListeners.head === listener)
+  }
+
+  test("Button.apply(caption, clickListener 2") {
+    val listener = {}
+    val button = Button("Test", listener)
+    assert(button.caption === Some("Test"))
+    assert(button.clickListeners.size === 1)
+    assert(button.clickListeners.head != listener) // listener is wrapped
+  }
+
   test("clickShortcut") {
     val button = new Button
 

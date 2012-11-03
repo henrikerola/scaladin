@@ -1,6 +1,7 @@
 package vaadin.scala
 
 import scala.xml.Node
+import scala.xml.NodeBuffer
 import vaadin.scala.mixins.LabelMixin
 import com.vaadin.shared.ui.label.ContentMode
 
@@ -30,6 +31,9 @@ class Label(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin
 
   def contentMode = Label.ContentMode(p.getContentMode.ordinal)
   def contentMode_=(contentMode: Label.ContentMode.Value) = p.setContentMode(ContentMode.values.apply(contentMode.id))
+  
+  def value_=(value: Node): Unit = p.setValue(value.mkString)
+  def value_=(value: NodeBuffer): Unit = p.setValue(value.mkString)
 
   //readOnly is inherited from Component and Property, needs override
   override def readOnly: Boolean = p.isReadOnly

@@ -1,6 +1,7 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.ResourceMixin
+import java.io.File
 
 package mixins {
   trait ResourceMixin extends ScaladinMixin
@@ -25,6 +26,11 @@ trait Resource extends Wrapper {
   def mimeType = p.getMIMEType
 }
 
+object ExternalResource {
+  def apply(sourceUrl: String): ExternalResource = new ExternalResource(sourceUrl)
+  def apply(sourceUrl: String, mimeType: String): ExternalResource = new ExternalResource(sourceUrl, mimeType)
+}
+
 class ExternalResource(override val p: com.vaadin.server.ExternalResource with ResourceMixin) extends Resource {
 
   def this(sourceUrl: String, mimeType: String = null) {
@@ -35,9 +41,25 @@ class ExternalResource(override val p: com.vaadin.server.ExternalResource with R
 
 }
 
+object ThemeResource {
+  def apply(resourceId: String): ThemeResource = new ThemeResource(resourceId)
+}
+
 class ThemeResource(override val p: com.vaadin.server.ThemeResource with ResourceMixin) extends Resource {
 
   def this(resourceId: String) {
     this(new com.vaadin.server.ThemeResource(resourceId) with ResourceMixin)
+  }
+}
+
+object FileResource {
+  def apply(sourceFile: File): FileResource = new FileResource(sourceFile)
+}
+
+// TODO: should extend ApplicationResource
+class FileResource(override val p: com.vaadin.server.FileResource with ResourceMixin) extends Resource {
+  
+  def this(sourceFile: File) {
+    this(new com.vaadin.server.FileResource(sourceFile) with ResourceMixin)
   }
 }

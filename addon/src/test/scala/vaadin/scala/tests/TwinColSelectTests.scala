@@ -2,8 +2,6 @@ package vaadin.scala.tests
 
 import org.scalatest.FunSuite
 import vaadin.scala._
-import com.vaadin.server.Sizeable
-import com.vaadin.data.util.IndexedContainer
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -69,5 +67,10 @@ class TwinColSelectTests extends FunSuite {
 
     twinColSelect.leftColumnCaption = None
     assert(twinColSelect.leftColumnCaption === None)
+  }
+  
+  test("container") {
+    val twinColSelect = new TwinColSelect
+    assert(twinColSelect.container.get.isInstanceOf[IndexedContainer])
   }
 }

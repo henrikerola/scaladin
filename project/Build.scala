@@ -17,7 +17,8 @@ object BuildSettings {
     scalaVersion := buildScalaVersion,
     scalacOptions ++= Seq("-deprecation", "-unchecked", "-encoding", "UTF-8"),
     resolvers := Seq("Vaadin Snapshots" at "https://oss.sonatype.org/content/repositories/vaadin-snapshots/"),
-    autoScalaLibrary := true)
+    autoScalaLibrary := true,
+    offline := false)
 
   val manifestAttributes = Seq(Package.ManifestAttributes(
     ("Implementation-Title" -> buildName),
@@ -33,6 +34,7 @@ object Dependencies {
   val junitVersion = "4.9"
   val mockitoVersion = "1.9.0"
 
+  val scala = "org.scala-lang" % "scala-library" % BuildSettings.buildScalaVersion % "provided"
   val vaadin = "com.vaadin" % "vaadin-server" % vaadinVersion
   val vaadinClientCompiled = "com.vaadin" % "vaadin-client-compiled" % vaadinVersion
   val vaadinThemes = "com.vaadin" % "vaadin-themes" % vaadinVersion
@@ -49,7 +51,7 @@ object ScaladinBuild extends Build {
 
   lazy val addonSettings = buildSettings ++ jacoco.settings ++ Seq(
     name := buildName,
-    libraryDependencies := Seq(vaadin, servletApi, scalaTest, junitInterface, mockito),
+    libraryDependencies := Seq(scala, vaadin, servletApi, scalaTest, junitInterface, mockito),
     packageConfiguration in Compile in packageBin ~= { 
       (config: Package.Configuration) => new Package.Configuration(config.sources, config.jar, manifestAttributes) 
     },
