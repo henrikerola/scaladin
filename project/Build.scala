@@ -9,7 +9,7 @@ object BuildSettings {
   val buildOrganization = "vaadin.scala"
   val buildName = "Scaladin"
   val buildVersion = "3.0.0-SNAPSHOT"
-  val buildScalaVersion = "2.9.2"
+  val buildScalaVersion = "2.10.0-RC1"
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
     organization := buildOrganization,
@@ -30,17 +30,18 @@ object BuildSettings {
 object Dependencies {
   val vaadinVersion = "7.0-SNAPSHOT"
   val jettyVersion = "7.3.0.v20110203"
-  val scalaTestVersion = "2.0.M3"
+  val scalaTestVersion = "2.0.M4"
   val junitVersion = "4.9"
   val mockitoVersion = "1.9.0"
 
   val scala = "org.scala-lang" % "scala-library" % BuildSettings.buildScalaVersion % "provided"
+  val scalaActors = "org.scala-lang" % "scala-actors" % BuildSettings.buildScalaVersion % "test"
   val vaadin = "com.vaadin" % "vaadin-server" % vaadinVersion
   val vaadinClientCompiled = "com.vaadin" % "vaadin-client-compiled" % vaadinVersion
   val vaadinThemes = "com.vaadin" % "vaadin-themes" % vaadinVersion
   val servletApi = "javax.servlet" % "javax.servlet-api" % "3.0.1"
   val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
-  val scalaTest = "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
+  val scalaTest = "org.scalatest" % "scalatest_2.10.0-RC1" % scalaTestVersion % "test"
   val junitInterface = "com.novocode" % "junit-interface" % "0.7" % "test->default"
   val mockito = "org.mockito" % "mockito-all" % mockitoVersion % "test" 
 }
@@ -51,7 +52,7 @@ object ScaladinBuild extends Build {
 
   lazy val addonSettings = buildSettings ++ jacoco.settings ++ Seq(
     name := buildName,
-    libraryDependencies := Seq(scala, vaadin, servletApi, scalaTest, junitInterface, mockito),
+    libraryDependencies := Seq(scala, scalaActors, vaadin, servletApi, scalaTest, junitInterface, mockito),
     packageConfiguration in Compile in packageBin ~= { 
       (config: Package.Configuration) => new Package.Configuration(config.sources, config.jar, manifestAttributes) 
     },
