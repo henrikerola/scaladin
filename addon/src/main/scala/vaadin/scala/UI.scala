@@ -3,15 +3,18 @@ package vaadin.scala
 import scala.collection.mutable
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.internal.ClickListener
+import vaadin.scala.internal.CleanupListener
 import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.mixins.AbstractComponentContainerMixin
 import vaadin.scala.internal.WrappedVaadinUI
 import scala.collection.mutable.ListBuffer
 
 object UI {
-  //def current: UI = com.vaadin.ui.UI.getCurrent
-  //def current_=(root: Option[UI]): Unit = com.vaadin.ui.UI.setCurrent(root.getOrElse(null))
-  //def current_=(root: UI): Unit = com.vaadin.ui.UI.setCurrent(root.p)
+  def current: UI = WrapperUtil.wrapperFor[UI](com.vaadin.ui.UI.getCurrent).orNull
+  def current_=(ui: Option[UI]): Unit = com.vaadin.ui.UI.setCurrent(if (ui.isDefined) ui.get.p else null)
+  def current_=(ui: UI): Unit = com.vaadin.ui.UI.setCurrent(ui.p)
+
+  case class CleanupEvent(ui: UI) extends Event
 }
 
 /**
@@ -68,8 +71,24 @@ abstract class UI(override val p: WrappedVaadinUI = new WrappedVaadinUI) extends
     override def removeListener(elem: ClickListener) = p.removeClickListener(elem)
   }
 
+  lazy val cleanupListeners = new ListenersTrait[UI.CleanupEvent, CleanupListener] {
+    override def listeners = p.getListeners(classOf[com.vaadin.ui.UI.CleanupListener])
+    override def addListener(elem: UI.CleanupEvent => Unit) = p.addCleanupListener(new CleanupListener(elem))
+    override def removeListener(elem: CleanupListener) = p.removeCleanupListener(elem)
+  }
+
   // TODO: setScrollTop
 
-  // TODO: page
+  def page = new Page {
+    val p = UI.this.p.getPage
+  }
+
+  // TODO: setNavigator
+
+  def lastHeartbeatTime: Long = p.getLastHeartbeatTime
+
+  def lastUidlRequestTime: Long = p.getLastUidlRequestTime
+
+  def theme: String = p.getTheme
 
 }
