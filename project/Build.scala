@@ -61,7 +61,7 @@ object ScaladinBuild extends Build {
 
   lazy val demoSettings = buildSettings ++ webSettings ++ Seq(
     name := buildName + "-demo",
-    libraryDependencies := Seq(jetty, vaadinClientCompiled, vaadinThemes))
+    libraryDependencies ++= Seq(jetty, vaadinClientCompiled, vaadinThemes))
 
   lazy val addon = Project("addon", file("addon"), settings = addonSettings)
   lazy val demo = Project("demo", file("demo"), settings = demoSettings) dependsOn (addon)
