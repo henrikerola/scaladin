@@ -4,7 +4,7 @@ import vaadin.scala.mixins.FormMixin
 import vaadin.scala.mixins.HasComponentsMixin
 
 package mixins {
-  trait FormMixin extends AbstractFieldMixin with HasComponentsMixin
+  trait FormMixin extends AbstractFieldMixin with HasComponentsMixin { self: com.vaadin.ui.Form => }
 }
 
 class Form(override val p: com.vaadin.ui.Form with FormMixin = new com.vaadin.ui.Form with FormMixin) extends AbstractField[Object](p) with Item.Viewer with Buffered with HasComponents {

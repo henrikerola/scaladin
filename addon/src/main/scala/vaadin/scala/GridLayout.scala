@@ -4,7 +4,7 @@ import vaadin.scala.mixins.GridLayoutMixin
 import vaadin.scala.internal.WrapperUtil
 
 package mixins {
-  trait GridLayoutMixin extends AbstractLayoutMixin
+  trait GridLayoutMixin extends AbstractLayoutMixin { self: com.vaadin.ui.GridLayout => }
 }
 
 object GridLayout {

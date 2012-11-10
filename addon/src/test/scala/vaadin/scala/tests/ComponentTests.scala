@@ -8,6 +8,8 @@ import vaadin.scala.mixins.ComponentMixin
 import org.scalatest.BeforeAndAfter
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
+import vaadin.scala.mixins.LabelMixin
+import vaadin.scala.mixins.LabelMixin
 
 @RunWith(classOf[JUnitRunner])
 class ComponentTests extends FunSuite with BeforeAndAfter with MockitoSugar {
@@ -166,5 +168,51 @@ class ComponentTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     label.size(200 px, None)
     assert(label.width.get === Measure(200, Units.px))
     assert(label.height === None)
+  }
+
+  test("attach()") {
+    var myLabelcnt = 0
+    var labelcnt = 0
+
+    class MyLabel extends com.vaadin.ui.Label {
+      override def attach() {
+        myLabelcnt = myLabelcnt + 1
+      }
+    }
+
+    val label = new Label(new MyLabel with LabelMixin) {
+      override def attach() {
+        labelcnt = labelcnt + 1
+        super.attach()
+      }
+    }
+    
+    label.p.attach()
+    
+    assert(myLabelcnt === 1)
+    assert(labelcnt === 1)
+  }
+  
+  test("detach()") {
+    var myLabelcnt = 0
+    var labelcnt = 0
+
+    class MyLabel extends com.vaadin.ui.Label {
+      override def detach() {
+        myLabelcnt = myLabelcnt + 1
+      }
+    }
+
+    val label = new Label(new MyLabel with LabelMixin) {
+      override def detach() {
+        labelcnt = labelcnt + 1
+        super.detach()
+      }
+    }
+    
+    label.p.detach()
+    
+    assert(myLabelcnt === 1)
+    assert(labelcnt === 1)
   }
 }

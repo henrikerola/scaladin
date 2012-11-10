@@ -9,7 +9,7 @@ import vaadin.scala.internal.ExpandListener
 import vaadin.scala.internal.CollapseListener
 
 package mixins {
-  trait TreeMixin extends AbstractSelectMixin with ContainerHierarchicalMixin
+  trait TreeMixin extends AbstractSelectMixin with ContainerHierarchicalMixin { self: com.vaadin.ui.Tree => }
 }
 
 object Tree {

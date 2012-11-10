@@ -3,7 +3,7 @@ package vaadin.scala
 import vaadin.scala.mixins.NativeButtonMixin
 
 package mixins {
-  trait NativeButtonMixin extends ButtonMixin
+  trait NativeButtonMixin extends ButtonMixin { self: com.vaadin.ui.NativeButton => }
 }
 
 /**

@@ -6,7 +6,7 @@ import vaadin.scala.internal.ButtonClickListener
 import vaadin.scala.internal.ListenersTrait
 
 package mixins {
-  trait ButtonMixin extends AbstractComponentMixin
+  trait ButtonMixin extends AbstractComponentMixin { self: com.vaadin.ui.Button => }
 }
 
 object Button {

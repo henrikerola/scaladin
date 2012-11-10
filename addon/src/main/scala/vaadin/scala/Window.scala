@@ -4,7 +4,7 @@ import scala.collection.mutable
 import vaadin.scala.mixins.WindowMixin
 
 package mixins {
-  trait WindowMixin extends PanelMixin
+  trait WindowMixin extends PanelMixin { self: com.vaadin.ui.Window => }
 }
 
 class WindowCloseListener(action: com.vaadin.ui.Window.CloseEvent => Unit) extends com.vaadin.ui.Window.CloseListener {

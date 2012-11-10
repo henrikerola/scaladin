@@ -6,7 +6,7 @@ import vaadin.scala.internal.ListenersTrait
 import com.vaadin.event.FieldEvents
 
 package mixins {
-  trait AbstractTextFieldMixin extends AbstractFieldMixin
+  trait AbstractTextFieldMixin extends AbstractFieldMixin { self: com.vaadin.ui.AbstractTextField => }
 }
 
 object AbstractTextField {

@@ -3,7 +3,7 @@ package vaadin.scala
 import vaadin.scala.mixins.OptionGroupMixin
 
 package mixins {
-  trait OptionGroupMixin extends AbstractSelectMixin
+  trait OptionGroupMixin extends AbstractSelectMixin { self: com.vaadin.ui.OptionGroup => }
 }
 
 class OptionGroup(override val p: com.vaadin.ui.OptionGroup with OptionGroupMixin = new com.vaadin.ui.OptionGroup with OptionGroupMixin)

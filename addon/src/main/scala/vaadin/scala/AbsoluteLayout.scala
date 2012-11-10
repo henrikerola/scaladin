@@ -3,7 +3,7 @@ package vaadin.scala
 import vaadin.scala.mixins.AbsoluteLayoutMixin
 
 package mixins {
-  trait AbsoluteLayoutMixin extends AbstractLayoutMixin
+  trait AbsoluteLayoutMixin extends AbstractLayoutMixin { self: com.vaadin.ui.AbsoluteLayout => }
 }
 
 class AbsoluteLayout(override val p: com.vaadin.ui.AbsoluteLayout with AbsoluteLayoutMixin = new com.vaadin.ui.AbsoluteLayout with AbsoluteLayoutMixin)

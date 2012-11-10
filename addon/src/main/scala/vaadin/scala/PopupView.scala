@@ -5,7 +5,7 @@ import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.internal.PopupVisibilityListener
 
 package mixins {
-  trait PopupViewMixin extends AbstractComponentContainerMixin
+  trait PopupViewMixin extends AbstractComponentContainerMixin { self: com.vaadin.ui.PopupView => }
 }
 
 object PopupView {

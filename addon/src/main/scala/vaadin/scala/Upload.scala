@@ -10,7 +10,7 @@ import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.mixins.UploadMixin
 
 package mixins {
-  trait UploadMixin extends AbstractComponentMixin
+  trait UploadMixin extends AbstractComponentMixin { self: com.vaadin.ui.Upload => }
 }
 
 object Upload {

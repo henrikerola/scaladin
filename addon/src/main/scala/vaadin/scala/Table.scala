@@ -18,7 +18,7 @@ import vaadin.scala.internal.ListenersTrait
 import scala.collection.mutable
 
 package mixins {
-  trait TableMixin extends AbstractSelectMixin with ContainerOrderedMixin with ContainerSortableMixin with HasComponentsMixin
+  trait TableMixin extends AbstractSelectMixin with ContainerOrderedMixin with ContainerSortableMixin with HasComponentsMixin { self: com.vaadin.ui.Table => }
 
   /* Property value formatter is disabled because of SI-2296. Re-enable it when fixed in the 2.9.x line 
    * or after upgrading to 2.10

@@ -5,8 +5,8 @@ import vaadin.scala.mixins.FieldMixin
 import vaadin.scala.mixins.ValidatableMixin
 
 package mixins {
-  trait AbstractFieldMixin extends AbstractComponentMixin with FieldMixin
-  trait FieldMixin extends ComponentMixin with BufferedValidatableMixin
+  trait AbstractFieldMixin extends AbstractComponentMixin with FieldMixin { self: com.vaadin.ui.AbstractField[_] => }
+  trait FieldMixin extends ComponentMixin with BufferedValidatableMixin { self: com.vaadin.ui.Field[_] => }
 }
 
 trait Field[T] extends Component with BufferedValidatable with Property[T] with Focusable with Wrapper {

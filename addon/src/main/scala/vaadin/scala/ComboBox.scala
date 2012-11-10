@@ -3,7 +3,7 @@ package vaadin.scala
 import vaadin.scala.mixins.ComboBoxMixin
 
 package mixins {
-  trait ComboBoxMixin extends AbstractSelectMixin
+  trait ComboBoxMixin extends AbstractSelectMixin { self: com.vaadin.ui.ComboBox => }
 }
 
 object ComboBox {

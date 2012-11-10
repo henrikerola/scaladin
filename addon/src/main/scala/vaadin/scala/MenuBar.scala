@@ -5,7 +5,7 @@ import vaadin.scala.internal.WrapperUtil
 import scala.collection._
 
 package mixins {
-  trait MenuBarMixin extends AbstractComponentMixin
+  trait MenuBarMixin extends AbstractComponentMixin { self: com.vaadin.ui.MenuBar => }
 }
 
 object MenuBar {

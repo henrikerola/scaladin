@@ -5,7 +5,7 @@ import com.vaadin.shared.ui.BorderStyle
 import com.vaadin.shared.ui.BorderStyle._
 
 package mixins {
-  trait LinkMixin extends AbstractComponentMixin
+  trait LinkMixin extends AbstractComponentMixin { self: com.vaadin.ui.Link => }
 }
 
 object Link {
@@ -33,5 +33,5 @@ class Link(override val p: com.vaadin.ui.Link with LinkMixin = new com.vaadin.ui
   
   def resource: Option[Resource] = wrapperFor[Resource](p.getResource)
   def resource_=(resource: Option[Resource]) = if (resource.isDefined) p.setResource(resource.get.p) else p.setResource(null)
-  def resource_=(resource: Resource) = if (resource == null) p.setResource(null) else p.setResource(resource.p)
+  def resource_=(resource: Resource) = p.setResource(resource.p)
 }

@@ -3,7 +3,7 @@ package vaadin.scala
 import vaadin.scala.mixins.CheckBoxMixin
 
 package mixins {
-  trait CheckBoxMixin extends AbstractFieldMixin
+  trait CheckBoxMixin extends AbstractFieldMixin { self: com.vaadin.ui.CheckBox => }
 }
 
 class CheckBox(override val p: com.vaadin.ui.CheckBox with CheckBoxMixin = new com.vaadin.ui.CheckBox with CheckBoxMixin)

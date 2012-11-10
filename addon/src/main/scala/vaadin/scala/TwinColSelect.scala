@@ -3,7 +3,7 @@ package vaadin.scala
 import vaadin.scala.mixins.TwinColSelectMixin
 
 package mixins {
-  trait TwinColSelectMixin extends AbstractSelectMixin
+  trait TwinColSelectMixin extends AbstractSelectMixin { self: com.vaadin.ui.TwinColSelect => }
 }
 
 class TwinColSelect(override val p: com.vaadin.ui.TwinColSelect with TwinColSelectMixin = new com.vaadin.ui.TwinColSelect with TwinColSelectMixin) extends AbstractSelect(p) with MultiSelectable {

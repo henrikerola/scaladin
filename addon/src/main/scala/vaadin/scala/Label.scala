@@ -6,7 +6,7 @@ import vaadin.scala.mixins.LabelMixin
 import com.vaadin.shared.ui.label.ContentMode
 
 package mixins {
-  trait LabelMixin extends AbstractComponentMixin
+  trait LabelMixin extends AbstractComponentMixin { self: com.vaadin.ui.Label => }
 }
 
 object Label {

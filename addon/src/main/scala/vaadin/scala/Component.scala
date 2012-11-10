@@ -21,12 +21,26 @@ package mixins {
   trait TypedScaladinMixin[C <: Wrapper] extends ScaladinMixin {
     override def wrapper: C = super.wrapper.asInstanceOf[C]
   }
-
-  trait ComponentMixin extends ScaladinMixin {
+  
+  trait ComponentMixin extends ScaladinMixin { self: com.vaadin.ui.Component =>
     def wrapperComponent: Component = wrapper.asInstanceOf[Component]
   }
+  
+  trait AbstractComponentSuperCalls {
+    def attach(): Unit
+    def detach(): Unit
+  }
 
-  trait AbstractComponentMixin extends ComponentMixin
+  trait AbstractComponentMixin extends ComponentMixin with AbstractComponentSuperCalls { self: com.vaadin.ui.AbstractComponent => 
+    
+    override def wrapper = super.wrapper.asInstanceOf[AbstractComponent]
+    
+    abstract override def attach(): Unit = wrapper.attach()
+    def __super__attach(): Unit = super.attach()
+    
+    abstract override def detach(): Unit = wrapper.detach()
+    def __super__detach(): Unit = super.detach()
+  }
 }
 
 trait Component extends Wrapper {
@@ -72,7 +86,7 @@ trait Component extends Wrapper {
   def id = Option(p.getId)
   def id_=(id: Option[String]) = p.setId(id.orNull)
   def id_=(id: String) = p.setId(id)
-
+  
   //override def toString = p.toString
 
   // TODO: ..
@@ -93,6 +107,11 @@ abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with Abs
   def data = p.getData
 
   def markAsDirty() = p.markAsDirty();
+  
+  def attach(): Unit = p.__super__attach()
+  
+  def detach(): Unit = p.__super__detach()
+  
 }
 
 trait Focusable extends Component {

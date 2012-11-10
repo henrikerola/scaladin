@@ -3,7 +3,7 @@ package vaadin.scala
 import vaadin.scala.mixins.VerticalLayoutMixin
 
 package mixins {
-  trait VerticalLayoutMixin extends AbstractOrderedLayoutMixin
+  trait VerticalLayoutMixin extends AbstractOrderedLayoutMixin { self: com.vaadin.ui.VerticalLayout => }
 }
 
 object VerticalLayout {

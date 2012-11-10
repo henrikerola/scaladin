@@ -5,7 +5,7 @@ import vaadin.scala.internal.ClickListener
 import vaadin.scala.mixins.PanelMixin
 
 package mixins {
-  trait PanelMixin extends AbstractComponentContainerMixin
+  trait PanelMixin extends AbstractComponentContainerMixin { self: com.vaadin.ui.Panel => }
 }
 
 class Panel(override val p: com.vaadin.ui.Panel with PanelMixin = new com.vaadin.ui.Panel with PanelMixin) extends AbstractComponentContainer(p) with Focusable {

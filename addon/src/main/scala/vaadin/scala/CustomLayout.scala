@@ -4,7 +4,7 @@ import scala.xml.Node
 import vaadin.scala.mixins.CustomLayoutMixin
 
 package mixins {
-  trait CustomLayoutMixin extends AbstractLayoutMixin
+  trait CustomLayoutMixin extends AbstractLayoutMixin { self: com.vaadin.ui.CustomLayout => }
 }
 
 class CustomLayout(override val p: com.vaadin.ui.CustomLayout with CustomLayoutMixin = new com.vaadin.ui.CustomLayout(null.asInstanceOf[String]) with CustomLayoutMixin) extends AbstractLayout(p) {

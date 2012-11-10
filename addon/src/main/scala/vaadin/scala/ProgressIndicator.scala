@@ -3,7 +3,7 @@ package vaadin.scala
 import vaadin.scala.mixins.ProgressIndicatorMixin
 
 package mixins {
-  trait ProgressIndicatorMixin extends AbstractFieldMixin
+  trait ProgressIndicatorMixin extends AbstractFieldMixin { self: com.vaadin.ui.ProgressIndicator => }
 }
 
 /**

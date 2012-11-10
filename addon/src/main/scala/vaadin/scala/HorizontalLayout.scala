@@ -3,7 +3,7 @@ package vaadin.scala
 import vaadin.scala.mixins.HorizontalLayoutMixin
 
 package mixins {
-  trait HorizontalLayoutMixin extends AbstractOrderedLayoutMixin
+  trait HorizontalLayoutMixin extends AbstractOrderedLayoutMixin { self: com.vaadin.ui.HorizontalLayout => }
 }
 
 class HorizontalLayout(override val p: com.vaadin.ui.HorizontalLayout with HorizontalLayoutMixin = new com.vaadin.ui.HorizontalLayout with HorizontalLayoutMixin) extends AbstractOrderedLayout(p)

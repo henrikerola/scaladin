@@ -6,7 +6,7 @@ import vaadin.scala.mixins.EmbeddedMixin
 import scala.collection.mutable
 
 package mixins {
-  trait EmbeddedMixin extends AbstractComponentMixin
+  trait EmbeddedMixin extends AbstractComponentMixin { self: com.vaadin.ui.Embedded => }
 }
 
 /**

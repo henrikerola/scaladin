@@ -7,9 +7,9 @@ import vaadin.scala.internal.SplitterClickListener
 import vaadin.scala.internal.ListenersTrait
 
 package mixins {
-  trait AbstractSplitPanelMixin extends AbstractComponentContainerMixin
-  trait VerticalSplitPanelMixin extends AbstractSplitPanelMixin
-  trait HorizontalSplitPanelMixin extends AbstractSplitPanelMixin
+  trait AbstractSplitPanelMixin extends AbstractComponentContainerMixin { self: com.vaadin.ui.AbstractSplitPanel => }
+  trait VerticalSplitPanelMixin extends AbstractSplitPanelMixin { self: com.vaadin.ui.VerticalSplitPanel => }
+  trait HorizontalSplitPanelMixin extends AbstractSplitPanelMixin { self: com.vaadin.ui.HorizontalSplitPanel => }
 }
 
 object AbstractSplitPanel {
