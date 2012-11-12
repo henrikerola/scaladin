@@ -85,3 +85,11 @@ class ClickListener(val action: ClickEvent => Unit) extends com.vaadin.event.Mou
 class PopupVisibilityListener(val action: PopupView.PopupVisibilityEvent => Unit) extends com.vaadin.ui.PopupView.PopupVisibilityListener with Listener {
   def popupVisibilityChange(e: com.vaadin.ui.PopupView#PopupVisibilityEvent) = action(PopupView.PopupVisibilityEvent(wrapperFor[PopupView](e.getPopupView).get, e.isPopupVisible))
 }
+
+class WindowCloseListener(val action: Window.CloseEvent => Unit) extends com.vaadin.ui.Window.CloseListener with Listener {
+  def windowClose(e: com.vaadin.ui.Window#CloseEvent) = action(Window.CloseEvent(wrapperFor[Window](e.getWindow).get))
+}
+
+class WindowResizeListener(val action: Window.ResizeEvent => Unit) extends com.vaadin.ui.Window.ResizeListener with Listener {
+  def windowResized(e: com.vaadin.ui.Window#ResizeEvent) = action(Window.ResizeEvent(wrapperFor[Window](e.getWindow).get))
+}
