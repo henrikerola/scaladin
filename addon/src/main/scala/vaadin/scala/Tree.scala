@@ -36,7 +36,7 @@ class Tree(override val p: com.vaadin.ui.Tree with TreeMixin = new com.vaadin.ui
 
   def collapseItemsRecursively(startItemId: Any): Boolean = p.collapseItemsRecursively(startItemId)
 
-  def selectionMode = {
+  def selectionMode: SelectionMode.Value = {
     if (!p.isSelectable)
       SelectionMode.None
     else if (p.isMultiSelect && p.getMultiselectMode == SIMPLE)
@@ -47,7 +47,7 @@ class Tree(override val p: com.vaadin.ui.Tree with TreeMixin = new com.vaadin.ui
       SelectionMode.Single
   }
 
-  def selectionMode_=(selectionMode: SelectionMode.Value) = selectionMode match {
+  def selectionMode_=(selectionMode: SelectionMode.Value): Unit = selectionMode match {
     case SelectionMode.None =>
       p.setSelectable(false)
     case SelectionMode.Single =>

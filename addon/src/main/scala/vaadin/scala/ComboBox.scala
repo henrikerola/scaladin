@@ -20,17 +20,17 @@ class ComboBox(override val p: com.vaadin.ui.ComboBox with ComboBoxMixin = new c
   extends AbstractSelect(p) with BlurNotifier with FocusNotifier {
 
   def inputPrompt: Option[String] = Option(p.getInputPrompt)
-  def inputPrompt_=(inputPrompt: Option[String]) = p.setInputPrompt(inputPrompt.orNull)
-  def inputPrompt_=(inputPrompt: String) = p.setInputPrompt(inputPrompt)
+  def inputPrompt_=(inputPrompt: Option[String]): Unit = p.setInputPrompt(inputPrompt.orNull)
+  def inputPrompt_=(inputPrompt: String): Unit = p.setInputPrompt(inputPrompt)
 
-  def textInputAllowed = p.isTextInputAllowed
-  def textInputAllowed_=(textInputAllowed: Boolean) = p.setTextInputAllowed(textInputAllowed)
+  def textInputAllowed: Boolean = p.isTextInputAllowed
+  def textInputAllowed_=(textInputAllowed: Boolean): Unit = p.setTextInputAllowed(textInputAllowed)
 
   // from Select:
 
-  def filteringMode = ComboBox.FilterinMode(p.getFilteringMode)
-  def filteringMode_=(filteringMode: ComboBox.FilterinMode.Value) = p.setFilteringMode(filteringMode.id)
+  def filteringMode: ComboBox.FilterinMode.Value = ComboBox.FilterinMode(p.getFilteringMode)
+  def filteringMode_=(filteringMode: ComboBox.FilterinMode.Value): Unit = p.setFilteringMode(filteringMode.id)
 
-  def scrollToSelectedItem = p.isScrollToSelectedItem
-  def scrollToSelectedItem_=(scrollToSelectedItem: Boolean) = p.setScrollToSelectedItem(scrollToSelectedItem)
+  def scrollToSelectedItem: Boolean = p.isScrollToSelectedItem
+  def scrollToSelectedItem_=(scrollToSelectedItem: Boolean): Unit = p.setScrollToSelectedItem(scrollToSelectedItem)
 }

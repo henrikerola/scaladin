@@ -12,7 +12,7 @@ class CheckBox(override val p: com.vaadin.ui.CheckBox with CheckBoxMixin = new c
 
   // Have to be Option[Boolean] because we override Option[Any]...
   override def value: Option[Boolean] = Option(p.booleanValue);
-  def value_=(value: Boolean) = p.setValue(value)
+  def value_=(value: Boolean): Unit = p.setValue(value)
   
   def booleanValue: Boolean = p.booleanValue
 }

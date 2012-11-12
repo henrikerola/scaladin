@@ -74,21 +74,21 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   extends AbstractSelect(p) with Container.Ordered with Container.Sortable with ItemDescriptionGeneratorOwner with ItemClickNotifier {
 
   def visibleColumns: Seq[Any] = p.getVisibleColumns
-  def visibleColumns_=(visibleColumns: Seq[Any]) = p.setVisibleColumns(visibleColumns map { _.asInstanceOf[Object] } toArray)
+  def visibleColumns_=(visibleColumns: Seq[Any]): Unit = p.setVisibleColumns(visibleColumns map { _.asInstanceOf[Object] } toArray)
 
   def columnHeaders: Seq[Option[String]] = p.getColumnHeaders map {
     case null => None
     case header => Some(header)
   }
-  def columnHeaders_=(columnHeaders: => Seq[String]) = p.setColumnHeaders(columnHeaders toArray)
-  def columnHeaders_=(columnHeaders: Seq[Option[String]]) = p.setColumnHeaders(columnHeaders map {
+  def columnHeaders_=(columnHeaders: => Seq[String]): Unit = p.setColumnHeaders(columnHeaders toArray)
+  def columnHeaders_=(columnHeaders: Seq[Option[String]]): Unit = p.setColumnHeaders(columnHeaders map {
     case None => null
     case Some(header) => header
   } toArray)
 
   def columnIcons: Seq[Option[Resource]] = p.getColumnIcons map { wrapperFor[Resource](_) }
-  def columnIcons_=(columnIcons: => Seq[Resource]) = p.setColumnIcons(columnIcons map { _.p } toArray)
-  def columnIcons_=(columnIcons: Seq[Option[Resource]]) = p.setColumnIcons(columnIcons map {
+  def columnIcons_=(columnIcons: => Seq[Resource]): Unit = p.setColumnIcons(columnIcons map { _.p } toArray)
+  def columnIcons_=(columnIcons: Seq[Option[Resource]]): Unit = p.setColumnIcons(columnIcons map {
     case None => null
     case Some(icon) => icon.p
   } toArray)
@@ -96,62 +96,62 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def columnAlignments: Seq[Table.ColumnAlignment.Value] = p.getColumnAlignments map { Table.ColumnAlignment.withName(_) }
   def columnAlignments_=(columnAlignments: Seq[Table.ColumnAlignment.Value]) = p.setColumnAlignments(columnAlignments map { _.toString } toArray)
 
-  def columnExpandRatio(propertyId: Any) = p.getColumnExpandRatio(propertyId)
-  def columnExpandRatio(propertyId: Any, ratio: Float) = p.setColumnExpandRatio(propertyId, ratio)
+  def columnExpandRatio(propertyId: Any): Float = p.getColumnExpandRatio(propertyId)
+  def columnExpandRatio(propertyId: Any, ratio: Float): Unit = p.setColumnExpandRatio(propertyId, ratio)
 
-  def columnWidth(propertyId: Any) = p.getColumnWidth(propertyId)
-  def columnWidth(propertyId: Any, width: Int) = p.setColumnWidth(propertyId, width)
+  def columnWidth(propertyId: Any): Int = p.getColumnWidth(propertyId)
+  def columnWidth(propertyId: Any, width: Int): Unit = p.setColumnWidth(propertyId, width)
 
-  def columnIcon(propertyId: Any) = wrapperFor[Resource](p.getColumnIcon(propertyId))
-  def columnIcon(propertyId: Any, icon: Option[Resource]) = p.setColumnIcon(propertyId, if (icon.isDefined) icon.get.p else null)
-  def columnIcon(propertyId: Any, icon: Resource) = p.setColumnIcon(propertyId, icon.p)
+  def columnIcon(propertyId: Any): Option[Resource] = wrapperFor[Resource](p.getColumnIcon(propertyId))
+  def columnIcon(propertyId: Any, icon: Option[Resource]): Unit = p.setColumnIcon(propertyId, if (icon.isDefined) icon.get.p else null)
+  def columnIcon(propertyId: Any, icon: Resource): Unit = p.setColumnIcon(propertyId, icon.p)
 
-  def columnHeader(propertyId: Any) = Option(p.getColumnHeader(propertyId))
-  def columnHeader(propertyId: Any, header: Option[String]) = p.setColumnHeader(propertyId, header.orNull)
-  def columnHeader(propertyId: Any, header: String) = p.setColumnHeader(propertyId, header)
+  def columnHeader(propertyId: Any): Option[String] = Option(p.getColumnHeader(propertyId))
+  def columnHeader(propertyId: Any, header: Option[String]): Unit = p.setColumnHeader(propertyId, header.orNull)
+  def columnHeader(propertyId: Any, header: String): Unit = p.setColumnHeader(propertyId, header)
 
-  def columnFooter(propertyId: Any) = Option(p.getColumnFooter(propertyId))
-  def columnFooter(propertyId: Any, footer: Option[String]) = p.setColumnFooter(propertyId, footer.orNull)
-  def columnFooter(propertyId: Any, footer: String) = p.setColumnFooter(propertyId, footer)
+  def columnFooter(propertyId: Any): Option[String] = Option(p.getColumnFooter(propertyId))
+  def columnFooter(propertyId: Any, footer: Option[String]): Unit = p.setColumnFooter(propertyId, footer.orNull)
+  def columnFooter(propertyId: Any, footer: String): Unit = p.setColumnFooter(propertyId, footer)
 
-  def columnAlignment(propertyId: Any) = Table.ColumnAlignment.withName(p.getColumnAlignment(propertyId))
-  def columnAlignment(propertyId: Any, alignment: Table.ColumnAlignment.Value) = p.setColumnAlignment(propertyId, alignment.toString)
+  def columnAlignment(propertyId: Any): Table.ColumnAlignment.Value = Table.ColumnAlignment.withName(p.getColumnAlignment(propertyId))
+  def columnAlignment(propertyId: Any, alignment: Table.ColumnAlignment.Value): Unit = p.setColumnAlignment(propertyId, alignment.toString)
 
-  def pageLength = p.getPageLength
-  def pageLength_=(pageLength: Int) = p.setPageLength(pageLength)
+  def pageLength: Int = p.getPageLength
+  def pageLength_=(pageLength: Int): Unit = p.setPageLength(pageLength)
 
-  def cacheRate = p.getCacheRate
-  def cacheRate_=(cacheRate: Double) = p.setCacheRate(cacheRate)
+  def cacheRate: Double = p.getCacheRate
+  def cacheRate_=(cacheRate: Double): Unit = p.setCacheRate(cacheRate)
 
   def currentPageFirstItemIndex: Int = p.getCurrentPageFirstItemIndex
-  def currentPageFirstItemIndex_=(currentPageFirstItemIndex: Int) = p.setCurrentPageFirstItemIndex(currentPageFirstItemIndex)
+  def currentPageFirstItemIndex_=(currentPageFirstItemIndex: Int): Unit = p.setCurrentPageFirstItemIndex(currentPageFirstItemIndex)
 
   def currentPageFirstItemId: Option[Any] = Option(p.getCurrentPageFirstItemId)
-  def currentPageFirstItemId_=(currentPageFirstItemId: Any) = p.setCurrentPageFirstItemId(currentPageFirstItemId)
+  def currentPageFirstItemId_=(currentPageFirstItemId: Any): Unit = p.setCurrentPageFirstItemId(currentPageFirstItemId)
 
-  def columnCollapsingAllowed = p.isColumnCollapsingAllowed
-  def columnCollapsingAllowed_=(columnCollapsingAllowed: Boolean) = p.setColumnCollapsingAllowed(columnCollapsingAllowed)
+  def columnCollapsingAllowed: Boolean = p.isColumnCollapsingAllowed
+  def columnCollapsingAllowed_=(columnCollapsingAllowed: Boolean): Unit = p.setColumnCollapsingAllowed(columnCollapsingAllowed)
 
   def columnCollapsible(propertyId: Any): Boolean = p.isColumnCollapsible(propertyId)
-  def columnCollapsible(propertyId: Any, collabsible: Boolean) = p.setColumnCollapsible(propertyId, collabsible)
+  def columnCollapsible(propertyId: Any, collabsible: Boolean): Unit = p.setColumnCollapsible(propertyId, collabsible)
 
-  def columnReorderingAllowed = p.isColumnReorderingAllowed
-  def columnReorderingAllowed_=(columnReorderingAllowed: Boolean) = p.setColumnReorderingAllowed(columnReorderingAllowed)
+  def columnReorderingAllowed: Boolean = p.isColumnReorderingAllowed
+  def columnReorderingAllowed_=(columnReorderingAllowed: Boolean): Unit = p.setColumnReorderingAllowed(columnReorderingAllowed)
 
-  def editable = p.isEditable;
-  def editable_=(editable: Boolean) = p.setEditable(editable)
+  def editable: Boolean = p.isEditable;
+  def editable_=(editable: Boolean): Unit = p.setEditable(editable)
 
-  def sortable = !p.isSortDisabled
-  def sortable_=(sortable: Boolean) = p.setSortDisabled(!sortable)
+  def sortable: Boolean = !p.isSortDisabled
+  def sortable_=(sortable: Boolean): Unit = p.setSortDisabled(!sortable)
 
   def sortContainerPropertyId: Option[Any] = Option(p.getSortContainerPropertyId)
-  def sortContainerPropertyId_=(sortContainerPropertyId: Option[Any]) = p.setSortContainerPropertyId(sortContainerPropertyId.orNull)
-  def sortContainerPropertyId_=(sortContainerPropertyId: Any) = p.setSortContainerPropertyId(sortContainerPropertyId)
+  def sortContainerPropertyId_=(sortContainerPropertyId: Option[Any]): Unit = p.setSortContainerPropertyId(sortContainerPropertyId.orNull)
+  def sortContainerPropertyId_=(sortContainerPropertyId: Any): Unit = p.setSortContainerPropertyId(sortContainerPropertyId)
 
-  def sortAscending = p.isSortAscending
-  def sortAscending_=(sortAscending: Boolean) = p.setSortAscending(true)
+  def sortAscending: Boolean = p.isSortAscending
+  def sortAscending_=(sortAscending: Boolean): Unit = p.setSortAscending(true)
 
-  def selectionMode = {
+  def selectionMode: SelectionMode.Value = {
     if (!p.isSelectable)
       SelectionMode.None
     else if (p.isMultiSelect && p.getMultiSelectMode == SIMPLE)
@@ -178,21 +178,21 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
       p.setMultiSelectMode(SIMPLE)
   }
 
-  def columnHeaderMode = Table.ColumnHeaderMode(p.getColumnHeaderMode)
-  def columnHeaderMode_=(columnHeaderMode: Table.ColumnHeaderMode.Value) = p.setColumnHeaderMode(columnHeaderMode.id)
+  def columnHeaderMode: Table.ColumnHeaderMode.Value = Table.ColumnHeaderMode(p.getColumnHeaderMode)
+  def columnHeaderMode_=(columnHeaderMode: Table.ColumnHeaderMode.Value): Unit = p.setColumnHeaderMode(columnHeaderMode.id)
 
-  def rowHeaderMode = Table.RowHeaderMode(p.getRowHeaderMode)
-  def rowHeaderMode_=(rowHeaderMode: Table.RowHeaderMode.Value) = p.setRowHeaderMode(rowHeaderMode.id)
+  def rowHeaderMode: Table.RowHeaderMode.Value = Table.RowHeaderMode(p.getRowHeaderMode)
+  def rowHeaderMode_=(rowHeaderMode: Table.RowHeaderMode.Value): Unit = p.setRowHeaderMode(rowHeaderMode.id)
 
-  def refreshRowCache() = p.refreshRowCache()
+  def refreshRowCache(): Unit = p.refreshRowCache()
 
-  def footerVisible = p.isFooterVisible
-  def footerVisible_=(footerVisible: Boolean) = p.setFooterVisible(footerVisible)
+  def footerVisible: Boolean = p.isFooterVisible
+  def footerVisible_=(footerVisible: Boolean): Unit = p.setFooterVisible(footerVisible)
 
   def tableFieldFactory: Option[TableFieldFactory] = wrapperFor[TableFieldFactory](p.getTableFieldFactory)
-  def tableFieldFactory_=(factory: TableFieldFactory) = p.setTableFieldFactory(factory.p)
-  def tableFieldFactory_=(factoryFunction: (TableFieldIngredients) => Option[Field]) = p.setTableFieldFactory(TableFieldFactory(factoryFunction).p)
-  def tableFieldFactory_=(factory: Option[TableFieldFactory]) = factory match {
+  def tableFieldFactory_=(factory: TableFieldFactory): Unit = p.setTableFieldFactory(factory.p)
+  def tableFieldFactory_=(factoryFunction: (TableFieldIngredients) => Option[Field]): Unit = p.setTableFieldFactory(TableFieldFactory(factoryFunction).p)
+  def tableFieldFactory_=(factory: Option[TableFieldFactory]): Unit = factory match {
     case Some(factory) => p.setTableFieldFactory(factory.p)
     case None => p.setTableFieldFactory(null)
   }
