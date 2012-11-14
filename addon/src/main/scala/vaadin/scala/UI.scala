@@ -22,7 +22,7 @@ object UI {
  * @author Henri Kerola / Vaadin
  */
 
-abstract class UI(override val p: WrappedVaadinUI = new WrappedVaadinUI) extends AbstractComponentContainer(p) with DelayedInit {
+abstract class UI(override val p: WrappedVaadinUI = new WrappedVaadinUI) extends AbstractSingleComponentContainer(p) with DelayedInit {
 
   private var initCode: Option[() => Unit] = None
 
@@ -58,9 +58,6 @@ abstract class UI(override val p: WrappedVaadinUI = new WrappedVaadinUI) extends
   }
 
   def scrollIntoView(component: Component): Unit = p.scrollIntoView(component.p)
-
-  def content: ComponentContainer = WrapperUtil.wrapperFor[ComponentContainer](p.getContent).get
-  def content_=(content: ComponentContainer) = p.setContent(content.p)
 
   def resizeLazy: Boolean = p.isResizeLazy
   def resizeLazy_=(resizeLazy: Boolean): Unit = p.setResizeLazy(resizeLazy)

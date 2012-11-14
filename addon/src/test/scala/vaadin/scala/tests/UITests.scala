@@ -86,11 +86,11 @@ class UITests extends FunSuite with BeforeAndAfter {
   test("content") {
     val layout = new VerticalLayout
 
-    assert(ui.content.isInstanceOf[VerticalLayout])
+    assert(ui.content.get.isInstanceOf[VerticalLayout])
     //assert(ui.content.asInstanceOf[VerticalLayout].margin === Margin(true, true, true, true))
 
     ui.content = layout
-    assert(ui.content === layout)
+    assert(ui.content === Some(layout))
   }
 
   test("resizeLazy") {

@@ -23,8 +23,8 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   }
 
   test("content, VerticalLayout is Window's default content") {
-    assert(window.content.isInstanceOf[VerticalLayout])
-    assert(window.content.asInstanceOf[VerticalLayout].margin === Margin(true, true, true, true))
+    assert(window.content.get.isInstanceOf[VerticalLayout])
+    assert(window.content.get.asInstanceOf[VerticalLayout].margin === Margin(true, true, true, true))
   }
 
   test("positionX") {

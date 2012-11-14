@@ -16,23 +16,23 @@ class PageTests extends ScaladinTestSuite {
     }
   }
   
-  test("setFragment") {
-    page.setFragment("test1", true)
-    Mockito.verify(vaadinPage).setFragment("test1", true)
+  test("setUriFragment") {
+    page.setUriFragment("test1", true)
+    Mockito.verify(vaadinPage).setUriFragment("test1", true)
     
-    page.setFragment(None, false)
-    Mockito.verify(vaadinPage).setFragment(null, false)
+    page.setUriFragment(None, false)
+    Mockito.verify(vaadinPage).setUriFragment(null, false)
   }
   
-  test("fragment") {
-    Mockito.when(vaadinPage.getFragment()).thenReturn("test123")
-    assert(page.fragment === Some("test123"))
+  test("uriFragment") {
+    Mockito.when(vaadinPage.getUriFragment()).thenReturn("test123")
+    assert(page.uriFragment === Some("test123"))
     
-    page.fragment = None
-    Mockito.verify(vaadinPage).setFragment(null)
+    page.uriFragment = None
+    Mockito.verify(vaadinPage).setUriFragment(null)
     
-    page.fragment = "myfragment"
-    Mockito.verify(vaadinPage).setFragment("myfragment")
+    page.uriFragment = "myfragment"
+    Mockito.verify(vaadinPage).setUriFragment("myfragment")
   }
   
   test("browserWindowSize") {

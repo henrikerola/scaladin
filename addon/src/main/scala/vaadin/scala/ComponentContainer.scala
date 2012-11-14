@@ -6,11 +6,16 @@ import vaadin.scala.mixins.AbstractComponentContainerMixin
 import vaadin.scala.mixins.AbstractLayoutMixin
 import vaadin.scala.mixins.ComponentContainerMixin
 import vaadin.scala.mixins.LayoutMixin
+import vaadin.scala.mixins.SingleComponentContainerMixin
+import vaadin.scala.mixins.AbstractSingleComponentContainerMixin
+
 
 package mixins {
   trait HasComponentsMixin extends ComponentMixin { self: com.vaadin.ui.HasComponents => }
   trait ComponentContainerMixin extends HasComponentsMixin { self: com.vaadin.ui.ComponentContainer => }
   trait AbstractComponentContainerMixin extends AbstractComponentMixin with ComponentContainerMixin { self: com.vaadin.ui.AbstractComponentContainer => }
+  trait SingleComponentContainerMixin extends HasComponentsMixin { self: com.vaadin.ui.SingleComponentContainer => }
+  trait AbstractSingleComponentContainerMixin extends AbstractComponentMixin with SingleComponentContainerMixin { self: com.vaadin.ui.AbstractSingleComponentContainer => }
   trait LayoutMixin extends ComponentContainerMixin { self: com.vaadin.ui.Layout => }
   trait AbstractLayoutMixin extends AbstractComponentContainerMixin with LayoutMixin { self: com.vaadin.ui.AbstractLayout => }
 }
@@ -78,6 +83,21 @@ trait Layout extends ComponentContainer {
 
   override def p: com.vaadin.ui.Layout with LayoutMixin
 
+}
+
+trait SingleComponentContainer extends HasComponents { // TODO: implements also ComponentAttachDetachNotifier
+
+  def p: com.vaadin.ui.SingleComponentContainer with SingleComponentContainerMixin
+
+  def componentCount: Int = p.getComponentCount
+
+  def content: Option[Component] = wrapperFor[Component](p.getContent)
+  def content_=(content: Component) = p.setContent(content.p) // TODO: content_=(Option[Component]) ?
+}
+
+abstract class AbstractSingleComponentContainer(override val p: com.vaadin.ui.AbstractSingleComponentContainer with AbstractSingleComponentContainerMixin) extends AbstractComponent(p) with SingleComponentContainer {
+
+  // TODO
 }
 
 abstract class AbstractLayout(override val p: com.vaadin.ui.AbstractLayout with AbstractLayoutMixin) extends AbstractComponentContainer(p) with Layout {

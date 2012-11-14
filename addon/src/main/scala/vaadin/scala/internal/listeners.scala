@@ -90,8 +90,8 @@ class CleanupListener(val action: UI.CleanupEvent => Unit) extends com.vaadin.ui
   def cleanup(e: com.vaadin.ui.UI.CleanupEvent) = action(UI.CleanupEvent(wrapperFor[UI](e.getUI).get))
 }
 
-class FragmentChangedListener(val action: Page.FragmentChangedEvent => Unit) extends com.vaadin.server.Page.FragmentChangedListener with Listener {
-  def fragmentChanged(e: com.vaadin.server.Page.FragmentChangedEvent) = action(Page.FragmentChangedEvent(wrapperFor[Page](e.getPage).get, Option(e.getFragment)))
+class UriFragmentChangedListener(val action: Page.UriFragmentChangedEvent => Unit) extends com.vaadin.server.Page.UriFragmentChangedListener with Listener {
+  def uriFragmentChanged(e: com.vaadin.server.Page.UriFragmentChangedEvent) = action(Page.UriFragmentChangedEvent(wrapperFor[Page](e.getPage).get, Option(e.getUriFragment)))
 }
 
 class BrowserWindowResizeListener(val action: Page.BrowserWindowResizeEvent => Unit) extends com.vaadin.server.Page.BrowserWindowResizeListener with Listener {

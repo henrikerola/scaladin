@@ -11,8 +11,8 @@ class PanelTests extends FunSuite {
   test("content, VerticalLayout is Panel's default content") {
     val panel = new Panel
 
-    assert(panel.content.isInstanceOf[VerticalLayout])
-    assert(panel.content.asInstanceOf[VerticalLayout].margin === Margin(true, true, true, true))
+    assert(panel.content.get.isInstanceOf[VerticalLayout])
+    assert(panel.content.get.asInstanceOf[VerticalLayout].margin === Margin(true, true, true, true))
   }
 
   test("content") {
@@ -20,7 +20,7 @@ class PanelTests extends FunSuite {
 
     val layout = new VerticalLayout
     panel.content = layout
-    assert(panel.content === layout)
+    assert(panel.content === Some(layout))
   }
 
   test("scrollLeft") {

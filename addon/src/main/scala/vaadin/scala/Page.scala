@@ -2,7 +2,7 @@ package vaadin.scala
 
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.internal.ListenersTrait
-import vaadin.scala.internal.FragmentChangedListener
+import vaadin.scala.internal.UriFragmentChangedListener
 import vaadin.scala.internal.BrowserWindowResizeListener
 import com.vaadin.shared.ui.BorderStyle
 import java.net.URI
@@ -19,19 +19,19 @@ object Page {
   def current: Page = WrapperUtil.wrapperFor[Page](com.vaadin.server.Page.getCurrent).get
 
   case class BrowserWindowResizeEvent(page: Page, width: Int, height: Int) extends Event
-  case class FragmentChangedEvent(page: Page, fragment: Option[String]) extends Event
+  case class UriFragmentChangedEvent(page: Page, fragment: Option[String]) extends Event
 }
 
 trait Page extends Wrapper { page =>
 
   val p: com.vaadin.server.Page
 
-  def setFragment(fragment: Option[String], fireEvent: Boolean): Unit = p.setFragment(fragment.orNull, fireEvent)
-  def setFragment(fragment: String, fireEvent: Boolean): Unit = p.setFragment(fragment, fireEvent)
+  def setUriFragment(fragment: Option[String], fireEvent: Boolean): Unit = p.setUriFragment(fragment.orNull, fireEvent)
+  def setUriFragment(fragment: String, fireEvent: Boolean): Unit = p.setUriFragment(fragment, fireEvent)
 
-  def fragment: Option[String] = Option(p.getFragment)
-  def fragment_=(fragment: Option[String]): Unit = p.setFragment(fragment.orNull)
-  def fragment_=(fragment: String): Unit = p.setFragment(fragment)
+  def uriFragment: Option[String] = Option(p.getUriFragment)
+  def uriFragment_=(fragment: Option[String]): Unit = p.setUriFragment(fragment.orNull)
+  def uriFragment_=(fragment: String): Unit = p.setUriFragment(fragment)
 
   //  def webBrowser: WebBrowser = new WebBrowser {
   //    val p = page.p.getWebBrowser
@@ -60,10 +60,10 @@ trait Page extends Wrapper { page =>
 
   def setTitle(title: String): Unit = p.setTitle(title)
 
-  lazy val fragmentChangedListeners = new ListenersTrait[Page.FragmentChangedEvent, FragmentChangedListener] {
+  lazy val uriFragmentChangedListeners = new ListenersTrait[Page.UriFragmentChangedEvent, UriFragmentChangedListener] {
     override def listeners = null // TODO
-    override def addListener(elem: Page.FragmentChangedEvent => Unit) = p.addFragmentChangedListener(new FragmentChangedListener(elem))
-    override def removeListener(elem: FragmentChangedListener) = p.removeFragmentChangedListener(elem)
+    override def addListener(elem: Page.UriFragmentChangedEvent => Unit) = p.addUriFragmentChangedListener(new UriFragmentChangedListener(elem))
+    override def removeListener(elem: UriFragmentChangedListener) = p.removeUriFragmentChangedListener(elem)
   }
 
   lazy val browserWindowResizeListeners = new ListenersTrait[Page.BrowserWindowResizeEvent, BrowserWindowResizeListener] {
