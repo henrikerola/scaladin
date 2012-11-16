@@ -9,7 +9,7 @@ object BuildSettings {
   val buildOrganization = "vaadin.scala"
   val buildName = "Scaladin"
   val buildVersion = "3.0.0-SNAPSHOT"
-  val buildScalaVersion = "2.10.0-RC1"
+  val buildScalaVersion = "2.10.0-RC2"
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
     organization := buildOrganization,
@@ -41,7 +41,7 @@ object Dependencies {
   val vaadinThemes = "com.vaadin" % "vaadin-themes" % vaadinVersion
   val servletApi = "javax.servlet" % "javax.servlet-api" % "3.0.1"
   val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
-  val scalaTest = "org.scalatest" % "scalatest_2.10.0-RC1" % scalaTestVersion % "test"
+  val scalaTest = "org.scalatest" % "scalatest_2.10.0-RC2" % scalaTestVersion % "test"
   val junitInterface = "com.novocode" % "junit-interface" % "0.7" % "test->default"
   val mockito = "org.mockito" % "mockito-all" % mockitoVersion % "test" 
 }
