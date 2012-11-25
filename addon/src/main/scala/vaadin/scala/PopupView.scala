@@ -5,7 +5,7 @@ import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.internal.PopupVisibilityListener
 
 package mixins {
-  trait PopupViewMixin extends AbstractComponentContainerMixin { self: com.vaadin.ui.PopupView => }
+  trait PopupViewMixin extends AbstractComponentMixin with HasComponentsMixin { self: com.vaadin.ui.PopupView => }
 }
 
 object PopupView {
@@ -16,7 +16,8 @@ object PopupView {
  * @see com.vaadin.ui.PopupView
  * @author Henri Kerola / Vaadin
  */
-class PopupView(override val p: com.vaadin.ui.PopupView with PopupViewMixin = new com.vaadin.ui.PopupView("", null) with PopupViewMixin) extends AbstractComponentContainer(p) {
+class PopupView(override val p: com.vaadin.ui.PopupView with PopupViewMixin = new com.vaadin.ui.PopupView("", null) with PopupViewMixin)
+    extends AbstractComponent(p) with HasComponents {
 
   def minimizedHtmlValue: String = p.getContent.getMinimizedValueAsHTML
   def minimizedHtmlValue_=(minimizedHtmlValue: String): Unit = {

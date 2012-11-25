@@ -3,11 +3,8 @@ package vaadin.scala
 import scala.collection.mutable
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.internal.ClickListener
-import vaadin.scala.internal.CleanupListener
 import vaadin.scala.internal.ListenersTrait
-import vaadin.scala.mixins.AbstractComponentContainerMixin
 import vaadin.scala.internal.WrappedVaadinUI
-import scala.collection.mutable.ListBuffer
 
 object UI {
   def current: UI = WrapperUtil.wrapperFor[UI](com.vaadin.ui.UI.getCurrent).orNull
@@ -21,10 +18,28 @@ object UI {
  * @see com.vaadin.ui.UI
  * @author Henri Kerola / Vaadin
  */
+abstract class UI(override val p: WrappedVaadinUI)
+    extends AbstractSingleComponentContainer(p) with DelayedInit {
 
-abstract class UI(override val p: WrappedVaadinUI = new WrappedVaadinUI) extends AbstractSingleComponentContainer(p) with DelayedInit {
+  private[this] var initCode: Option[() => Unit] = None
 
-  private var initCode: Option[() => Unit] = None
+  private[this] var _title: Option[String] = None
+  private[this] var _theme: Option[String] = None
+  private[this] var _widgetset: Option[String] = None
+  private[this] var _preserveOnRefresh: Boolean = false
+
+  def this(
+      title: String = null,
+      theme: String = null,
+      widgetset: String = null,
+      preserveOnRefresh: Boolean = false,
+      p: WrappedVaadinUI = new WrappedVaadinUI) {
+    this(p)
+    this._title = Option(title)
+    this._theme = Option(theme)
+    this._widgetset = Option(widgetset)
+    this._preserveOnRefresh = preserveOnRefresh
+  }
 
   def delayedInit(body: => Unit) {
     content = new VerticalLayout {
@@ -61,17 +76,11 @@ abstract class UI(override val p: WrappedVaadinUI = new WrappedVaadinUI) extends
 
   def resizeLazy: Boolean = p.isResizeLazy
   def resizeLazy_=(resizeLazy: Boolean): Unit = p.setResizeLazy(resizeLazy)
-  // TODO: the same clickListeners can be found from Panel and Embedded, use a trait instead of copy-pasting? 
+  // TODO: the same clickListeners can be found from Panel and Embedded, use a trait instead of copy-pasting?
   lazy val clickListeners = new ListenersTrait[ClickEvent, ClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.event.MouseEvents.ClickListener])
     override def addListener(elem: ClickEvent => Unit) = p.addClickListener(new ClickListener(elem))
     override def removeListener(elem: ClickListener) = p.removeClickListener(elem)
-  }
-
-  lazy val cleanupListeners = new ListenersTrait[UI.CleanupEvent, CleanupListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.UI.CleanupListener])
-    override def addListener(elem: UI.CleanupEvent => Unit) = p.addCleanupListener(new CleanupListener(elem))
-    override def removeListener(elem: CleanupListener) = p.removeCleanupListener(elem)
   }
 
   // TODO: setScrollTop
@@ -82,10 +91,18 @@ abstract class UI(override val p: WrappedVaadinUI = new WrappedVaadinUI) extends
 
   // TODO: setNavigator
 
-  def lastHeartbeatTime: Long = p.getLastHeartbeatTime
+  def lastHeartbeatTimestamp: Long = p.getLastHeartbeatTimestamp
 
-  def lastUidlRequestTime: Long = p.getLastUidlRequestTime
+  def close(): Unit = p.close()
 
-  def theme: String = p.getTheme
+  def isClosing: Boolean = p.isClosing
+
+  def theme: String = Option(p.getTheme).getOrElse(_theme.orNull)
+
+  def title: Option[String] = _title
+
+  def widgetset: Option[String] = _widgetset
+
+  def preserveOnRefresh: Boolean = _preserveOnRefresh
 
 }

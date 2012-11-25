@@ -42,7 +42,7 @@ class PageTests extends ScaladinTestSuite {
     assert(page.browserWindowSize === (1300, 950))
     
     page.browserWindowSize = (1300, 950)
-    Mockito.verify(vaadinPage).setBrowserWindowSize(1300, 950)
+    Mockito.verify(vaadinPage).updateBrowserWindowSize(1300, 950)
   }
   
   test("browserWindowHeight") {
@@ -50,7 +50,7 @@ class PageTests extends ScaladinTestSuite {
     assert(page.browserWindowHeight === 950)
     
     page.browserWindowHeight = 950
-    Mockito.verify(vaadinPage).setBrowserWindowSize(0, 950)
+    Mockito.verify(vaadinPage).updateBrowserWindowSize(0, 950)
   }
   
   test("browserWindowWidth") {
@@ -58,6 +58,6 @@ class PageTests extends ScaladinTestSuite {
     assert(page.browserWindowWidth === 1300)
     
     page.browserWindowWidth = 1300
-    Mockito.verify(vaadinPage).setBrowserWindowSize(1300, 0)
+    Mockito.verify(vaadinPage).updateBrowserWindowSize(1300, 0)
   }
 }

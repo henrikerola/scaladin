@@ -2,6 +2,7 @@ package vaadin.scala.tests
 
 import org.scalatest.FunSuite
 import vaadin.scala._
+import internal.WrappedVaadinUI
 import org.scalatest.BeforeAndAfter
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -29,6 +30,25 @@ class UITests extends FunSuite with BeforeAndAfter {
 
     UI.current = None
     assert(UI.current === null)
+  }
+
+  test("Constructor params") {
+    var ui = new UI {}
+    assert(ui.title === None)
+    assert(ui.theme === null)
+    assert(ui.widgetset === None)
+    assert(ui.preserveOnRefresh === false)
+    assert(ui.p != null)
+
+
+    val wrappedVaadinUI = new WrappedVaadinUI
+    ui = new UI("mytitle", "mytheme", "mywidgetset", true, wrappedVaadinUI) {}
+
+    assert(ui.title === Some("mytitle"))
+    assert(ui.theme === "mytheme")
+    assert(ui.widgetset === Some("mywidgetset"))
+    assert(ui.preserveOnRefresh === true)
+    assert(ui.p === wrappedVaadinUI)
   }
 
   test("initialization without init(request: ScaladinRequest)") {

@@ -1,10 +1,9 @@
 package vaadin.scala
 
-import com.vaadin.server.VaadinServlet
+import com.vaadin.server.{VaadinServlet, SessionInitListener, SessionInitEvent}
 import javax.servlet.ServletConfig
 import vaadin.scala.internal.ScaladinUIProvider
-import com.vaadin.server.SessionInitListener
-import com.vaadin.server.SessionInitEvent
+import vaadin.scala.mixins.ScaladinServletServiceMixin
 
 class ScaladinServlet extends VaadinServlet {
 
@@ -21,4 +20,6 @@ class ScaladinServlet extends VaadinServlet {
     })
   }
 
+  override def createServletService(c: com.vaadin.server.DeploymentConfiguration) =
+    new ScaladinServletService(new com.vaadin.server.VaadinServletService(this, c) with ScaladinServletServiceMixin).p
 }

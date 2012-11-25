@@ -68,14 +68,22 @@ class ScaladinRequestTests extends FunSuite with BeforeAndAfter with MockitoSuga
     Mockito.verify(vaadinRequest).setAttribute("attr3", null)
   }
   
-  test("requestPathInfo") {
-    Mockito.when(vaadinRequest.getRequestPathInfo).thenReturn("/test")
-    assert(scaladinRequest.requestPathInfo === Some("/test"))
+  test("pathInfo") {
+    Mockito.when(vaadinRequest.getPathInfo).thenReturn("/test")
+    assert(scaladinRequest.pathInfo === Some("/test"))
     
-    Mockito.when(vaadinRequest.getRequestPathInfo).thenReturn(null)
-    assert(scaladinRequest.requestPathInfo === None)
+    Mockito.when(vaadinRequest.getPathInfo).thenReturn(null)
+    assert(scaladinRequest.pathInfo === None)
   }
-  
+
+  test("contextPath") {
+    Mockito.when(vaadinRequest.getContextPath).thenReturn("/test")
+    assert(scaladinRequest.contextPath === Some("/test"))
+
+    Mockito.when(vaadinRequest.getContextPath).thenReturn(null)
+    assert(scaladinRequest.contextPath === None)
+  }
+
   // TODO: wrappedSession
   
   test("contentType") {

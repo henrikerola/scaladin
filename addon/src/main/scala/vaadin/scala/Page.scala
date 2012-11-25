@@ -38,13 +38,13 @@ trait Page extends Wrapper { page =>
   //  }
 
   def browserWindowSize: (Int, Int) = (browserWindowWidth, browserWindowHeight)
-  def browserWindowSize_=(size: (Int, Int)): Unit = p.setBrowserWindowSize(size._1, size._2)
+  def browserWindowSize_=(size: (Int, Int)): Unit = p.updateBrowserWindowSize(size._1, size._2)
 
   def browserWindowHeight: Int = p.getBrowserWindowHeight
-  def browserWindowHeight_=(browserWindowHeight: Int): Unit = p.setBrowserWindowSize(browserWindowWidth, browserWindowHeight)
+  def browserWindowHeight_=(browserWindowHeight: Int): Unit = p.updateBrowserWindowSize(browserWindowWidth, browserWindowHeight)
 
   def browserWindowWidth: Int = p.getBrowserWindowWidth
-  def browserWindowWidth_=(browserWindowWidth: Int): Unit = p.setBrowserWindowSize(browserWindowWidth, browserWindowHeight)
+  def browserWindowWidth_=(browserWindowWidth: Int): Unit = p.updateBrowserWindowSize(browserWindowWidth, browserWindowHeight)
 
   //  def javaScript: JavaScript = new JavaScript {
   //    val p = page.p.getJavaScript

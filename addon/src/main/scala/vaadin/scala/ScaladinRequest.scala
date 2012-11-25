@@ -6,28 +6,6 @@ import java.util.Date
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 
-object ScaladinRequest {
-
-  trait DeploymentConfiguration {
-
-    val p: com.vaadin.server.DeploymentConfiguration
-
-    def isProductionMode: Boolean = p.isProductionMode
-
-    def isXsrfProtectionEnabled: Boolean = p.isXsrfProtectionEnabled
-
-    def resourceCacheTime: Int = p.getResourceCacheTime
-
-    def heartbeatInterval: Int = p.getHeartbeatInterval
-
-    def isIdleUICleanupEnabled: Boolean = p.isIdleUICleanupEnabled
-
-    def initParameters: java.util.Properties = p.getInitParameters
-
-    def getApplicationOrSystemProperty(propertyName: String, defaultValue: String): String = p.getApplicationOrSystemProperty(propertyName, defaultValue)
-  }
-}
-
 trait ScaladinRequest { scaladinRequest =>
 
   val p: com.vaadin.server.VaadinRequest
@@ -45,7 +23,9 @@ trait ScaladinRequest { scaladinRequest =>
   def setAttribute(name: String, value: Any): Unit = p.setAttribute(name, value)
   def setAttribute(name: String, value: Option[Any]): Unit = p.setAttribute(name, value.orNull)
 
-  def requestPathInfo: Option[String] = Option(p.getRequestPathInfo)
+  def pathInfo: Option[String] = Option(p.getPathInfo)
+
+  def contextPath: Option[String] = Option(p.getContextPath) // TODO can be null or not?
 
   def wrappedSession: com.vaadin.server.WrappedSession = p.getWrappedSession // TODO: return wrapped WrappedSession
   def wrappedSession(allowSessionCreation: Boolean): Option[com.vaadin.server.WrappedSession] = Option(p.getWrappedSession) // TODO: return wrapped WrappedSession

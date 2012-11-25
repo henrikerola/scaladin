@@ -24,14 +24,14 @@ trait HasComponents extends Component {
 
   override def p: com.vaadin.ui.HasComponents with HasComponentsMixin
 
-  def componentVisible(childComponent: Component) = p.isComponentVisible(childComponent.p)
-
   def components: Iterable[Component] = new Iterable[Component] {
     def iterator: Iterator[Component] = {
       import scala.collection.JavaConverters._
       p.iterator.asScala.map(wrapperFor[Component](_).get)
     }
   }
+
+  // TODO: Component attach, detach...
 }
 
 trait ComponentContainer extends HasComponents {
