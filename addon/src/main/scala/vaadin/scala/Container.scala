@@ -36,7 +36,8 @@ trait Container extends Wrapper {
 
   def removeItem(itemId: Any): Boolean = p.removeItem(itemId)
 
-  def addItem(): Option[Any] = Some(p.addItem())
+  def addItem(): Any = p.addItem()
+  def addItemOption(): Option[Any] = Option(p.addItem())
 
   def addItem(itemId: Any): Option[Item] = optionalWrapItem(p.addItem(itemId))
 
@@ -97,16 +98,18 @@ object Container {
 
     import scala.collection.JavaConverters._
 
-    def children(itemId: Any): Iterable[Any] = p.getChildren(itemId).asScala
+    def children(itemId: Any): Iterable[Any] = p.getChildren(itemId) match {
+      case null => List.empty
+      case result => result.asScala
+    }
 
     def parent(itemId: Any): Any = p.getParent(itemId)
-    def parent_=(itemId: Any, newParentId: Any): Unit = p.setParent(itemId, newParentId)
+    def setParent(itemToParent: (Any, Any)): Unit = p.setParent(itemToParent._1, itemToParent._2)
 
     def rootItemIds: Iterable[Any] = p.rootItemIds.asScala
 
     def childrenAllowed(itemId: Any): Boolean = p.areChildrenAllowed(itemId)
-
-    def setChildrenAllowed(itemId: Any, areChildrenAllowed: Boolean): Unit = p.setChildrenAllowed(itemId, areChildrenAllowed)
+    def setChildrenAllowed(childrenAllowedForItem: (Any, Boolean)): Unit = p.setChildrenAllowed(childrenAllowedForItem._1, childrenAllowedForItem._2)
 
     def isRoot(itemId: Any): Boolean = p.isRoot(itemId)
 
