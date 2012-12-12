@@ -54,7 +54,7 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
   test("visibleColumns") {
     Mockito.reset(spy)
-    
+
     assert(table.visibleColumns === "col1" :: "col2" :: Nil)
 
     table.visibleColumns = "col1" :: Nil
@@ -311,20 +311,20 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
   test("columnGenerators") {
     val button = new Button
-    
+
     table.columnGenerators += "colid1" -> { e => None }
     table.columnGenerators += "colid2" -> { e => Some("test") }
     table.columnGenerators += "colid3" -> { e => Some(button) }
-    
+
     assert(table.p.getColumnGenerator("colid1").generateCell(table.p, "itemId", "colid1") === null)
     assert(table.p.getColumnGenerator("colid2").generateCell(table.p, "itemId", "colid2") === "test")
     assert(table.p.getColumnGenerator("colid3").generateCell(table.p, "itemId", "colid3") === button.p)
     assert(table.columnGenerators.size === 3)
-    
+
     table.columnGenerators -= "colid2"
     assert(table.columnGenerators.size === 2)
   }
-  
+
   test("container") {
     assert(table.container.get.isInstanceOf[IndexedContainer])
   }

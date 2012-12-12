@@ -21,7 +21,7 @@ class Link(override val p: com.vaadin.ui.Link with LinkMixin = new com.vaadin.ui
   def targetName = Option(p.getTargetName)
   def targetName_=(targetName: Option[String]) = p.setTargetName(caption.orNull)
   def targetName_=(targetName: String) = p.setTargetName(targetName)
-  
+
   def targetBorder = Link.TargetBorder(p.getTargetBorder.ordinal)
   def targetBorder_=(targetBorder: Link.TargetBorder.Value) = p.setTargetBorder(BorderStyle.values.apply(targetBorder.id))
 
@@ -30,7 +30,7 @@ class Link(override val p: com.vaadin.ui.Link with LinkMixin = new com.vaadin.ui
 
   def targetHeight = p.getTargetHeight()
   def targetHeight_=(targetHeight: Int) = p.setTargetHeight(targetHeight)
-  
+
   def resource: Option[Resource] = wrapperFor[Resource](p.getResource)
   def resource_=(resource: Option[Resource]) = if (resource.isDefined) p.setResource(resource.get.p) else p.setResource(null)
   def resource_=(resource: Resource) = p.setResource(resource.p)

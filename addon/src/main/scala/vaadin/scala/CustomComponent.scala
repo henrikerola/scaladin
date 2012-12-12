@@ -17,7 +17,7 @@ package mixins {
  */
 // Note that extends AbstractComponent instead of AbstractComponentContainer
 class CustomComponent(override val p: com.vaadin.ui.CustomComponent with CustomComponentMixin = new com.vaadin.ui.CustomComponent with CustomComponentMixin)
-  extends AbstractComponent(p) with HasComponents {
+    extends AbstractComponent(p) with HasComponents {
 
   protected def compositionRoot = wrapperFor[Component](p.getCompositionRoot)
   protected def compositionRoot_=(compositionRoot: Component) = p.setCompositionRoot(compositionRoot.p)

@@ -21,21 +21,21 @@ class CheckBoxTests extends FunSuite {
 
   test("value") {
     val checkBox = new CheckBox()
-    
+
     assert(checkBox.value === Some(false))
 
     checkBox.value = true
     assert(checkBox.value === Some(true))
   }
-  
+
   test("booleanValue") {
     val checkBox = new CheckBox()
-    
+
     assert(checkBox.booleanValue === false)
 
     checkBox.value = true
     assert(checkBox.booleanValue === true)
-  } 
+  }
 
   // TODO test focus and blur listeners
 }

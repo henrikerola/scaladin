@@ -30,7 +30,7 @@ class GridLayoutTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     layout.add(label)
     Mockito.verify(spy).addComponent(label.p)
   }
-  
+
   test("add(component, alignment)") {
     val label = new Label
     layout.add(label, alignment = Alignment.BottomCenter)

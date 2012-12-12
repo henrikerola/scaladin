@@ -1,6 +1,6 @@
 package vaadin.scala
 
-import internal.{WrapperUtil, ErrorHandler}
+import internal.{ WrapperUtil, ErrorHandler }
 import java.util.Locale
 import java.util.concurrent.locks.Lock
 import collection.JavaConverters._

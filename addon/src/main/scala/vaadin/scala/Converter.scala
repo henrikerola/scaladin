@@ -25,7 +25,7 @@ package mixins {
  * @author Henri Kerola / Vaadin
  */
 abstract class Converter[Presentation: Manifest, Model: Manifest](val p: com.vaadin.data.util.converter.Converter[Presentation, Model] with ConverterMixin[Presentation, Model] = new com.vaadin.data.util.converter.Converter[Presentation, Model] with ConverterMixin[Presentation, Model])
-  extends Wrapper {
+    extends Wrapper {
 
   p.wrapper = this
 

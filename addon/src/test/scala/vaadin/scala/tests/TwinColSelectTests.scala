@@ -68,7 +68,7 @@ class TwinColSelectTests extends FunSuite {
     twinColSelect.leftColumnCaption = None
     assert(twinColSelect.leftColumnCaption === None)
   }
-  
+
   test("container") {
     val twinColSelect = new TwinColSelect
     assert(twinColSelect.container.get.isInstanceOf[IndexedContainer])

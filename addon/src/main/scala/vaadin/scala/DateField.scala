@@ -26,22 +26,22 @@ object DateField {
     val Month = Value(MONTH.ordinal)
     val Year = Value(YEAR.ordinal)
   }
-  
+
   case class UnparsableDateStringEvent(dateField: DateField, dateString: String) extends Event
-  
+
   val DefaultUnparsableDateStringHandler: (UnparsableDateStringEvent => Option[java.util.Date]) = e => {
     throw new RuntimeException(e.dateField.parseErrorMessage.getOrElse(""))
   }
 }
 
 class DateField(override val p: com.vaadin.ui.DateField with DateFieldMixin = new com.vaadin.ui.DateField with DateFieldMixin)
-  extends AbstractField[java.util.Date](p) with BlurNotifier with FocusNotifier {
+    extends AbstractField[java.util.Date](p) with BlurNotifier with FocusNotifier {
 
   resolution = DateField.Resolution.Second
 
   var unparsableDateStringHandler: Option[DateField.UnparsableDateStringEvent => Option[java.util.Date]] = Some(DateField.DefaultUnparsableDateStringHandler)
   def unparsableDateStringHandler_=(handler: DateField.UnparsableDateStringEvent => Option[java.util.Date]) {
-	  unparsableDateStringHandler = Option(handler)
+    unparsableDateStringHandler = Option(handler)
   }
 
   def resolution = DateField.Resolution(p.getResolution.ordinal)

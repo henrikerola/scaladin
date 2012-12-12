@@ -9,7 +9,6 @@ import vaadin.scala.mixins.LayoutMixin
 import vaadin.scala.mixins.SingleComponentContainerMixin
 import vaadin.scala.mixins.AbstractSingleComponentContainerMixin
 
-
 package mixins {
   trait HasComponentsMixin extends ComponentMixin { self: com.vaadin.ui.HasComponents => }
   trait ComponentContainerMixin extends HasComponentsMixin { self: com.vaadin.ui.ComponentContainer => }

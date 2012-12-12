@@ -22,7 +22,7 @@ class ScaladinWrapperTests extends FunSuite {
   test("wrapped ComponentContainer has correct wrapped type") {
     val wrapper = ScaladinWrapper.wrapComponentContainer(new com.vaadin.ui.VerticalLayout with ComponentContainerMixin)
     assert(wrapper.p.isInstanceOf[com.vaadin.ui.VerticalLayout])
-    
+
     val label = new Label
     wrapper.addComponent(label)
 

@@ -27,11 +27,11 @@ abstract class UI(override val p: WrappedVaadinUI)
   private[this] var _preserveOnRefresh: Boolean = false
 
   def this(
-      title: String = null,
-      theme: String = null,
-      widgetset: String = null,
-      preserveOnRefresh: Boolean = false,
-      p: WrappedVaadinUI = new WrappedVaadinUI) {
+    title: String = null,
+    theme: String = null,
+    widgetset: String = null,
+    preserveOnRefresh: Boolean = false,
+    p: WrappedVaadinUI = new WrappedVaadinUI) {
     this(p)
     this._title = Option(title)
     this._theme = Option(theme)
