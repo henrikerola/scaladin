@@ -10,8 +10,6 @@ object UI {
   def current: UI = WrapperUtil.wrapperFor[UI](com.vaadin.ui.UI.getCurrent).orNull
   def current_=(ui: Option[UI]): Unit = com.vaadin.ui.UI.setCurrent(if (ui.isDefined) ui.get.p else null)
   def current_=(ui: UI): Unit = com.vaadin.ui.UI.setCurrent(ui.p)
-
-  case class CleanupEvent(ui: UI) extends Event
 }
 
 /**

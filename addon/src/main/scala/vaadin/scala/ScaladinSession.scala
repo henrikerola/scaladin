@@ -5,6 +5,11 @@ import java.util.Locale
 import java.util.concurrent.locks.Lock
 import collection.JavaConverters._
 import collection.mutable
+import vaadin.scala.mixins.VaadinSessionMixin
+
+package mixins {
+  trait VaadinSessionMixin extends ScaladinMixin
+}
 
 object ScaladinSession {
   def current: ScaladinSession = WrapperUtil.wrapperFor[ScaladinSession](com.vaadin.server.VaadinSession.getCurrent).orNull
@@ -21,7 +26,9 @@ object ScaladinSession {
  * @see com.vaadin.server.VaadinSession
  * @author Henri Kerola / Vaadin
  */
-class ScaladinSession(val p: com.vaadin.server.VaadinSession) extends Wrapper { vaadinSession =>
+class ScaladinSession(val p: com.vaadin.server.VaadinSession with VaadinSessionMixin) extends Wrapper { vaadinSession =>
+
+  p.wrapper = this
 
   errorHandler = ScaladinSession.DefaultErrorHandler
 
