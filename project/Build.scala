@@ -4,6 +4,7 @@ import com.github.siasia.WebPlugin._
 import de.johoop.jacoco4sbt._
 import JacocoPlugin._
 import java.util.jar.{Attributes, Manifest}
+import com.typesafe.sbt.SbtScalariform._
 
 object BuildSettings {
   val buildOrganization = "vaadin.scala"
@@ -50,7 +51,7 @@ object ScaladinBuild extends Build {
   import Dependencies._
   import BuildSettings._
 
-  lazy val addonSettings = buildSettings ++ jacoco.settings ++ Seq(
+  lazy val addonSettings = buildSettings ++ jacoco.settings ++ scalariformSettings ++ Seq(
     name := buildName,
     libraryDependencies := Seq(scala, scalaActors, vaadin, servletApi, scalaTest, junitInterface, mockito),
     packageConfiguration in Compile in packageBin ~= { 
