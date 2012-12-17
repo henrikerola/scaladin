@@ -9,7 +9,7 @@ import vaadin.scala.mixins.NewItemHandlerMixin
 
 package mixins {
   trait AbstractSelectMixin extends AbstractFieldMixin with ContainerMixin with ContainerViewerMixin { self: com.vaadin.ui.AbstractSelect => }
-  trait NewItemHandlerMixin extends TypedScaladinMixin[NewItemHandler] 
+  trait NewItemHandlerMixin extends TypedScaladinMixin[NewItemHandler]
 }
 
 object AbstractSelect {
@@ -41,7 +41,7 @@ abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with 
 
   def newItemsAllowed: Boolean = p.isNewItemsAllowed
   def newItemsAllowed_=(newItemsAllowed: Boolean): Unit = p.setNewItemsAllowed(newItemsAllowed)
-  
+
   def itemCaptionMode = AbstractSelect.ItemCaptionMode(p.getItemCaptionMode.ordinal)
   def itemCaptionMode_=(itemCaptionMode: AbstractSelect.ItemCaptionMode.Value) = p.setItemCaptionMode(com.vaadin.ui.AbstractSelect.ItemCaptionMode.values.apply(itemCaptionMode.id))
 
@@ -89,11 +89,11 @@ class DefaultNewItemHandler(select: AbstractSelect) extends NewItemHandler {
       // Sets the caption property, if used
       if (select.itemCaptionPropertyId.isDefined) {
         //try {
-          select.property(newItemCaption, select.itemCaptionPropertyId.get).get.value = newItemCaption
+        select.property(newItemCaption, select.itemCaptionPropertyId.get).get.value = newItemCaption
         //} catch {
-          // TODO
-          //case ignored: com.vaadin.data.Property.ConversionException =>
-          // The conversion exception is safely ignored, the caption is just missing
+        // TODO
+        //case ignored: com.vaadin.data.Property.ConversionException =>
+        // The conversion exception is safely ignored, the caption is just missing
         //}
       }
       if (select.isInstanceOf[MultiSelectable] && select.asInstanceOf[MultiSelectable].multiSelect) {

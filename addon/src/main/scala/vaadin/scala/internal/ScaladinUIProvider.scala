@@ -1,6 +1,6 @@
 package vaadin.scala.internal
 
-import com.vaadin.server.{UIProviderEvent, DefaultUIProvider, UIClassSelectionEvent, UICreateEvent}
+import com.vaadin.server.{ UIProviderEvent, DefaultUIProvider, UIClassSelectionEvent, UICreateEvent }
 import collection.mutable
 
 class ScaladinUIProvider extends DefaultUIProvider {

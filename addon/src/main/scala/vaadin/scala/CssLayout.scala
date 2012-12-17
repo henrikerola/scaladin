@@ -20,7 +20,7 @@ package mixins {
  *
  */
 class CssLayout(override val p: com.vaadin.ui.CssLayout with CssLayoutMixin = new com.vaadin.ui.CssLayout with CssLayoutMixin)
-  extends AbstractLayout(p) with LayoutClickNotifier {
+    extends AbstractLayout(p) with LayoutClickNotifier {
 
   // FIXME: should be private or protected
   val cssMap = Map.empty[VaadinComponent, String]
@@ -33,9 +33,9 @@ class CssLayout(override val p: com.vaadin.ui.CssLayout with CssLayoutMixin = ne
   }
 
   def css(component: Component): Option[String] = Option(cssMap.getOrElse(component.p, null))
-  
-  def addComponentAsFirst(component: Component) = p.addComponentAsFirst(component.p) 
-  
+
+  def addComponentAsFirst(component: Component) = p.addComponentAsFirst(component.p)
+
   override def removeComponent(component: Component) = {
     super.removeComponent(component)
     cssMap -= component.p

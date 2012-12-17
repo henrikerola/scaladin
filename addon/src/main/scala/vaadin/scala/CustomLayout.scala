@@ -20,9 +20,9 @@ class CustomLayout(override val p: com.vaadin.ui.CustomLayout with CustomLayoutM
     p.addComponent(component.p, location)
     component
   }
-  
+
   def component(location: String) = wrapperFor[Component](p.getComponent(location))
-  
+
   // TODO provide add and component with Symbol location? 
   // TODO: "unimplemented" margin methods
 }

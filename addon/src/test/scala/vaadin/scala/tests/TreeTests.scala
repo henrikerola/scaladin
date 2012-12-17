@@ -22,30 +22,30 @@ class TreeTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     spy = Mockito.spy(vaadinTree)
     tree = new Tree(spy)
   }
-  
+
   test("expanded") {
     assert(!tree.expanded('itemId))
     Mockito.verify(spy).isExpanded('itemId)
   }
-  
+
   test("expandItem") {
     assert(!tree.expandItem('itemId))
     Mockito.verify(spy).expandItem('itemId)
   }
-  
+
   test("expandItemsRecursively") {
-	  assert(tree.expandItemsRecursively('itemId))
-	  Mockito.verify(spy).expandItemsRecursively('itemId)
+    assert(tree.expandItemsRecursively('itemId))
+    Mockito.verify(spy).expandItemsRecursively('itemId)
   }
-  
+
   test("collapseItem") {
     assert(tree.collapseItem('itemId))
     Mockito.verify(spy).collapseItem('itemId)
   }
-  
+
   test("collapseItemsRecursively") {
-	  assert(tree.collapseItemsRecursively('itemId))
-	  Mockito.verify(spy).collapseItemsRecursively('itemId)
+    assert(tree.collapseItemsRecursively('itemId))
+    Mockito.verify(spy).collapseItemsRecursively('itemId)
   }
 
   test("itemStyleGenerator") {
@@ -64,7 +64,7 @@ class TreeTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     tree.itemStyleGenerator = Some(generator)
     assert(tree.itemStyleGenerator === Some(generator))
   }
-  
+
   test("itemStyleGenerator, style generation") {
     tree.itemStyleGenerator = { e: Tree.ItemStyleEvent =>
       e.itemId match {
@@ -72,12 +72,12 @@ class TreeTests extends FunSuite with BeforeAndAfter with MockitoSugar {
         case _ => None
       }
     }
-    
+
     assert(tree.p.getItemStyleGenerator.getStyle(tree.p, "test1") === "test1")
     assert(tree.p.getItemStyleGenerator.getStyle(tree.p, "test2") === null)
     assert(tree.p.getItemStyleGenerator.getStyle(tree.p, null) === null)
   }
-  
+
   test("container") {
     assert(tree.container.get.getClass === classOf[HierarchicalContainer])
   }

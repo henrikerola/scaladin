@@ -10,8 +10,6 @@ object UI {
   def current: UI = WrapperUtil.wrapperFor[UI](com.vaadin.ui.UI.getCurrent).orNull
   def current_=(ui: Option[UI]): Unit = com.vaadin.ui.UI.setCurrent(if (ui.isDefined) ui.get.p else null)
   def current_=(ui: UI): Unit = com.vaadin.ui.UI.setCurrent(ui.p)
-
-  case class CleanupEvent(ui: UI) extends Event
 }
 
 /**
@@ -29,11 +27,11 @@ abstract class UI(override val p: WrappedVaadinUI)
   private[this] var _preserveOnRefresh: Boolean = false
 
   def this(
-      title: String = null,
-      theme: String = null,
-      widgetset: String = null,
-      preserveOnRefresh: Boolean = false,
-      p: WrappedVaadinUI = new WrappedVaadinUI) {
+    title: String = null,
+    theme: String = null,
+    widgetset: String = null,
+    preserveOnRefresh: Boolean = false,
+    p: WrappedVaadinUI = new WrappedVaadinUI) {
     this(p)
     this._title = Option(title)
     this._theme = Option(theme)

@@ -22,37 +22,37 @@ class TreeTableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     spy = Mockito.spy(vaadinTree)
     treeTable = new TreeTable(spy)
   }
-  
+
   test("collapsed(itemId, collapsed)") {
     treeTable.collapsed('itemId, true)
     Mockito.verify(spy).setCollapsed('itemId, true)
   }
-  
+
   test("hierarchyColumn") {
     assert(treeTable.hierarchyColumn === None)
-    
+
     treeTable.hierarchyColumn = 'col1
     assert(treeTable.hierarchyColumn === Some('col1))
-    
+
     treeTable.hierarchyColumn = None
     assert(treeTable.hierarchyColumn === None)
-    
+
     treeTable.hierarchyColumn = Some('col1)
     assert(treeTable.hierarchyColumn === Some('col1))
   }
-  
+
   test("collapsed(itemId)") {
-	assert(treeTable.collapsed('itemId))
+    assert(treeTable.collapsed('itemId))
     Mockito.verify(spy).isCollapsed('itemId)
   }
-  
+
   test("animationsEnabled") {
     assert(!treeTable.animationsEnabled)
-    
+
     treeTable.animationsEnabled = true
     assert(treeTable.animationsEnabled)
   }
-  
+
   test("container") {
     assert(treeTable.container.get.getClass === classOf[HierarchicalContainer])
   }

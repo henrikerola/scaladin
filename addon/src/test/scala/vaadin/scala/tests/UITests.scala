@@ -40,7 +40,6 @@ class UITests extends FunSuite with BeforeAndAfter {
     assert(ui.preserveOnRefresh === false)
     assert(ui.p != null)
 
-
     val wrappedVaadinUI = new WrappedVaadinUI
     ui = new UI("mytitle", "mytheme", "mywidgetset", true, wrappedVaadinUI) {}
 

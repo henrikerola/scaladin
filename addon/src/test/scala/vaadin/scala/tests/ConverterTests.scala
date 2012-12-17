@@ -33,7 +33,7 @@ class ConverterTests extends FunSuite {
     val myConverter = new MyConverter
     assert(myConverter.presentationType === classOf[String])
   }
-  
+
   test("p.getPresentationType") {
     val myConverter = new MyConverter
     assert(myConverter.p.getPresentationType === classOf[String])

@@ -10,7 +10,7 @@ package mixins {
 }
 
 object Button {
-  
+
   def apply(caption: String): Button = {
     val button = new Button
     button.caption = caption

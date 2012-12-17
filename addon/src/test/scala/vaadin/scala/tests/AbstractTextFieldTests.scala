@@ -29,10 +29,10 @@ class AbstractTextFieldTests extends FunSuite with BeforeAndAfter with MockitoSu
     assert(AbstractTextField.TextChangeEventMode.Lazy.id === com.vaadin.ui.AbstractTextField.TextChangeEventMode.LAZY.ordinal)
     assert(AbstractTextField.TextChangeEventMode.Timeout.id === com.vaadin.ui.AbstractTextField.TextChangeEventMode.TIMEOUT.ordinal)
   }
-  
+
   test("nullSettingAllowed") {
     assert(!abstractTextField.nullSettingAllowed)
-    
+
     abstractTextField.nullSettingAllowed = true
     assert(abstractTextField.nullSettingAllowed)
   }

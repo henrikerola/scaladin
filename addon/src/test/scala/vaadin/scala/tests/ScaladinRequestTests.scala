@@ -60,18 +60,18 @@ class ScaladinRequestTests extends FunSuite with BeforeAndAfter with MockitoSuga
   test("setAttribute") {
     scaladinRequest.setAttribute("attr1", 12345)
     Mockito.verify(vaadinRequest).setAttribute("attr1", 12345)
-    
+
     scaladinRequest.setAttribute("attr2", Some(123))
     Mockito.verify(vaadinRequest).setAttribute("attr2", 123)
-    
+
     scaladinRequest.setAttribute("attr3", None)
     Mockito.verify(vaadinRequest).setAttribute("attr3", null)
   }
-  
+
   test("pathInfo") {
     Mockito.when(vaadinRequest.getPathInfo).thenReturn("/test")
     assert(scaladinRequest.pathInfo === Some("/test"))
-    
+
     Mockito.when(vaadinRequest.getPathInfo).thenReturn(null)
     assert(scaladinRequest.pathInfo === None)
   }
@@ -85,43 +85,43 @@ class ScaladinRequestTests extends FunSuite with BeforeAndAfter with MockitoSuga
   }
 
   // TODO: wrappedSession
-  
+
   test("contentType") {
     Mockito.when(vaadinRequest.getContentType).thenReturn("contentType")
     assert(scaladinRequest.contentType === Some("contentType"))
-    
+
     Mockito.when(vaadinRequest.getContentType).thenReturn(null)
     assert(scaladinRequest.contentType === None)
   }
-  
+
   // TODO: browserDetails
-  
+
   test("locale") {
     Mockito.when(vaadinRequest.getLocale).thenReturn(Locale.ENGLISH)
     assert(scaladinRequest.locale === Locale.ENGLISH)
   }
-  
+
   test("remoteAddr") {
     Mockito.when(vaadinRequest.getRemoteAddr).thenReturn("192.168.0.1")
     assert(scaladinRequest.remoteAddr === Some("192.168.0.1"))
-    
+
     Mockito.when(vaadinRequest.getRemoteAddr).thenReturn(null)
     assert(scaladinRequest.remoteAddr === None)
   }
-  
+
   test("isSecure") {
     Mockito.when(vaadinRequest.isSecure).thenReturn(true)
     assert(scaladinRequest.isSecure)
   }
-  
+
   test("getHeader") {
     Mockito.when(vaadinRequest.getHeader("header1")).thenReturn("value")
     Mockito.when(vaadinRequest.getHeader("header2")).thenReturn(null)
-    
+
     assert(scaladinRequest.getHeader("header1") === Some("value"))
     assert(scaladinRequest.getHeader("header2") === None)
   }
-  
+
   // TODO: vaadinService
 
 }

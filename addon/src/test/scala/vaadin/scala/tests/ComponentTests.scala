@@ -186,13 +186,13 @@ class ComponentTests extends FunSuite with BeforeAndAfter with MockitoSugar {
         super.attach()
       }
     }
-    
+
     label.p.attach()
-    
+
     assert(myLabelcnt === 1)
     assert(labelcnt === 1)
   }
-  
+
   test("detach()") {
     var myLabelcnt = 0
     var labelcnt = 0
@@ -209,9 +209,9 @@ class ComponentTests extends FunSuite with BeforeAndAfter with MockitoSugar {
         super.detach()
       }
     }
-    
+
     label.p.detach()
-    
+
     assert(myLabelcnt === 1)
     assert(labelcnt === 1)
   }

@@ -4,7 +4,7 @@ import vaadin.scala.mixins.InlineDateFieldMixin
 
 package mixins {
   trait InlineDateFieldMixin extends DateFieldMixin { self: com.vaadin.ui.InlineDateField =>
-    
+
   }
 }
 

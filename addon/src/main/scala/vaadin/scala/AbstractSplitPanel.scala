@@ -13,7 +13,7 @@ package mixins {
 }
 
 object AbstractSplitPanel {
-	case class SplitterClickEvent(component: Component, button: MouseButton.Value, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
+  case class SplitterClickEvent(component: Component, button: MouseButton.Value, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
 }
 
 abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPanel with AbstractSplitPanelMixin) extends AbstractComponentContainer(p) {
@@ -40,7 +40,7 @@ abstract class AbstractSplitPanel(override val p: com.vaadin.ui.AbstractSplitPan
     case None => p.setMinSplitPosition(0, com.vaadin.server.Sizeable.Unit.PERCENTAGE)
     case Some(pos) => p.setMinSplitPosition(pos.value.intValue, com.vaadin.server.Sizeable.Unit.values.apply(pos.unit.id))
   }
-  
+
   def maxSplitPosition: Measure = Measure(p.getMaxSplitPosition, Units(p.getMaxSplitPositionUnit.ordinal))
   def maxSplitPosition_=(maxSplitPosition: Option[Measure]) = maxSplitPosition match {
     case None => p.setMaxSplitPosition(100, com.vaadin.server.Sizeable.Unit.PERCENTAGE)
