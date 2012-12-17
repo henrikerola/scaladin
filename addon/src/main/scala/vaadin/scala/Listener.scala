@@ -60,3 +60,4 @@ trait ValueChangeNotifier { self: { def p: { def getListeners(eventType: Class[_
     override def removeListener(elem: ValueChangeListener) = p.removeListener(elem)
   }
 }
+

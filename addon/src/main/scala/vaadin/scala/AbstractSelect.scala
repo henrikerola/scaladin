@@ -8,7 +8,7 @@ import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.mixins.NewItemHandlerMixin
 
 package mixins {
-  trait AbstractSelectMixin extends AbstractFieldMixin with ContainerMixin with ContainerViewerMixin { self: com.vaadin.ui.AbstractSelect => }
+  trait AbstractSelectMixin extends AbstractFieldMixin[AnyRef] with ContainerMixin with ContainerViewerMixin { self: com.vaadin.ui.AbstractSelect => }
   trait NewItemHandlerMixin extends TypedScaladinMixin[NewItemHandler]
 }
 

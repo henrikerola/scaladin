@@ -4,7 +4,7 @@ import vaadin.scala.mixins.DateFieldMixin
 import internal.WrapperUtil
 
 package mixins {
-  trait DateFieldMixin extends AbstractFieldMixin { self: com.vaadin.ui.DateField =>
+  trait DateFieldMixin extends AbstractFieldMixin[java.util.Date] { self: com.vaadin.ui.DateField =>
     override def handleUnparsableDateString(dateString: String): java.util.Date = {
       // FIXME: asInstanceOf
       wrapper.asInstanceOf[DateField].unparsableDateStringHandler match {

@@ -2,7 +2,7 @@ package vaadin.scala
 import vaadin.scala.mixins.SliderMixin
 
 package mixins {
-  trait SliderMixin extends AbstractFieldMixin { self: com.vaadin.ui.Slider => }
+  trait SliderMixin extends AbstractFieldMixin[java.lang.Double] { self: com.vaadin.ui.Slider => }
 }
 
 abstract class AbstractSlider(override val p: com.vaadin.ui.Slider with SliderMixin) extends AbstractField[java.lang.Double](p) {

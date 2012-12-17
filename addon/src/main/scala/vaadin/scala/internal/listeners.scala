@@ -93,3 +93,4 @@ class UriFragmentChangedListener(val action: Page.UriFragmentChangedEvent => Uni
 class BrowserWindowResizeListener(val action: Page.BrowserWindowResizeEvent => Unit) extends com.vaadin.server.Page.BrowserWindowResizeListener with Listener {
   def browserWindowResized(e: com.vaadin.server.Page.BrowserWindowResizeEvent) = action(Page.BrowserWindowResizeEvent(wrapperFor[Page](e.getSource).get, e.getWidth, e.getHeight))
 }
+
