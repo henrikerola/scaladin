@@ -17,7 +17,7 @@ object ComboBox {
 
 // In Vaadin ComboBox extends Select, here just extend AbstractSelect directly and add methods from Select to ComboBox
 class ComboBox(override val p: com.vaadin.ui.ComboBox with ComboBoxMixin = new com.vaadin.ui.ComboBox with ComboBoxMixin)
-  extends AbstractSelect(p) with BlurNotifier with FocusNotifier {
+    extends AbstractSelect(p) with BlurNotifier with FocusNotifier {
 
   def inputPrompt: Option[String] = Option(p.getInputPrompt)
   def inputPrompt_=(inputPrompt: Option[String]): Unit = p.setInputPrompt(inputPrompt.orNull)

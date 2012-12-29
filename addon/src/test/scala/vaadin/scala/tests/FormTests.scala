@@ -144,19 +144,19 @@ class FormTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   }
 
   test("validation visible after commit") {
-    val person = Person(null ,null)
+    val person = Person(null, null)
 
     form.item = new BeanItem(person)
     assert(!form.validationVisible)
-    
+
     form.field("firstName").foreach(_.required = true)
     form.writeThrough = false
     form.commit
     assert(form.validationVisible)
-    
+
     form.validationVisible = false
     form.validationVisibleOnCommit = false
-    
+
     form.commit
     assert(!form.validationVisible)
   }

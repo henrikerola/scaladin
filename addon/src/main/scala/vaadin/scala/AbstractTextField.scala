@@ -21,7 +21,7 @@ object AbstractTextField {
 }
 
 abstract class AbstractTextField(override val p: com.vaadin.ui.AbstractTextField with AbstractTextFieldMixin)
-  extends AbstractField(p) with BlurNotifier with FocusNotifier {
+    extends AbstractField(p) with BlurNotifier with FocusNotifier {
 
   def prompt: Option[String] = Option(p.getInputPrompt)
   def prompt_=(prompt: Option[String]) = p.setInputPrompt(prompt.orNull)

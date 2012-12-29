@@ -7,7 +7,7 @@ package mixins {
 }
 
 abstract class AbstractOrderedLayout(override val p: com.vaadin.ui.AbstractOrderedLayout with AbstractOrderedLayoutMixin)
-  extends AbstractLayout(p) with SpacingHandler with AlignmentHandler with LayoutClickNotifier {
+    extends AbstractLayout(p) with SpacingHandler with AlignmentHandler with LayoutClickNotifier {
 
   def add[C <: Component](component: C = null, ratio: Float = -1, alignment: Alignment.Value = null, index: Int = -1): C = {
     if (index < 0)

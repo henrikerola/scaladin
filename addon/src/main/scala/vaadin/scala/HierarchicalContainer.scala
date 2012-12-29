@@ -15,7 +15,7 @@ object HierarchicalContainer {
  * @author Henri Kerola / Vaadin
  */
 class HierarchicalContainer(override val p: com.vaadin.data.util.HierarchicalContainer with HierarchicalContainerMixin = new com.vaadin.data.util.HierarchicalContainer with HierarchicalContainerMixin)
-  extends IndexedContainer(p) with Container.Hierarchical {
+    extends IndexedContainer(p) with Container.Hierarchical {
 
   def moveAfterSibling(itemId: Any, siblingId: Any): Unit = p.moveAfterSibling(itemId, siblingId)
 

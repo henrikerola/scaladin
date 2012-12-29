@@ -2,13 +2,13 @@ package vaadin.scala.tests
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{ BeforeAndAfter, FunSuite }
 import org.scalatest.mock.MockitoSugar
 import vaadin.scala._
 import internal.ActionHandler
 import vaadin.scala.mixins.ActionContainerMixin
-import org.mockito.{Matchers, ArgumentCaptor, Mockito}
-import vaadin.scala.Action.{HandleActionEvent, GetActionsEvent}
+import org.mockito.{ Matchers, ArgumentCaptor, Mockito }
+import vaadin.scala.Action.{ HandleActionEvent, GetActionsEvent }
 
 @RunWith(classOf[JUnitRunner])
 class ActionTests extends FunSuite with BeforeAndAfter with MockitoSugar {
@@ -23,7 +23,7 @@ class ActionTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
   val icon = ThemeResource("test.png")
   val actionFunction = { a: Action.HandleActionEvent => }
-  val actionFunction2 = { }
+  val actionFunction2 = {}
 
   test("Action(caption)") {
     val action = Action("caption")
@@ -87,7 +87,7 @@ class ActionTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
   test("Action.Container.actions_=(actions: GetActionsEvent => Seq[Action])") {
     val argument = ArgumentCaptor.forClass(classOf[ActionHandler])
-    val actions = { e: GetActionsEvent =>  Action("Action 1") :: Action("Action 2") :: Nil }
+    val actions = { e: GetActionsEvent => Action("Action 1") :: Action("Action 2") :: Nil }
 
     actionContainer.actions = actions
     Mockito.verify(actionContainer.p).addActionHandler(argument.capture())

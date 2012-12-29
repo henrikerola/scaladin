@@ -6,7 +6,7 @@ case class KeyCode(value: Int)
 case class KeyModifier(value: Int)
 
 object KeyCode {
-  
+
   val Enter = KeyCode(13)
 
   val Escape = KeyCode(27)

@@ -7,7 +7,7 @@ package mixins {
 }
 
 class TwinColSelect(override val p: com.vaadin.ui.TwinColSelect with TwinColSelectMixin = new com.vaadin.ui.TwinColSelect with TwinColSelectMixin)
-  extends AbstractSelect(p) with MultiSelectable {
+    extends AbstractSelect(p) with MultiSelectable {
 
   def rows: Int = p.getRows
   def rows_=(rows: Int): Unit = p.setRows(rows)

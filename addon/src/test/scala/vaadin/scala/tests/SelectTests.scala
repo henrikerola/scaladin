@@ -23,7 +23,7 @@ class SelectTests extends FunSuite {
     assert(comboBox.p.getInputPrompt === null)
     assert(comboBox.p.isNullSelectionAllowed)
   }
-  
+
   test("container") {
     val comboBox = new ComboBox
     assert(comboBox.container.get.isInstanceOf[IndexedContainer])

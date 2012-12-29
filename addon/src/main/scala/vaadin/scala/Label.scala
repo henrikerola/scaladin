@@ -32,7 +32,7 @@ class Label(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin
 
   def contentMode = Label.ContentMode(p.getContentMode)
   def contentMode_=(contentMode: Label.ContentMode.Value) = p.setContentMode(contentMode.id)
-  
+
   def value_=(value: NodeBuffer): Unit = p.setValue(value.mkString)
 
   //readOnly is inherited from Component and Property, needs override

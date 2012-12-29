@@ -58,7 +58,7 @@ object FileResource {
 
 // TODO: should extend ApplicationResource
 class FileResource(override val p: com.vaadin.terminal.FileResource with ResourceMixin) extends Resource {
-  
+
   def this(sourceFile: File, application: vaadin.scala.Application) {
     this(new com.vaadin.terminal.FileResource(sourceFile, application) with ResourceMixin)
   }

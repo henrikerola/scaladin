@@ -46,13 +46,13 @@ class LabelTests extends FunSuite {
     label.value = Some("test value")
     assert(label.value === Some("test value"))
   }
-  
+
   test("value: XML Node") {
     val label = new Label
     label.value = <b>Hello World!</b>
     assert(label.value === Some("<b>Hello World!</b>"))
   }
-  
+
   test("value: XML NodeBuffer") {
     val label = new Label
 

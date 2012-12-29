@@ -1,7 +1,7 @@
 package vaadin.scala
 
 import internal.ActionHandler
-import vaadin.scala.mixins.{ActionContainerMixin, ActionMixin}
+import vaadin.scala.mixins.{ ActionContainerMixin, ActionMixin }
 
 package mixins {
   trait ActionMixin extends ScaladinMixin
@@ -89,7 +89,7 @@ object Action {
  * @author Henri Kerola / Vaadin
  */
 class Action(val p: com.vaadin.event.Action with ActionMixin = new com.vaadin.event.Action(null) with ActionMixin)
-  extends Wrapper {
+    extends Wrapper {
 
   p.wrapper = this
 

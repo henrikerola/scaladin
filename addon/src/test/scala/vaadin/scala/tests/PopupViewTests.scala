@@ -15,7 +15,7 @@ class PopupViewTests extends ScaladinTestSuite {
 
   test("popupVisible") {
     popupView.popupContent = new Label // popupVisible = true requires that popup component has been set 
-    
+
     assert(popupView.popupVisible === false)
 
     popupView.popupVisible = true
@@ -68,17 +68,17 @@ class PopupViewTests extends ScaladinTestSuite {
     popupView.popupVisible = true
     assert(cnt === 2)
   }
-  
+
   test("PopupVisibilityEvent") {
     class PopupVisibilityListenerFunction extends Function1[PopupView.PopupVisibilityEvent, Unit] {
       def apply(x: PopupView.PopupVisibilityEvent) {}
     }
-    
+
     popupView.popupContent = new Label
 
     val spy = Mockito.spy(new PopupVisibilityListenerFunction)
     popupView.popupVisibilityListeners += spy
-    
+
     popupView.popupVisible = true
 
     val argument = ArgumentCaptor.forClass(classOf[PopupView.PopupVisibilityEvent]);

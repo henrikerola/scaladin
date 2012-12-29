@@ -4,7 +4,7 @@ import vaadin.scala.mixins.PopupDateFieldMixin
 
 package mixins {
   trait PopupDateFieldMixin extends DateFieldMixin { self: com.vaadin.ui.PopupDateField =>
-    
+
   }
 }
 

@@ -18,14 +18,14 @@ class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     vaadinNotificationSpy = Mockito.spy(new com.vaadin.ui.Window.Notification(null))
     notification = new Notification(vaadinNotificationSpy)
   }
-  
+
   test("Types") {
     assert(Notification.Type.Humanized.id === com.vaadin.ui.Window.Notification.TYPE_HUMANIZED_MESSAGE)
     assert(Notification.Type.Warning.id === com.vaadin.ui.Window.Notification.TYPE_WARNING_MESSAGE)
     assert(Notification.Type.Error.id === com.vaadin.ui.Window.Notification.TYPE_ERROR_MESSAGE)
     assert(Notification.Type.Tray.id === com.vaadin.ui.Window.Notification.TYPE_TRAY_NOTIFICATION)
   }
-  
+
   test("Positions") {
     assert(Notification.Position.Centered.id === com.vaadin.ui.Window.Notification.POSITION_CENTERED)
     assert(Notification.Position.CenteredTop.id === com.vaadin.ui.Window.Notification.POSITION_CENTERED_TOP)
@@ -73,42 +73,40 @@ class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(notification.description === Some("Some text..."))
     assert(!notification.htmlContentAllowed)
   }
-  
+
   test("caption") {
     assert(notification.caption === None)
-    
-    
+
     notification.caption = "123"
     assert(notification.caption === Some("123"))
-    
+
     notification.caption = None
     assert(notification.caption === None)
-    
+
     notification.caption = Some("1234")
     assert(notification.caption === Some("1234"))
   }
-  
+
   test("description") {
     assert(notification.description === None)
-    
-    
+
     notification.description = "123"
     assert(notification.description === Some("123"))
-    
+
     notification.description = None
     assert(notification.description === None)
-    
+
     notification.description = Some("1234")
     assert(notification.description === Some("1234"))
   }
-  
+
   test("position") {
     assert(notification.position === Notification.Position.Centered)
-    
+
     notification.position = Notification.Position.TopLeft
     assert(notification.position === Notification.Position.TopLeft)
   }
-  
+
   test("icon") {
     assert(notification.icon === None)
 
@@ -123,7 +121,6 @@ class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     notification.icon = Some(icon)
     assert(notification.icon === Some(icon))
   }
-  
 
   test("delayMsec") {
     assert(notification.delayMsec === 0)
@@ -131,7 +128,7 @@ class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     notification.delayMsec = 999
     assert(notification.delayMsec === 999)
   }
-  
+
   test("styleName") {
     assert(notification.styleName === None)
 
@@ -144,11 +141,11 @@ class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     notification.styleName = Some("style1 style2")
     assert(notification.styleName === Some("style1 style2"))
   }
-  
+
   test("htmlContentAllowed") {
     assert(notification.htmlContentAllowed)
     notification.htmlContentAllowed = false
     assert(!notification.htmlContentAllowed)
   }
-  
+
 }

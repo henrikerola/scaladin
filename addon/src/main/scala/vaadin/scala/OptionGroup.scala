@@ -7,7 +7,7 @@ package mixins {
 }
 
 class OptionGroup(override val p: com.vaadin.ui.OptionGroup with OptionGroupMixin = new com.vaadin.ui.OptionGroup with OptionGroupMixin)
-  extends AbstractSelect(p) with MultiSelectable with BlurNotifier with FocusNotifier {
+    extends AbstractSelect(p) with MultiSelectable with BlurNotifier with FocusNotifier {
 
   def itemEnabled(itemId: Any): Boolean = p.isItemEnabled(itemId)
   def itemEnabled(itemId: Any, enabled: Boolean): Unit = p.setItemEnabled(itemId, enabled)

@@ -12,11 +12,11 @@ package mixins {
 
 object Window {
   val BORDER_NONE: Int = 0
-  
+
   val BORDER_MINIMAL: Int = 1
-  
+
   val BORDER_DEFAULT: Int = 2
-  
+
   case class CloseEvent(window: Window) extends Event
   case class ResizeEvent(window: Window) extends Event
 }
@@ -97,13 +97,13 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
   def showNotification(notification: Notification): Unit = p.showNotification(notification.p)
 
   def open(resource: Resource, windowName: String = null, width: Int = -1, height: Int = -1, border: Int = Window.BORDER_DEFAULT): Unit = p.open(resource.p, windowName, width, height, border)
-  
+
   lazy val closeListeners = new ListenersTrait[Window.CloseEvent, WindowCloseListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Window.CloseListener])
     override def addListener(elem: Window.CloseEvent => Unit) = p.addListener(new WindowCloseListener(elem))
     override def removeListener(elem: WindowCloseListener) = p.removeListener(elem)
   }
-  
+
   lazy val resizeListeners = new ListenersTrait[Window.ResizeEvent, WindowResizeListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Window.CloseListener])
     override def addListener(elem: Window.ResizeEvent => Unit) = p.addListener(new WindowResizeListener(elem))

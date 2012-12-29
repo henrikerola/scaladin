@@ -19,7 +19,7 @@ object MenuBar {
     val p: com.vaadin.ui.MenuBar#MenuItem
     menuItemsMap += p -> this
 
-    def parent: Option[MenuItem] = menuItemsMap.get(p.getParent) map( _.asInstanceOf[MenuItem])
+    def parent: Option[MenuItem] = menuItemsMap.get(p.getParent) map (_.asInstanceOf[MenuItem])
 
     def visible = p.isVisible
     def visible_=(visible: Boolean) = p.setVisible(visible)
@@ -89,7 +89,7 @@ object MenuBar {
 class MenuBar(override val p: com.vaadin.ui.MenuBar with MenuBarMixin = new com.vaadin.ui.MenuBar with MenuBarMixin) extends AbstractComponent(p) {
 
   private val menuItems = mutable.Map.empty[com.vaadin.ui.MenuBar#MenuItem, MenuBar.MenuItemTrait]
-  
+
   new MenuBar.MenuItem(p.getMoreMenuItem, menuItems)
 
   def addItem(caption: String): MenuBar.MenuItem = new MenuBar.MenuItem(p.addItem(caption, null), menuItems)
