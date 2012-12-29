@@ -18,8 +18,8 @@ class IndexedContainerTests extends ContainerTestIndexed with BeforeAndAfter {
   }
 
   test("addItem for an empty container") {
-    assert(true === container.addItem.isDefined)
-    assert(true === container.addItem.isDefined)
+    assert(true === addItem.isDefined)
+    assert(true === addItem.isDefined)
     assert(2 === container.size)
 
   }
@@ -28,7 +28,7 @@ class IndexedContainerTests extends ContainerTestIndexed with BeforeAndAfter {
     val newItem = container.addItem('someId)
     assert(newItem.get.isInstanceOf[Item])
 
-    val existingId = container.addItem.get
+    val existingId = addItem.get
     assert(None == container.addItem(existingId))
 
     assert(true === container.containsId('someId))

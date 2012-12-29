@@ -8,6 +8,6 @@ package mixins {
 
 class NativeSelect(override val p: com.vaadin.ui.NativeSelect with NativeSelectMixin = new com.vaadin.ui.NativeSelect with NativeSelectMixin) extends AbstractSelect(p) {
 
-  def columns = p.getColumns
-  def columns_=(columns: Int) = p.setColumns(columns)
+  def columns: Int = p.getColumns
+  def columns_=(columns: Int): Unit = p.setColumns(columns)
 }

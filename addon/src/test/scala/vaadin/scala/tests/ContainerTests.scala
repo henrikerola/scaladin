@@ -33,14 +33,14 @@ trait ContainerTestBase extends FunSuite {
 
   def container: Container
 
-  def addItem: Option[Any] = container.addItem
+  def addItem(): Option[Any] = container.addItemOption
 
 }
 
 trait ContainerTestAddItem extends ContainerTestBase {
   test("addItem without an id") {
 
-    val item1Id = container.addItem
+    val item1Id = addItem()
     assert(None != item1Id)
     assert(None != container.item(item1Id.get))
 
@@ -102,5 +102,36 @@ trait ContainerTestIndexed extends ContainerTestOrdered {
     assert(container.indexOfId(itemId2) === 1)
     assert(container.getIdByIndex(0) === itemId1)
     assert(container.getIdByIndex(1) === itemId2)
+  }
+}
+
+trait ContainerTestHierarchical extends ContainerTestBase {
+
+  override def container: Container.Hierarchical
+
+  test("setParent / children checks") {
+    val parent = container.addItem
+    val child = container.addItem
+
+    container.setParent(child -> parent)
+    assert(container.children(parent).size === 1)
+    assert(container.children(parent).head === child)
+
+    assert(container.hasChildren(parent))
+    assert(container.isRoot(parent))
+
+    container.setParent(child -> null)
+    assert(container.children(parent).isEmpty)
+  }
+
+  test("childrenAllowed") {
+    val parent = container.addItem
+    val child = container.addItem
+
+    container.setChildrenAllowed(parent -> true)
+    assert(container.childrenAllowed(parent) === true)
+
+    container.setChildrenAllowed(parent -> false)
+    assert(container.childrenAllowed(parent) === false)
   }
 }

@@ -9,7 +9,7 @@ import vaadin.scala.internal.ExpandListener
 import vaadin.scala.internal.CollapseListener
 
 package mixins {
-  trait TreeMixin extends AbstractSelectMixin with ContainerHierarchicalMixin { self: com.vaadin.ui.Tree => }
+  trait TreeMixin extends AbstractSelectMixin with ActionContainerMixin with ContainerHierarchicalMixin { self: com.vaadin.ui.Tree => }
 }
 
 object Tree {
@@ -22,7 +22,7 @@ object Tree {
  * @author Henri Kerola / Vaadin
  */
 class Tree(override val p: com.vaadin.ui.Tree with TreeMixin = new com.vaadin.ui.Tree with TreeMixin)
-    extends AbstractSelect(p) with Container.Hierarchical with ItemDescriptionGeneratorOwner with ItemClickNotifier with ExpandNotifier with CollapseNotifier {
+    extends AbstractSelect(p) with Action.Container with Container.Hierarchical with ItemDescriptionGeneratorOwner with ItemClickNotifier with ExpandNotifier with CollapseNotifier {
 
   container = new HierarchicalContainer
 
@@ -36,7 +36,7 @@ class Tree(override val p: com.vaadin.ui.Tree with TreeMixin = new com.vaadin.ui
 
   def collapseItemsRecursively(startItemId: Any): Boolean = p.collapseItemsRecursively(startItemId)
 
-  def selectionMode = {
+  def selectionMode: SelectionMode.Value = {
     if (!p.isSelectable)
       SelectionMode.None
     else if (p.isMultiSelect && p.getMultiselectMode == SIMPLE)
@@ -47,7 +47,7 @@ class Tree(override val p: com.vaadin.ui.Tree with TreeMixin = new com.vaadin.ui
       SelectionMode.Single
   }
 
-  def selectionMode_=(selectionMode: SelectionMode.Value) = selectionMode match {
+  def selectionMode_=(selectionMode: SelectionMode.Value): Unit = selectionMode match {
     case SelectionMode.None =>
       p.setSelectable(false)
     case SelectionMode.Single =>
