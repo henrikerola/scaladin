@@ -56,7 +56,7 @@ object ScaladinBuild extends Build {
 
   lazy val demoSettings = buildSettings ++ webSettings ++ Seq(
     name := buildName + "-demo",
-    libraryDependencies := Seq(jetty))
+    libraryDependencies := Seq(scala, jetty))
 
   lazy val addon = Project("addon", file("addon"), settings = addonSettings)
   lazy val demo = Project("demo", file("demo"), settings = demoSettings) dependsOn (addon)
