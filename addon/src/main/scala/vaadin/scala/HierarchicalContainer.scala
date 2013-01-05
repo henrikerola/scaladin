@@ -6,6 +6,10 @@ package mixins {
   trait HierarchicalContainerMixin extends IndexedContainerMixin with ContainerHierarchicalMixin
 }
 
+object HierarchicalContainer {
+  def removeItemRecursively(container: Container.Hierarchical, itemId: Any): Boolean = com.vaadin.data.util.HierarchicalContainer.removeItemRecursively(container.p, itemId)
+}
+
 /**
  * @see com.vaadin.data.util.HierarchicalContainer
  * @author Henri Kerola / Vaadin
@@ -20,6 +24,5 @@ class HierarchicalContainer(override val p: com.vaadin.data.util.HierarchicalCon
   def includeParentsWhenFiltering: Boolean = p.isIncludeParentsWhenFiltering
   def includeParentsWhenFiltering_=(includeParentsWhenFiltering: Boolean): Unit = p.setIncludeParentsWhenFiltering(includeParentsWhenFiltering)
 
-  // TODO: static removeItemRecursively(Container.Hierarchical container, Object itemId)
   // TODO: protected doSort(), doFilterContainer, passesFilters
 }

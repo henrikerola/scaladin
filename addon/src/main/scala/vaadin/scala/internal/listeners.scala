@@ -94,3 +94,10 @@ class BrowserWindowResizeListener(val action: Page.BrowserWindowResizeEvent => U
   def browserWindowResized(e: com.vaadin.server.Page.BrowserWindowResizeEvent) = action(Page.BrowserWindowResizeEvent(wrapperFor[Page](e.getSource).get, e.getWidth, e.getHeight))
 }
 
+class WindowCloseListener(val action: Window.CloseEvent => Unit) extends com.vaadin.ui.Window.CloseListener with Listener {
+  def windowClose(e: com.vaadin.ui.Window.CloseEvent) = action(Window.CloseEvent(wrapperFor[Window](e.getWindow).get))
+}
+
+class WindowResizeListener(val action: Window.ResizeEvent => Unit) extends com.vaadin.ui.Window.ResizeListener with Listener {
+  def windowResized(e: com.vaadin.ui.Window.ResizeEvent) = action(Window.ResizeEvent(wrapperFor[Window](e.getWindow).get))
+}

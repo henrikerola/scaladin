@@ -18,15 +18,15 @@ class TreeTable(override val p: com.vaadin.ui.TreeTable with TreeTableMixin = ne
 
   container = new HierarchicalContainer
 
-  def collapsed(itemId: Any, collapsed: Boolean) = p.setCollapsed(itemId, collapsed)
+  def collapsed(itemId: Any, collapsed: Boolean): Unit = p.setCollapsed(itemId, collapsed)
 
   def collapsed(itemId: Any): Boolean = p.isCollapsed(itemId)
 
   def hierarchyColumn: Option[Any] = Option(p.getHierarchyColumnId)
-  def hierarchyColumn_=(hierarchyColumn: Option[Any]) = p.setHierarchyColumn(hierarchyColumn.orNull)
-  def hierarchyColumn_=(hierarchyColumn: Any) = p.setHierarchyColumn(hierarchyColumn)
+  def hierarchyColumn_=(hierarchyColumn: Option[Any]): Unit = p.setHierarchyColumn(hierarchyColumn.orNull)
+  def hierarchyColumn_=(hierarchyColumn: Any): Unit = p.setHierarchyColumn(hierarchyColumn)
 
   def animationsEnabled: Boolean = p.isAnimationsEnabled
-  def animationsEnabled_=(animationsEnabled: Boolean) = p.setAnimationsEnabled(animationsEnabled)
+  def animationsEnabled_=(animationsEnabled: Boolean): Unit = p.setAnimationsEnabled(animationsEnabled)
 
 }

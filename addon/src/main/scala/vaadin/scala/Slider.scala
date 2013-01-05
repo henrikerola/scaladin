@@ -7,16 +7,16 @@ package mixins {
 
 abstract class AbstractSlider(override val p: com.vaadin.ui.Slider with SliderMixin) extends AbstractField[java.lang.Double](p) {
 
-  def min = p.getMin
+  def min: Double = p.getMin
   def min_=(min: Double) = p.setMin(min)
 
-  def max = p.getMax
-  def max_=(max: Double) = p.setMax(max)
+  def max: Double = p.getMax
+  def max_=(max: Double): Unit = p.setMax(max)
 
-  def resolution = p.getResolution
-  def resolution_=(resolution: Int) = p.setResolution(resolution)
+  def resolution: Int = p.getResolution
+  def resolution_=(resolution: Int): Unit = p.setResolution(resolution)
 
-  def value_=(value: Double) = p.setValue(value)
+  def value_=(value: Double): Unit = p.setValue(value)
 
 }
 

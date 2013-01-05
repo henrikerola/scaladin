@@ -50,10 +50,10 @@ class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaa
   def clickShortcut_=(clickShortcut: KeyShortcut): Unit = this.clickShortcut = Option(clickShortcut)
 
   def disableOnClick: Boolean = p.isDisableOnClick
-  def disableOnClick_=(disableOnClick: Boolean) = p.setDisableOnClick(disableOnClick)
+  def disableOnClick_=(disableOnClick: Boolean): Unit = p.setDisableOnClick(disableOnClick)
 
   def htmlContentAllowed: Boolean = p.isHtmlContentAllowed
-  def htmlContentAllowed_=(htmlContentAllowed: Boolean) = p.setHtmlContentAllowed(htmlContentAllowed)
+  def htmlContentAllowed_=(htmlContentAllowed: Boolean): Unit = p.setHtmlContentAllowed(htmlContentAllowed)
 
   lazy val clickListeners = new ListenersTrait[Button.ClickEvent, ButtonClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Button.ClickEvent])
