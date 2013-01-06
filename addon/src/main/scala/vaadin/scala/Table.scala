@@ -12,7 +12,7 @@ import vaadin.scala.internal.TableColumnGenerator
 import vaadin.scala.internal.CellStyleGenerator
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.internal.ListenersTrait
-import scala.collection.mutable
+import collection.mutable
 
 package mixins {
   trait TableMixin extends AbstractSelectMixin with ActionContainerMixin with ContainerOrderedMixin with ContainerSortableMixin
@@ -226,8 +226,9 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
     override def removeListener(elem: ColumnReorderListener) = p.removeListener(elem)
   }
 
-  private val columnGeneratorIds = mutable.HashSet.empty[Any]
-  lazy val columnGenerators: mutable.Map[Any, Table.ColumnGenerationEvent => Option[Any]] = new mutable.Map[Any, Table.ColumnGenerationEvent => Option[Any]] {
+  private val columnGeneratorIds: mutable.Set[Any] = mutable.Set.empty[Any]
+  lazy val columnGenerators: mutable.Map[Any, Table.ColumnGenerationEvent => Option[Any]] = new mutable.Map[Any, Table.ColumnGenerationEvent => Option[Any]] with Serializable {
+
     def -=(id: Any): this.type = {
       p.removeGeneratedColumn(id)
       columnGeneratorIds -= id

@@ -44,7 +44,7 @@ trait ComponentContainer extends Component {
     p.moveComponentsFrom(source.p)
   }
 
-  def components: mutable.Set[Component] = new mutable.Set[Component] {
+  lazy val components: mutable.Set[Component] = new mutable.Set[Component] with Serializable {
     import scala.collection.JavaConversions.asScalaIterator
     def contains(key: Component) = {
       p.getComponentIterator.contains(key.p)

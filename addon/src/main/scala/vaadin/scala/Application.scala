@@ -25,7 +25,7 @@ abstract class Application(title: String = "", applicationTheme: String = Reinde
   def theme_=(theme: String) = super.setTheme(theme)
   def theme = super.getTheme
 
-  def windows: mutable.Set[Window] = new mutable.Set[Window] {
+  def windows: mutable.Set[Window] = new mutable.Set[Window] with Serializable {
     import scala.collection.JavaConversions.asScalaIterator
 
     def contains(key: Window) = {

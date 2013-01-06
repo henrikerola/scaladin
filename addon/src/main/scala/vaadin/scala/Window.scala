@@ -33,7 +33,7 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
   def resizable_=(resizable: Boolean): Unit = p.setResizable(resizable)
   def resizable: Boolean = p.isResizable
 
-  def childWindows: mutable.Set[Window] = new mutable.Set[Window] {
+  def childWindows: mutable.Set[Window] = new mutable.Set[Window] with Serializable {
     import scala.collection.JavaConversions.asScalaIterator
 
     def contains(key: Window) = {
