@@ -3,42 +3,35 @@ package vaadin.scala.tests
 import org.scalatest.BeforeAndAfter
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
-import vaadin.scala.FormFieldFactory
 import org.mockito.Mockito._
-import vaadin.scala.FormFieldIngredients
-import vaadin.scala.BeanItem
-import vaadin.scala.TextField
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import vaadin.scala.Form
-import vaadin.scala.TableFieldFactory
-import vaadin.scala.BeanItemContainer
-import vaadin.scala.BeanItemContainer
-import vaadin.scala.TableFieldIngredients
-import vaadin.scala.Table
+import vaadin.scala._
 
 @RunWith(classOf[JUnitRunner])
-class FieldFactoryTests extends FunSuite with BeforeAndAfter with MockitoSugar {
+class FieldFactoryTests extends ScaladinTestSuite {
 
   test("FormFieldFactoryDelegator calls Scala function") {
 
     val item = new BeanItem[Any]
-    val field = new Form
+    val field = new FieldGroup
     field.item = item
 
-    var result: FormFieldIngredients = null
+    var resultDataType: Class[_] = null
+    var resultFieldType: Class[_] = null
 
-    val factoryMock = FormFieldFactory(ingr => {
-      result = ingr
+    val factoryMock = FieldGroupFieldFactory((datatype, fieldtype) => {
+      resultDataType = datatype
+      resultFieldType = fieldtype
       None
     })
 
-    factoryMock.p.createField(item.p, 'propertyId, field.p)
+    factoryMock.p.createField(classOf[Integer], classOf[com.vaadin.ui.TextField])
 
-    assert(result != null)
-    assert(result.item.p === item.p)
-    assert(result.uiContext === field)
-    assert(result.propertyId === 'propertyId)
+    assert(resultFieldType != null)
+    assert(resultDataType != null)
+    assert(resultDataType == classOf[Integer])
+    assert(resultFieldType == classOf[TextField])
   }
 
   test("TableFieldFactoryDelegator calls Scala function") {

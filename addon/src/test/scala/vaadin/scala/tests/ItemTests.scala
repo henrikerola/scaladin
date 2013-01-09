@@ -8,10 +8,12 @@ import org.scalatest.junit.JUnitRunner
 class ItemTests extends FunSuite with BeforeAndAfter {
 
   case class TestBean(name: String)
-  var viewer: Item.Viewer = _
+
+  //TODO Vaadin FieldGroup doesn't implement Item.Viewer yet 
+  var viewer: FieldGroup = _
 
   before {
-    viewer = new Form
+    viewer = new FieldGroup
   }
 
   test("Item instance stays the same between set and get") {
