@@ -13,7 +13,6 @@ package mixins {
   trait FieldGroupFieldFactoryMixin extends TypedScaladinMixin[FieldGroupFieldFactory] { self: com.vaadin.data.fieldgroup.FieldGroupFieldFactory => }
 }
 
-case class FormFieldIngredients(item: Item, propertyId: Any, uiContext: Component)
 case class TableFieldIngredients(container: Container, itemId: Any, propertyId: Any, uiContext: Component)
 
 object FieldGroupFieldFactory {
@@ -163,17 +162,6 @@ object DefaultFieldFactory extends TableFieldFactory {
   val Item = classOf[Item]
   val Date = classOf[Date]
   val Bool = classOf[Boolean]
-
-  def createField(ingredients: FormFieldIngredients): Option[Field[_]] = ingredients.item.property(ingredients.propertyId) match {
-    case Some(property) => {
-      val propertyType: Class[_] = property.getType
-      val field: Field[_] = createFieldByPropertyType(propertyType);
-      field.caption = createCaptionByPropertyId(ingredients.propertyId)
-      Option(field)
-    }
-
-    case None => None
-  }
 
   def createField(ingredients: TableFieldIngredients): Option[Field[_]] = ingredients.container.property(ingredients.itemId, ingredients.propertyId) match {
     case Some(property) => {

@@ -10,10 +10,7 @@ import vaadin.scala.FieldGroup.PostCommitEvent
 import vaadin.scala.internal.PostCommitHandler
 
 package mixins {
-  trait FieldGroupMixin extends TypedScaladinMixin[FieldGroup] { self: com.vaadin.data.fieldgroup.FieldGroup =>
-    override def getField(propertyId: Any): com.vaadin.ui.Field[_] with FieldMixin[_] = self.getField(propertyId).asInstanceOf[com.vaadin.ui.Field[_] with FieldMixin[_]]
-    override def getFieldFactory(): com.vaadin.data.fieldgroup.FieldGroupFieldFactory with FieldGroupFieldFactoryMixin = self.getFieldFactory().asInstanceOf[com.vaadin.data.fieldgroup.FieldGroupFieldFactory with FieldGroupFieldFactoryMixin]
-  }
+  trait FieldGroupMixin extends TypedScaladinMixin[FieldGroup]
 }
 
 object FieldGroup {
@@ -30,6 +27,8 @@ class FieldGroup(override val p: com.vaadin.data.fieldgroup.FieldGroup with Fiel
   import scala.collection.JavaConverters._
   import scala.util.control.Exception._
   import scala.collection.mutable
+
+  fieldFactory = DefaultFieldGroupFieldFactory
 
   val preCommitHandlers: mutable.Set[PreCommitEvent => FieldGroup.CommitResult] = new HandlersTrait[PreCommitEvent, PreCommitHandler, FieldGroup.CommitResult] {
     def addHandler(handler: PreCommitHandler) = p.addCommitHandler(handler)
@@ -79,13 +78,13 @@ class FieldGroup(override val p: com.vaadin.data.fieldgroup.FieldGroup with Fiel
   def boundPropertyIds: Iterable[Any] = p.getBoundPropertyIds.asScala
   def unboundPropertyIds: Iterable[Any] = p.getUnboundPropertyIds.asScala
 
-  def commit: Either[FieldGroup.CommitFailed, FieldGroup.CommitSuccess] = catching(classOf[com.vaadin.data.fieldgroup.FieldGroup.CommitException]) either (p.commit) fold (
+  def commit: FieldGroup.CommitResult = catching(classOf[com.vaadin.data.fieldgroup.FieldGroup.CommitException]) either (p.commit) fold (
     exception => Left(FieldGroup.CommitFailed(exception.getMessage)),
     nothing => Right(FieldGroup.CommitSuccess()))
 
   def discard: Unit = p.discard
 
-  def field(propertyId: Any): Option[Field[_]] = Option(p.getField(propertyId)) map (_.wrapper)
+  def field(propertyId: Any): Option[Field[_]] = Option(p.getField(propertyId)) map (_.asInstanceOf[com.vaadin.ui.Field[_] with FieldMixin[_]]) map (_.wrapper)
   def propertyId(field: Field[_]): Option[Any] = Option(p.getPropertyId(field.p))
 
   def valid: Boolean = p.isValid
