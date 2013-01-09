@@ -19,6 +19,10 @@ package mixins {
 object FieldGroup {
   case class PreCommitEvent(fieldBinder: FieldGroup) extends Event
   case class PostCommitEvent(fieldBinder: FieldGroup) extends Event
+
+  case class CommitSuccess()
+  case class CommitFailed(error: String)
+  type CommitResult = Either[CommitFailed, CommitSuccess]
 }
 
 class FieldGroup(override val p: com.vaadin.data.fieldgroup.FieldGroup with FieldGroupMixin = new com.vaadin.data.fieldgroup.FieldGroup with FieldGroupMixin) extends Wrapper {
@@ -27,20 +31,20 @@ class FieldGroup(override val p: com.vaadin.data.fieldgroup.FieldGroup with Fiel
   import scala.util.control.Exception._
   import scala.collection.mutable
 
-  val preCommitHandlers: mutable.Set[PreCommitEvent => Try[Unit]] = new HandlersTrait[PreCommitEvent, PreCommitHandler] {
+  val preCommitHandlers: mutable.Set[PreCommitEvent => FieldGroup.CommitResult] = new HandlersTrait[PreCommitEvent, PreCommitHandler, FieldGroup.CommitResult] {
     def addHandler(handler: PreCommitHandler) = p.addCommitHandler(handler)
 
     def removeHandler(handler: PreCommitHandler) = p.removeCommitHandler(handler)
 
-    def createListener(action: PreCommitEvent => Try[Unit]): PreCommitHandler = new PreCommitHandler(action)
+    def createListener(action: PreCommitEvent => Either[FieldGroup.CommitFailed, FieldGroup.CommitSuccess]): PreCommitHandler = new PreCommitHandler(action)
   }
 
-  val postCommitHandlers: mutable.Set[PostCommitEvent => Try[Unit]] = new HandlersTrait[PostCommitEvent, PostCommitHandler] {
+  val postCommitHandlers: mutable.Set[PostCommitEvent => Either[FieldGroup.CommitFailed, FieldGroup.CommitSuccess]] = new HandlersTrait[PostCommitEvent, PostCommitHandler, FieldGroup.CommitResult] {
     def addHandler(handler: PostCommitHandler) = p.addCommitHandler(handler)
 
     def removeHandler(handler: PostCommitHandler) = p.removeCommitHandler(handler)
 
-    def createListener(action: PostCommitEvent => Try[Unit]): PostCommitHandler = new PostCommitHandler(action)
+    def createListener(action: PostCommitEvent => Either[FieldGroup.CommitFailed, FieldGroup.CommitSuccess]): PostCommitHandler = new PostCommitHandler(action)
   }
 
   def this(item: Option[Item]) = this(new com.vaadin.data.fieldgroup.FieldGroup(item map (_.p) orNull) with FieldGroupMixin)
@@ -48,7 +52,8 @@ class FieldGroup(override val p: com.vaadin.data.fieldgroup.FieldGroup with Fiel
   //make sure that the Item wrapper instance is the same (type) all the time
   protected var itemWrapper: Option[Item] = None
   protected def internalSetItem(optionWrap: Option[Item]): Unit = optionWrap match {
-    case Some(wrapper) => itemWrapper = optionWrap; p.setItemDataSource(wrapper.p)
+    case Some(wrapper) =>
+      itemWrapper = optionWrap; p.setItemDataSource(wrapper.p)
     case None => itemWrapper = None; p.setItemDataSource(null)
   }
 
@@ -74,7 +79,10 @@ class FieldGroup(override val p: com.vaadin.data.fieldgroup.FieldGroup with Fiel
   def boundPropertyIds: Iterable[Any] = p.getBoundPropertyIds.asScala
   def unboundPropertyIds: Iterable[Any] = p.getUnboundPropertyIds.asScala
 
-  def commit: Try[Unit] = catching(classOf[com.vaadin.data.fieldgroup.FieldGroup.CommitException]) withTry (p.commit)
+  def commit: Either[FieldGroup.CommitFailed, FieldGroup.CommitSuccess] = catching(classOf[com.vaadin.data.fieldgroup.FieldGroup.CommitException]) either (p.commit) fold (
+    exception => Left(FieldGroup.CommitFailed(exception.getMessage)),
+    nothing => Right(FieldGroup.CommitSuccess()))
+
   def discard: Unit = p.discard
 
   def field(propertyId: Any): Option[Field[_]] = Option(p.getField(propertyId)) map (_.wrapper)
@@ -84,7 +92,9 @@ class FieldGroup(override val p: com.vaadin.data.fieldgroup.FieldGroup with Fiel
   def modified: Boolean = p.isModified
 
   def fieldFactory: Option[FieldGroupFieldFactory] = wrapperFor(p.getFieldFactory)
-  def fieldFactory_=(factory: Option[FieldGroupFieldFactory]) = p.setFieldFactory(factory map (_.p) orNull)
+  def fieldFactory_=(factory: Option[FieldGroupFieldFactory]): Unit = p.setFieldFactory(factory map (_.p) orNull)
+  def fieldFactory_=(factory: FieldGroupFieldFactory): Unit = p.setFieldFactory(if (factory != null) factory.p else null)
+  def fieldFactory_=[FT <: Field[_]](fieldFunction: (Class[_], Class[_]) => Option[FT]): Unit = this.fieldFactory = FieldGroupFieldFactory(fieldFunction)
 
-  //build & bind currently unsupported
+  //TODO build & bind
 }

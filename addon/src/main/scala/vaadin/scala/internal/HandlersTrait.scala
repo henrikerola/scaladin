@@ -3,33 +3,37 @@ package vaadin.scala.internal
 import scala.collection.mutable
 import scala.util.Try
 
-trait HandlersTrait[E, H <: Handler[E]] extends mutable.Set[E => Try[Unit]] {
+trait HandlersTrait[E, H <: Handler[E, R], R] extends mutable.Set[E => R] {
 
-  private val internalSet: mutable.Set[H] = mutable.Set.empty
+  type Event = E
+  type Result = R
+  type HandlerSubtype = H
+
+  private val internalSet: mutable.Set[HandlerSubtype] = mutable.Set.empty
 
   def iterator = internalSet map (_.action) iterator
 
-  def contains(elem: E => Try[Unit]) = internalSet.exists(h => h.action == elem)
+  def contains(elem: Event => Result) = internalSet.exists(h => h.action == elem)
 
-  def +=(elem: E => Try[Unit]) = {
+  def +=(elem: Event => Result) = {
     val listener = createListener(elem)
     addHandler(listener)
     internalSet += listener
     this
   }
 
-  def -=(elem: E => Try[Unit]) = {
+  def -=(elem: Event => Result) = {
     val toRemove = internalSet filter (e => e.action == elem)
-    toRemove foreach {
-      removeHandler(_)
-      internalSet -= _
+    toRemove foreach { elementToRemove =>
+      removeHandler(elementToRemove)
+      internalSet -= elementToRemove
     }
     this
   }
 
-  protected def addHandler(elem: H)
+  protected def addHandler(elem: HandlerSubtype)
 
-  protected def removeHandler(elem: H)
+  protected def removeHandler(elem: HandlerSubtype)
 
-  protected def createListener(e: E => Try[Unit]): H
+  protected def createListener(e: Event => Result): HandlerSubtype
 }
