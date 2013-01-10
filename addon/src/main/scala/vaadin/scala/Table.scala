@@ -103,7 +103,7 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def columnWidth(propertyId: Any, width: Int): Unit = p.setColumnWidth(propertyId, width)
 
   def columnIcon(propertyId: Any): Option[Resource] = wrapperFor[Resource](p.getColumnIcon(propertyId))
-  def columnIcon(propertyId: Any, icon: Option[Resource]): Unit = p.setColumnIcon(propertyId, if (icon.isDefined) icon.get.p else null)
+  def columnIcon(propertyId: Any, icon: Option[Resource]): Unit = p.setColumnIcon(propertyId, peerFor(icon))
   def columnIcon(propertyId: Any, icon: Resource): Unit = p.setColumnIcon(propertyId, icon.p)
 
   def columnHeader(propertyId: Any): Option[String] = Option(p.getColumnHeader(propertyId))
