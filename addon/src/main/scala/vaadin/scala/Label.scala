@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import vaadin.scala.converter.Converter
 import scala.xml.Node
 import scala.xml.NodeBuffer
 import vaadin.scala.mixins.LabelMixin
@@ -38,5 +39,8 @@ class Label(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin
   //readOnly is inherited from Component and Property, needs override
   override def readOnly: Boolean = p.isReadOnly
   override def readOnly_=(readOnly: Boolean): Unit = p.setReadOnly(readOnly)
+
+  def converter: Option[Converter[String, Any]] = wrapperFor[Converter[String, Any]](p.getConverter)
+  def converter_=(converter: Converter[String, _]): Unit = p.setConverter(converter.p)
 }
 

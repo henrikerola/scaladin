@@ -1,6 +1,7 @@
 package vaadin.scala.tests
 
 import vaadin.scala._
+import converter.{ DateToLongConverter, Converter }
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -11,11 +12,11 @@ import java.util.Locale
 class ConverterTests extends FunSuite {
 
   class MyConverter extends Converter[String, Date] {
-    override def convertToModel(value: String, locale: Locale): Date = {
-      new Date
+    override def convertToModel(value: Option[String], locale: Locale): Option[Date] = {
+      Some(new Date)
     }
-    override def convertToPresentation(value: Date, locale: Locale): String = {
-      ""
+    override def convertToPresentation(value: Option[Date], locale: Locale): Option[String] = {
+      Some("")
     }
   }
 
@@ -37,6 +38,21 @@ class ConverterTests extends FunSuite {
   test("p.getPresentationType") {
     val myConverter = new MyConverter
     assert(myConverter.p.getPresentationType === classOf[String])
+  }
+
+  val locale = Locale.UK
+
+  test("DateToLongConverter") {
+    val converter = new DateToLongConverter
+
+    assert(converter.presentationType === classOf[java.util.Date])
+    assert(converter.modelType === classOf[java.lang.Long])
+
+    assert(converter.convertToModel(None, locale) === None)
+    assert(converter.convertToPresentation(None, locale) === None)
+
+    assert(converter.convertToModel(Some(new Date(1358627734477L)), locale) === Some(1358627734477L))
+    assert(converter.convertToPresentation(Some(1358627734477L), locale) === Some(new Date(1358627734477L)))
   }
 
 }

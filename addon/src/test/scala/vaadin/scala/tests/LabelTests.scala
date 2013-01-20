@@ -2,10 +2,11 @@ package vaadin.scala.tests
 
 import org.scalatest.FunSuite
 import vaadin.scala._
-import vaadin.scala.Property
+import vaadin.scala.converter.Converter
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import scala.xml.NodeBuffer
+import java.util.Locale
 
 @RunWith(classOf[JUnitRunner])
 class LabelTests extends FunSuite {
@@ -95,5 +96,21 @@ class LabelTests extends FunSuite {
   test("object constructor for undefined size") {
     val label = Label.undefinedSized("testValue")
     assert(Some("testValue") === label.value)
+  }
+
+  test("conveter") {
+    val label = new Label
+
+    val converter = new Converter[String, Integer]() {
+
+      def convertToPresentation(value: Option[Integer], locale: Locale) = ???
+
+      def convertToModel(value: Option[String], locale: Locale) = ???
+    }
+
+    assert(label.converter === None)
+    label.converter = converter
+
+    assert(label.converter === Some(converter))
   }
 }
