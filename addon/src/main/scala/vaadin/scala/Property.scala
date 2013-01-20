@@ -68,7 +68,7 @@ class FunctionProperty[T](getter: Unit => T, setter: T => Unit = null)(implicit 
 
   override def value_=(value: Any) = setter(value.asInstanceOf[T])
 
-  override def getType: Class[T] = m.erasure.asInstanceOf[Class[T]]
+  override def getType: Class[T] = m.runtimeClass.asInstanceOf[Class[T]]
 
   override def readOnly: Boolean = setter != null
 

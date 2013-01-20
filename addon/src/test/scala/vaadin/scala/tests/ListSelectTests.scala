@@ -16,14 +16,4 @@ class ListSelectTests extends FunSuite {
     listSelect.rows = 7
     assert(listSelect.rows === 7)
   }
-
-  test("columns") {
-    val listSelect = new ListSelect
-
-    assert(listSelect.columns === 0)
-
-    listSelect.columns = 5
-    assert(listSelect.columns === 5)
-  }
-
 }

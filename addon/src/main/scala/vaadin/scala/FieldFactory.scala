@@ -92,7 +92,7 @@ class DefaultFieldGroupFieldFactory extends FieldGroupFieldFactory {
     select.immediate = true
     select.nullSelectionAllowed = false
 
-    return select;
+    select
   }
 
   def createBooleanField[T <: Field[_]](fieldType: Class[T]): Option[T] = {

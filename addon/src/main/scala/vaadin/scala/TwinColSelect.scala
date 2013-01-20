@@ -12,9 +12,6 @@ class TwinColSelect(override val p: com.vaadin.ui.TwinColSelect with TwinColSele
   def rows: Int = p.getRows
   def rows_=(rows: Int): Unit = p.setRows(rows)
 
-  def columns: Int = p.getColumns
-  def columns_=(columns: Int): Unit = p.setColumns(columns)
-
   def rightColumnCaption: Option[String] = Option(p.getRightColumnCaption)
   def rightColumnCaption_=(rightColumnCaption: Option[String]): Unit = p.setRightColumnCaption(rightColumnCaption.orNull)
   def rightColumnCaption_=(rightColumnCaption: String): Unit = p.setRightColumnCaption(rightColumnCaption)

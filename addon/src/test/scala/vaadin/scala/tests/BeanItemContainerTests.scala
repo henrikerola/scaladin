@@ -5,7 +5,7 @@ import org.scalatest.junit.JUnitRunner
 import vaadin.scala._
 import org.scalatest.BeforeAndAfter
 import org.scalatest.FunSuite
-import scala.reflect.BeanProperty
+import scala.beans.BeanProperty
 
 @RunWith(classOf[JUnitRunner])
 class BeanItemContainerTests extends FunSuite

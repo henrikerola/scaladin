@@ -18,15 +18,6 @@ class TwinColSelectTests extends FunSuite {
     assert(twinColSelect.rows === 7)
   }
 
-  test("columns") {
-    val twinColSelect = new TwinColSelect
-
-    assert(twinColSelect.columns === 0)
-
-    twinColSelect.columns = 5
-    assert(twinColSelect.columns === 5)
-  }
-
   test("rightColumnCaption, String") {
     val twinColSelect = new TwinColSelect
 

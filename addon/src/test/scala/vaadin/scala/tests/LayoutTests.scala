@@ -12,9 +12,9 @@ class LayoutTests extends FunSuite {
   test("VerticalLayout, default constructor") {
     val layout = new VerticalLayout()
     assert(layout.p.getWidth === 100)
-    assert(layout.p.getWidthUnits === Sizeable.UNITS_PERCENTAGE)
+    assert(layout.p.getWidthUnits === Sizeable.Unit.PERCENTAGE)
     assert(layout.p.getHeight === -1)
-    assert(layout.p.getHeightUnits === Sizeable.UNITS_PIXELS)
+    assert(layout.p.getHeightUnits === Sizeable.Unit.PIXELS)
     assert(layout.margin === Margin(false, false, false, false))
     assert(layout.spacing === false)
     assert(layout.caption === None)
@@ -50,9 +50,9 @@ class LayoutTests extends FunSuite {
   test("HorizontalLayout, default constructor") {
     val layout = new HorizontalLayout()
     assert(layout.p.getWidth === -1)
-    assert(layout.p.getWidthUnits === Sizeable.UNITS_PIXELS)
+    assert(layout.p.getWidthUnits === Sizeable.Unit.PIXELS)
     assert(layout.p.getHeight === -1)
-    assert(layout.p.getHeightUnits === Sizeable.UNITS_PIXELS)
+    assert(layout.p.getHeightUnits === Sizeable.Unit.PIXELS)
     assert(layout.margin === Margin(false, false, false, false))
     assert(layout.spacing === false)
     assert(layout.caption === None)
@@ -71,9 +71,9 @@ class LayoutTests extends FunSuite {
   test("CssLayout, default constructor") {
     val layout = new CssLayout()
     assert(layout.p.getWidth === -1)
-    assert(layout.p.getWidthUnits === Sizeable.UNITS_PIXELS)
+    assert(layout.p.getWidthUnits === Sizeable.Unit.PIXELS)
     assert(layout.p.getHeight === -1)
-    assert(layout.p.getHeightUnits === Sizeable.UNITS_PIXELS)
+    assert(layout.p.getHeightUnits === Sizeable.Unit.PIXELS)
     assert(layout.caption === None)
     assert(layout.p.getStyleName === "")
   }

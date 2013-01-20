@@ -10,7 +10,4 @@ class ListSelect(override val p: com.vaadin.ui.ListSelect with ListSelectMixin =
 
   def rows = p.getRows
   def rows_=(rows: Int) = p.setRows(rows)
-
-  def columns = p.getColumns
-  def columns_=(columns: Int) = p.setColumns(columns)
 }

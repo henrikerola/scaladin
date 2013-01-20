@@ -13,9 +13,9 @@ class SelectTests extends FunSuite {
     val comboBox = new ComboBox
     assert(comboBox.caption === None)
     assert(comboBox.p.getWidth === -1)
-    assert(comboBox.p.getWidthUnits === Sizeable.UNITS_PIXELS)
+    assert(comboBox.p.getWidthUnits === Sizeable.Unit.PIXELS)
     assert(comboBox.p.getHeight === -1)
-    assert(comboBox.p.getHeightUnits === Sizeable.UNITS_PIXELS)
+    assert(comboBox.p.getHeightUnits === Sizeable.Unit.PIXELS)
     assert(comboBox.p.getContainerDataSource != null)
     assert(comboBox.p.getPropertyDataSource === null)
     assert(comboBox.p.getValue === null)
