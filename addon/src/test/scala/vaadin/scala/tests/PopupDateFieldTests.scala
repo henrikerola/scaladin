@@ -26,7 +26,7 @@ class PopupDateFieldTests extends FunSuite {
   }
 
   test("unparsableDateStringHandler") {
-    var i = 0;
+    var i = 0
     val dateField = new PopupDateField
     dateField.unparsableDateStringHandler = { e =>
       i = i + 1

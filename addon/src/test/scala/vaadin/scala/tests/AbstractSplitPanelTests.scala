@@ -28,7 +28,7 @@ class AbstractSplitPanelTests extends FunSuite {
   test("set splitPosition to None") {
     val splitPanel = new VerticalSplitPanel
 
-    splitPanel.splitPosition = None;
+    splitPanel.splitPosition = None
     assert(splitPanel.splitPosition === Measure(50, Units.pct))
     assert(splitPanel.p.getSplitPosition === 50)
     assert(splitPanel.p.getSplitPositionUnit() === com.vaadin.server.Sizeable.Unit.PERCENTAGE)
@@ -39,7 +39,8 @@ class AbstractSplitPanelTests extends FunSuite {
 
     assert(Some(splitPanel.minSplitPosition) === (0 pct))
 
-    splitPanel.minSplitPosition = 10 px;
+    splitPanel.minSplitPosition = 10 px
+
     assert(Some(splitPanel.minSplitPosition) === (10 px))
 
     splitPanel.minSplitPosition = None
@@ -51,7 +52,8 @@ class AbstractSplitPanelTests extends FunSuite {
 
     assert(Some(splitPanel.maxSplitPosition) === (100 pct))
 
-    splitPanel.maxSplitPosition = 10 px;
+    splitPanel.maxSplitPosition = 10 px
+
     assert(Some(splitPanel.maxSplitPosition) === (10 px))
 
     splitPanel.maxSplitPosition = None

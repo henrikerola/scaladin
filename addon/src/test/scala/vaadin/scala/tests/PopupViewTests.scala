@@ -81,7 +81,7 @@ class PopupViewTests extends ScaladinTestSuite {
 
     popupView.popupVisible = true
 
-    val argument = ArgumentCaptor.forClass(classOf[PopupView.PopupVisibilityEvent]);
+    val argument = ArgumentCaptor.forClass(classOf[PopupView.PopupVisibilityEvent])
     Mockito.verify(spy).apply(argument.capture())
     assert(argument.getValue.popupView === popupView)
     assert(argument.getValue.popupVisible)

@@ -315,9 +315,9 @@ class MenuBarTests extends FunSuite with BeforeAndAfter {
       editItem.addItem("Paste", command)
 
       val viewItem = addItem("View", command)
-      val showToolBar = viewItem.addCheckableItem("Show Toolbar", command);
+      val showToolBar = viewItem.addCheckableItem("Show Toolbar", command)
       showToolBar.checked = true
-      viewItem.addCheckableItem("Show Statusbar", command);
+      viewItem.addCheckableItem("Show Statusbar", command)
 
       val help = addItem("Help")
     }

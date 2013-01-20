@@ -54,27 +54,27 @@ class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new c
   def source_=(source: Option[Resource]) = if (source.isDefined) p.setSource(source.get.p) else p.setSource(null)
   def source_=(source: Resource) = p.setSource(source.p)
 
-  def codebase: Option[String] = Option(p.getCodebase);
+  def codebase: Option[String] = Option(p.getCodebase)
   def codebase_=(codebase: Option[String]) = p.setCodebase(codebase.orNull)
   def codebase_=(codebase: String) = p.setCodebase(codebase)
 
-  def codetype: Option[String] = Option(p.getCodetype);
+  def codetype: Option[String] = Option(p.getCodetype)
   def codetype_=(codetype: Option[String]) = p.setCodetype(codetype.orNull)
   def codetype_=(codetype: String) = p.setCodetype(codetype)
 
-  def standby: Option[String] = Option(p.getStandby);
+  def standby: Option[String] = Option(p.getStandby)
   def standby_=(standby: Option[String]) = p.setStandby(standby.orNull)
   def standby_=(standby: String) = p.setStandby(standby)
 
-  def mimeType: Option[String] = Option(p.getMimeType);
+  def mimeType: Option[String] = Option(p.getMimeType)
   def mimeType_=(mimeType: Option[String]) = p.setMimeType(mimeType.orNull)
   def mimeType_=(mimeType: String) = p.setMimeType(mimeType)
 
-  def classId: Option[String] = Option(p.getClassId);
+  def classId: Option[String] = Option(p.getClassId)
   def classId_=(classId: Option[String]) = p.setClassId(classId.orNull)
   def classId_=(classId: String) = p.setClassId(classId)
 
-  def archive: Option[String] = Option(p.getArchive);
+  def archive: Option[String] = Option(p.getArchive)
   def archive_=(archive: Option[String]) = p.setArchive(archive.orNull)
   def archive_=(archive: String) = p.setArchive(archive)
 }

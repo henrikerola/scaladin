@@ -141,7 +141,7 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def columnReorderingAllowed: Boolean = p.isColumnReorderingAllowed
   def columnReorderingAllowed_=(columnReorderingAllowed: Boolean): Unit = p.setColumnReorderingAllowed(columnReorderingAllowed)
 
-  def editable: Boolean = p.isEditable;
+  def editable: Boolean = p.isEditable
   def editable_=(editable: Boolean): Unit = p.setEditable(editable)
 
   def sortable: Boolean = p.isSortEnabled

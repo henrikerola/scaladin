@@ -10,7 +10,7 @@ class CheckBox(override val p: com.vaadin.ui.CheckBox with CheckBoxMixin = new c
     extends AbstractField[java.lang.Boolean](p) {
 
   // Have to be Option[Boolean] because we override Option[Any]...
-  override def value: Option[Boolean] = Option(p.getValue);
+  override def value: Option[Boolean] = Option(p.getValue)
   def value_=(value: Boolean): Unit = p.setValue(value)
 
   def booleanValue: Boolean = p.getValue

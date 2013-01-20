@@ -278,7 +278,7 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   test("closeHandler") {
     assert(tabSheet.closeHandler != null)
 
-    val myCloseHandler = (e: TabSheet.TabCloseEvent) => println(e.tabSheet);
+    val myCloseHandler = (e: TabSheet.TabCloseEvent) => println(e.tabSheet)
     tabSheet.closeHandler = myCloseHandler
     assert(tabSheet.closeHandler === myCloseHandler)
 

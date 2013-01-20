@@ -101,13 +101,13 @@ abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with Abs
   def description_=(description: Option[String]): Unit = p.setDescription(description.orNull)
   def description_=(description: String): Unit = p.setDescription(description)
 
-  def immediate: Boolean = p.isImmediate();
-  def immediate_=(immediate: Boolean): Unit = p.setImmediate(immediate);
+  def immediate: Boolean = p.isImmediate
+  def immediate_=(immediate: Boolean): Unit = p.setImmediate(immediate)
 
   def data_=(data: Any): Unit = p.setData(data)
   def data: Any = p.getData
 
-  def markAsDirty() = p.markAsDirty();
+  def markAsDirty() = p.markAsDirty()
 
   def attach(): Unit = p.__super__attach()
 
@@ -121,7 +121,7 @@ trait Focusable extends Component {
 
   def focus(): Unit = p.focus()
 
-  def tabIndex: Int = p.getTabIndex()
+  def tabIndex: Int = p.getTabIndex
   def tabIndex_=(tabIndex: Int): Unit = p.setTabIndex(tabIndex)
 }
 

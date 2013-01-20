@@ -302,7 +302,7 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
     table.p.getColumnGenerator("colid").generateCell(table.p, "itemId", "colid")
 
-    val argument = ArgumentCaptor.forClass(classOf[Table.ColumnGenerationEvent]);
+    val argument = ArgumentCaptor.forClass(classOf[Table.ColumnGenerationEvent])
     Mockito.verify(spy).apply(argument.capture())
     assert(argument.getValue.table === table)
     assert(argument.getValue.itemId === "itemId")

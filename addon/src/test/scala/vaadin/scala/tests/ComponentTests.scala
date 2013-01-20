@@ -120,25 +120,27 @@ class ComponentTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
   test("width, defined size") {
     val label = new Label()
-    label.width = 25 px;
+    label.width = 25 px
+
     assert(label.width.get === Measure(25, Units.px))
   }
 
   test("width, undefined size") {
     val label = new Label()
-    label.width = None;
+    label.width = None
     assert(label.width === None)
   }
 
   test("height, defined size") {
     val label = new Label()
-    label.height = 25 px;
+    label.height = 25 px
+
     assert(label.height.get === Measure(25, Units.px))
   }
 
   test("height, undefined size") {
     val label = new Label()
-    label.height = None;
+    label.height = None
     assert(label.height === None)
   }
 

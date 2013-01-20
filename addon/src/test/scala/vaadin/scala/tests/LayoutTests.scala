@@ -97,7 +97,7 @@ class LayoutTests extends FunSuite {
   test("CssLayout, function literal for css") {
     val layout = new CssLayout
     val label = new Label
-    var cnt = 0;
+    var cnt = 0
     layout.add(label, {
       cnt = cnt + 1
       "" + cnt

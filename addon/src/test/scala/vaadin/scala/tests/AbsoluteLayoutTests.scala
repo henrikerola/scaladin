@@ -22,17 +22,18 @@ class AbsoluteLayoutTests extends FunSuite with BeforeAndAfter {
   }
 
   test("ComponentPosition.cssString") {
-    layout.position(label).get.cssString = "top: 10px; left: 100em";
+    layout.position(label).get.cssString = "top: 10px; left: 100em"
     assert(layout.position(label).get.cssString === "top:10.0px;left:100.0em;")
   }
 
   test("ComponentPosition.zIndex") {
-    layout.position(label).get.zIndex = 23;
+    layout.position(label).get.zIndex = 23
     assert(layout.position(label).get.zIndex === 23)
   }
 
   test("ComponentPosition.top, Option[Measure]") {
-    layout.position(label).get.top = 10 px;
+    layout.position(label).get.top = 10 px
+
     assert(layout.position(label).get.top === (10 px))
   }
 
@@ -62,12 +63,13 @@ class AbsoluteLayoutTests extends FunSuite with BeforeAndAfter {
   }
 
   test("ComponentPosition.bottom, Option[Measure]") {
-    layout.position(label).get.bottom = 30 em;
+    layout.position(label).get.bottom = 30 em
+
     assert(layout.position(label).get.bottom === (30 em))
   }
 
   test("ComponentPosition.bottom, Measure") {
-    layout.position(label).get.bottom = Measure(30, Units.em);
+    layout.position(label).get.bottom = Measure(30, Units.em)
     assert(layout.position(label).get.bottom === (30 em))
   }
 
@@ -77,7 +79,8 @@ class AbsoluteLayoutTests extends FunSuite with BeforeAndAfter {
   }
 
   test("ComponentPosition.left, Option[Measure]") {
-    layout.position(label).get.left = 100 pct;
+    layout.position(label).get.left = 100 pct
+
     assert(layout.position(label).get.left === (100 pct))
   }
 
