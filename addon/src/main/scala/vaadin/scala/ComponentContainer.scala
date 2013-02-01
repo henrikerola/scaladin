@@ -59,7 +59,7 @@ trait ComponentContainer extends HasComponents {
     p.moveComponentsFrom(source.p)
   }
 
-  lazy val components: mutable.Set[Component] = new mutable.Set[Component] with Serializable {
+  override lazy val components: mutable.Set[Component] = new mutable.Set[Component] with Serializable {
     import scala.collection.JavaConversions.asScalaIterator
     def contains(key: Component) = {
       p.iterator.contains(key.p)
