@@ -1,0 +1,19 @@
+package vaadin.scala
+
+import vaadin.scala.mixins.VideoMixin
+
+package mixins {
+  trait VideoMixin extends AbstractMediaMixin { self: com.vaadin.ui.Video => }
+}
+
+/**
+ * @see com.vaadin.ui.Video
+ * @author Henri Kerola / Vaadin
+ */
+class Video(override val p: com.vaadin.ui.Video with VideoMixin = new com.vaadin.ui.Video with VideoMixin)
+    extends AbstractMedia(p) {
+
+  def poster: Option[Resource] = wrapperFor(p.getPoster)
+  def poster_=(poster: Option[Resource]): Unit = p.setPoster(peerFor(poster))
+  def poster_=(poster: Resource): Unit = p.setPoster(poster.p)
+}

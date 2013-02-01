@@ -2,7 +2,7 @@ package vaadin.scala.internal
 
 import scala.collection.mutable
 
-trait ListenersTrait[E, L <: Listener] extends mutable.Set[E => Unit] {
+trait ListenersTrait[E, L <: Listener] extends mutable.Set[E => Unit] with Serializable {
 
   import scala.collection.JavaConverters._
   def contains(key: E => Unit) = {

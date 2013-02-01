@@ -52,7 +52,7 @@ trait Component extends Wrapper {
   def styleName: String = p.getStyleName // TODO: should be Option[String]?
   def styleName_=(styleName: String): Unit = p.setStyleName(styleName)
 
-  val styleNames = new mutable.Set[String] {
+  lazy val styleNames: mutable.Set[String] = new mutable.Set[String] with Serializable {
     def contains(key: String) = p.getStyleName().split(" ").iterator.contains(key)
     def iterator: Iterator[String] = p.getStyleName().split(" ").iterator
     def +=(elem: String) = { elem.split(" ").foreach(p.addStyleName(_)); this }

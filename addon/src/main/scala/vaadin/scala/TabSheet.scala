@@ -4,6 +4,7 @@ import vaadin.scala.mixins.TabSheetMixin
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.internal.SelectedTabChangeListener
 import vaadin.scala.internal.ListenersTrait
+import collection.mutable
 
 package mixins {
   trait TabSheetMixin extends AbstractComponentContainerMixin { self: com.vaadin.ui.TabSheet => }
@@ -52,7 +53,7 @@ class TabSheet(override val p: com.vaadin.ui.TabSheet with TabSheetMixin = new c
     extends AbstractComponentContainer(p) with Focusable with FocusNotifier with BlurNotifier with SelectiveRenderer {
 
   // TODO: change to protected/private
-  val tabs = scala.collection.mutable.Map.empty[com.vaadin.ui.TabSheet.Tab, TabSheet.Tab]
+  val tabs = mutable.Map.empty[com.vaadin.ui.TabSheet.Tab, TabSheet.Tab]
   protected def register(vaadinTab: com.vaadin.ui.TabSheet.Tab): TabSheet.Tab = {
     val tab = new TabSheet.Tab(vaadinTab)
     tabs += vaadinTab -> tab

@@ -15,7 +15,7 @@ package mixins {
  */
 class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new com.vaadin.ui.Embedded with EmbeddedMixin) extends AbstractComponent(p) {
 
-  lazy val parameters: mutable.Map[String, String] = new mutable.Map[String, String] {
+  lazy val parameters: mutable.Map[String, String] = new mutable.Map[String, String] with Serializable {
     def -=(name: String): this.type = { p.removeParameter(name); this }
 
     def +=(parameter: (String, String)): this.type = { update(parameter._1, parameter._2); this }
