@@ -34,7 +34,7 @@ trait Field[T] extends Component with BufferedValidatable with Property[T] with 
 }
 
 abstract class AbstractField[T](override val p: com.vaadin.ui.AbstractField[T] with AbstractFieldMixin[T])
-  extends AbstractComponent(p) with Field[T] with PropertyViewer with ValueChangeNotifier {
+    extends AbstractComponent(p) with Field[T] with PropertyViewer with ValueChangeNotifier {
 
   //description is inherited from AbstractComponent and Field, needs override
   // override def description: Option[String] = Option(p.getDescription)
@@ -51,6 +51,6 @@ abstract class AbstractField[T](override val p: com.vaadin.ui.AbstractField[T] w
   def converter_=(converter: Converter[T, _]): Unit = p.setConverter(converter.p)
   def converter_=(datamodelType: Class[_]): Unit = p.setConverter(datamodelType)
 
-  override def getType: Class[_ <: T]
+  //override def getType: Class[_ <: T]
 }
 
