@@ -37,6 +37,9 @@ class ScaladinSession(val p: com.vaadin.server.VaadinSession with VaadinSessionM
   // TODO: p.setLastRequestTime
   def lastRequestDuration: Long = p.getLastRequestDuration
 
+  //TODO: setter ?
+  def lastRequestTimestamp: Long = p.getLastRequestTimestamp
+
   // TODO: getSession: WrappedSession
 
   def configuration: DeploymentConfiguration = new DeploymentConfiguration {
@@ -44,7 +47,8 @@ class ScaladinSession(val p: com.vaadin.server.VaadinSession with VaadinSessionM
   }
 
   def locale: Locale = p.getLocale
-  // TODO: setLocale
+  def locale_=(locale: Option[Locale]): Unit = p.setLocale(locale.orNull)
+  def locale_=(locale: Locale): Unit = p.setLocale(locale)
 
   def errorHandler: ScaladinSession.ErrorEvent => Unit =
     p.getErrorHandler.asInstanceOf[ErrorHandler].action
@@ -78,6 +82,9 @@ class ScaladinSession(val p: com.vaadin.server.VaadinSession with VaadinSessionM
 
   def service: ScaladinService = wrapperFor[ScaladinService](p.getService).get
 
+  // TODO: this should be overridable?
   def close(): Unit = p.close()
+
+  def isClosing: Boolean = p.isClosing
 
 }
