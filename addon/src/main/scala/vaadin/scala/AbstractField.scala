@@ -50,5 +50,7 @@ abstract class AbstractField[T](override val p: com.vaadin.ui.AbstractField[T] w
   def converter: Option[Converter[T, Any]] = wrapperFor[Converter[T, Any]](p.getConverter)
   def converter_=(converter: Converter[T, _]): Unit = p.setConverter(converter.p)
   def converter_=(datamodelType: Class[_]): Unit = p.setConverter(datamodelType)
+
+  override def getType: Class[_ <: T]
 }
 

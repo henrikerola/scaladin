@@ -16,7 +16,7 @@ trait Property[T] extends Wrapper {
   // TODO value argument is Any instead of T:
   def value_=(value: Option[Any]): Unit = value_=(value.getOrElse(null).asInstanceOf[T])
   def value_=(value: Any): Unit = p.setValue(value.asInstanceOf[T])
-  def getType: Class[_] = p.getType // FIXME: _ <: T
+  def getType: Class[_ <: T] = p.getType
   def readOnly: Boolean = p.isReadOnly
   def readOnly_=(ro: Boolean): Unit = p.setReadOnly(ro)
   override def toString: String = p.toString
