@@ -101,3 +101,18 @@ class WindowCloseListener(val action: Window.CloseEvent => Unit) extends com.vaa
 class WindowResizeListener(val action: Window.ResizeEvent => Unit) extends com.vaadin.ui.Window.ResizeListener with Listener {
   def windowResized(e: com.vaadin.ui.Window.ResizeEvent) = action(Window.ResizeEvent(wrapperFor[Window](e.getWindow).get))
 }
+
+trait ViewChangeListener extends com.vaadin.navigator.ViewChangeListener with Listener {
+  def beforeViewChange(e: com.vaadin.navigator.ViewChangeListener.ViewChangeEvent): Boolean = true
+  def afterViewChange(e: com.vaadin.navigator.ViewChangeListener.ViewChangeEvent) {}
+}
+
+class BeforeViewChangeListener(val action: Navigator.ViewChangeEvent => Boolean) extends ViewChangeListener {
+  override def beforeViewChange(e: com.vaadin.navigator.ViewChangeListener.ViewChangeEvent): Boolean = action(Navigator.ViewChangeEvent(wrapperFor[Navigator](e.getNavigator).get, wrapperFor[Navigator.View](e.getOldView), wrapperFor[Navigator.View](e.getNewView).get, e.getViewName, e.getParameters))
+}
+
+class AfterViewChangeListener(val action: Navigator.ViewChangeEvent => Unit) extends ViewChangeListener {
+  override def afterViewChange(e: com.vaadin.navigator.ViewChangeListener.ViewChangeEvent) {
+    action(Navigator.ViewChangeEvent(wrapperFor[Navigator](e.getNavigator).get, wrapperFor[Navigator.View](e.getOldView), wrapperFor[Navigator.View](e.getNewView).get, e.getViewName, e.getParameters))
+  }
+}
