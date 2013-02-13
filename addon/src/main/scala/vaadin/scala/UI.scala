@@ -19,7 +19,7 @@ object UI {
 abstract class UI(override val p: WrappedVaadinUI)
     extends AbstractSingleComponentContainer(p) with DelayedInit {
 
-  private[this] var initCode: Option[() => Unit] = None
+  private[this] var initCode: () => Unit = null
 
   private[this] var _title: Option[String] = None
   private[this] var _theme: Option[String] = None
@@ -43,11 +43,12 @@ abstract class UI(override val p: WrappedVaadinUI)
     content = new VerticalLayout {
       margin = true
     }
-    initCode = Some(() => body)
+    val cont = if (initCode != null) initCode else () => {}
+    initCode = () => {cont(); body;}
   }
 
   def doInit(request: ScaladinRequest) {
-    for (proc <- initCode) proc()
+    initCode()
     init(request)
   }
 
