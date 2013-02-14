@@ -83,7 +83,7 @@ abstract class UI(override val p: WrappedVaadinUI)
 
   // TODO: setScrollTop
 
-  def page = new Page {
+  def page: Page = new Page {
     val p = UI.this.p.getPage
   }
 
