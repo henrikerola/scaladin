@@ -103,6 +103,15 @@ class NavigatorTests extends ScaladinTestSuite {
     assert(navigator.state === Some("MyPage"))
   }
 
+  test("UriFragmentManager set state") {
+
+    navigator.stateManager.state = None
+    Mockito.verify(vaadinPage).setUriFragment("!", false)
+
+    navigator.stateManager.state = Some("TestView")
+    Mockito.verify(vaadinPage).setUriFragment("!TestView", false)
+  }
+
   test("Navigator.ClassBasedViewProvider") {
     navigator.addView("ClassBasedTestView", classOf[ClassBasedTestView])
     assert(ClassBasedTestView.count === 0)

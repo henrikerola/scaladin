@@ -16,7 +16,9 @@ package mixins {
     self: com.vaadin.navigator.NavigationStateManager =>
     override def wrapper = super.wrapper.asInstanceOf[Navigator.NavigationStateManager]
 
-    def getState: String = wrapper.state.getOrElse("")
+    def getState: String = {
+      wrapper.state.getOrElse("")
+    }
 
     def setState(state: String) {
       wrapper.state = Some(state)
@@ -146,7 +148,7 @@ object Navigator {
     }).getOrElse(None)
 
     def state_=(s: Option[String]) {
-      page.setUriFragment(fragment = "!" + state, false)
+      page.setUriFragment(fragment = "!" + s.getOrElse(""), false)
     }
 
   }
@@ -243,7 +245,7 @@ class Navigator(val ui: UI, val display: Navigator.ViewDisplay) extends Wrapper 
     p.navigateTo(navigationState.getOrElse(""))
   }
 
-  def state = stateManager.state
+  def state: Option[String] = stateManager.state
 
   def addView(viewName: String, view: Navigator.View) {
     addViewProvider(viewName, new Navigator.StaticViewProvider(viewName, view))
@@ -271,7 +273,6 @@ class Navigator(val ui: UI, val display: Navigator.ViewDisplay) extends Wrapper 
   }
 
   def errorView(viewClass: Class[_ <: Navigator.View]) {
-    val viewClassName = viewClass.getSimpleName
     p.setErrorProvider(new Navigator.ViewProvider {
       def viewName(viewAndParameters: String): Option[String] = {
         Option(viewAndParameters)
