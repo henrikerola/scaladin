@@ -96,11 +96,11 @@ class NavigatorTests extends ScaladinTestSuite {
   }
 
   test("UriFragmentManager.state") {
-    assert(navigator.state === None)
+    assert(navigator.getState === None)
     Mockito.when(vaadinPage.getUriFragment).thenReturn("MyPage")
-    assert(navigator.state === None)
+    assert(navigator.getState === None)
     Mockito.when(vaadinPage.getUriFragment).thenReturn("!MyPage")
-    assert(navigator.state === Some("MyPage"))
+    assert(navigator.getState === Some("MyPage"))
   }
 
   test("UriFragmentManager set state") {
@@ -123,7 +123,7 @@ class NavigatorTests extends ScaladinTestSuite {
 
   test("Navigator.beforeViewChangeListeners.listeners with ClassBasedViewProvider errorView") {
     var listenerVar = 0
-    navigator.errorView(classOf[ClassBasedTestView])
+    navigator.setErrorView(classOf[ClassBasedTestView])
     navigator.beforeViewChangeListeners.listenerSet.add(new BeforeViewChangeListener((e) => {
       listenerVar += 1
       listenerVar > 1

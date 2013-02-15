@@ -88,10 +88,11 @@ class DemoView extends VerticalLayout with Navigator.View {
   init()
 
   override def enter(event: Navigator.ViewChangeEvent) {
-    if (event.viewName == DemoView.VIEW2) {
+    val viewName = event.viewName.getOrElse("")
+    if (viewName == DemoView.VIEW2) {
       DemoView.inc
     }
-    label.value = "Hello from view " + event.viewName + ", the view has been created " + DemoView.count + " times."
-    Notification.show("Entering view " + event.viewName)
+    label.value = "Hello from view " + viewName + ", the view has been created " + DemoView.count + " times."
+    Notification.show("Entering view " + viewName)
   }
 }

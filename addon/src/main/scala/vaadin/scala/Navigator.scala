@@ -21,11 +21,11 @@ package mixins {
     }
 
     def setState(state: String) {
-      wrapper.state = Some(state)
+      wrapper.state = Option(state)
     }
 
     def setNavigator(navigator: com.vaadin.navigator.Navigator) {
-      wrapper.navigator = WrapperUtil.wrapperFor(navigator)
+      wrapper.setNavigator(WrapperUtil.wrapperFor(navigator))
     }
 
   }
@@ -39,8 +39,8 @@ package mixins {
         WrapperUtil.wrapperFor(event.getNavigator).get,
         WrapperUtil.wrapperFor(event.getOldView),
         WrapperUtil.wrapperFor(event.getNewView).get,
-        event.getViewName,
-        event.getParameters))
+        Option(event.getViewName),
+        Option(event.getParameters)))
     }
   }
 
@@ -58,11 +58,11 @@ package mixins {
     override def wrapper = super.wrapper.asInstanceOf[Navigator.ViewProvider]
 
     override def getViewName(s: String): String = {
-      wrapper.viewName(s).getOrElse(null)
+      wrapper.getViewName(Option(s)).getOrElse(null)
     }
 
     override def getView(s: String): com.vaadin.navigator.View = {
-      wrapper.view(s).map(_.pView).getOrElse(null)
+      wrapper.getView(Option(s)).map(_.pView).getOrElse(null)
     }
   }
 
@@ -85,20 +85,18 @@ object Navigator {
     val pNavigationStateManager = new com.vaadin.navigator.NavigationStateManager with NavigationStateManagerMixin
     pNavigationStateManager.wrapper = this
 
-    def navigator: Option[Navigator]
-
-    def navigator_=(n: Navigator) {
-      navigator_=(Some(n))
-    }
-
-    def navigator_=(n: Option[Navigator])
+    /**
+     * This method should only be called by a Navigator.
+     * @see com.vaadin.navigator.NavigationStateManager
+     */
+    def setNavigator(n: Option[Navigator])
 
     def state: Option[String]
 
-    def state_=(s: String) {
-      state_=(Some(s))
-    }
-
+    /**
+     * This method should only be called by a Navigator.
+     * @see com.vaadin.navigator.NavigationStateManager
+     */
     def state_=(s: Option[String])
 
   }
@@ -110,33 +108,35 @@ object Navigator {
     def enter(e: Navigator.ViewChangeEvent)
   }
 
-  case class ViewChangeEvent(navigator: Navigator, oldView: Option[Navigator.View], newView: Navigator.View, viewName: String, parameters: String) extends Event
+  case class ViewChangeEvent(navigator: Navigator, oldView: Option[Navigator.View], newView: Navigator.View, viewName: Option[String], parameters: Option[String]) extends Event
 
   trait ViewDisplay extends InterfaceWrapper {
     val pViewDisplay = new com.vaadin.navigator.ViewDisplay with ViewDisplayMixin
     pViewDisplay.wrapper = this
 
-    def showView(v: Navigator.View) {
-      showView(Option(v))
+    def showView(view: Navigator.View) {
+      showView(Option(view))
     }
 
-    def showView(v: Option[Navigator.View])
+    def showView(view: Option[Navigator.View])
   }
 
   trait ViewProvider extends InterfaceWrapper {
     val pViewProvider = new com.vaadin.navigator.ViewProvider with ViewProviderMixin
     pViewProvider.wrapper = this
 
-    def viewName(viewAndParameters: String): Option[String]
+    def getViewName(viewAndParameters: String): Option[String] = getViewName(Option(viewAndParameters))
+    def getViewName(viewAndParameters: Option[String]): Option[String]
 
-    def view(name: String): Option[Navigator.View]
+    def getView(name: String): Option[Navigator.View] = getView(Option(name))
+    def getView(name: Option[String]): Option[Navigator.View]
 
   }
 
   class UriFragmentManager(val page: Page, var navigator: Option[Navigator] = None) extends NavigationStateManager {
 
-    // Added through p since page does not have listeners implemented yet.
-    //    page.uriFragmentChangedListeners.add((event: Page.UriFragmentChangedEvent) => navigator.map(_.navigateTo(state)))
+    // TODO: Added through p since page does not have listeners implemented yet.
+    // page.uriFragmentChangedListeners.add((event: Page.UriFragmentChangedEvent) => navigator.map(_.navigateTo(state)))
     page.p.addUriFragmentChangedListener(new UriFragmentChangedListener((event: Page.UriFragmentChangedEvent) => navigator.map(_.navigateTo(state))))
 
     def state: Option[String] = page.uriFragment.map(fragment => {
@@ -151,9 +151,16 @@ object Navigator {
       page.setUriFragment(fragment = "!" + s.getOrElse(""), false)
     }
 
+    /**
+     * This method should only be called by a Navigator.
+     * @see com.vaadin.navigator.NavigationStateManager
+     */
+    def setNavigator(n: Option[Navigator]) {
+      navigator = n
+    }
+
   }
 
-  // TODO: extends CustomComponent with ViewDisplay
   class ComponentContainerViewDisplay(container: ComponentContainer) extends Navigator.ViewDisplay {
     def showView(view: Option[Navigator.View]) {
       view.map(v => v match {
@@ -166,7 +173,6 @@ object Navigator {
     }
   }
 
-  // TODO: extends CustomComponent with ViewDisplay
   class SingleComponentContainerViewDisplay(container: SingleComponentContainer) extends Navigator.ViewDisplay {
     def showView(view: Option[Navigator.View]) {
       view.map(v => v match {
@@ -176,33 +182,34 @@ object Navigator {
     }
   }
 
-  class StaticViewProvider(val viewName: String, val viewInstance: Navigator.View) extends Navigator.ViewProvider {
-    def viewName(viewAndParameters: String): Option[String] = {
-      if (viewAndParameters != null && (viewAndParameters == viewName || viewAndParameters.startsWith(viewName + "/"))) {
-        Some(viewName)
-      } else {
-        None
-      }
-    }
+  /**
+   * Helper for removing duplicate code in StaticViewProvider and ClassBasedViewProvider
+   */
+  trait AbstractViewProvider extends Navigator.ViewProvider {
+    def viewName: Option[String]
 
-    def view(name: String): Option[Navigator.View] = if (viewName == name) {
-      Some(viewInstance)
+    def getViewName(viewAndParameters: Option[String]): Option[String] = {
+      viewAndParameters.map(vap => {
+        if (viewName.map(vn => vn == vap || vap.startsWith(vn + "/")).getOrElse(false)) {
+          viewName
+        } else {
+          None
+        }
+      }).getOrElse(None)
+    }
+  }
+
+  class StaticViewProvider(val viewName: Option[String], val viewInstance: Option[Navigator.View]) extends AbstractViewProvider {
+    def getView(name: Option[String]): Option[Navigator.View] = if (viewName == name) {
+      viewInstance
     } else {
       None
     }
   }
 
-  class ClassBasedViewProvider(val viewName: String, viewClass: Class[_ <: Navigator.View]) extends Navigator.ViewProvider {
-    def viewName(viewAndParameters: String): Option[String] = {
-      if (viewAndParameters != null && (viewAndParameters == viewName || viewAndParameters.startsWith(viewName + "/"))) {
-        Some(viewName)
-      } else {
-        None
-      }
-    }
-
-    def view(n: String): Option[Navigator.View] = {
-      if (n == viewName) {
+  class ClassBasedViewProvider(val viewName: Option[String], viewClass: Class[_ <: Navigator.View]) extends AbstractViewProvider {
+    def getView(name: Option[String]): Option[Navigator.View] = {
+      if (name == viewName) {
         try {
           Some(viewClass.newInstance())
         } catch {
@@ -216,26 +223,28 @@ object Navigator {
   }
 
   def apply(ui: UI, container: ComponentContainer): Navigator = {
-    new Navigator(ui, new ComponentContainerViewDisplay(container))
+    apply(ui, new Navigator.ComponentContainerViewDisplay(container))
   }
 
   def apply(ui: UI, container: SingleComponentContainer): Navigator = {
-    new Navigator(ui, new SingleComponentContainerViewDisplay(container))
+    apply(ui, new Navigator.SingleComponentContainerViewDisplay(container))
   }
 
+  def apply(ui: UI, display: Navigator.ViewDisplay): Navigator = {
+    new Navigator(ui, new Navigator.UriFragmentManager(ui.page), display)
+  }
 }
 
 /**
  * @see com.vaadin.navigator.Navigator
  * @author Matti Heinola / Viklo
  */
-class Navigator(val ui: UI, val display: Navigator.ViewDisplay) extends Wrapper {
+class Navigator(val ui: UI, val stateManager: Navigator.NavigationStateManager, val display: Navigator.ViewDisplay) extends Wrapper {
   navigator =>
 
-  val stateManager: Navigator.NavigationStateManager = new Navigator.UriFragmentManager(ui.page)
   val p: com.vaadin.navigator.Navigator with NavigatorMixin = new com.vaadin.navigator.Navigator(ui.p, stateManager.pNavigationStateManager, display.pViewDisplay) with NavigatorMixin
   p.wrapper = this
-  stateManager.navigator = this
+  stateManager.setNavigator(Option(this))
 
   def navigateTo(navigationState: String) {
     navigateTo(Option(navigationState))
@@ -245,23 +254,35 @@ class Navigator(val ui: UI, val display: Navigator.ViewDisplay) extends Wrapper 
     p.navigateTo(navigationState.getOrElse(""))
   }
 
-  def state: Option[String] = stateManager.state
+  def getState: Option[String] = stateManager.state
 
   def addView(viewName: String, view: Navigator.View) {
+    addView(Option(viewName), Option(view))
+  }
+
+  def addView(viewName: Option[String], view: Option[Navigator.View]) {
     addViewProvider(viewName, new Navigator.StaticViewProvider(viewName, view))
   }
 
   def addView(viewName: String, viewClass: Class[_ <: Navigator.View]) {
+    addView(Option(viewName), viewClass)
+  }
+
+  def addView(viewName: Option[String], viewClass: Class[_ <: Navigator.View]) {
     addViewProvider(viewName, new Navigator.ClassBasedViewProvider(viewName, viewClass))
   }
 
-  private def addViewProvider(viewName: String, provider: Navigator.ViewProvider) {
+  private def addViewProvider(viewName: Option[String], provider: Navigator.ViewProvider) {
     removeView(viewName)
     addProvider(provider)
   }
 
   def removeView(viewName: String) {
-    p.removeView(viewName)
+    removeView(Option(viewName))
+  }
+
+  def removeView(viewName: Option[String]) {
+    viewName.map(n => p.removeView(n))
   }
 
   def addProvider(provider: Navigator.ViewProvider) {
@@ -272,24 +293,28 @@ class Navigator(val ui: UI, val display: Navigator.ViewDisplay) extends Wrapper 
     p.removeProvider(provider.pViewProvider)
   }
 
-  def errorView(viewClass: Class[_ <: Navigator.View]) {
-    p.setErrorProvider(new Navigator.ViewProvider {
-      def viewName(viewAndParameters: String): Option[String] = {
-        Option(viewAndParameters)
+  def setErrorView(viewClass: Class[_ <: Navigator.View]) {
+    setErrorProvider(new Navigator.ViewProvider {
+      def getViewName(viewAndParameters: Option[String]): Option[String] = {
+        viewAndParameters
       }
 
-      def view(n: String): Option[Navigator.View] = {
+      def getView(name: Option[String]): Option[Navigator.View] = {
         try {
           Some(viewClass.newInstance())
         } catch {
           case e: Exception => throw new RuntimeException(e)
         }
       }
-    }.pViewProvider)
+    })
   }
 
-  def errorView(view: Navigator.View) {
+  def setErrorView(view: Navigator.View) {
     p.setErrorView(view.pView)
+  }
+
+  def setErrorProvider(provider: Navigator.ViewProvider) {
+    p.setErrorProvider(provider.pViewProvider)
   }
 
   lazy val beforeViewChangeListeners = new DecisionListenersTrait[Navigator.ViewChangeEvent, ViewChangeListener] {
