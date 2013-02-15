@@ -64,9 +64,15 @@ class DemoUI extends UI(title = "Hello World") {
 object DemoView {
   val VIEW1 = ""
   val VIEW2 = "ClassBasedView"
+
+  private var count = 1
+
+  private def inc = {
+    count += 1; count
+  }
 }
 
-class DemoView extends Navigator.PanelView {
+class DemoView extends VerticalLayout with Navigator.View {
   val label = Label("Hello from DemoView")
 
   def init() {
@@ -76,13 +82,16 @@ class DemoView extends Navigator.PanelView {
       add(label)
     }
     layout.margin = true
-    content = layout
+    add(layout)
   }
 
   init()
 
   override def enter(event: Navigator.ViewChangeEvent) {
-    label.value = "Hello from view " + event.viewName
+    if (event.viewName == DemoView.VIEW2) {
+      DemoView.inc
+    }
+    label.value = "Hello from view " + event.viewName + ", the view has been created " + DemoView.count + " times."
     Notification.show("Entering view " + event.viewName)
   }
 }

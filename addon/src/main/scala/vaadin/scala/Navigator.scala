@@ -1,55 +1,67 @@
 package vaadin.scala
 
-import vaadin.scala.mixins.ViewMixin
-import vaadin.scala.mixins.EmptyViewMixin
-import vaadin.scala.mixins.ComponentContainerViewDisplayMixin
-import vaadin.scala.mixins.SingleComponentContainerViewDisplayMixin
-import vaadin.scala.mixins.ViewProviderMixin
-import vaadin.scala.mixins.NavigatorMixin
-import vaadin.scala.mixins.PanelMixin
-import internal._
-import scala._
-import scala.collection.JavaConversions._
 import scala.collection.mutable
+import scala.collection.JavaConversions._
+
+import internal._
+import vaadin.scala.mixins._
 import scala.Some
 
 package mixins {
 
-  trait ViewMixin extends ScaladinMixin {
+  /**
+   * @see com.vaadin.navigator.NavigationStateManager
+   */
+  trait NavigationStateManagerMixin extends ScaladinInterfaceMixin {
+    self: com.vaadin.navigator.NavigationStateManager =>
+    override def wrapper = super.wrapper.asInstanceOf[Navigator.NavigationStateManager]
+
+    def getState: String = wrapper.state.getOrElse("")
+
+    def setState(state: String) {
+      wrapper.state = Some(state)
+    }
+
+    def setNavigator(navigator: com.vaadin.navigator.Navigator) {
+      wrapper.navigator = WrapperUtil.wrapperFor(navigator)
+    }
+
+  }
+
+  trait ViewMixin extends ScaladinInterfaceMixin {
     self: com.vaadin.navigator.View =>
-    override def enter(e: com.vaadin.navigator.ViewChangeListener.ViewChangeEvent) {
-      wrapper.asInstanceOf[Navigator.View].enter(Navigator.ViewChangeEvent(
-        WrapperUtil.wrapperFor(e.getNavigator).get,
-        WrapperUtil.wrapperFor(e.getOldView),
-        WrapperUtil.wrapperFor(e.getNewView).get,
-        e.getViewName,
-        e.getParameters))
+    override def wrapper = super.wrapper.asInstanceOf[Navigator.View]
+
+    def enter(event: com.vaadin.navigator.ViewChangeListener.ViewChangeEvent) {
+      wrapper.enter(Navigator.ViewChangeEvent(
+        WrapperUtil.wrapperFor(event.getNavigator).get,
+        WrapperUtil.wrapperFor(event.getOldView),
+        WrapperUtil.wrapperFor(event.getNewView).get,
+        event.getViewName,
+        event.getParameters))
     }
   }
 
-  trait ViewDisplayMixin extends ScaladinMixin with com.vaadin.navigator.ViewDisplay
+  trait ViewDisplayMixin extends ScaladinInterfaceMixin {
+    self: com.vaadin.navigator.ViewDisplay =>
+    override def wrapper = super.wrapper.asInstanceOf[Navigator.ViewDisplay]
 
-  trait ViewProviderMixin extends ScaladinMixin {
+    def showView(view: com.vaadin.navigator.View) {
+      wrapper.showView(WrapperUtil.wrapperFor(view))
+    }
+  }
+
+  trait ViewProviderMixin extends ScaladinInterfaceMixin {
     self: com.vaadin.navigator.ViewProvider =>
+    override def wrapper = super.wrapper.asInstanceOf[Navigator.ViewProvider]
+
     override def getViewName(s: String): String = {
-      wrapper.asInstanceOf[Navigator.ViewProvider].viewName(s).getOrElse(null)
+      wrapper.viewName(s).getOrElse(null)
     }
 
     override def getView(s: String): com.vaadin.navigator.View = {
-      wrapper.asInstanceOf[Navigator.ViewProvider].view(s).map(_.p).getOrElse(null)
+      wrapper.view(s).map(_.pView).getOrElse(null)
     }
-  }
-
-  trait EmptyViewMixin extends CssLayoutMixin with ViewMixin {
-    self: com.vaadin.navigator.Navigator.EmptyView =>
-  }
-
-  trait ComponentContainerViewDisplayMixin extends ViewDisplayMixin {
-    self: com.vaadin.navigator.Navigator.ComponentContainerViewDisplay =>
-  }
-
-  trait SingleComponentContainerViewDisplayMixin extends ViewDisplayMixin {
-    self: com.vaadin.navigator.Navigator.SingleComponentContainerViewDisplay =>
   }
 
   trait NavigatorMixin extends ScaladinMixin {
@@ -67,65 +79,102 @@ package mixins {
 
 object Navigator {
 
-  trait View extends Wrapper {
-    val p: com.vaadin.navigator.View with ViewMixin = new com.vaadin.navigator.View with ViewMixin
+  trait NavigationStateManager extends InterfaceWrapper {
+    val pNavigationStateManager = new com.vaadin.navigator.NavigationStateManager with NavigationStateManagerMixin
+    pNavigationStateManager.wrapper = this
 
-    def enter(e: Navigator.ViewChangeEvent) {
-      // Subclasses can override
+    def navigator: Option[Navigator]
+
+    def navigator_=(n: Navigator) {
+      navigator_=(Some(n))
     }
+
+    def navigator_=(n: Option[Navigator])
+
+    def state: Option[String]
+
+    def state_=(s: String) {
+      state_=(Some(s))
+    }
+
+    def state_=(s: Option[String])
+
+  }
+
+  trait View extends InterfaceWrapper {
+    val pView = new com.vaadin.navigator.View with ViewMixin
+    pView.wrapper = this
+
+    def enter(e: Navigator.ViewChangeEvent)
   }
 
   case class ViewChangeEvent(navigator: Navigator, oldView: Option[Navigator.View], newView: Navigator.View, viewName: String, parameters: String) extends Event
 
-  trait ViewDisplay extends Wrapper {
-    viewDisplay =>
-    def p: com.vaadin.navigator.ViewDisplay
+  trait ViewDisplay extends InterfaceWrapper {
+    val pViewDisplay = new com.vaadin.navigator.ViewDisplay with ViewDisplayMixin
+    pViewDisplay.wrapper = this
 
-    def showView(v: Navigator.View)
+    def showView(v: Navigator.View) {
+      showView(Option(v))
+    }
+
+    def showView(v: Option[Navigator.View])
   }
 
-  class EmptyView(override val p: com.vaadin.navigator.Navigator.EmptyView with EmptyViewMixin with com.vaadin.navigator.View with ViewMixin = new com.vaadin.navigator.Navigator.EmptyView with EmptyViewMixin with com.vaadin.navigator.View with ViewMixin) extends CssLayout with Navigator.View {
-    p.wrapper = this
+  trait ViewProvider extends InterfaceWrapper {
+    val pViewProvider = new com.vaadin.navigator.ViewProvider with ViewProviderMixin
+    pViewProvider.wrapper = this
+
+    def viewName(viewAndParameters: String): Option[String]
+
+    def view(name: String): Option[Navigator.View]
+
   }
 
-  // TODO: How to wrap the View interface from Vaadin to support any Layout?
-  class PanelView(override val p: com.vaadin.ui.Panel with PanelMixin with com.vaadin.navigator.View with ViewMixin = new com.vaadin.ui.Panel with PanelMixin with com.vaadin.navigator.View with ViewMixin) extends Panel with Navigator.View {
-    p.wrapper = this
+  class UriFragmentManager(val page: Page, var navigator: Option[Navigator] = None) extends NavigationStateManager {
+
+    // Added through p since page does not have listeners implemented yet.
+    //    page.uriFragmentChangedListeners.add((event: Page.UriFragmentChangedEvent) => navigator.map(_.navigateTo(state)))
+    page.p.addUriFragmentChangedListener(new UriFragmentChangedListener((event: Page.UriFragmentChangedEvent) => navigator.map(_.navigateTo(state))))
+
+    def state: Option[String] = page.uriFragment.map(fragment => {
+      if (fragment == null || !fragment.startsWith("!")) {
+        None
+      } else {
+        Some(fragment.substring(1))
+      }
+    }).getOrElse(None)
+
+    def state_=(s: Option[String]) {
+      page.setUriFragment(fragment = "!" + state, false)
+    }
+
   }
 
-  class ComponentContainerViewDisplay(container: ComponentContainer) extends ViewDisplay {
-    override val p: com.vaadin.navigator.Navigator.ComponentContainerViewDisplay with ComponentContainerViewDisplayMixin = new com.vaadin.navigator.Navigator.ComponentContainerViewDisplay(container.p) with ComponentContainerViewDisplayMixin
-
-    override def showView(v: Navigator.View) {
-      v match {
+  // TODO: extends CustomComponent with ViewDisplay
+  class ComponentContainerViewDisplay(container: ComponentContainer) extends Navigator.ViewDisplay {
+    def showView(view: Option[Navigator.View]) {
+      view.map(v => v match {
         case c: Component => {
           container.removeAllComponents()
           container.addComponent(c)
         }
-        case _ => p.showView(v.p)
-      }
+        case _ => throw new IllegalArgumentException("View is not a component: " + view)
+      })
     }
   }
 
-  class SingleComponentContainerViewDisplay(container: SingleComponentContainer) extends ViewDisplay {
-    override def p: com.vaadin.navigator.Navigator.SingleComponentContainerViewDisplay with SingleComponentContainerViewDisplayMixin = new com.vaadin.navigator.Navigator.SingleComponentContainerViewDisplay(container.p) with SingleComponentContainerViewDisplayMixin
-
-    override def showView(v: Navigator.View) {
-      v match {
+  // TODO: extends CustomComponent with ViewDisplay
+  class SingleComponentContainerViewDisplay(container: SingleComponentContainer) extends Navigator.ViewDisplay {
+    def showView(view: Option[Navigator.View]) {
+      view.map(v => v match {
         case c: Component => container.content_=(c)
-        case _ => p.showView(v.p)
-      }
+        case _ => throw new IllegalArgumentException("View is not a component: " + view)
+      })
     }
   }
 
-  trait ViewProvider extends Wrapper {
-    viewProvider =>
-    def p: com.vaadin.navigator.ViewProvider
-
-    def viewName: String
-
-    def viewInstance: Navigator.View
-
+  class StaticViewProvider(val viewName: String, val viewInstance: Navigator.View) extends Navigator.ViewProvider {
     def viewName(viewAndParameters: String): Option[String] = {
       if (viewAndParameters != null && (viewAndParameters == viewName || viewAndParameters.startsWith(viewName + "/"))) {
         Some(viewName)
@@ -141,86 +190,27 @@ object Navigator {
     }
   }
 
-  class StaticViewProvider(override val viewName: String, override val viewInstance: Navigator.View) extends ViewProvider {
-    viewProvider =>
-    val p: com.vaadin.navigator.Navigator.StaticViewProvider with ViewProviderMixin = new com.vaadin.navigator.Navigator.StaticViewProvider(viewName, viewInstance.p) with ViewProviderMixin
-    p.wrapper = this
-  }
-
-  class ClassBasedViewProvider(override val viewName: String, viewClass: Class[_ <: Navigator.View]) extends ViewProvider {
-    viewProvider =>
-    val p: com.vaadin.navigator.ViewProvider with ViewProviderMixin = new com.vaadin.navigator.ViewProvider with ViewProviderMixin
-    p.wrapper = this
-
-    override def viewInstance: Navigator.View = {
-      try {
-        viewClass.newInstance()
-      } catch {
-        case e: InstantiationException => throw new RuntimeException(e)
-        case e: IllegalAccessException => throw new RuntimeException(e)
-      }
-    }
-  }
-
-  class ClassBasedErrorViewProvider(override val viewName: String, viewClass: Class[_ <: Navigator.View]) extends ClassBasedViewProvider(viewName, viewClass) {
-    override def viewName(navigationState: String): Option[String] = Some(navigationState)
-  }
-
-  /**
-   * State manager implements directly the Vaadin interface.
-   */
-  trait NavigationStateManager extends com.vaadin.navigator.NavigationStateManager {
-
-    def navigator: Option[Navigator]
-
-    def navigator_=(n: Navigator) {
-      navigator_=(Some(n))
-    }
-
-    def navigator_=(n: Option[Navigator])
-
-    override def getState: String = state
-
-    def state: String
-
-  }
-
-  class UriFragmentManager(val page: Page, override var navigator: Option[Navigator] = None)
-      extends UriFragmentChangedListener(action = (event: Page.UriFragmentChangedEvent) => navigator.map(_.navigateTo("")))
-      with NavigationStateManager {
-
-    page.p.addUriFragmentChangedListener(this)
-
-    override def setNavigator(navigator: com.vaadin.navigator.Navigator) {
-      this.navigator = wrapperFor[Navigator](navigator)
-    }
-
-    def state: String = page.uriFragment.map(fragment => {
-      if (fragment == null || !fragment.startsWith("!")) {
-        ""
+  class ClassBasedViewProvider(val viewName: String, viewClass: Class[_ <: Navigator.View]) extends Navigator.ViewProvider {
+    def viewName(viewAndParameters: String): Option[String] = {
+      if (viewAndParameters != null && (viewAndParameters == viewName || viewAndParameters.startsWith(viewName + "/"))) {
+        Some(viewName)
       } else {
-        fragment.substring(1)
+        None
       }
-    }).getOrElse("")
-
-    override def setState(state: String) {
-      setFragment(fragment = "!" + state)
     }
 
-    override def uriFragmentChanged(e: com.vaadin.server.Page.UriFragmentChangedEvent) {
-      navigator.map(_.navigateTo(state))
+    def view(n: String): Option[Navigator.View] = {
+      if (n == viewName) {
+        try {
+          Some(viewClass.newInstance())
+        } catch {
+          case e: InstantiationException => throw new RuntimeException(e)
+          case e: IllegalAccessException => throw new RuntimeException(e)
+        }
+      } else {
+        None
+      }
     }
-
-    def uriFragmentChanged(e: Page.UriFragmentChangedEvent) {
-      navigator.map(_.navigateTo(state))
-    }
-
-    protected def getFragment: String = page.uriFragment.orNull
-
-    protected def setFragment(fragment: String) {
-      page.setUriFragment(fragment, false)
-    }
-
   }
 
   def apply(ui: UI, container: ComponentContainer): Navigator = {
@@ -230,6 +220,7 @@ object Navigator {
   def apply(ui: UI, container: SingleComponentContainer): Navigator = {
     new Navigator(ui, new SingleComponentContainerViewDisplay(container))
   }
+
 }
 
 /**
@@ -240,12 +231,16 @@ class Navigator(val ui: UI, val display: Navigator.ViewDisplay) extends Wrapper 
   navigator =>
 
   val stateManager: Navigator.NavigationStateManager = new Navigator.UriFragmentManager(ui.page)
-  val p: com.vaadin.navigator.Navigator with NavigatorMixin = new com.vaadin.navigator.Navigator(ui.p, stateManager, display.p) with NavigatorMixin
+  val p: com.vaadin.navigator.Navigator with NavigatorMixin = new com.vaadin.navigator.Navigator(ui.p, stateManager.pNavigationStateManager, display.pViewDisplay) with NavigatorMixin
   p.wrapper = this
   stateManager.navigator = this
 
   def navigateTo(navigationState: String) {
-    p.navigateTo(navigationState)
+    navigateTo(Option(navigationState))
+  }
+
+  def navigateTo(navigationState: Option[String]) {
+    p.navigateTo(navigationState.getOrElse(""))
   }
 
   def state = stateManager.state
@@ -268,19 +263,32 @@ class Navigator(val ui: UI, val display: Navigator.ViewDisplay) extends Wrapper 
   }
 
   def addProvider(provider: Navigator.ViewProvider) {
-    p.addProvider(provider.p)
+    p.addProvider(provider.pViewProvider)
   }
 
   def removeProvider(provider: Navigator.ViewProvider) {
-    p.removeProvider(provider.p)
+    p.removeProvider(provider.pViewProvider)
   }
 
   def errorView(viewClass: Class[_ <: Navigator.View]) {
-    p.setErrorProvider(new Navigator.ClassBasedErrorViewProvider(viewClass.getSimpleName, viewClass).p)
+    val viewClassName = viewClass.getSimpleName
+    p.setErrorProvider(new Navigator.ViewProvider {
+      def viewName(viewAndParameters: String): Option[String] = {
+        Option(viewAndParameters)
+      }
+
+      def view(n: String): Option[Navigator.View] = {
+        try {
+          Some(viewClass.newInstance())
+        } catch {
+          case e: Exception => throw new RuntimeException(e)
+        }
+      }
+    }.pViewProvider)
   }
 
   def errorView(view: Navigator.View) {
-    p.setErrorView(view.p)
+    p.setErrorView(view.pView)
   }
 
   lazy val beforeViewChangeListeners = new DecisionListenersTrait[Navigator.ViewChangeEvent, ViewChangeListener] {

@@ -2,17 +2,22 @@ package vaadin.scala.tests
 
 import vaadin.scala._
 import com.vaadin.server.{ Page => VaadinPage }
-import internal.{ AfterViewChangeListener, BeforeViewChangeListener }
+import internal.{ BeforeViewChangeListener, AfterViewChangeListener }
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.mockito.Mockito
 
 object ClassBasedTestView {
   var count = 0
-  private def inc = { count += 1; count }
+
+  private def inc = {
+    count += 1; count
+  }
 }
-class ClassBasedTestView extends Navigator.PanelView {
+
+class ClassBasedTestView extends Panel with Navigator.View {
   ClassBasedTestView.inc
+
   override def enter(event: Navigator.ViewChangeEvent) {}
 }
 
@@ -28,8 +33,12 @@ class NavigatorTests extends ScaladinTestSuite {
   val testView2 = new TestView2
   var navigator: Navigator = null
 
-  class TestView1 extends Navigator.PanelView {
+  class TestView1 extends Panel with Navigator.View {
     content = Label("Hello from DemoView1")
+
+    def enter(e: Navigator.ViewChangeEvent) {
+      // no op
+    }
   }
 
   class TestView2 extends TestView1 {
@@ -60,11 +69,11 @@ class NavigatorTests extends ScaladinTestSuite {
   }
 
   test("Navigator navigateTo") {
-    assert(navigator.stateManager.state === "")
+    assert(navigator.stateManager.state === None)
 
     Mockito.when(vaadinPage.getUriFragment).thenReturn("!TestView2")
     navigator.navigateTo("TestView2")
-    assert(navigator.stateManager.state === "TestView2")
+    assert(navigator.stateManager.state === Some("TestView2"))
     assert(testView2.nr === Some(1))
 
   }
@@ -74,7 +83,6 @@ class NavigatorTests extends ScaladinTestSuite {
     val testView = new TestView1
     val cc = new Navigator.ComponentContainerViewDisplay(componentMock)
     cc.showView(testView)
-    Mockito.verify(componentMock).p
     Mockito.verify(componentMock).removeAllComponents()
     Mockito.verify(componentMock).addComponent(testView)
   }
@@ -88,11 +96,11 @@ class NavigatorTests extends ScaladinTestSuite {
   }
 
   test("UriFragmentManager.state") {
-    assert(navigator.state === "")
+    assert(navigator.state === None)
     Mockito.when(vaadinPage.getUriFragment).thenReturn("MyPage")
-    assert(navigator.state === "")
+    assert(navigator.state === None)
     Mockito.when(vaadinPage.getUriFragment).thenReturn("!MyPage")
-    assert(navigator.state === "MyPage")
+    assert(navigator.state === Some("MyPage"))
   }
 
   test("Navigator.ClassBasedViewProvider") {
