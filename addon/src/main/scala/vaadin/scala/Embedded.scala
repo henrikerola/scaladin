@@ -50,8 +50,8 @@ class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new c
   def alternateText_=(alternateText: String) = p.setAlternateText(alternateText)
   def alternateText_=(alternateText: Option[String]) = p.setAlternateText(alternateText.orNull)
 
-  def source: Option[Resource] = wrapperFor[Resource](p.getSource)
-  def source_=(source: Option[Resource]) = if (source.isDefined) p.setSource(source.get.p) else p.setSource(null)
+  def source: Option[Resource] = wrapperFor(p.getSource)
+  def source_=(source: Option[Resource]) = p.setSource(peerFor(source))
   def source_=(source: Resource) = p.setSource(source.p)
 
   def codebase: Option[String] = Option(p.getCodebase)
