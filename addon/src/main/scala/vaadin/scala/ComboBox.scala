@@ -15,8 +15,8 @@ object ComboBox {
   }
 }
 
-// In Vaadin ComboBox extends Select, here just extend AbstractSelect directly and add methods from Select to ComboBox
-class ComboBox(override val p: com.vaadin.ui.ComboBox with ComboBoxMixin = new com.vaadin.ui.ComboBox with ComboBoxMixin)
+class ComboBox(
+  override val p: com.vaadin.ui.ComboBox with ComboBoxMixin = new com.vaadin.ui.ComboBox with ComboBoxMixin)
     extends AbstractSelect(p) with BlurNotifier with FocusNotifier {
 
   def inputPrompt: Option[String] = Option(p.getInputPrompt)
@@ -26,11 +26,14 @@ class ComboBox(override val p: com.vaadin.ui.ComboBox with ComboBoxMixin = new c
   def textInputAllowed: Boolean = p.isTextInputAllowed
   def textInputAllowed_=(textInputAllowed: Boolean): Unit = p.setTextInputAllowed(textInputAllowed)
 
-  // from Select:
-
   def filteringMode: ComboBox.FilterinMode.Value = ComboBox.FilterinMode(p.getFilteringMode.ordinal)
-  def filteringMode_=(filteringMode: ComboBox.FilterinMode.Value): Unit = p.setFilteringMode(com.vaadin.shared.ui.combobox.FilteringMode.values.apply(filteringMode.id))
+  def filteringMode_=(filteringMode: ComboBox.FilterinMode.Value): Unit =
+    p.setFilteringMode(com.vaadin.shared.ui.combobox.FilteringMode.values.apply(filteringMode.id))
 
   def scrollToSelectedItem: Boolean = p.isScrollToSelectedItem
   def scrollToSelectedItem_=(scrollToSelectedItem: Boolean): Unit = p.setScrollToSelectedItem(scrollToSelectedItem)
+
+  def pageLength: Int = p.getPageLength
+  def pageLength_=(pageLength: Int): Unit = p.setPageLength(pageLength)
+
 }
