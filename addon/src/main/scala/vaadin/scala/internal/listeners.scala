@@ -86,8 +86,12 @@ class PopupVisibilityListener(val action: PopupView.PopupVisibilityEvent => Unit
   def popupVisibilityChange(e: com.vaadin.ui.PopupView.PopupVisibilityEvent) = action(PopupView.PopupVisibilityEvent(wrapperFor[PopupView](e.getPopupView).get, e.isPopupVisible))
 }
 
-class UriFragmentChangedListener(val action: Page.UriFragmentChangedEvent => Unit) extends com.vaadin.server.Page.UriFragmentChangedListener with Listener {
-  def uriFragmentChanged(e: com.vaadin.server.Page.UriFragmentChangedEvent) = action(Page.UriFragmentChangedEvent(wrapperFor[Page](e.getPage).get, Option(e.getUriFragment)))
+class UriFragmentChangedListener(val action: Page.UriFragmentChangedEvent => Unit)
+    extends com.vaadin.server.Page.UriFragmentChangedListener with Listener {
+  def uriFragmentChanged(e: com.vaadin.server.Page.UriFragmentChangedEvent) = {
+    val page = new Page { val p = e.getPage }
+    action(Page.UriFragmentChangedEvent(page, Option(e.getUriFragment)))
+  }
 }
 
 class BrowserWindowResizeListener(val action: Page.BrowserWindowResizeEvent => Unit) extends com.vaadin.server.Page.BrowserWindowResizeListener with Listener {
