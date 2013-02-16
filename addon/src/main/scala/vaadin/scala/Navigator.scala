@@ -89,6 +89,10 @@ object Navigator {
      * This method should only be called by a Navigator.
      * @see com.vaadin.navigator.NavigationStateManager
      */
+    def setNavigator(n: Navigator) {
+      setNavigator(Option(n))
+    }
+
     def setNavigator(n: Option[Navigator])
 
     def state: Option[String]
@@ -126,9 +130,11 @@ object Navigator {
     pViewProvider.wrapper = this
 
     def getViewName(viewAndParameters: String): Option[String] = getViewName(Option(viewAndParameters))
+
     def getViewName(viewAndParameters: Option[String]): Option[String]
 
     def getView(name: String): Option[Navigator.View] = getView(Option(name))
+
     def getView(name: Option[String]): Option[Navigator.View]
 
   }
@@ -222,17 +228,6 @@ object Navigator {
     }
   }
 
-  def apply(ui: UI, container: ComponentContainer): Navigator = {
-    apply(ui, new Navigator.ComponentContainerViewDisplay(container))
-  }
-
-  def apply(ui: UI, container: SingleComponentContainer): Navigator = {
-    apply(ui, new Navigator.SingleComponentContainerViewDisplay(container))
-  }
-
-  def apply(ui: UI, display: Navigator.ViewDisplay): Navigator = {
-    new Navigator(ui, new Navigator.UriFragmentManager(ui.page), display)
-  }
 }
 
 /**
@@ -242,9 +237,21 @@ object Navigator {
 class Navigator(val ui: UI, val stateManager: Navigator.NavigationStateManager, val display: Navigator.ViewDisplay) extends Wrapper {
   navigator =>
 
+  def this(ui: UI, container: ComponentContainer) = {
+    this(ui, new Navigator.UriFragmentManager(ui.page), new Navigator.ComponentContainerViewDisplay(container))
+  }
+
+  def this(ui: UI, container: SingleComponentContainer) = {
+    this(ui, new Navigator.UriFragmentManager(ui.page), new Navigator.SingleComponentContainerViewDisplay(container))
+  }
+
+  def this(ui: UI, viewDisplay: Navigator.ViewDisplay) = {
+    this(ui, new Navigator.UriFragmentManager(ui.page), viewDisplay)
+  }
+
   val p: com.vaadin.navigator.Navigator with NavigatorMixin = new com.vaadin.navigator.Navigator(ui.p, stateManager.pNavigationStateManager, display.pViewDisplay) with NavigatorMixin
   p.wrapper = this
-  stateManager.setNavigator(Option(this))
+  stateManager.pNavigationStateManager.setNavigator(p)
 
   def navigateTo(navigationState: String) {
     navigateTo(Option(navigationState))
@@ -273,16 +280,19 @@ class Navigator(val ui: UI, val stateManager: Navigator.NavigationStateManager, 
   }
 
   private def addViewProvider(viewName: Option[String], provider: Navigator.ViewProvider) {
-    removeView(viewName)
+    viewName.map(removeView)
     addProvider(provider)
   }
 
+  /**
+   * TODO: com.vaadin.navigator.Navigator#removeView supports only Vaadin implementations.
+   * This will not remove any providers added through Scaladin.
+   * removeProvider works as expected.
+   *
+   * @see com.vaadin.navigator.Navigator#removeView
+   */
   def removeView(viewName: String) {
-    removeView(Option(viewName))
-  }
-
-  def removeView(viewName: Option[String]) {
-    viewName.map(n => p.removeView(n))
+    p.removeView(viewName)
   }
 
   def addProvider(provider: Navigator.ViewProvider) {

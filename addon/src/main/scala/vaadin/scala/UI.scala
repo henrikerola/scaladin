@@ -87,7 +87,7 @@ abstract class UI(override val p: WrappedVaadinUI)
     val p = UI.this.p.getPage
   }
 
-  def navigator: Option[Navigator] = wrapperFor[Navigator](p.getNavigator)
+  def navigator: Navigator = wrapperFor[Navigator](p.getNavigator).orNull
 
   // Can be used in init if subclasses override
   protected def navigator_=(n: Navigator) {
@@ -95,7 +95,7 @@ abstract class UI(override val p: WrappedVaadinUI)
   }
 
   protected def navigator_=(n: Option[Navigator]) {
-    p.setNavigator(n.map(_.p).getOrElse(null))
+    p.setNavigator(n.map(_.p).orNull)
   }
 
   def lastHeartbeatTimestamp: Long = p.getLastHeartbeatTimestamp

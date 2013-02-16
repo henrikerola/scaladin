@@ -118,7 +118,7 @@ class UITests extends FunSuite with BeforeAndAfter {
   }
 
   test("navigator") {
-    assert(ui.navigator.isEmpty)
+    assert(ui.navigator == null)
     assert(ui.p.getNavigator == null)
 
     val nui = new UI {
@@ -128,11 +128,11 @@ class UITests extends FunSuite with BeforeAndAfter {
         super.navigator_=(n)
       }
     }
-    nui.setNavigator(Some(Navigator(nui, new VerticalLayout {})))
-    assert(nui.navigator.isDefined)
+    nui.setNavigator(Some(new Navigator(nui, new VerticalLayout {})))
+    assert(nui.navigator != null)
     assert(nui.p.getNavigator != null)
     nui.setNavigator(None)
-    assert(nui.navigator.isEmpty)
+    assert(nui.navigator == null)
     assert(nui.p.getNavigator == null)
   }
 }

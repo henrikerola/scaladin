@@ -11,7 +11,8 @@ object ClassBasedTestView {
   var count = 0
 
   private def inc = {
-    count += 1; count
+    count += 1;
+    count
   }
 }
 
@@ -57,14 +58,18 @@ class NavigatorTests extends ScaladinTestSuite {
       override val p = vaadinPage
     }
     Mockito.when(vaadinPage.getUriFragment).thenReturn("")
-    navigator = Navigator(ui, contentLayout)
-    navigator.addView("", new TestView1)
-    navigator.addView("TestView2", testView2)
+    navigator = new Navigator(ui, contentLayout) {
+      addView("", new TestView1)
+      addView("TestView2", testView2)
+    }
   }
 
   test("Navigator construct") {
 
+    assert(navigator.stateManager != null)
     assert(navigator.stateManager.isInstanceOf[Navigator.UriFragmentManager])
+    assert(navigator.display != null)
+    assert(navigator.display.isInstanceOf[Navigator.ComponentContainerViewDisplay])
 
   }
 
@@ -112,13 +117,34 @@ class NavigatorTests extends ScaladinTestSuite {
     Mockito.verify(vaadinPage).setUriFragment("!TestView", false)
   }
 
-  test("Navigator.ClassBasedViewProvider") {
+  test("Navigator.addView") {
     navigator.addView("ClassBasedTestView", classOf[ClassBasedTestView])
     assert(ClassBasedTestView.count === 0)
     navigator.navigateTo("ClassBasedTestView")
     assert(ClassBasedTestView.count === 1)
     navigator.navigateTo("ClassBasedTestView")
     assert(ClassBasedTestView.count === 2)
+
+  }
+
+  // TODO: change to test once the removeView is fixed (see the implementation for more info)
+  ignore("Navigator.removeView") {
+    navigator.addView("WillBeRemovedView", new TestView2)
+    navigator.navigateTo("WillBeRemovedView")
+    navigator.removeView("WillBeRemovedView")
+    intercept[IllegalArgumentException] {
+      navigator.navigateTo("WillBeRemovedView")
+    }
+  }
+
+  test("Navigator.removeProvider") {
+    val provider = new Navigator.StaticViewProvider(Some("Navigator.removeProvider"), Some(new TestView2))
+    navigator.addProvider(provider)
+    navigator.navigateTo("Navigator.removeProvider")
+    navigator.removeProvider(provider)
+    intercept[IllegalArgumentException] {
+      navigator.navigateTo("Navigator.removeProvider")
+    }
   }
 
   test("Navigator.beforeViewChangeListeners.listeners with ClassBasedViewProvider errorView") {
