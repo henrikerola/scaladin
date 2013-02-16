@@ -90,8 +90,7 @@ trait Component extends Wrapper {
   def icon_=(icon: Option[Resource]): Unit = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
   def icon_=(icon: Resource): Unit = p.setIcon(icon.p)
 
-  // TODO: return UI instead of Option[UI]?
-  def ui = wrapperFor[UI](p.getUI)
+  def ui: UI = wrapperFor[UI](p.getUI).orNull
 
   def locale: Option[Locale] = Option(p.getLocale)
 
