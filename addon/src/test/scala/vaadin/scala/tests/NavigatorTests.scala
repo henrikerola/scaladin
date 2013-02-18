@@ -1,8 +1,8 @@
 package vaadin.scala.tests
 
 import vaadin.scala._
-import com.vaadin.server.{ Page => VaadinPage }
-import internal.{ BeforeViewChangeListener, AfterViewChangeListener }
+import com.vaadin.server.{Page => VaadinPage}
+import internal.{BeforeViewChangeListener, AfterViewChangeListener}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.mockito.Mockito
@@ -11,7 +11,7 @@ object ClassBasedTestView {
   var count = 0
 
   private def inc = {
-    count += 1;
+    count += 1
     count
   }
 }
@@ -127,8 +127,7 @@ class NavigatorTests extends ScaladinTestSuite {
 
   }
 
-  // TODO: change to test once the removeView is fixed (see the implementation for more info)
-  ignore("Navigator.removeView") {
+  test("Navigator.removeView") {
     navigator.addView("WillBeRemovedView", new TestView2)
     navigator.navigateTo("WillBeRemovedView")
     navigator.removeView("WillBeRemovedView")

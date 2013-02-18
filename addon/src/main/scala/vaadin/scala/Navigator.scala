@@ -125,7 +125,16 @@ object Navigator {
     def showView(view: Option[Navigator.View])
   }
 
-  trait ViewProvider extends InterfaceWrapper {
+  /**
+   * Added to Scaladin api to allow removing views from the Navigator by the view name.
+   *
+   * TODO: Remove when com.vaadin.navigator.Navigator allows removal of views other than the Vaadin implementation.
+   */
+  trait IdentifiableViewProvider {
+    def viewName: Option[String]
+  }
+
+  trait ViewProvider extends InterfaceWrapper with IdentifiableViewProvider {
     val pViewProvider = new com.vaadin.navigator.ViewProvider with ViewProviderMixin
     pViewProvider.wrapper = this
 
@@ -253,6 +262,20 @@ class Navigator(val ui: UI, val stateManager: Navigator.NavigationStateManager, 
   p.wrapper = this
   stateManager.pNavigationStateManager.setNavigator(p)
 
+  /**
+   * the Array viewProviders is added to allow removal of other views than those added through com.vaadin.navigator.Navigator#addView
+   *
+   * com.vaadin.navigator.Navigator#removeView removes views by casting to Vaadin implementation, not using the ViewProvider interface.
+   * Until this is fixed, Scaladin has to keep track of the viewProvider added through Scaladin.
+   *
+   * @see com.vaadin.navigator.Navigator#addView
+   * @see com.vaadin.navigator.Navigator#removeView
+   * @see com.vaadin.navigator.ViewProvider
+   * @see com.vaadin.navigator.Navigator.StaticViewProvider
+   * @see com.vaadin.navigator.Navigator.ClassBasedViewProvider
+   */
+  private val viewProviders = mutable.ArrayBuffer.empty[Navigator.ViewProvider]
+
   def navigateTo(navigationState: String) {
     navigateTo(Option(navigationState))
   }
@@ -284,23 +307,20 @@ class Navigator(val ui: UI, val stateManager: Navigator.NavigationStateManager, 
     addProvider(provider)
   }
 
-  /**
-   * TODO: com.vaadin.navigator.Navigator#removeView supports only Vaadin implementations.
-   * This will not remove any providers added through Scaladin.
-   * removeProvider works as expected.
-   *
-   * @see com.vaadin.navigator.Navigator#removeView
-   */
   def removeView(viewName: String) {
+    val providersToRemove = viewProviders.filter(p => p.viewName.map(_.equals(viewName)).getOrElse(false))
     p.removeView(viewName)
+    providersToRemove.map(removeProvider)
   }
 
   def addProvider(provider: Navigator.ViewProvider) {
     p.addProvider(provider.pViewProvider)
+    viewProviders += provider
   }
 
   def removeProvider(provider: Navigator.ViewProvider) {
     p.removeProvider(provider.pViewProvider)
+    viewProviders -= provider
   }
 
   def setErrorView(viewClass: Class[_ <: Navigator.View]) {
@@ -316,6 +336,8 @@ class Navigator(val ui: UI, val stateManager: Navigator.NavigationStateManager, 
           case e: Exception => throw new RuntimeException(e)
         }
       }
+
+      def viewName = Option(viewClass.getSimpleName)
     })
   }
 
