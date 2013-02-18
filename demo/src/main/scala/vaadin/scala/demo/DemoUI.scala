@@ -19,9 +19,10 @@ class DemoUI extends UI(title = "Hello World") {
   }
 
   override def init(request: ScaladinRequest) {
-    val navigator = Navigator(this, contentLayout)
-    navigator.addView(DemoView.VIEW1, new DemoView)
-    navigator.addView(DemoView.VIEW2, classOf[DemoView])
+    val navigator = new Navigator(this, contentLayout) {
+      addView(DemoView.VIEW1, new DemoView)
+      addView(DemoView.VIEW2, classOf[DemoView])
+    }
 
     navigator_=(navigator)
 
