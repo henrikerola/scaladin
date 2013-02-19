@@ -6,7 +6,6 @@ import internal.WrappedVaadinUI
 import org.scalatest.BeforeAndAfter
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.mockito.Mockito
 
 @RunWith(classOf[JUnitRunner])
 class UITests extends FunSuite with BeforeAndAfter {
@@ -116,5 +115,24 @@ class UITests extends FunSuite with BeforeAndAfter {
     assert(!ui.resizeLazy)
     ui.resizeLazy = true
     assert(ui.resizeLazy)
+  }
+
+  test("navigator") {
+    assert(ui.navigator == null)
+    assert(ui.p.getNavigator == null)
+
+    val nui = new UI {
+      override def init(request: ScaladinRequest) {
+      }
+      def setNavigator(n: Option[Navigator]) {
+        super.navigator_=(n)
+      }
+    }
+    nui.setNavigator(Some(new Navigator(nui, new VerticalLayout {})))
+    assert(nui.navigator != null)
+    assert(nui.p.getNavigator != null)
+    nui.setNavigator(None)
+    assert(nui.navigator == null)
+    assert(nui.p.getNavigator == null)
   }
 }
