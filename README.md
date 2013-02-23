@@ -38,7 +38,7 @@ That generates needed Eclipse configuration files into the project.
 
 The following people have contributed code or ideas to Scaladin:
 
- * Matti Heinonen
+ * Matti Heinola
  * Henri Kerola
  * Henri Muurimaa
  * Risto Yrjänä
