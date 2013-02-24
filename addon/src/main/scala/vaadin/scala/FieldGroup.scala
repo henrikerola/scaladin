@@ -17,9 +17,8 @@ object FieldGroup {
   case class PreCommitEvent(fieldBinder: FieldGroup) extends Event
   case class PostCommitEvent(fieldBinder: FieldGroup) extends Event
 
-  case class CommitSuccess()
   case class CommitFailed(error: String)
-  type CommitResult = Either[CommitFailed, CommitSuccess]
+  type CommitResult = Either[CommitFailed, Unit]
 }
 
 class FieldGroup(override val p: com.vaadin.data.fieldgroup.FieldGroup with FieldGroupMixin = new com.vaadin.data.fieldgroup.FieldGroup with FieldGroupMixin) extends Wrapper {
@@ -27,23 +26,24 @@ class FieldGroup(override val p: com.vaadin.data.fieldgroup.FieldGroup with Fiel
   import scala.collection.JavaConverters._
   import scala.util.control.Exception._
   import scala.collection.mutable
-
+  import vaadin.scala.FieldGroup._
+  
   fieldFactory = DefaultFieldGroupFieldFactory
 
-  val preCommitHandlers: mutable.Set[PreCommitEvent => FieldGroup.CommitResult] = new HandlersTrait[PreCommitEvent, PreCommitHandler, FieldGroup.CommitResult] {
+  val preCommitHandlers: mutable.Set[PreCommitEvent => CommitResult] = new HandlersTrait[PreCommitEvent, PreCommitHandler, CommitResult] {
     def addHandler(handler: PreCommitHandler) = p.addCommitHandler(handler)
 
     def removeHandler(handler: PreCommitHandler) = p.removeCommitHandler(handler)
 
-    def createListener(action: PreCommitEvent => Either[FieldGroup.CommitFailed, FieldGroup.CommitSuccess]): PreCommitHandler = new PreCommitHandler(action)
+    def createListener(action: PreCommitEvent => CommitResult): PreCommitHandler = new PreCommitHandler(action)
   }
 
-  val postCommitHandlers: mutable.Set[PostCommitEvent => Either[FieldGroup.CommitFailed, FieldGroup.CommitSuccess]] = new HandlersTrait[PostCommitEvent, PostCommitHandler, FieldGroup.CommitResult] {
+  val postCommitHandlers: mutable.Set[PostCommitEvent => CommitResult] = new HandlersTrait[PostCommitEvent, PostCommitHandler, CommitResult] {
     def addHandler(handler: PostCommitHandler) = p.addCommitHandler(handler)
 
     def removeHandler(handler: PostCommitHandler) = p.removeCommitHandler(handler)
 
-    def createListener(action: PostCommitEvent => Either[FieldGroup.CommitFailed, FieldGroup.CommitSuccess]): PostCommitHandler = new PostCommitHandler(action)
+    def createListener(action: PostCommitEvent => CommitResult): PostCommitHandler = new PostCommitHandler(action)
   }
 
   def this(item: Option[Item]) = this(new com.vaadin.data.fieldgroup.FieldGroup(item map (_.p) orNull) with FieldGroupMixin)
@@ -80,7 +80,7 @@ class FieldGroup(override val p: com.vaadin.data.fieldgroup.FieldGroup with Fiel
 
   def commit: FieldGroup.CommitResult = catching(classOf[com.vaadin.data.fieldgroup.FieldGroup.CommitException]) either (p.commit) fold (
     exception => Left(FieldGroup.CommitFailed(exception.getMessage)),
-    nothing => Right(FieldGroup.CommitSuccess()))
+    nothing => Right())
 
   def discard: Unit = p.discard
 
@@ -96,4 +96,6 @@ class FieldGroup(override val p: com.vaadin.data.fieldgroup.FieldGroup with Fiel
   def fieldFactory_=[FT <: Field[_]](fieldFunction: (Class[_], Class[_]) => Option[FT]): Unit = this.fieldFactory = FieldGroupFieldFactory(fieldFunction)
 
   //TODO build & bind
+  
+  
 }
