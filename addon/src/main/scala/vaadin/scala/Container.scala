@@ -81,7 +81,7 @@ object Container {
             container.addContainerProperty(property._1, property._2.getClass, None)
             containerItem.property(property._1) match {
               case Some(p: Property[_]) => p.value = (property._2)
-              case None =>
+              case _ =>
             }
           }
         }

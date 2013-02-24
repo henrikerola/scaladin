@@ -15,7 +15,7 @@ import vaadin.scala.internal.TableColumnGenerator
 import vaadin.scala.internal.CellStyleGenerator
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.internal.ListenersTrait
-import scala.collection.mutable
+import collection.mutable
 
 package mixins {
   trait TableMixin extends AbstractSelectMixin with ActionContainerMixin with ContainerOrderedMixin with ContainerSortableMixin with HasComponentsMixin { self: com.vaadin.ui.Table => }
@@ -106,7 +106,7 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   def columnWidth(propertyId: Any, width: Int): Unit = p.setColumnWidth(propertyId, width)
 
   def columnIcon(propertyId: Any): Option[Resource] = wrapperFor[Resource](p.getColumnIcon(propertyId))
-  def columnIcon(propertyId: Any, icon: Option[Resource]): Unit = p.setColumnIcon(propertyId, if (icon.isDefined) icon.get.p else null)
+  def columnIcon(propertyId: Any, icon: Option[Resource]): Unit = p.setColumnIcon(propertyId, peerFor(icon))
   def columnIcon(propertyId: Any, icon: Resource): Unit = p.setColumnIcon(propertyId, icon.p)
 
   def columnHeader(propertyId: Any): Option[String] = Option(p.getColumnHeader(propertyId))
@@ -229,8 +229,9 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
     override def removeListener(elem: ColumnReorderListener) = p.removeColumnReorderListener(elem)
   }
 
-  private val columnGeneratorIds = mutable.HashSet.empty[Any]
-  lazy val columnGenerators: mutable.Map[Any, Table.ColumnGenerationEvent => Option[Any]] = new mutable.Map[Any, Table.ColumnGenerationEvent => Option[Any]] {
+  private val columnGeneratorIds: mutable.Set[Any] = mutable.Set.empty[Any]
+  lazy val columnGenerators: mutable.Map[Any, Table.ColumnGenerationEvent => Option[Any]] = new mutable.Map[Any, Table.ColumnGenerationEvent => Option[Any]] with Serializable {
+
     def -=(id: Any): this.type = {
       p.removeGeneratedColumn(id)
       columnGeneratorIds -= id

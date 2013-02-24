@@ -33,9 +33,9 @@ trait Page extends Wrapper { page =>
   def uriFragment_=(fragment: Option[String]): Unit = p.setUriFragment(fragment.orNull)
   def uriFragment_=(fragment: String): Unit = p.setUriFragment(fragment)
 
-  //  def webBrowser: WebBrowser = new WebBrowser {
-  //    val p = page.p.getWebBrowser
-  //  }
+  def webBrowser: WebBrowser = new WebBrowser {
+    val p = page.p.getWebBrowser
+  }
 
   def browserWindowSize: (Int, Int) = (browserWindowWidth, browserWindowHeight)
   def browserWindowSize_=(size: (Int, Int)): Unit = p.updateBrowserWindowSize(size._1, size._2)

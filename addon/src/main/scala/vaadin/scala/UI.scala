@@ -83,11 +83,20 @@ abstract class UI(override val p: WrappedVaadinUI)
 
   // TODO: setScrollTop
 
-  def page = new Page {
+  def page: Page = new Page {
     val p = UI.this.p.getPage
   }
 
-  // TODO: setNavigator
+  def navigator: Navigator = wrapperFor[Navigator](p.getNavigator).orNull
+
+  // Can be used in init if subclasses override
+  protected def navigator_=(n: Navigator) {
+    navigator_=(Option(n))
+  }
+
+  protected def navigator_=(n: Option[Navigator]) {
+    p.setNavigator(n.map(_.p).orNull)
+  }
 
   def lastHeartbeatTimestamp: Long = p.getLastHeartbeatTimestamp
 

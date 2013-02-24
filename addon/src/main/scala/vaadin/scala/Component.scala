@@ -19,6 +19,17 @@ package mixins {
     }
   }
 
+  trait ScaladinInterfaceMixin {
+    private[this] var _wrapper: InterfaceWrapper = _
+    def wrapper: InterfaceWrapper = _wrapper
+    def wrapper_=(wrapper: InterfaceWrapper) = {
+      if (_wrapper != null)
+        throw new RuntimeException("wrapper cannot be reset once set")
+      else
+        _wrapper = wrapper
+    }
+  }
+
   trait TypedScaladinMixin[C <: Wrapper] extends ScaladinMixin {
     override def wrapper: C = super.wrapper.asInstanceOf[C]
   }
@@ -52,7 +63,7 @@ trait Component extends Wrapper {
   def styleName: String = p.getStyleName // TODO: should be Option[String]?
   def styleName_=(styleName: String): Unit = p.setStyleName(styleName)
 
-  val styleNames = new mutable.Set[String] {
+  lazy val styleNames: mutable.Set[String] = new mutable.Set[String] with Serializable {
     def contains(key: String) = p.getStyleName().split(" ").iterator.contains(key)
     def iterator: Iterator[String] = p.getStyleName().split(" ").iterator
     def +=(elem: String) = { elem.split(" ").foreach(p.addStyleName(_)); this }
@@ -79,8 +90,7 @@ trait Component extends Wrapper {
   def icon_=(icon: Option[Resource]): Unit = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
   def icon_=(icon: Resource): Unit = p.setIcon(icon.p)
 
-  // TODO: return UI instead of Option[UI]?
-  def ui = wrapperFor[UI](p.getUI)
+  def ui: UI = wrapperFor[UI](p.getUI).orNull
 
   def locale: Option[Locale] = Option(p.getLocale)
 

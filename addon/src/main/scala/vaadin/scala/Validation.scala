@@ -39,7 +39,8 @@ object Validator {
   }
 }
 
-class Validators(p: com.vaadin.data.Validatable with ValidatableMixin) extends mutable.Set[Validator] {
+class Validators(p: com.vaadin.data.Validatable with ValidatableMixin)
+    extends mutable.Set[Validator] with Serializable {
 
   def contains(key: Validator) = iterator.contains(key)
 
