@@ -40,7 +40,8 @@ object Dependencies {
   val vaadin = "com.vaadin" % "vaadin-server" % vaadinVersion
   val vaadinClientCompiled = "com.vaadin" % "vaadin-client-compiled" % vaadinVersion
   val vaadinThemes = "com.vaadin" % "vaadin-themes" % vaadinVersion
-  val servletApi = "javax.servlet" % "javax.servlet-api" % "3.0.1"
+  val servletApi = "javax.servlet" % "servlet-api" % "2.4"
+  val portletApi = "javax.portlet" % "portlet-api" % "2.0"
   val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
   val scalaTest = "org.scalatest" % "scalatest_2.10.0-RC5" % scalaTestVersion % "test"
   val junitInterface = "com.novocode" % "junit-interface" % "0.7" % "test->default"
@@ -53,7 +54,7 @@ object ScaladinBuild extends Build {
 
   lazy val addonSettings = buildSettings ++ jacoco.settings ++ scalariformSettings ++ Seq(
     name := buildName,
-    libraryDependencies := Seq(scala, scalaActors, vaadin, servletApi, scalaTest, junitInterface, mockito),
+    libraryDependencies := Seq(scala, scalaActors, vaadin, servletApi, portletApi, scalaTest, junitInterface, mockito),
     packageConfiguration in Compile in packageBin ~= { 
       (config: Package.Configuration) => new Package.Configuration(config.sources, config.jar, manifestAttributes) 
     },
