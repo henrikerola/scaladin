@@ -49,6 +49,8 @@ abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with 
   def itemCaptionPropertyId_=(itemCaptionPropertyId: Option[Any]) = p.setItemCaptionPropertyId(itemCaptionPropertyId.orNull)
   def itemCaptionPropertyId_=(itemCaptionPropertyId: Any) = p.setItemCaptionPropertyId(itemCaptionPropertyId)
 
+  def setItemCaption(item: Any, caption: String) = p.setItemCaption(item, caption)
+
   def itemIconPropertyId: Option[Any] = Option(p.getItemIconPropertyId)
   def itemIconPropertyId_=(itemIconPropertyId: Option[Any]) = p.setItemIconPropertyId(itemIconPropertyId.orNull)
   def itemIconPropertyId_=(itemIconPropertyId: Any) = p.setItemIconPropertyId(itemIconPropertyId)
