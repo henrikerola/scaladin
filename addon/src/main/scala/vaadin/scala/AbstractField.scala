@@ -31,8 +31,6 @@ trait Field[T] extends Component with BufferedValidatable with Property[T] with 
   def requiredError: Option[String] = Option(p.getRequiredError)
   def requiredError_=(requiredError: String): Unit = p.setRequiredError(requiredError)
   def requiredError_=(requiredError: Option[String]): Unit = p.setRequiredError(requiredError.orNull)
-
-  def valid: Boolean = p.isValid
 }
 
 abstract class AbstractField[T](override val p: com.vaadin.ui.AbstractField[T] with AbstractFieldMixin[T])

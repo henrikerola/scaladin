@@ -66,6 +66,8 @@ trait Validatable extends Wrapper {
   lazy val validators: Validators = new Validators(p)
 
   def validate: Validation = Validation.wrapToValidation(p.validate)
+
+  def valid: Boolean = p.isValid
 }
 
 class ValidatorDelegator extends com.vaadin.data.Validator with ValidatorMixin {
