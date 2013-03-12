@@ -104,65 +104,65 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   }
 
   test("columnExpandRatio") {
-    assert(table.columnExpandRatio('myPropertyId) === -1)
+    assert(table.getColumnExpandRatio('myPropertyId) === -1)
 
-    table.columnExpandRatio('myPropertyId, 1)
-    assert(table.columnExpandRatio('myPropertyId) === 1)
+    table.setColumnExpandRatio('myPropertyId, 1)
+    assert(table.getColumnExpandRatio('myPropertyId) === 1)
   }
 
   test("columnWidth") {
-    assert(table.columnWidth('myPropertyId) === -1)
+    assert(table.getColumnWidth('myPropertyId) === -1)
 
-    table.columnWidth('myPropertyId, 30)
-    assert(table.columnWidth('myPropertyId) === 30)
+    table.setColumnWidth('myPropertyId, 30)
+    assert(table.getColumnWidth('myPropertyId) === 30)
   }
 
   test("columnIcon") {
-    assert(table.columnIcon('myPropertyId) === None)
+    assert(table.getColumnIcon('myPropertyId) === None)
 
     val icon = new ThemeResource("test.png")
 
-    table.columnIcon('myPropertyId, icon)
-    assert(table.columnIcon('myPropertyId) === Some(icon))
+    table.setColumnIcon('myPropertyId, icon)
+    assert(table.getColumnIcon('myPropertyId) === Some(icon))
 
-    table.columnIcon('myPropertyId, None)
-    assert(table.columnIcon('myPropertyId) === None)
+    table.setColumnIcon('myPropertyId, None)
+    assert(table.getColumnIcon('myPropertyId) === None)
 
-    table.columnIcon('myPropertyId, Some(icon))
-    assert(table.columnIcon('myPropertyId) === Some(icon))
+    table.setColumnIcon('myPropertyId, Some(icon))
+    assert(table.getColumnIcon('myPropertyId) === Some(icon))
   }
 
   test("columnHeader") {
-    assert(table.columnHeader('myPropertyId) === Some("'myPropertyId"))
+    assert(table.getColumnHeader('myPropertyId) === Some("'myPropertyId"))
 
-    table.columnHeader('myPropertyId, "Test")
-    assert(table.columnHeader('myPropertyId) === Some("Test"))
+    table.setColumnHeader('myPropertyId, "Test")
+    assert(table.getColumnHeader('myPropertyId) === Some("Test"))
 
-    table.columnHeader('myPropertyId, None)
-    assert(table.columnHeader('myPropertyId) === Some("'myPropertyId"))
+    table.setColumnHeader('myPropertyId, None)
+    assert(table.getColumnHeader('myPropertyId) === Some("'myPropertyId"))
 
-    table.columnHeader('myPropertyId, Some("Test"))
-    assert(table.columnHeader('myPropertyId) === Some("Test"))
+    table.setColumnHeader('myPropertyId, Some("Test"))
+    assert(table.getColumnHeader('myPropertyId) === Some("Test"))
   }
 
   test("columnFooter") {
-    assert(table.columnFooter('myPropertyId) === None)
+    assert(table.getColumnFooter('myPropertyId) === None)
 
-    table.columnFooter('myPropertyId, "Test")
-    assert(table.columnFooter('myPropertyId) === Some("Test"))
+    table.setColumnFooter('myPropertyId, "Test")
+    assert(table.getColumnFooter('myPropertyId) === Some("Test"))
 
-    table.columnFooter('myPropertyId, None)
-    assert(table.columnFooter('myPropertyId) === None)
+    table.setColumnFooter('myPropertyId, None)
+    assert(table.getColumnFooter('myPropertyId) === None)
 
-    table.columnFooter('myPropertyId, Some("Test"))
-    assert(table.columnFooter('myPropertyId) === Some("Test"))
+    table.setColumnFooter('myPropertyId, Some("Test"))
+    assert(table.getColumnFooter('myPropertyId) === Some("Test"))
   }
 
   test("columnAlignment") {
-    assert(table.columnAlignment('myPropertyId) === Table.ColumnAlignment.Left)
+    assert(table.getColumnAlignment('myPropertyId) === Table.ColumnAlignment.Left)
 
-    table.columnAlignment('myPropertyId, Table.ColumnAlignment.Right)
-    assert(table.columnAlignment('myPropertyId) === Table.ColumnAlignment.Right)
+    table.setColumnAlignment('myPropertyId, Table.ColumnAlignment.Right)
+    assert(table.getColumnAlignment('myPropertyId) === Table.ColumnAlignment.Right)
   }
 
   test("pageLength") {
@@ -203,10 +203,10 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   }
 
   test("columnCollapsible") {
-    assert(table.columnCollapsible("col1"))
+    assert(table.isColumnCollapsible("col1"))
 
-    table.columnCollapsible("col1", false)
-    assert(!table.columnCollapsible("col1"))
+    table.setColumnCollapsible("col1", false)
+    assert(!table.isColumnCollapsible("col1"))
   }
 
   test("columnReorderingAllowed") {
