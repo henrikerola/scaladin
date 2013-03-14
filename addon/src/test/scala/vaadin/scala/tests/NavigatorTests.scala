@@ -1,8 +1,8 @@
 package vaadin.scala.tests
 
 import vaadin.scala._
-import com.vaadin.server.{Page => VaadinPage}
-import internal.{BeforeViewChangeListener, AfterViewChangeListener}
+import com.vaadin.server.{ Page => VaadinPage }
+import internal.{ BeforeViewChangeListener, AfterViewChangeListener }
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.mockito.Mockito
