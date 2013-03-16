@@ -112,7 +112,7 @@ class DefaultFieldGroupFieldFactory extends FieldGroupFieldFactory {
   }
 
   def createDefaultField[T <: Field[_]](dataType: Class[_],
-    fieldType: Class[T]): Option[T] = {
+                                        fieldType: Class[T]): Option[T] = {
     if (fieldType.isAssignableFrom(TextField.getClass))
       createAbstractTextField[TextField](classOf[TextField]) map (fieldType.cast(_))
 
@@ -134,7 +134,7 @@ trait TableFieldFactory extends Wrapper {
 
 trait TableFieldFactoryDelegator extends com.vaadin.ui.TableFieldFactory with TableFieldFactoryMixin {
   def createField(container: com.vaadin.data.Container, itemId: Any, propertyId: Any,
-    uiContext: com.vaadin.ui.Component): com.vaadin.ui.Field[_] = {
+                  uiContext: com.vaadin.ui.Component): com.vaadin.ui.Field[_] = {
     uiContext match {
 
       case mixin: ScaladinMixin if mixin.wrapper.isInstanceOf[Table] => {
