@@ -28,6 +28,21 @@ object BuildSettings {
     ("Vaadin-License-Title" -> "Apache License 2.0")))
 }
 
+
+object Format {
+
+  lazy val settings = scalariformSettings ++ Seq(
+    ScalariformKeys.preferences := formattingPreferences
+  )
+ 
+  lazy val formattingPreferences = {
+    import scalariform.formatter.preferences._
+    FormattingPreferences().
+      setPreference(AlignParameters, true).
+      setPreference(DoubleIndentClassDeclaration, true)
+  }
+}
+
 object Dependencies {
   val vaadinVersion = "7.0-SNAPSHOT"
   val jettyVersion = "7.3.0.v20110203"
@@ -52,7 +67,7 @@ object ScaladinBuild extends Build {
   import Dependencies._
   import BuildSettings._
 
-  lazy val addonSettings = buildSettings ++ jacoco.settings ++ scalariformSettings ++ Seq(
+  lazy val addonSettings = buildSettings ++ jacoco.settings ++ Format.settings ++ Seq(
     name := buildName,
     libraryDependencies := Seq(scala, scalaActors, vaadin, servletApi, portletApi, scalaTest, junitInterface, mockito),
     packageConfiguration in Compile in packageBin ~= { 

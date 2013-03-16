@@ -14,4 +14,4 @@ libraryDependencies ++= Seq(
 
 addSbtPlugin("de.johoop" % "jacoco4sbt" % "1.2.4")
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.0.0")
+addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.0.1")
