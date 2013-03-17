@@ -2,10 +2,6 @@ package vaadin.scala
 
 import vaadin.scala.internal.ItemDescriptionGenerator
 
-// TODO: move traits and classes to correct packages
-
-case class ItemDescriptionEvent(component: Component, itemId: Any, propertyId: Any) extends Event
-
 trait ItemDescriptionGeneratorOwner {
 
   self: {
