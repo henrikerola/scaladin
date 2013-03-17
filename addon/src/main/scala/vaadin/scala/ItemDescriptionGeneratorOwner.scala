@@ -6,7 +6,7 @@ trait ItemDescriptionGeneratorOwner {
 
   self: {
     def p: {
-      def getItemDescriptionGenerator: com.vaadin.ui.AbstractSelect.ItemDescriptionGenerator
+      def getItemDescriptionGenerator(): com.vaadin.ui.AbstractSelect.ItemDescriptionGenerator
       def setItemDescriptionGenerator(generator: com.vaadin.ui.AbstractSelect.ItemDescriptionGenerator)
     }
   } =>
