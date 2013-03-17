@@ -12,9 +12,3 @@ trait ItemClickNotifier { self: { def p: { def getListeners(eventType: Class[_])
     override def removeListener(elem: ItemClickListener) = p.removeListener(elem)
   }
 }
-
-package internal {
-  class ItemClickListener(val action: ItemClickEvent => Unit) extends com.vaadin.event.ItemClickEvent.ItemClickListener with Listener {
-    def itemClick(e: com.vaadin.event.ItemClickEvent): Unit = action(ItemClickEvent(wrapperFor[Table](e.getComponent).get, new BasicItem(e.getItem), e.getItemId, Option(e.getPropertyId), MouseButton(e.getButton.ordinal), e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
-  }
-}
