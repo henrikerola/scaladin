@@ -6,4 +6,5 @@ package mixins {
   trait FormLayoutMixin extends AbstractOrderedLayoutMixin { self: com.vaadin.ui.FormLayout => }
 }
 
-class FormLayout(override val p: com.vaadin.ui.FormLayout with FormLayoutMixin = new com.vaadin.ui.FormLayout with FormLayoutMixin) extends AbstractOrderedLayout(p)
+class FormLayout(override val p: com.vaadin.ui.FormLayout with FormLayoutMixin = new com.vaadin.ui.FormLayout with FormLayoutMixin)
+  extends AbstractOrderedLayout(p)

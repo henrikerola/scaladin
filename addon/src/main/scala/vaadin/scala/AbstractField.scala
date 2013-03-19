@@ -5,7 +5,8 @@ import vaadin.scala.mixins.AbstractFieldMixin
 import vaadin.scala.mixins.FieldMixin
 
 package mixins {
-  trait AbstractFieldMixin[T] extends AbstractComponentMixin with FieldMixin[T] { self: com.vaadin.ui.AbstractField[T] =>
+  trait AbstractFieldMixin[T] extends AbstractComponentMixin with FieldMixin[T] {
+    self: com.vaadin.ui.AbstractField[T] =>
     override def wrapper = super.wrapper.asInstanceOf[AbstractField[T]]
   }
   trait FieldMixin[T] extends ComponentMixin with BufferedValidatableMixin { self: com.vaadin.ui.Field[T] =>

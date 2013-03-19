@@ -11,6 +11,17 @@ package mixins {
 
 object Button {
 
+  case class ClickEvent(
+    button: Button,
+    clientX: Int,
+    clientY: Int,
+    relativeX: Int,
+    relativeY: Int,
+    altKey: Boolean,
+    ctrlKey: Boolean,
+    metaKey: Boolean,
+    shiftKey: Boolean) extends Event
+
   def apply(caption: String): Button = {
     val button = new Button
     button.caption = caption
@@ -30,8 +41,6 @@ object Button {
     button.clickListeners += clickListener
     button
   }
-
-  case class ClickEvent(button: Button, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends Event
 }
 
 class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin)
@@ -40,20 +49,20 @@ class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaa
   private var _clickShortcut: Option[KeyShortcut] = None
 
   def clickShortcut: Option[KeyShortcut] = _clickShortcut
-  def clickShortcut_=(clickShortcut: Option[KeyShortcut]): Unit = {
+  def clickShortcut_=(clickShortcut: Option[KeyShortcut]) {
     _clickShortcut = clickShortcut
     clickShortcut match {
       case None => p.removeClickShortcut
-      case Some(clickShortcut) => p.setClickShortcut(clickShortcut.keyCode.value, clickShortcut.modifiers.map(_.value): _*)
+      case Some(shortcut) => p.setClickShortcut(shortcut.keyCode.value, shortcut.modifiers.map(_.value): _*)
     }
   }
-  def clickShortcut_=(clickShortcut: KeyShortcut): Unit = this.clickShortcut = Option(clickShortcut)
+  def clickShortcut_=(clickShortcut: KeyShortcut) { this.clickShortcut = Option(clickShortcut) }
 
   def disableOnClick: Boolean = p.isDisableOnClick
-  def disableOnClick_=(disableOnClick: Boolean): Unit = p.setDisableOnClick(disableOnClick)
+  def disableOnClick_=(disableOnClick: Boolean) { p.setDisableOnClick(disableOnClick) }
 
   def htmlContentAllowed: Boolean = p.isHtmlContentAllowed
-  def htmlContentAllowed_=(htmlContentAllowed: Boolean): Unit = p.setHtmlContentAllowed(htmlContentAllowed)
+  def htmlContentAllowed_=(htmlContentAllowed: Boolean) { p.setHtmlContentAllowed(htmlContentAllowed) }
 
   lazy val clickListeners = new ListenersTrait[Button.ClickEvent, ButtonClickListener] {
     override def listeners = p.getListeners(classOf[com.vaadin.ui.Button.ClickEvent])
@@ -62,6 +71,7 @@ class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaa
   }
 }
 
-class LinkButton(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin) extends Button(p) {
+class LinkButton(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin)
+    extends Button(p) {
   p.setStyleName(BaseTheme.ButtonLink)
 }
