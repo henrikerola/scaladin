@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.Event
 import scala.collection.mutable
 import scala.collection.JavaConversions._
 

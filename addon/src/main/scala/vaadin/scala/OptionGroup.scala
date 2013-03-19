@@ -1,6 +1,7 @@
 package vaadin.scala
 
 import com.vaadin.ui.{ OptionGroup => VaadinOptionGroup }
+import event.{ FocusNotifier, BlurNotifier }
 import vaadin.scala.mixins.OptionGroupMixin
 
 package mixins {

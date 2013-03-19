@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.ValueChangeNotifier
 import vaadin.scala.converter.Converter
 import scala.xml.Node
 import scala.xml.NodeBuffer

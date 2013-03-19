@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.ClickEvent
 import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.internal.ClickListener
 import vaadin.scala.mixins.EmbeddedMixin

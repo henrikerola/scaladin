@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.ValueChangeNotifier
 import vaadin.scala.converter.Converter
 import vaadin.scala.mixins.AbstractFieldMixin
 import vaadin.scala.mixins.FieldMixin

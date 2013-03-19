@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.AbstractClickEvent
 import vaadin.scala.mixins.AbstractSplitPanelMixin
 import vaadin.scala.mixins.HorizontalSplitPanelMixin
 import vaadin.scala.mixins.VerticalSplitPanelMixin

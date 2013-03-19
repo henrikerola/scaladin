@@ -2,6 +2,7 @@ package vaadin.scala.internal
 
 import com.vaadin.event.ItemClickEvent.{ ItemClickListener => VaadinItemClickListener }
 import vaadin.scala._
+import event.ItemClickEvent
 
 class ItemClickListener(val action: ItemClickEvent => Unit) extends VaadinItemClickListener with Listener {
 

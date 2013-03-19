@@ -4,6 +4,7 @@ import com.vaadin.shared.ui.MultiSelectMode._
 import com.vaadin.ui.Table.ColumnHeaderMode
 import com.vaadin.ui.Table.RowHeaderMode
 import com.vaadin.ui.Table.Align
+import event.{ ItemDescriptionGeneratorOwner, ItemClickNotifier, AbstractClickEvent, Event }
 import vaadin.scala.mixins.TableMixin
 import vaadin.scala.mixins.ContainerOrderedMixin
 import vaadin.scala.mixins.ContainerSortableMixin

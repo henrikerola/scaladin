@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.LayoutClickNotifier
 import vaadin.scala.mixins.AbsoluteLayoutMixin
 import com.vaadin.ui.{ AbsoluteLayout => VaadinAbsoluteLayout }
 import com.vaadin.server.Sizeable.{ Unit => VaadinUnit }

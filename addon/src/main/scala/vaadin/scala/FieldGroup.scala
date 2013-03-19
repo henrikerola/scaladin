@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.Event
 import vaadin.scala.mixins.FieldGroupMixin
 import vaadin.scala.mixins.FieldMixin
 import scala.util.Try

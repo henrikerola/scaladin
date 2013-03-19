@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.Event
 import internal.{ WrapperUtil, ErrorHandler }
 import java.util.Locale
 import java.util.concurrent.locks.Lock

@@ -1,6 +1,7 @@
 package vaadin.scala
 
 import com.vaadin.ui.{ TreeTable => VaadinTreeTable }
+import event.{ CollapseNotifier, ExpandNotifier }
 import vaadin.scala.mixins.TreeTableMixin
 
 package mixins {

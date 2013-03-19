@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.{ FocusNotifier, BlurNotifier, Event }
 import vaadin.scala.mixins.DateFieldMixin
 import internal.WrapperUtil
 

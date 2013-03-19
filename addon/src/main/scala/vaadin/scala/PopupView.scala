@@ -1,6 +1,7 @@
 package vaadin.scala
 
 import com.vaadin.ui.{ PopupView => VaadinPopupView }
+import event.Event
 import vaadin.scala.mixins.PopupViewMixin
 import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.internal.PopupVisibilityListener

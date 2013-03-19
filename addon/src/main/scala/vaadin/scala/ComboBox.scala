@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.{ FocusNotifier, BlurNotifier }
 import vaadin.scala.mixins.ComboBoxMixin
 
 package mixins {

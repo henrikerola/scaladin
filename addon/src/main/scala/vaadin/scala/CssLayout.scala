@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.LayoutClickNotifier
 import scala.collection.mutable.Map
 import com.vaadin.ui.{ Alignment => VaadinAlignment, Component => VaadinComponent }
 import vaadin.scala.mixins.CssLayoutMixin

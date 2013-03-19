@@ -1,6 +1,7 @@
 package vaadin.scala.tests
 
 import vaadin.scala._
+import event.FocusEvent
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner

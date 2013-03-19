@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.Event
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.internal.UriFragmentChangedListener

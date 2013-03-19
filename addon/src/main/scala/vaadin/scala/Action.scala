@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.Event
 import internal.ActionHandler
 import vaadin.scala.mixins.{ ActionContainerMixin, ActionMixin }
 

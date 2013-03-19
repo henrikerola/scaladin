@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.ClickEvent
 import scala.collection.mutable
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.internal.ClickListener

@@ -1,6 +1,6 @@
 package vaadin.scala.event
 
-import vaadin.scala.{MouseButton, Item, Component}
+import vaadin.scala.{ MouseButton, Item, Component }
 
 case class ItemClickEvent(
   component: Component,

@@ -2,12 +2,11 @@ package vaadin.scala.event
 
 import vaadin.scala.{ MouseButton, Component }
 
-case class LayoutClickEvent(
+case class ClickEvent(
   component: Component,
-  clickedComponent: Component,
-  childComponent: Component,
   button: MouseButton.Value,
-  clientX: Int, clientY: Int,
+  clientX: Int,
+  clientY: Int,
   relativeX: Int,
   relativeY: Int,
   doubleClick: Boolean,
@@ -15,8 +14,7 @@ case class LayoutClickEvent(
   ctrlKey: Boolean,
   metaKey: Boolean,
   shiftKey: Boolean)
-    extends AbstractClickEvent(
-      component,
+    extends AbstractClickEvent(component,
       button,
       clientX,
       clientY,

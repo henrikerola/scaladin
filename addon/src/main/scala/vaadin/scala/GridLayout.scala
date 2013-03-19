@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.LayoutClickNotifier
 import vaadin.scala.mixins.GridLayoutMixin
 import vaadin.scala.internal.WrapperUtil
 
