@@ -116,7 +116,7 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(tabSheet.tabs.size === 2)
     tabSheet.removeComponent(label)
 
-    assert(tabSheet.tab(label) === None)
+    assert(tabSheet.getTab(label) === None)
     assert(tabSheet.tabs.size === 1)
   }
 
@@ -137,7 +137,7 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
     tabSheet.removeTab(tab)
     Mockito.verify(spy).removeTab(tab.p)
-    assert(tabSheet.tab(label) === None)
+    assert(tabSheet.getTab(label) === None)
     assert(tabSheet.tabs.size === 1)
   }
 
@@ -211,7 +211,7 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     val labelToBeAdded = new Label
 
     tabSheet.components += label
-    assert(tabSheet.tab(labelToBeAdded) != None)
+    assert(tabSheet.getTab(labelToBeAdded) != None)
   }
 
   test("tabsVisible") {
@@ -221,12 +221,12 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(!tabSheet.tabsVisible)
   }
 
-  test("tab") {
-    assert(tabSheet.tab(0) === Some(tab))
+  test("getTab") {
+    assert(tabSheet.getTab(0) === Some(tab))
   }
 
-  test("tab, illegal position returns None") {
-    assert(tabSheet.tab(2) === None)
+  test("getTab, illegal position returns None") {
+    assert(tabSheet.getTab(2) === None)
   }
 
   test("selectedComponent") {
@@ -259,20 +259,20 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(tabSheet.selectedTab === tab)
   }
 
-  test("tabPosition") {
-    assert(tabSheet.tabPosition(tab) === 0)
-    assert(tabSheet.tabPosition(tab2) === 1)
+  test("setTabPosition") {
+    assert(tabSheet.getTabPosition(tab) === 0)
+    assert(tabSheet.getTabPosition(tab2) === 1)
 
-    tabSheet.tabPosition(tab, 1)
+    tabSheet.setTabPosition(tab, 1)
 
-    assert(tabSheet.tabPosition(tab) === 1)
-    assert(tabSheet.tabPosition(tab2) === 0)
+    assert(tabSheet.getTabPosition(tab) === 1)
+    assert(tabSheet.getTabPosition(tab2) === 0)
   }
 
-  test("tabPosition, position for a Tab from another TabSheet") {
+  test("getTabPosition, position for a Tab from another TabSheet") {
     val tabFromAnotherTabSheet = new TabSheet().addTab(new Label)
 
-    assert(tabSheet.tabPosition(tabFromAnotherTabSheet) === -1)
+    assert(tabSheet.getTabPosition(tabFromAnotherTabSheet) === -1)
   }
 
   test("closeHandler") {
@@ -281,7 +281,6 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     val myCloseHandler = (e: TabSheet.TabCloseEvent) => println(e.tabSheet)
     tabSheet.closeHandler = myCloseHandler
     assert(tabSheet.closeHandler === myCloseHandler)
-
   }
 
   test("Example") {
@@ -292,7 +291,7 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
       }
       val tab1 = addTab(new Label, "Tab 1")
       tab1.closable = true
-      val tab2 = addTab(new Label, "Tab 2", new ThemeResource("../runo/icons/16/globe.png"))
+      val tab2 = addTab(new Label, "Tab 2", ThemeResource("../runo/icons/16/globe.png"))
       tab2.closable = true
 
       selectedTab = tab2
