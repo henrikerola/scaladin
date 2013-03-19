@@ -1,4 +1,4 @@
-package vaadin.scala
+package vaadin.scala.event
 
 import vaadin.scala.internal.ItemDescriptionGenerator
 
