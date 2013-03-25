@@ -17,7 +17,10 @@ object Page {
     val Default = Value(DEFAULT.ordinal)
   }
 
-  def current: Page = WrapperUtil.wrapperFor[Page](com.vaadin.server.Page.getCurrent).get
+  def current: Page = Option(com.vaadin.server.Page.getCurrent) match {
+    case Some(page) => new Page { val p = page }
+    case None => null
+  }
 
   case class BrowserWindowResizeEvent(page: Page, width: Int, height: Int) extends Event
   case class UriFragmentChangedEvent(page: Page, fragment: Option[String]) extends Event

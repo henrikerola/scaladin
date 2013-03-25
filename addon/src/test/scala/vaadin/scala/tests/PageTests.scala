@@ -1,7 +1,7 @@
 package vaadin.scala.tests
 
 import vaadin.scala._
-import com.vaadin.server.{ Page => VaadinPage }
+import com.vaadin.server.{ Page => VaadinPage, VaadinRequest }
 import org.mockito.Mockito
 
 class PageTests extends ScaladinTestSuite {
@@ -14,6 +14,17 @@ class PageTests extends ScaladinTestSuite {
     page = new Page {
       override val p = vaadinPage
     }
+  }
+
+  test("Page.current") {
+    assert(Page.current === null)
+
+    val myUI = new com.vaadin.ui.UI() {
+      def init(request: VaadinRequest) {}
+    }
+    com.vaadin.ui.UI.setCurrent(myUI)
+
+    assert(Page.current.p === myUI.getPage)
   }
 
   test("setUriFragment") {
