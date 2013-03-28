@@ -1,12 +1,13 @@
 package vaadin.scala
 
 import event.Event
-import internal.{ WrapperUtil, ErrorHandler }
+import internal._
 import java.util.Locale
 import java.util.concurrent.locks.Lock
 import collection.JavaConverters._
 import collection.mutable
 import vaadin.scala.mixins.VaadinSessionMixin
+import org.jsoup.nodes.{ Document, Node }
 
 package mixins {
   trait VaadinSessionMixin extends ScaladinMixin
@@ -18,6 +19,9 @@ object ScaladinSession {
   def current_=(session: ScaladinSession): Unit = com.vaadin.server.VaadinSession.setCurrent(session.p)
 
   case class ErrorEvent(throwable: Throwable) extends Event
+
+  case class BootstrapFragmentResponse(nodes: mutable.Buffer[Node]) extends Event
+  case class BootstrapPageResponse(document: Document) extends Event
 
   val DefaultErrorHandler: (ScaladinSession.ErrorEvent => Unit) = e =>
     com.vaadin.server.DefaultErrorHandler.doDefault(new com.vaadin.server.ErrorEvent(e.throwable))
@@ -87,5 +91,20 @@ class ScaladinSession(val p: com.vaadin.server.VaadinSession with VaadinSessionM
   def close(): Unit = p.close()
 
   def isClosing: Boolean = p.isClosing
+
+  lazy val bootstrapFragmentListeners =
+    new ListenersTrait[ScaladinSession.BootstrapFragmentResponse, BootstrapFragmentListener] {
+      override def listeners = null // FIXME
+      override def addListener(elem: ScaladinSession.BootstrapFragmentResponse => Unit) =
+        p.addBootstrapListener(new BootstrapFragmentListener(elem))
+      override def removeListener(elem: BootstrapFragmentListener) = p.removeBootstrapListener(elem)
+    }
+
+  lazy val bootstrapPageListeners = new ListenersTrait[ScaladinSession.BootstrapPageResponse, BootstrapPageListener] {
+    override def listeners = null // FIXME
+    override def addListener(elem: ScaladinSession.BootstrapPageResponse => Unit) =
+      p.addBootstrapListener(new BootstrapPageListener(elem))
+    override def removeListener(elem: BootstrapPageListener) = p.removeBootstrapListener(elem)
+  }
 
 }
