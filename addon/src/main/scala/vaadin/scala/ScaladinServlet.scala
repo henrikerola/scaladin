@@ -2,7 +2,7 @@ package vaadin.scala
 
 import com.vaadin.server.{ VaadinServlet, SessionInitListener, SessionInitEvent }
 import javax.servlet.ServletConfig
-import vaadin.scala.internal.ScaladinUIProvider
+import internal.{ WrapperUtil, ScaladinUIProvider }
 import vaadin.scala.mixins.ScaladinServletServiceMixin
 
 class ScaladinServlet extends VaadinServlet {
@@ -13,13 +13,13 @@ class ScaladinServlet extends VaadinServlet {
   }
 
   private def registerUIProvider() {
-    getService.addSessionInitListener(new SessionInitListener {
-      def sessionInit(e: SessionInitEvent) {
-        e.getSession.addUIProvider(new ScaladinUIProvider)
-      }
-    })
+    service.sessionInitListeners += {
+      _.session.p.addUIProvider(new ScaladinUIProvider) // FIXME .p.
+    }
   }
 
   override def createServletService(c: com.vaadin.server.DeploymentConfiguration) =
     new ScaladinServletService(new com.vaadin.server.VaadinServletService(this, c) with ScaladinServletServiceMixin).p
+
+  def service: ScaladinServletService = WrapperUtil.wrapperFor(getService).get
 }

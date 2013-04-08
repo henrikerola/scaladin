@@ -2,17 +2,22 @@ package vaadin.scala.tests
 
 import vaadin.scala.ScaladinSession
 import vaadin.scala.mixins.VaadinSessionMixin
-import com.vaadin.server.BootstrapFragmentResponse
+import com.vaadin.server.{ BootstrapPageResponse, BootstrapFragmentResponse }
 import org.mockito.Mockito
 import org.jsoup.nodes.Element
 import org.jsoup.parser.Tag
 
 class ScaladinSessionTests extends ScaladinTestSuite {
 
-  test("bootstrapFragmentListeners: modifying nodes should modify original Java List") {
-    val vaadinSession = new com.vaadin.server.VaadinSession(null) with VaadinSessionMixin
-    val session = new ScaladinSession(vaadinSession)
+  var vaadinSession: com.vaadin.server.VaadinSession with VaadinSessionMixin = _
+  var session: ScaladinSession = _
 
+  before {
+    vaadinSession = new com.vaadin.server.VaadinSession(null) with VaadinSessionMixin
+    session = new ScaladinSession(vaadinSession)
+  }
+
+  test("bootstrapFragmentListeners: modifying nodes should modify original Java List") {
     val mockedResponse = mock[BootstrapFragmentResponse]
     val list = mock[java.util.List[org.jsoup.nodes.Node]]
 
@@ -26,6 +31,18 @@ class ScaladinSessionTests extends ScaladinTestSuite {
     vaadinSession.modifyBootstrapResponse(mockedResponse)
 
     Mockito.verify(list).add(element)
+  }
+
+  test("bootstrapPageListeners: adding headers") {
+    val mockedResponse = mock[BootstrapPageResponse]
+
+    session.bootstrapPageListeners += { e =>
+      e.headers += "key" -> "value"
+    }
+
+    vaadinSession.modifyBootstrapResponse(mockedResponse)
+
+    Mockito.verify(mockedResponse).setHeader("key", "value")
   }
 
 }

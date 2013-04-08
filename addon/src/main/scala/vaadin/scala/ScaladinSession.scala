@@ -8,6 +8,8 @@ import collection.JavaConverters._
 import collection.mutable
 import vaadin.scala.mixins.VaadinSessionMixin
 import org.jsoup.nodes.{ Document, Node }
+import vaadin.scala.ScaladinRequest
+import com.vaadin.server.UIProvider
 
 package mixins {
   trait VaadinSessionMixin extends ScaladinMixin
@@ -20,8 +22,11 @@ object ScaladinSession {
 
   case class ErrorEvent(throwable: Throwable) extends Event
 
-  case class BootstrapFragmentResponse(nodes: mutable.Buffer[Node]) extends Event
-  case class BootstrapPageResponse(document: Document) extends Event
+  sealed class BootstrapResponse(request: ScaladinRequest, session: ScaladinSession, uiClass: Class[_ <: UI], uiProvider: UIProvider) extends Event
+  case class BootstrapFragmentResponse(request: ScaladinRequest, session: ScaladinSession, uiClass: Class[_ <: UI], uiProvider: UIProvider, nodes: mutable.Buffer[Node])
+    extends BootstrapResponse(request, session, uiClass, uiProvider)
+  case class BootstrapPageResponse(request: ScaladinRequest, session: ScaladinSession, uiClass: Class[_ <: UI], uiProvider: UIProvider, document: Document, headers: mutable.Map[String, String])
+    extends BootstrapResponse(request, session, uiClass, uiProvider)
 
   val DefaultErrorHandler: (ScaladinSession.ErrorEvent => Unit) = e =>
     com.vaadin.server.DefaultErrorHandler.doDefault(new com.vaadin.server.ErrorEvent(e.throwable))
