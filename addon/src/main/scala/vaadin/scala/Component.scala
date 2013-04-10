@@ -68,7 +68,7 @@ trait Component extends Wrapper {
   def caption_=(caption: Option[String]) { p.setCaption(caption.orNull) }
   def caption_=(caption: String) { p.setCaption(caption) }
 
-  def icon: Option[Resource] = wrapperFor[Resource](p.getIcon)
+  def icon: Option[Resource] = wrapperFor(p.getIcon)
   def icon_=(icon: Option[Resource]) { p.setIcon(peerFor(icon)) }
   def icon_=(icon: Resource) { p.setIcon(icon.p) }
 

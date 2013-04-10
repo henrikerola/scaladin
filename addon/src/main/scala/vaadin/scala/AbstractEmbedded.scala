@@ -16,11 +16,11 @@ class AbstractEmbedded(override val p: com.vaadin.ui.AbstractEmbedded with Abstr
     extends AbstractComponent(p) {
 
   def source: Option[Resource] = wrapperFor(p.getSource)
-  def source_=(source: Option[Resource]) = p.setSource(peerFor(source))
-  def source_=(source: Resource) = p.setSource(source.p)
+  def source_=(source: Option[Resource]) { p.setSource(peerFor(source)) }
+  def source_=(source: Resource) { p.setSource(source.p) }
 
   def alternateText: Option[String] = Option(p.getAlternateText)
-  def alternateText_=(alternateText: String) = p.setAlternateText(alternateText)
-  def alternateText_=(alternateText: Option[String]) = p.setAlternateText(alternateText.orNull)
+  def alternateText_=(alternateText: String) { p.setAlternateText(alternateText) }
+  def alternateText_=(alternateText: Option[String]) { p.setAlternateText(alternateText.orNull) }
 
 }
