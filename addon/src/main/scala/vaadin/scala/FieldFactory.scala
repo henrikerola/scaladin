@@ -163,16 +163,17 @@ object DefaultFieldFactory extends TableFieldFactory {
   val Date = classOf[Date]
   val Bool = classOf[Boolean]
 
-  def createField(ingredients: TableFieldIngredients): Option[Field[_]] = ingredients.container.property(ingredients.itemId, ingredients.propertyId) match {
-    case Some(property) => {
-      val propertyType: Class[_] = property.getType
-      val field: Field[_] = createFieldByPropertyType(propertyType)
-      field.caption = createCaptionByPropertyId(ingredients.propertyId)
-      Option(field)
-    }
+  def createField(ingredients: TableFieldIngredients): Option[Field[_]] =
+    ingredients.container.getProperty(ingredients.itemId, ingredients.propertyId) match {
+      case Some(property) => {
+        val propertyType: Class[_] = property.getType
+        val field: Field[_] = createFieldByPropertyType(propertyType)
+        field.caption = createCaptionByPropertyId(ingredients.propertyId)
+        Option(field)
+      }
 
-    case None => None
-  }
+      case None => None
+    }
 
   def createFieldByPropertyType(propertyType: Class[_]): Field[_] = propertyType match {
     case null => null

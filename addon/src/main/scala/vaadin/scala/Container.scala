@@ -45,7 +45,7 @@ trait Container extends Wrapper {
 
   def size: Int = p.size()
 
-  def property(itemId: Any, propertyId: Any): Option[Property[_]] = optionalWrapProperty(p.getContainerProperty(itemId, propertyId))
+  def getProperty(itemId: Any, propertyId: Any): Option[Property[_]] = optionalWrapProperty(p.getContainerProperty(itemId, propertyId))
 
   def propertyIds(): Iterable[Any] = p.getContainerPropertyIds().asScala
 

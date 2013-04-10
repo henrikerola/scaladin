@@ -107,7 +107,7 @@ class DefaultNewItemHandler(select: AbstractSelect) extends NewItemHandler {
       // Sets the caption property, if used
       if (select.itemCaptionPropertyId.isDefined) {
         //try {
-        select.property(newItemCaption, select.itemCaptionPropertyId.get).get.value = newItemCaption
+        select.getProperty(newItemCaption, select.itemCaptionPropertyId.get).get.value = newItemCaption
         //} catch {
         // TODO
         //case ignored: com.vaadin.data.Property.ConversionException =>
