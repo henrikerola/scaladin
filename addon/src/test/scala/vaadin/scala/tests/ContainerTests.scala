@@ -114,14 +114,14 @@ trait ContainerTestHierarchical extends ContainerTestBase {
     val child = container.addItem
 
     container.setParent(child -> parent)
-    assert(container.children(parent).size === 1)
-    assert(container.children(parent).head === child)
+    assert(container.getChildren(parent).size === 1)
+    assert(container.getChildren(parent).head === child)
 
     assert(container.hasChildren(parent))
     assert(container.isRoot(parent))
 
     container.setParent(child -> null)
-    assert(container.children(parent).isEmpty)
+    assert(container.getChildren(parent).isEmpty)
   }
 
   test("childrenAllowed") {

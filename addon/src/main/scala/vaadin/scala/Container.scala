@@ -100,7 +100,7 @@ object Container {
 
     import scala.collection.JavaConverters._
 
-    def children(itemId: Any): Iterable[Any] = p.getChildren(itemId) match {
+    def getChildren(itemId: Any): Iterable[Any] = p.getChildren(itemId) match {
       case null => List.empty
       case result => result.asScala
     }
