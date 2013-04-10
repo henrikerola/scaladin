@@ -103,7 +103,7 @@ object Container {
       case result => result.asScala
     }
 
-    def parent(itemId: Any): Any = p.getParent(itemId)
+    def getParent(itemId: Any): Any = p.getParent(itemId)
     def setParent(itemToParent: (Any, Any)): Unit = p.setParent(itemToParent._1, itemToParent._2)
 
     def rootItemIds: Iterable[Any] = p.rootItemIds.asScala
