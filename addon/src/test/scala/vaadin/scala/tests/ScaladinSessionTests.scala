@@ -20,7 +20,7 @@ class ScaladinSessionTests extends ScaladinTestSuite {
   test("bootstrapFragmentListeners: modifying nodes should modify original Java List") {
     val mockedResponse = mock[BootstrapFragmentResponse]
     val list = mock[java.util.List[org.jsoup.nodes.Node]]
-
+    Mockito.when(mockedResponse.getSession).thenReturn(vaadinSession)
     Mockito.when(mockedResponse.getFragmentNodes).thenReturn(list)
 
     val element = new Element(Tag.valueOf("div"), "")
@@ -35,6 +35,7 @@ class ScaladinSessionTests extends ScaladinTestSuite {
 
   test("bootstrapPageListeners: adding headers") {
     val mockedResponse = mock[BootstrapPageResponse]
+    Mockito.when(mockedResponse.getSession).thenReturn(vaadinSession)
 
     session.bootstrapPageListeners += { e =>
       e.headers += "key" -> "value"

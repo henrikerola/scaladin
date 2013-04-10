@@ -8,7 +8,6 @@ import collection.JavaConverters._
 import collection.mutable
 import vaadin.scala.mixins.VaadinSessionMixin
 import org.jsoup.nodes.{ Document, Node }
-import vaadin.scala.ScaladinRequest
 import com.vaadin.server.UIProvider
 
 package mixins {
