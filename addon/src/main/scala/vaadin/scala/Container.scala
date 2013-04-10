@@ -24,7 +24,7 @@ trait Container extends Wrapper {
 
   def p: com.vaadin.data.Container with ContainerMixin
 
-  def item(id: Any): Option[Item] = optionalWrapItem(p.getItem(id))
+  def getItem(id: Any): Option[Item] = optionalWrapItem(p.getItem(id))
 
   def itemIds: Iterable[Any] = p.getItemIds.asScala
 

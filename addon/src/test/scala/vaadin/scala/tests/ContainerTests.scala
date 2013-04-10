@@ -14,7 +14,7 @@ class ContainerTests extends FunSuite {
     val result = Container('itemId -> List('propertyId -> "foobar"))
 
     assert(1 === result.size)
-    val item = result.item('itemId).get
+    val item = result.getItem('itemId).get
     assert(1 === item.propertyIds.size)
     val property = item.property('propertyId).get
     assert(classOf[String] === property.getType)
@@ -24,7 +24,7 @@ class ContainerTests extends FunSuite {
   test("container creation with one item") {
     val result = Container('itemId -> List())
     assert(1 === result.size)
-    val item = result.item('itemId).get
+    val item = result.getItem('itemId).get
     assert(0 === item.propertyIds.size)
   }
 }
@@ -42,7 +42,7 @@ trait ContainerTestAddItem extends ContainerTestBase {
 
     val item1Id = addItem()
     assert(None != item1Id)
-    assert(None != container.item(item1Id.get))
+    assert(None != container.getItem(item1Id.get))
 
   }
 }
