@@ -108,8 +108,9 @@ object Container {
 
     def rootItemIds: Iterable[Any] = p.rootItemIds.asScala
 
-    def childrenAllowed(itemId: Any): Boolean = p.areChildrenAllowed(itemId)
-    def setChildrenAllowed(childrenAllowedForItem: (Any, Boolean)): Unit = p.setChildrenAllowed(childrenAllowedForItem._1, childrenAllowedForItem._2)
+    def isChildrenAllowed(itemId: Any): Boolean = p.areChildrenAllowed(itemId)
+    def setChildrenAllowed(childrenAllowedForItem: (Any, Boolean)): Unit =
+      p.setChildrenAllowed(childrenAllowedForItem._1, childrenAllowedForItem._2)
 
     def isRoot(itemId: Any): Boolean = p.isRoot(itemId)
 
