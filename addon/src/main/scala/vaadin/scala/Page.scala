@@ -1,6 +1,6 @@
 package vaadin.scala
 
-import event.Event
+import vaadin.scala.event.{ ClickEvent, Event }
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.internal.UriFragmentChangedListener
@@ -70,7 +70,7 @@ trait Page extends Wrapper { page =>
 
   def setTitle(title: String) { p.setTitle(title) }
 
-  lazy val uriFragmentChangedListeners =
+  lazy val uriFragmentChangedListeners: ListenersSet[Page.UriFragmentChangedEvent => Unit] =
     new ListenersTrait[Page.UriFragmentChangedEvent, UriFragmentChangedListener] {
       override def listeners = null // TODO
       override def addListener(elem: Page.UriFragmentChangedEvent => Unit) =
@@ -78,7 +78,7 @@ trait Page extends Wrapper { page =>
       override def removeListener(elem: UriFragmentChangedListener) = p.removeUriFragmentChangedListener(elem)
     }
 
-  lazy val browserWindowResizeListeners =
+  lazy val browserWindowResizeListeners: ListenersSet[Page.BrowserWindowResizeEvent => Unit] =
     new ListenersTrait[Page.BrowserWindowResizeEvent, BrowserWindowResizeListener] {
       override def listeners = null // TODO
       override def addListener(elem: Page.BrowserWindowResizeEvent => Unit) =

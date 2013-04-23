@@ -26,12 +26,13 @@ trait ScaladinService extends Wrapper {
 
   val p: com.vaadin.server.VaadinService
 
-  lazy val sessionInitListeners = new ListenersTrait[ScaladinService.SessionInitEvent, SessionInitListener] {
-    override def listeners = null // TODO
-    override def addListener(elem: ScaladinService.SessionInitEvent => Unit) =
-      p.addSessionInitListener(new SessionInitListener(elem))
-    override def removeListener(elem: SessionInitListener) = p.removeSessionInitListener(elem)
-  }
+  lazy val sessionInitListeners: ListenersSet[ScaladinService.SessionInitEvent => Unit] =
+    new ListenersTrait[ScaladinService.SessionInitEvent, SessionInitListener] {
+      override def listeners = null // TODO
+      override def addListener(elem: ScaladinService.SessionInitEvent => Unit) =
+        p.addSessionInitListener(new SessionInitListener(elem))
+      override def removeListener(elem: SessionInitListener) = p.removeSessionInitListener(elem)
+    }
 
 }
 

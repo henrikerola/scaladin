@@ -109,10 +109,11 @@ class TabSheet(override val p: VaadinTabSheet with TabSheetMixin = new VaadinTab
     p.setCloseHandler(new TabCloseHandler(handler))
   }
 
-  lazy val selectedTabChangeListeners = new ListenersTrait[TabSheet.SelectedTabChangeEvent, SelectedTabChangeListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.TabSheet.SelectedTabChangeEvent])
-    override def addListener(elem: TabSheet.SelectedTabChangeEvent => Unit) =
-      p.addSelectedTabChangeListener(new SelectedTabChangeListener(elem))
-    override def removeListener(elem: SelectedTabChangeListener) = p.removeSelectedTabChangeListener(elem)
-  }
+  lazy val selectedTabChangeListeners: ListenersSet[TabSheet.SelectedTabChangeEvent => Unit] =
+    new ListenersTrait[TabSheet.SelectedTabChangeEvent, SelectedTabChangeListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.TabSheet.SelectedTabChangeEvent])
+      override def addListener(elem: TabSheet.SelectedTabChangeEvent => Unit) =
+        p.addSelectedTabChangeListener(new SelectedTabChangeListener(elem))
+      override def removeListener(elem: SelectedTabChangeListener) = p.removeSelectedTabChangeListener(elem)
+    }
 }

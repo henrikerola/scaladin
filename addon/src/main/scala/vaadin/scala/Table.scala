@@ -239,37 +239,41 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
    *  def propertyValueFormatter_=(propertyValueFormatter: Table.FormatPropertyEvent => Option[String]): Unit =
    *  this.propertyValueFormatter = Some(propertyValueFormatter)
    */
-  lazy val headerClickListeners = new ListenersTrait[Table.HeaderClickEvent, HeaderClickListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.HeaderClickListener])
-    override def addListener(elem: Table.HeaderClickEvent => Unit) {
-      p.addHeaderClickListener(new HeaderClickListener(elem))
+  lazy val headerClickListeners: ListenersSet[Table.HeaderClickEvent => Unit] =
+    new ListenersTrait[Table.HeaderClickEvent, HeaderClickListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.HeaderClickListener])
+      override def addListener(elem: Table.HeaderClickEvent => Unit) {
+        p.addHeaderClickListener(new HeaderClickListener(elem))
+      }
+      override def removeListener(elem: HeaderClickListener) { p.removeHeaderClickListener(elem) }
     }
-    override def removeListener(elem: HeaderClickListener) { p.removeHeaderClickListener(elem) }
-  }
 
-  lazy val footerClickListeners = new ListenersTrait[Table.FooterClickEvent, FooterClickListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.FooterClickListener])
-    override def addListener(elem: Table.FooterClickEvent => Unit) {
-      p.addFooterClickListener(new FooterClickListener(elem))
+  lazy val footerClickListeners: ListenersSet[Table.FooterClickEvent => Unit] =
+    new ListenersTrait[Table.FooterClickEvent, FooterClickListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.FooterClickListener])
+      override def addListener(elem: Table.FooterClickEvent => Unit) {
+        p.addFooterClickListener(new FooterClickListener(elem))
+      }
+      override def removeListener(elem: FooterClickListener) { p.removeFooterClickListener(elem) }
     }
-    override def removeListener(elem: FooterClickListener) { p.removeFooterClickListener(elem) }
-  }
 
-  lazy val columnResizeListeners = new ListenersTrait[Table.ColumnResizeEvent, ColumnResizeListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.ColumnReorderListener])
-    override def addListener(elem: Table.ColumnResizeEvent => Unit) {
-      p.addColumnResizeListener(new ColumnResizeListener(elem))
+  lazy val columnResizeListeners: ListenersSet[Table.ColumnResizeEvent => Unit] =
+    new ListenersTrait[Table.ColumnResizeEvent, ColumnResizeListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.ColumnReorderListener])
+      override def addListener(elem: Table.ColumnResizeEvent => Unit) {
+        p.addColumnResizeListener(new ColumnResizeListener(elem))
+      }
+      override def removeListener(elem: ColumnResizeListener) { p.removeColumnResizeListener(elem) }
     }
-    override def removeListener(elem: ColumnResizeListener) { p.removeColumnResizeListener(elem) }
-  }
 
-  lazy val columnReorderListeners = new ListenersTrait[Table.ColumnReorderEvent, ColumnReorderListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.ColumnReorderListener])
-    override def addListener(elem: Table.ColumnReorderEvent => Unit) {
-      p.addColumnReorderListener(new ColumnReorderListener(elem))
+  lazy val columnReorderListeners: ListenersSet[Table.ColumnReorderEvent => Unit] =
+    new ListenersTrait[Table.ColumnReorderEvent, ColumnReorderListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.ColumnReorderListener])
+      override def addListener(elem: Table.ColumnReorderEvent => Unit) {
+        p.addColumnReorderListener(new ColumnReorderListener(elem))
+      }
+      override def removeListener(elem: ColumnReorderListener) { p.removeColumnReorderListener(elem) }
     }
-    override def removeListener(elem: ColumnReorderListener) { p.removeColumnReorderListener(elem) }
-  }
 
   private val columnGeneratorIds: mutable.Set[Any] = mutable.Set.empty[Any]
   lazy val columnGenerators: mutable.Map[Any, Table.ColumnGenerationEvent => Option[Any]] =

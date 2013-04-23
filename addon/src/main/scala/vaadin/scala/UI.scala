@@ -1,6 +1,6 @@
 package vaadin.scala
 
-import event.ClickEvent
+import vaadin.scala.event.{ ClickNotifier, ClickEvent }
 import scala.collection.mutable
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.internal.ClickListener
@@ -18,7 +18,7 @@ object UI {
  * @author Henri Kerola / Vaadin
  */
 abstract class UI(override val p: WrappedVaadinUI)
-    extends AbstractSingleComponentContainer(p) with DelayedInit {
+    extends AbstractSingleComponentContainer(p) with DelayedInit with ClickNotifier {
 
   private[this] var initCode: Option[() => Unit] = None
 
@@ -58,7 +58,7 @@ abstract class UI(override val p: WrappedVaadinUI)
 
   def uiId: Int = p.getUIId
 
-  def windows: mutable.Set[Window] = new mutable.Set[Window] {
+  lazy val windows: mutable.Set[Window] = new mutable.Set[Window] {
     import scala.collection.JavaConversions.asScalaIterator
 
     def contains(key: Window) = {
@@ -75,12 +75,6 @@ abstract class UI(override val p: WrappedVaadinUI)
 
   def resizeLazy: Boolean = p.isResizeLazy
   def resizeLazy_=(resizeLazy: Boolean): Unit = p.setResizeLazy(resizeLazy)
-  // TODO: the same clickListeners can be found from Panel and Embedded, use a trait instead of copy-pasting?
-  lazy val clickListeners = new ListenersTrait[ClickEvent, ClickListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.event.MouseEvents.ClickListener])
-    override def addListener(elem: ClickEvent => Unit) = p.addClickListener(new ClickListener(elem))
-    override def removeListener(elem: ClickListener) = p.removeClickListener(elem)
-  }
 
   // TODO: setScrollTop
 

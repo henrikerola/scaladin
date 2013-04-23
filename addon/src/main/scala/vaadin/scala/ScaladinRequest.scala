@@ -6,7 +6,7 @@ import java.util.Date
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 
-trait ScaladinRequest { scaladinRequest =>
+trait ScaladinRequest extends Serializable { scaladinRequest =>
 
   val p: com.vaadin.server.VaadinRequest
 

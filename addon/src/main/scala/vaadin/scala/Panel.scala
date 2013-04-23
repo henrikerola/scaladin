@@ -1,6 +1,6 @@
 package vaadin.scala
 
-import event.ClickEvent
+import vaadin.scala.event.{ ClickNotifier, ClickEvent }
 import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.internal.ClickListener
 import vaadin.scala.mixins.PanelMixin
@@ -10,7 +10,7 @@ package mixins {
 }
 
 class Panel(override val p: com.vaadin.ui.Panel with PanelMixin = new com.vaadin.ui.Panel with PanelMixin)
-    extends AbstractSingleComponentContainer(p) with Focusable {
+    extends AbstractSingleComponentContainer(p) with Focusable with ClickNotifier {
 
   // Vaadin Panel sets a default content (VerticalLayout) for Panel but 
   // we must to reset a default content because Panel with PanelMixin is used.
@@ -23,12 +23,6 @@ class Panel(override val p: com.vaadin.ui.Panel with PanelMixin = new com.vaadin
 
   def scrollTop: Int = p.getScrollTop
   def scrollTop_=(scrollTop: Int) { p.setScrollTop(scrollTop) }
-
-  lazy val clickListeners = new ListenersTrait[ClickEvent, ClickListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.event.MouseEvents.ClickListener])
-    override def addListener(elem: ClickEvent => Unit) = p.addClickListener(new ClickListener(elem))
-    override def removeListener(elem: ClickListener) = p.removeClickListener(elem)
-  }
 
   // TODO: actions
 }

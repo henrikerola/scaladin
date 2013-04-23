@@ -59,37 +59,42 @@ class Upload(override val p: com.vaadin.ui.Upload with UploadMixin = new com.vaa
 
   def submitUpload() { p.submitUpload() }
 
-  lazy val progressListeners = new ListenersTrait[Upload.ProgressEvent, UploadProgressListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.server.StreamVariable.StreamingProgressEvent])
-    override def addListener(elem: Upload.ProgressEvent => Unit) =
-      p.addProgressListener(new UploadProgressListener(elem))
-    override def removeListener(elem: UploadProgressListener) = p.removeProgressListener(elem)
-  }
+  lazy val progressListeners: ListenersSet[Upload.ProgressEvent => Unit] =
+    new ListenersTrait[Upload.ProgressEvent, UploadProgressListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.server.StreamVariable.StreamingProgressEvent])
+      override def addListener(elem: Upload.ProgressEvent => Unit) =
+        p.addProgressListener(new UploadProgressListener(elem))
+      override def removeListener(elem: UploadProgressListener) = p.removeProgressListener(elem)
+    }
 
-  lazy val startedListeners = new ListenersTrait[Upload.StartedEvent, UploadStartedListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.Upload.StartedEvent])
-    override def addListener(elem: Upload.StartedEvent => Unit) =
-      p.addStartedListener(new UploadStartedListener(elem))
-    override def removeListener(elem: UploadStartedListener) = p.removeStartedListener(elem)
-  }
+  lazy val startedListeners: ListenersSet[Upload.StartedEvent => Unit] =
+    new ListenersTrait[Upload.StartedEvent, UploadStartedListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.Upload.StartedEvent])
+      override def addListener(elem: Upload.StartedEvent => Unit) =
+        p.addStartedListener(new UploadStartedListener(elem))
+      override def removeListener(elem: UploadStartedListener) = p.removeStartedListener(elem)
+    }
 
-  lazy val finishedListeners = new ListenersTrait[Upload.FinishedEvent, UploadFinishedListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.Upload.FinishedEvent])
-    override def addListener(elem: Upload.FinishedEvent => Unit) =
-      p.addFinishedListener(new UploadFinishedListener(elem))
-    override def removeListener(elem: UploadFinishedListener) = p.removeFinishedListener(elem)
-  }
+  lazy val finishedListeners: ListenersSet[Upload.FinishedEvent => Unit] =
+    new ListenersTrait[Upload.FinishedEvent, UploadFinishedListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.Upload.FinishedEvent])
+      override def addListener(elem: Upload.FinishedEvent => Unit) =
+        p.addFinishedListener(new UploadFinishedListener(elem))
+      override def removeListener(elem: UploadFinishedListener) = p.removeFinishedListener(elem)
+    }
 
-  lazy val failedListeners = new ListenersTrait[Upload.FailedEvent, UploadFailedListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.Upload.FailedEvent])
-    override def addListener(elem: Upload.FailedEvent => Unit) = p.addFailedListener(new UploadFailedListener(elem))
-    override def removeListener(elem: UploadFailedListener) = p.removeFailedListener(elem)
-  }
+  lazy val failedListeners: ListenersSet[Upload.FailedEvent => Unit] =
+    new ListenersTrait[Upload.FailedEvent, UploadFailedListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.Upload.FailedEvent])
+      override def addListener(elem: Upload.FailedEvent => Unit) = p.addFailedListener(new UploadFailedListener(elem))
+      override def removeListener(elem: UploadFailedListener) = p.removeFailedListener(elem)
+    }
 
-  lazy val succeededListeners = new ListenersTrait[Upload.SucceededEvent, UploadSucceededListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.Upload.SucceededEvent])
-    override def addListener(elem: Upload.SucceededEvent => Unit) =
-      p.addSucceededListener(new UploadSucceededListener(elem))
-    override def removeListener(elem: UploadSucceededListener) = p.removeSucceededListener(elem)
-  }
+  lazy val succeededListeners: ListenersSet[Upload.SucceededEvent => Unit] =
+    new ListenersTrait[Upload.SucceededEvent, UploadSucceededListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.Upload.SucceededEvent])
+      override def addListener(elem: Upload.SucceededEvent => Unit) =
+        p.addSucceededListener(new UploadSucceededListener(elem))
+      override def removeListener(elem: UploadSucceededListener) = p.removeSucceededListener(elem)
+    }
 }

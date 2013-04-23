@@ -1,6 +1,6 @@
 package vaadin.scala
 
-import event.ClickEvent
+import vaadin.scala.event.{ ClickNotifier, ClickEvent }
 import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.internal.ClickListener
 import vaadin.scala.mixins.EmbeddedMixin
@@ -14,7 +14,8 @@ package mixins {
  * @see com.vaadin.ui.Embedded
  * @author Henri Kerola / Vaadin
  */
-class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new com.vaadin.ui.Embedded with EmbeddedMixin) extends AbstractComponent(p) {
+class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new com.vaadin.ui.Embedded with EmbeddedMixin)
+    extends AbstractComponent(p) with ClickNotifier {
 
   lazy val parameters: mutable.Map[String, String] = new mutable.Map[String, String] with Serializable {
     def -=(name: String): this.type = { p.removeParameter(name); this }
@@ -38,13 +39,6 @@ class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new c
         (name, p.getParameter(name))
       }
     }
-  }
-
-  // TODO: the same clickListeners can be found from Panel, use a trait instead of copy-pasting? 
-  lazy val clickListeners = new ListenersTrait[ClickEvent, ClickListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.event.MouseEvents.ClickListener])
-    override def addListener(elem: ClickEvent => Unit) = p.addClickListener(new ClickListener(elem))
-    override def removeListener(elem: ClickListener) = p.removeClickListener(elem)
   }
 
   def alternateText: Option[String] = Option(p.getAlternateText)

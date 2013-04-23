@@ -96,7 +96,7 @@ class ScaladinSession(val p: com.vaadin.server.VaadinSession with VaadinSessionM
 
   def isClosing: Boolean = p.isClosing
 
-  lazy val bootstrapFragmentListeners =
+  lazy val bootstrapFragmentListeners: ListenersSet[ScaladinSession.BootstrapFragmentResponse => Unit] =
     new ListenersTrait[ScaladinSession.BootstrapFragmentResponse, BootstrapFragmentListener] {
       override def listeners = null // FIXME
       override def addListener(elem: ScaladinSession.BootstrapFragmentResponse => Unit) =
@@ -104,11 +104,12 @@ class ScaladinSession(val p: com.vaadin.server.VaadinSession with VaadinSessionM
       override def removeListener(elem: BootstrapFragmentListener) = p.removeBootstrapListener(elem)
     }
 
-  lazy val bootstrapPageListeners = new ListenersTrait[ScaladinSession.BootstrapPageResponse, BootstrapPageListener] {
-    override def listeners = null // FIXME
-    override def addListener(elem: ScaladinSession.BootstrapPageResponse => Unit) =
-      p.addBootstrapListener(new BootstrapPageListener(elem))
-    override def removeListener(elem: BootstrapPageListener) = p.removeBootstrapListener(elem)
-  }
+  lazy val bootstrapPageListeners: ListenersSet[ScaladinSession.BootstrapPageResponse => Unit] =
+    new ListenersTrait[ScaladinSession.BootstrapPageResponse, BootstrapPageListener] {
+      override def listeners = null // FIXME
+      override def addListener(elem: ScaladinSession.BootstrapPageResponse => Unit) =
+        p.addBootstrapListener(new BootstrapPageListener(elem))
+      override def removeListener(elem: BootstrapPageListener) = p.removeBootstrapListener(elem)
+    }
 
 }

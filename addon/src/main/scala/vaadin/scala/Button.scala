@@ -65,11 +65,12 @@ class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaa
   def htmlContentAllowed: Boolean = p.isHtmlContentAllowed
   def htmlContentAllowed_=(htmlContentAllowed: Boolean) { p.setHtmlContentAllowed(htmlContentAllowed) }
 
-  lazy val clickListeners = new ListenersTrait[Button.ClickEvent, ButtonClickListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.Button.ClickEvent])
-    override def addListener(elem: Button.ClickEvent => Unit) = p.addClickListener(new ButtonClickListener(elem))
-    override def removeListener(elem: ButtonClickListener) = p.removeClickListener(elem)
-  }
+  lazy val clickListeners: ListenersSet[Button.ClickEvent => Unit] =
+    new ListenersTrait[Button.ClickEvent, ButtonClickListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.Button.ClickEvent])
+      override def addListener(elem: Button.ClickEvent => Unit) = p.addClickListener(new ButtonClickListener(elem))
+      override def removeListener(elem: ButtonClickListener) = p.removeClickListener(elem)
+    }
 }
 
 class LinkButton(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin)

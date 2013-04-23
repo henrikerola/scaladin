@@ -1,6 +1,6 @@
 package vaadin.scala
 
-import event.{ FocusNotifier, BlurNotifier, Event }
+import vaadin.scala.event.{ ClickEvent, FocusNotifier, BlurNotifier, Event }
 import scala.collection.mutable
 import vaadin.scala.mixins.WindowMixin
 import vaadin.scala.internal.ListenersTrait
@@ -60,15 +60,17 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
   def draggable_=(draggable: Boolean) = p.setDraggable(draggable)
   def draggable: Boolean = p.isDraggable
 
-  lazy val closeListeners = new ListenersTrait[Window.CloseEvent, WindowCloseListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.Window.CloseListener])
-    override def addListener(elem: Window.CloseEvent => Unit) = p.addCloseListener(new WindowCloseListener(elem))
-    override def removeListener(elem: WindowCloseListener) = p.removeCloseListener(elem)
-  }
+  lazy val closeListeners: ListenersSet[Window.CloseEvent => Unit] =
+    new ListenersTrait[Window.CloseEvent, WindowCloseListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.Window.CloseListener])
+      override def addListener(elem: Window.CloseEvent => Unit) = p.addCloseListener(new WindowCloseListener(elem))
+      override def removeListener(elem: WindowCloseListener) = p.removeCloseListener(elem)
+    }
 
-  lazy val resizeListeners = new ListenersTrait[Window.ResizeEvent, WindowResizeListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.Window.CloseListener])
-    override def addListener(elem: Window.ResizeEvent => Unit) = p.addResizeListener(new WindowResizeListener(elem))
-    override def removeListener(elem: WindowResizeListener) = p.removeResizeListener(elem)
-  }
+  lazy val resizeListeners: ListenersSet[Window.ResizeEvent => Unit] =
+    new ListenersTrait[Window.ResizeEvent, WindowResizeListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.Window.CloseListener])
+      override def addListener(elem: Window.ResizeEvent => Unit) = p.addResizeListener(new WindowResizeListener(elem))
+      override def removeListener(elem: WindowResizeListener) = p.removeResizeListener(elem)
+    }
 }

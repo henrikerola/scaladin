@@ -1,7 +1,7 @@
 package vaadin.scala
 
 import com.vaadin.ui.{ PopupView => VaadinPopupView }
-import event.Event
+import vaadin.scala.event.{ ClickEvent, Event }
 import vaadin.scala.mixins.PopupViewMixin
 import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.internal.PopupVisibilityListener
@@ -48,11 +48,12 @@ class PopupView(
   def hideOnMouseOut: Boolean = p.isHideOnMouseOut
   def hideOnMouseOut_=(hideOnMouseOut: Boolean) { p.setHideOnMouseOut(hideOnMouseOut) }
 
-  lazy val popupVisibilityListeners = new ListenersTrait[PopupView.PopupVisibilityEvent, PopupVisibilityListener] {
-    override def listeners = p.getListeners(classOf[com.vaadin.ui.PopupView.PopupVisibilityEvent])
-    override def addListener(elem: PopupView.PopupVisibilityEvent => Unit) =
-      p.addPopupVisibilityListener(new PopupVisibilityListener(elem))
-    override def removeListener(elem: PopupVisibilityListener) = p.removePopupVisibilityListener(elem)
-  }
+  lazy val popupVisibilityListeners: ListenersSet[PopupView.PopupVisibilityEvent => Unit] =
+    new ListenersTrait[PopupView.PopupVisibilityEvent, PopupVisibilityListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.PopupView.PopupVisibilityEvent])
+      override def addListener(elem: PopupView.PopupVisibilityEvent => Unit) =
+        p.addPopupVisibilityListener(new PopupVisibilityListener(elem))
+      override def removeListener(elem: PopupVisibilityListener) = p.removePopupVisibilityListener(elem)
+    }
 
 }
