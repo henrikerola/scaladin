@@ -27,7 +27,7 @@ object Upload {
  * @author Henri Kerola / Vaadin
  */
 class Upload(override val p: com.vaadin.ui.Upload with UploadMixin = new com.vaadin.ui.Upload with UploadMixin)
-    extends AbstractComponent(p) with Focusable {
+    extends AbstractComponent(p) with Component.Focusable {
 
   def receiver: Option[Upload.ReceiveEvent => java.io.OutputStream] = p.getReceiver match {
     case null => None

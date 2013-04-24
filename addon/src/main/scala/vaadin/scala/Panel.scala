@@ -10,7 +10,7 @@ package mixins {
 }
 
 class Panel(override val p: com.vaadin.ui.Panel with PanelMixin = new com.vaadin.ui.Panel with PanelMixin)
-    extends AbstractSingleComponentContainer(p) with Focusable with ClickNotifier {
+    extends AbstractSingleComponentContainer(p) with Component.Focusable with ClickNotifier {
 
   // Vaadin Panel sets a default content (VerticalLayout) for Panel but 
   // we must to reset a default content because Panel with PanelMixin is used.

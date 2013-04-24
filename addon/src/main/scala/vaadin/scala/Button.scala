@@ -45,7 +45,7 @@ object Button {
 }
 
 class Button(override val p: com.vaadin.ui.Button with ButtonMixin = new com.vaadin.ui.Button with ButtonMixin)
-    extends AbstractComponent(p) with BlurNotifier with FocusNotifier with Focusable {
+    extends AbstractComponent(p) with BlurNotifier with FocusNotifier with Component.Focusable {
 
   private var _clickShortcut: Option[KeyShortcut] = None
 

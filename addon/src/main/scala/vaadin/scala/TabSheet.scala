@@ -50,7 +50,8 @@ object TabSheet {
 }
 
 class TabSheet(override val p: VaadinTabSheet with TabSheetMixin = new VaadinTabSheet with TabSheetMixin)
-    extends AbstractComponentContainer(p) with Focusable with FocusNotifier with BlurNotifier with SelectiveRenderer {
+    extends AbstractComponentContainer(p) with Component.Focusable with FocusNotifier with BlurNotifier
+    with SelectiveRenderer {
 
   // TODO: change to protected/private
   val tabs = mutable.Map.empty[com.vaadin.ui.TabSheet.Tab, TabSheet.Tab]

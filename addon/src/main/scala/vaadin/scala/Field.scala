@@ -8,7 +8,7 @@ package mixins {
   }
 }
 
-trait Field[T] extends Component with BufferedValidatable with Property[T] with Focusable with Wrapper {
+trait Field[T] extends Component with BufferedValidatable with Property[T] with Component.Focusable with Wrapper {
 
   def p: com.vaadin.ui.Field[T] with FieldMixin[T]
 
