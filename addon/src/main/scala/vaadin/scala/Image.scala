@@ -2,6 +2,7 @@ package vaadin.scala
 
 import com.vaadin.ui.{ Image => VaadinImage }
 import vaadin.scala.mixins.ImageMixin
+import vaadin.scala.event.ClickNotifier
 
 package mixins {
   trait ImageMixin extends AbstractEmbeddedMixin {
@@ -14,6 +15,6 @@ package mixins {
  * @author Henri Kerola / Vaadin
  */
 class Image(override val p: VaadinImage with ImageMixin = new VaadinImage with ImageMixin)
-    extends AbstractEmbedded(p) {
+    extends AbstractEmbedded(p) with ClickNotifier {
 
 }
