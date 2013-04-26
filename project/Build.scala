@@ -51,6 +51,7 @@ object Dependencies {
   val mockitoVersion = "1.9.0"
 
   val scala = "org.scala-lang" % "scala-library" % BuildSettings.buildScalaVersion % "provided"
+  val scalaReflect = "org.scala-lang" % "scala-reflect" % BuildSettings.buildScalaVersion
   val scalaActors = "org.scala-lang" % "scala-actors" % BuildSettings.buildScalaVersion % "test"
   val vaadin = "com.vaadin" % "vaadin-server" % vaadinVersion
   val vaadinClientCompiled = "com.vaadin" % "vaadin-client-compiled" % vaadinVersion
@@ -69,7 +70,7 @@ object ScaladinBuild extends Build {
 
   lazy val addonSettings = buildSettings ++ jacoco.settings ++ Format.settings ++ Seq(
     name := buildName,
-    libraryDependencies := Seq(scala, scalaActors, vaadin, servletApi, portletApi, scalaTest, junitInterface, mockito),
+    libraryDependencies := Seq(scala, scalaActors, scalaReflect, vaadin, servletApi, portletApi, scalaTest, junitInterface, mockito),
     packageConfiguration in Compile in packageBin ~= { 
       (config: Package.Configuration) => new Package.Configuration(config.sources, config.jar, manifestAttributes) 
     },

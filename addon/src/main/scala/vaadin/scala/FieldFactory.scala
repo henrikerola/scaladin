@@ -78,7 +78,7 @@ class DefaultFieldGroupFieldFactory extends FieldGroupFieldFactory {
   def createRichTextArea(): Option[RichTextArea] = Some(new RichTextArea { immediate = true })
 
   def createCompatibleSelect(fieldType: Class[_ <: AbstractSelect]): AbstractSelect = {
-    var select: AbstractSelect =
+    val select: AbstractSelect =
       if (fieldType.isAssignableFrom(ListSelect.getClass)) new ListSelect() {
         multiSelect = false
       }
