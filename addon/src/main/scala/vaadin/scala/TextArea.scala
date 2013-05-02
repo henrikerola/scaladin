@@ -6,11 +6,13 @@ package mixins {
   trait TextAreaMixin extends AbstractTextFieldMixin { self: com.vaadin.ui.TextArea => }
 }
 
-class TextArea(override val p: com.vaadin.ui.TextArea with TextAreaMixin = new com.vaadin.ui.TextArea with TextAreaMixin) extends AbstractTextField(p) {
+class TextArea(
+  override val p: com.vaadin.ui.TextArea with TextAreaMixin = new com.vaadin.ui.TextArea with TextAreaMixin)
+    extends AbstractTextField(p) {
 
-  def rows = p.getRows
-  def rows_=(rows: Int) = p.setRows(rows)
+  def rows: Int = p.getRows
+  def rows_=(rows: Int) { p.setRows(rows) }
 
-  def wordwrap = p.isWordwrap
-  def wordwrap_=(wordwrap: Boolean) = p.setWordwrap(wordwrap)
+  def wordwrap: Boolean = p.isWordwrap
+  def wordwrap_=(wordwrap: Boolean) { p.setWordwrap(wordwrap) }
 }

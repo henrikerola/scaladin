@@ -78,7 +78,7 @@ class DefaultFieldGroupFieldFactory extends FieldGroupFieldFactory {
   def createRichTextArea(): Option[RichTextArea] = Some(new RichTextArea { immediate = true })
 
   def createCompatibleSelect(fieldType: Class[_ <: AbstractSelect]): AbstractSelect = {
-    var select: AbstractSelect =
+    val select: AbstractSelect =
       if (fieldType.isAssignableFrom(ListSelect.getClass)) new ListSelect() {
         multiSelect = false
       }
@@ -112,7 +112,7 @@ class DefaultFieldGroupFieldFactory extends FieldGroupFieldFactory {
   }
 
   def createDefaultField[T <: Field[_]](dataType: Class[_],
-    fieldType: Class[T]): Option[T] = {
+                                        fieldType: Class[T]): Option[T] = {
     if (fieldType.isAssignableFrom(TextField.getClass))
       createAbstractTextField[TextField](classOf[TextField]) map (fieldType.cast(_))
 
@@ -134,7 +134,7 @@ trait TableFieldFactory extends Wrapper {
 
 trait TableFieldFactoryDelegator extends com.vaadin.ui.TableFieldFactory with TableFieldFactoryMixin {
   def createField(container: com.vaadin.data.Container, itemId: Any, propertyId: Any,
-    uiContext: com.vaadin.ui.Component): com.vaadin.ui.Field[_] = {
+                  uiContext: com.vaadin.ui.Component): com.vaadin.ui.Field[_] = {
     uiContext match {
 
       case mixin: ScaladinMixin if mixin.wrapper.isInstanceOf[Table] => {
@@ -163,16 +163,17 @@ object DefaultFieldFactory extends TableFieldFactory {
   val Date = classOf[Date]
   val Bool = classOf[Boolean]
 
-  def createField(ingredients: TableFieldIngredients): Option[Field[_]] = ingredients.container.property(ingredients.itemId, ingredients.propertyId) match {
-    case Some(property) => {
-      val propertyType: Class[_] = property.getType
-      val field: Field[_] = createFieldByPropertyType(propertyType)
-      field.caption = createCaptionByPropertyId(ingredients.propertyId)
-      Option(field)
-    }
+  def createField(ingredients: TableFieldIngredients): Option[Field[_]] =
+    ingredients.container.getProperty(ingredients.itemId, ingredients.propertyId) match {
+      case Some(property) => {
+        val propertyType: Class[_] = property.getType
+        val field: Field[_] = createFieldByPropertyType(propertyType)
+        field.caption = createCaptionByPropertyId(ingredients.propertyId)
+        Option(field)
+      }
 
-    case None => None
-  }
+      case None => None
+    }
 
   def createFieldByPropertyType(propertyType: Class[_]): Field[_] = propertyType match {
     case null => null

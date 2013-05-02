@@ -20,5 +20,6 @@ trait DeploymentConfiguration {
 
   def initParameters: java.util.Properties = p.getInitParameters
 
-  def getApplicationOrSystemProperty(propertyName: String, defaultValue: String): String = p.getApplicationOrSystemProperty(propertyName, defaultValue)
+  def getApplicationOrSystemProperty(propertyName: String, defaultValue: String): String =
+    p.getApplicationOrSystemProperty(propertyName, defaultValue)
 }

@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.Event
 import internal.ActionHandler
 import vaadin.scala.mixins.{ ActionContainerMixin, ActionMixin }
 
@@ -20,20 +21,22 @@ object Action {
       actionHandler.map(_.actions)
     }
 
-    def actions_=(actions: Option[GetActionsEvent => Seq[Action]]): Unit = actions match {
-      case Some(actions) => this.actions = actions
-      case None =>
-        actionHandler.foreach(p.removeActionHandler(_))
-        actionHandler = None
+    def actions_=(actions: Option[GetActionsEvent => Seq[Action]]) {
+      actions match {
+        case Some(actions) => this.actions = actions
+        case None =>
+          actionHandler.foreach(p.removeActionHandler(_))
+          actionHandler = None
+      }
     }
 
-    def actions_=(actions: GetActionsEvent => Seq[Action]): Unit = {
+    def actions_=(actions: GetActionsEvent => Seq[Action]) {
       actionHandler.foreach(p.removeActionHandler(_))
       actionHandler = Some(new ActionHandler(actions))
       p.addActionHandler(actionHandler.get)
     }
 
-    def actions_=(actions: Seq[Action]): Unit = this.actions = (a => actions)
+    def actions_=(actions: Seq[Action]) { this.actions = (a => actions) }
   }
 
   case class GetActionsEvent(target: Option[Any], sender: Any) extends Event
@@ -94,12 +97,12 @@ class Action(val p: com.vaadin.event.Action with ActionMixin = new com.vaadin.ev
   p.wrapper = this
 
   def caption: Option[String] = Option(p.getCaption)
-  def caption_=(caption: Option[String]): Unit = p.setCaption(caption.orNull)
-  def caption_=(caption: String): Unit = p.setCaption(caption)
+  def caption_=(caption: Option[String]) { p.setCaption(caption.orNull) }
+  def caption_=(caption: String) { p.setCaption(caption) }
 
-  def icon: Option[Resource] = wrapperFor[Resource](p.getIcon)
-  def icon_=(icon: Option[Resource]): Unit = if (icon.isDefined) p.setIcon(icon.get.p) else p.setIcon(null)
-  def icon_=(icon: Resource): Unit = p.setIcon(icon.p)
+  def icon: Option[Resource] = wrapperFor(p.getIcon)
+  def icon_=(icon: Option[Resource]) { p.setIcon(peerFor(icon)) }
+  def icon_=(icon: Resource) { p.setIcon(icon.p) }
 
   var handler: Option[Action.HandleActionEvent => Unit] = None
 }

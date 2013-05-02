@@ -1,15 +1,19 @@
 package vaadin.scala
 
 import com.vaadin.shared.ui.MultiSelectMode._
+import event._
 import vaadin.scala.mixins.TreeMixin
 import vaadin.scala.mixins.AbstractSelectMixin
 import vaadin.scala.mixins.ContainerHierarchicalMixin
 import vaadin.scala.internal.ItemStyleGenerator
 import vaadin.scala.internal.ExpandListener
 import vaadin.scala.internal.CollapseListener
+import scala.Some
 
 package mixins {
-  trait TreeMixin extends AbstractSelectMixin with ActionContainerMixin with ContainerHierarchicalMixin { self: com.vaadin.ui.Tree => }
+  trait TreeMixin extends AbstractSelectMixin with ActionContainerMixin with ContainerHierarchicalMixin {
+    self: com.vaadin.ui.Tree =>
+  }
 }
 
 object Tree {
@@ -22,7 +26,8 @@ object Tree {
  * @author Henri Kerola / Vaadin
  */
 class Tree(override val p: com.vaadin.ui.Tree with TreeMixin = new com.vaadin.ui.Tree with TreeMixin)
-    extends AbstractSelect(p) with Action.Container with Container.Hierarchical with ItemDescriptionGeneratorOwner with ItemClickNotifier with ExpandNotifier with CollapseNotifier {
+    extends AbstractSelect(p) with Action.Container with Container.Hierarchical with ItemDescriptionGeneratorOwner
+    with ItemClickNotifier with ExpandNotifier with CollapseNotifier {
 
   container = new HierarchicalContainer
 
@@ -47,32 +52,36 @@ class Tree(override val p: com.vaadin.ui.Tree with TreeMixin = new com.vaadin.ui
       SelectionMode.Single
   }
 
-  def selectionMode_=(selectionMode: SelectionMode.Value): Unit = selectionMode match {
-    case SelectionMode.None =>
-      p.setSelectable(false)
-    case SelectionMode.Single =>
-      p.setSelectable(true)
-      p.setMultiSelect(false)
-    case SelectionMode.Multi =>
-      p.setSelectable(true)
-      p.setMultiSelect(true)
-      p.setMultiselectMode(DEFAULT)
-    case SelectionMode.MultiSimple =>
-      p.setSelectable(true)
-      p.setMultiSelect(true)
-      p.setMultiselectMode(SIMPLE)
+  def selectionMode_=(selectionMode: SelectionMode.Value) {
+    selectionMode match {
+      case SelectionMode.None =>
+        p.setSelectable(false)
+      case SelectionMode.Single =>
+        p.setSelectable(true)
+        p.setMultiSelect(false)
+      case SelectionMode.Multi =>
+        p.setSelectable(true)
+        p.setMultiSelect(true)
+        p.setMultiselectMode(DEFAULT)
+      case SelectionMode.MultiSimple =>
+        p.setSelectable(true)
+        p.setMultiSelect(true)
+        p.setMultiselectMode(SIMPLE)
+    }
   }
 
   def itemStyleGenerator: Option[Tree.ItemStyleEvent => Option[String]] = p.getItemStyleGenerator match {
     case null => None
     case generator: ItemStyleGenerator => Some(generator.action)
   }
-  def itemStyleGenerator_=(generator: Tree.ItemStyleEvent => Option[String]): Unit = {
+  def itemStyleGenerator_=(generator: Tree.ItemStyleEvent => Option[String]) {
     p.setItemStyleGenerator(new ItemStyleGenerator(generator))
   }
-  def itemStyleGenerator_=(generator: Option[Tree.ItemStyleEvent => Option[String]]): Unit = generator match {
-    case None => p.setItemStyleGenerator(null)
-    case Some(generator) => itemStyleGenerator = generator
+  def itemStyleGenerator_=(generator: Option[Tree.ItemStyleEvent => Option[String]]) {
+    generator match {
+      case None => p.setItemStyleGenerator(null)
+      case Some(generator) => itemStyleGenerator = generator
+    }
   }
 
   // TODO: setNullSelectionItemId throws UnsupportedOperationException

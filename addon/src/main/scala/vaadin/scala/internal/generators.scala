@@ -3,7 +3,7 @@ package vaadin.scala.internal
 import vaadin.scala.Table
 import vaadin.scala.Tree
 import vaadin.scala.Component
-import vaadin.scala.ItemDescriptionEvent
+import vaadin.scala.event.ItemDescriptionEvent
 
 class ColumnReorderListener(val action: Table.ColumnReorderEvent => Unit) extends com.vaadin.ui.Table.ColumnReorderListener with Listener {
   def columnReorder(e: com.vaadin.ui.Table.ColumnReorderEvent) = action(Table.ColumnReorderEvent(wrapperFor[Table](e.getComponent).get))

@@ -10,7 +10,7 @@ object BuildSettings {
   val buildOrganization = "vaadin.scala"
   val buildName = "Scaladin"
   val buildVersion = "3.0.0-SNAPSHOT"
-  val buildScalaVersion = "2.10.0"
+  val buildScalaVersion = "2.10.1"
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
     organization := buildOrganization,
@@ -28,6 +28,21 @@ object BuildSettings {
     ("Vaadin-License-Title" -> "Apache License 2.0")))
 }
 
+
+object Format {
+
+  lazy val settings = scalariformSettings ++ Seq(
+    ScalariformKeys.preferences := formattingPreferences
+  )
+ 
+  lazy val formattingPreferences = {
+    import scalariform.formatter.preferences._
+    FormattingPreferences().
+      setPreference(AlignParameters, true).
+      setPreference(DoubleIndentClassDeclaration, true)
+  }
+}
+
 object Dependencies {
   val vaadinVersion = "7.0-SNAPSHOT"
   val jettyVersion = "7.3.0.v20110203"
@@ -36,11 +51,13 @@ object Dependencies {
   val mockitoVersion = "1.9.0"
 
   val scala = "org.scala-lang" % "scala-library" % BuildSettings.buildScalaVersion % "provided"
+  val scalaReflect = "org.scala-lang" % "scala-reflect" % BuildSettings.buildScalaVersion
   val scalaActors = "org.scala-lang" % "scala-actors" % BuildSettings.buildScalaVersion % "test"
   val vaadin = "com.vaadin" % "vaadin-server" % vaadinVersion
   val vaadinClientCompiled = "com.vaadin" % "vaadin-client-compiled" % vaadinVersion
   val vaadinThemes = "com.vaadin" % "vaadin-themes" % vaadinVersion
-  val servletApi = "javax.servlet" % "javax.servlet-api" % "3.0.1"
+  val servletApi = "javax.servlet" % "servlet-api" % "2.4"
+  val portletApi = "javax.portlet" % "portlet-api" % "2.0"
   val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
   val scalaTest = "org.scalatest" % "scalatest_2.10.0-RC5" % scalaTestVersion % "test"
   val junitInterface = "com.novocode" % "junit-interface" % "0.7" % "test->default"
@@ -51,9 +68,9 @@ object ScaladinBuild extends Build {
   import Dependencies._
   import BuildSettings._
 
-  lazy val addonSettings = buildSettings ++ jacoco.settings ++ scalariformSettings ++ Seq(
+  lazy val addonSettings = buildSettings ++ jacoco.settings ++ Format.settings ++ Seq(
     name := buildName,
-    libraryDependencies := Seq(scala, scalaActors, vaadin, servletApi, scalaTest, junitInterface, mockito),
+    libraryDependencies := Seq(scala, scalaActors, scalaReflect, vaadin, servletApi, portletApi, scalaTest, junitInterface, mockito),
     packageConfiguration in Compile in packageBin ~= { 
       (config: Package.Configuration) => new Package.Configuration(config.sources, config.jar, manifestAttributes) 
     },

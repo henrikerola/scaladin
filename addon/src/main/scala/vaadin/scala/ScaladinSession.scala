@@ -1,11 +1,14 @@
 package vaadin.scala
 
-import internal.{ WrapperUtil, ErrorHandler }
+import event.Event
+import internal._
 import java.util.Locale
 import java.util.concurrent.locks.Lock
 import collection.JavaConverters._
 import collection.mutable
 import vaadin.scala.mixins.VaadinSessionMixin
+import org.jsoup.nodes.{ Document, Node }
+import com.vaadin.server.UIProvider
 
 package mixins {
   trait VaadinSessionMixin extends ScaladinMixin
@@ -17,6 +20,12 @@ object ScaladinSession {
   def current_=(session: ScaladinSession): Unit = com.vaadin.server.VaadinSession.setCurrent(session.p)
 
   case class ErrorEvent(throwable: Throwable) extends Event
+
+  sealed class BootstrapResponse(request: ScaladinRequest, session: ScaladinSession, uiClass: Class[_ <: UI], uiProvider: UIProvider) extends Event
+  case class BootstrapFragmentResponse(request: ScaladinRequest, session: ScaladinSession, uiClass: Class[_ <: UI], uiProvider: UIProvider, nodes: mutable.Buffer[Node])
+    extends BootstrapResponse(request, session, uiClass, uiProvider)
+  case class BootstrapPageResponse(request: ScaladinRequest, session: ScaladinSession, uiClass: Class[_ <: UI], uiProvider: UIProvider, document: Document, headers: mutable.Map[String, String])
+    extends BootstrapResponse(request, session, uiClass, uiProvider)
 
   val DefaultErrorHandler: (ScaladinSession.ErrorEvent => Unit) = e =>
     com.vaadin.server.DefaultErrorHandler.doDefault(new com.vaadin.server.ErrorEvent(e.throwable))
@@ -86,5 +95,21 @@ class ScaladinSession(val p: com.vaadin.server.VaadinSession with VaadinSessionM
   def close(): Unit = p.close()
 
   def isClosing: Boolean = p.isClosing
+
+  lazy val bootstrapFragmentListeners: ListenersSet[ScaladinSession.BootstrapFragmentResponse => Unit] =
+    new ListenersTrait[ScaladinSession.BootstrapFragmentResponse, BootstrapFragmentListener] {
+      override def listeners = null // FIXME
+      override def addListener(elem: ScaladinSession.BootstrapFragmentResponse => Unit) =
+        p.addBootstrapListener(new BootstrapFragmentListener(elem))
+      override def removeListener(elem: BootstrapFragmentListener) = p.removeBootstrapListener(elem)
+    }
+
+  lazy val bootstrapPageListeners: ListenersSet[ScaladinSession.BootstrapPageResponse => Unit] =
+    new ListenersTrait[ScaladinSession.BootstrapPageResponse, BootstrapPageListener] {
+      override def listeners = null // FIXME
+      override def addListener(elem: ScaladinSession.BootstrapPageResponse => Unit) =
+        p.addBootstrapListener(new BootstrapPageListener(elem))
+      override def removeListener(elem: BootstrapPageListener) = p.removeBootstrapListener(elem)
+    }
 
 }

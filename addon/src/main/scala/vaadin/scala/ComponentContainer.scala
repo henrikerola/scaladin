@@ -26,7 +26,7 @@ trait HasComponents extends Component {
   def components: Iterable[Component] = new Iterable[Component] {
     def iterator: Iterator[Component] = {
       import scala.collection.JavaConverters._
-      p.iterator.asScala.map(wrapperFor[Component](_).get)
+      p.iterator.asScala.map(wrapperFor(_).get)
     }
   }
 

@@ -8,7 +8,9 @@ import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.mixins.NewItemHandlerMixin
 
 package mixins {
-  trait AbstractSelectMixin extends AbstractFieldMixin[AnyRef] with ContainerMixin with ContainerViewerMixin { self: com.vaadin.ui.AbstractSelect => }
+  trait AbstractSelectMixin extends AbstractFieldMixin[AnyRef] with ContainerMixin with ContainerViewerMixin {
+    self: com.vaadin.ui.AbstractSelect =>
+  }
   trait NewItemHandlerMixin extends TypedScaladinMixin[NewItemHandler]
 }
 
@@ -29,7 +31,8 @@ object AbstractSelect {
 abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with AbstractSelectMixin)
     extends AbstractField[Object](p) with Container with Container.Viewer {
 
-  // TODO: Move newItemHandler and newItemsAllowed to a trait because not all subclasses of AbstractSelect support new items.
+  // TODO: Move newItemHandler and newItemsAllowed to a trait because not
+  // all subclasses of AbstractSelect support new items.
 
   //initial setup of the default newItemHandler
   newItemHandler = new DefaultNewItemHandler(this)
@@ -37,32 +40,47 @@ abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with 
 
   def newItemHandler: Option[NewItemHandler] = WrapperUtil.wrapperFor[NewItemHandler](p.getNewItemHandler)
   def newItemHandler_=(newItemHandler: NewItemHandler): Unit = p.setNewItemHandler(newItemHandler.p)
-  def newItemHandler_=(newItemHandler: Option[NewItemHandler]): Unit = if (newItemHandler.isDefined) p.setNewItemHandler(newItemHandler.get.p) else p.setNewItemHandler(null)
+  def newItemHandler_=(newItemHandler: Option[NewItemHandler]): Unit = p.setNewItemHandler(peerFor(newItemHandler))
 
   def newItemsAllowed: Boolean = p.isNewItemsAllowed
   def newItemsAllowed_=(newItemsAllowed: Boolean): Unit = p.setNewItemsAllowed(newItemsAllowed)
 
-  def itemCaptionMode = AbstractSelect.ItemCaptionMode(p.getItemCaptionMode.ordinal)
-  def itemCaptionMode_=(itemCaptionMode: AbstractSelect.ItemCaptionMode.Value) = p.setItemCaptionMode(com.vaadin.ui.AbstractSelect.ItemCaptionMode.values.apply(itemCaptionMode.id))
+  def itemCaptionMode: AbstractSelect.ItemCaptionMode.Value =
+    AbstractSelect.ItemCaptionMode(p.getItemCaptionMode.ordinal)
+  def itemCaptionMode_=(itemCaptionMode: AbstractSelect.ItemCaptionMode.Value) {
+    p.setItemCaptionMode(com.vaadin.ui.AbstractSelect.ItemCaptionMode.values.apply(itemCaptionMode.id))
+  }
 
   def itemCaptionPropertyId: Option[Any] = Option(p.getItemCaptionPropertyId)
-  def itemCaptionPropertyId_=(itemCaptionPropertyId: Option[Any]) = p.setItemCaptionPropertyId(itemCaptionPropertyId.orNull)
-  def itemCaptionPropertyId_=(itemCaptionPropertyId: Any) = p.setItemCaptionPropertyId(itemCaptionPropertyId)
+  def itemCaptionPropertyId_=(itemCaptionPropertyId: Option[Any]) {
+    p.setItemCaptionPropertyId(itemCaptionPropertyId.orNull)
+  }
+  def itemCaptionPropertyId_=(itemCaptionPropertyId: Any) { p.setItemCaptionPropertyId(itemCaptionPropertyId) }
+
+  def getItemCaption(item: Any): String = p.getItemCaption(item)
+  def setItemCaption(item: Any, caption: Option[String]) { p.setItemCaption(item, caption.orNull) }
+  def setItemCaption(item: Any, caption: String) { p.setItemCaption(item, caption) }
 
   def itemIconPropertyId: Option[Any] = Option(p.getItemIconPropertyId)
-  def itemIconPropertyId_=(itemIconPropertyId: Option[Any]) = p.setItemIconPropertyId(itemIconPropertyId.orNull)
-  def itemIconPropertyId_=(itemIconPropertyId: Any) = p.setItemIconPropertyId(itemIconPropertyId)
+  def itemIconPropertyId_=(itemIconPropertyId: Option[Any]) { p.setItemIconPropertyId(itemIconPropertyId.orNull) }
+  def itemIconPropertyId_=(itemIconPropertyId: Any) { p.setItemIconPropertyId(itemIconPropertyId) }
 
-  def nullSelectionAllowed = p.isNullSelectionAllowed
-  def nullSelectionAllowed_=(nullSelectionAllowed: Boolean) = p.setNullSelectionAllowed(nullSelectionAllowed)
+  def getItemIcon(item: Any): Option[Resource] = wrapperFor(p.getItemIcon(item))
+  def setItemIcon(item: Any, icon: Option[Resource]) { p.setItemIcon(item, peerFor(icon)) }
+  def setItemIcon(item: Any, icon: Resource) { p.setItemIcon(item, icon.p) }
+
+  def nullSelectionAllowed: Boolean = p.isNullSelectionAllowed
+  def nullSelectionAllowed_=(nullSelectionAllowed: Boolean) { p.setNullSelectionAllowed(nullSelectionAllowed) }
 
   def nullSelectionItemId: Option[Any] = Option(p.getNullSelectionItemId)
-  def nullSelectionItemId_=(nullSelectionItemId: Option[Any]) = p.setNullSelectionItemId(nullSelectionItemId.orNull)
-  def nullSelectionItemId_=(nullSelectionItemId: Any) = p.setNullSelectionItemId(nullSelectionItemId)
+  def nullSelectionItemId_=(nullSelectionItemId: Option[Any]) { p.setNullSelectionItemId(nullSelectionItemId.orNull) }
+  def nullSelectionItemId_=(nullSelectionItemId: Any) { p.setNullSelectionItemId(nullSelectionItemId) }
 
-  def selected(itemId: Any) = p.isSelected(itemId)
-  def select(itemId: Any) = p.select(itemId)
-  def unselect(itemId: Any) = p.unselect(itemId)
+  def isSelected(itemId: Any): Boolean = p.isSelected(itemId)
+
+  def select(itemId: Any) { p.select(itemId) }
+
+  def unselect(itemId: Any) { p.unselect(itemId) }
 
   // Container.Container:
   def wrapItem(unwrapped: com.vaadin.data.Item): Item = container.get.wrapItem(unwrapped)
@@ -89,7 +107,7 @@ class DefaultNewItemHandler(select: AbstractSelect) extends NewItemHandler {
       // Sets the caption property, if used
       if (select.itemCaptionPropertyId.isDefined) {
         //try {
-        select.property(newItemCaption, select.itemCaptionPropertyId.get).get.value = newItemCaption
+        select.getProperty(newItemCaption, select.itemCaptionPropertyId.get).get.value = newItemCaption
         //} catch {
         // TODO
         //case ignored: com.vaadin.data.Property.ConversionException =>

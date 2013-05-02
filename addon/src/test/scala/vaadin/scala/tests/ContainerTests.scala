@@ -14,7 +14,7 @@ class ContainerTests extends FunSuite {
     val result = Container('itemId -> List('propertyId -> "foobar"))
 
     assert(1 === result.size)
-    val item = result.item('itemId).get
+    val item = result.getItem('itemId).get
     assert(1 === item.propertyIds.size)
     val property = item.property('propertyId).get
     assert(classOf[String] === property.getType)
@@ -24,7 +24,7 @@ class ContainerTests extends FunSuite {
   test("container creation with one item") {
     val result = Container('itemId -> List())
     assert(1 === result.size)
-    val item = result.item('itemId).get
+    val item = result.getItem('itemId).get
     assert(0 === item.propertyIds.size)
   }
 }
@@ -42,7 +42,7 @@ trait ContainerTestAddItem extends ContainerTestBase {
 
     val item1Id = addItem()
     assert(None != item1Id)
-    assert(None != container.item(item1Id.get))
+    assert(None != container.getItem(item1Id.get))
 
   }
 }
@@ -114,14 +114,14 @@ trait ContainerTestHierarchical extends ContainerTestBase {
     val child = container.addItem
 
     container.setParent(child -> parent)
-    assert(container.children(parent).size === 1)
-    assert(container.children(parent).head === child)
+    assert(container.getChildren(parent).size === 1)
+    assert(container.getChildren(parent).head === child)
 
     assert(container.hasChildren(parent))
     assert(container.isRoot(parent))
 
     container.setParent(child -> null)
-    assert(container.children(parent).isEmpty)
+    assert(container.getChildren(parent).isEmpty)
   }
 
   test("childrenAllowed") {
@@ -129,9 +129,9 @@ trait ContainerTestHierarchical extends ContainerTestBase {
     val child = container.addItem
 
     container.setChildrenAllowed(parent -> true)
-    assert(container.childrenAllowed(parent) === true)
+    assert(container.isChildrenAllowed(parent) === true)
 
     container.setChildrenAllowed(parent -> false)
-    assert(container.childrenAllowed(parent) === false)
+    assert(container.isChildrenAllowed(parent) === false)
   }
 }

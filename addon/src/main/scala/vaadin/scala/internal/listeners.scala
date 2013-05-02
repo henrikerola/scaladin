@@ -1,6 +1,11 @@
 package vaadin.scala.internal
 
 import vaadin.scala._
+import event._
+import event.BlurEvent
+import event.ClickEvent
+import event.FocusEvent
+import event.LayoutClickEvent
 
 class LayoutClickListener(val action: LayoutClickEvent => Unit) extends com.vaadin.event.LayoutEvents.LayoutClickListener with Listener {
   def layoutClick(e: com.vaadin.event.LayoutEvents.LayoutClickEvent) = action(LayoutClickEvent(wrapperFor[Component](e.getComponent).get, wrapperFor[Component](e.getClickedComponent).get, wrapperFor[Component](e.getChildComponent).get, MouseButton(e.getButton.ordinal), e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))
@@ -112,11 +117,11 @@ trait ViewChangeListener extends com.vaadin.navigator.ViewChangeListener with Li
 }
 
 class BeforeViewChangeListener(val action: Navigator.ViewChangeEvent => Boolean) extends ViewChangeListener {
-  override def beforeViewChange(e: com.vaadin.navigator.ViewChangeListener.ViewChangeEvent): Boolean = action(Navigator.ViewChangeEvent(wrapperFor[Navigator](e.getNavigator).get, wrapperFor[Navigator.View](e.getOldView), wrapperFor[Navigator.View](e.getNewView).get, Option(e.getViewName), Option(e.getParameters)))
+  override def beforeViewChange(e: com.vaadin.navigator.ViewChangeListener.ViewChangeEvent): Boolean = action(Navigator.ViewChangeEvent(wrapperFor[Navigator](e.getNavigator).get, wrapperFor[Navigator.View](e.getOldView), wrapperFor[Navigator.View](e.getNewView).get, Option(e.getViewName), e.getParameters))
 }
 
 class AfterViewChangeListener(val action: Navigator.ViewChangeEvent => Unit) extends ViewChangeListener {
   override def afterViewChange(e: com.vaadin.navigator.ViewChangeListener.ViewChangeEvent) {
-    action(Navigator.ViewChangeEvent(wrapperFor[Navigator](e.getNavigator).get, wrapperFor[Navigator.View](e.getOldView), wrapperFor[Navigator.View](e.getNewView).get, Option(e.getViewName), Option(e.getParameters)))
+    action(Navigator.ViewChangeEvent(wrapperFor[Navigator](e.getNavigator).get, wrapperFor[Navigator.View](e.getOldView), wrapperFor[Navigator.View](e.getNewView).get, Option(e.getViewName), e.getParameters))
   }
 }

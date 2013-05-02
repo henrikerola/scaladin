@@ -1,10 +1,11 @@
 package vaadin.scala.internal
 
 import scala.collection.mutable
+import vaadin.scala.ListenersSet
+import scala.collection.JavaConverters._
 
-trait ListenersTrait[E, L <: Listener] extends mutable.Set[E => Unit] with Serializable {
+trait ListenersTrait[E, L <: Listener] extends mutable.Set[E => Unit] with ListenersSet[E => Unit] with Serializable {
 
-  import scala.collection.JavaConverters._
   def contains(key: E => Unit) = {
     iterator.contains(key)
   }
@@ -31,9 +32,8 @@ trait ListenersTrait[E, L <: Listener] extends mutable.Set[E => Unit] with Seria
   protected def removeListener(elem: L)
 }
 
-trait DecisionListenersTrait[E, L <: Listener] extends mutable.Set[E => Boolean] {
+trait DecisionListenersTrait[E, L <: Listener] extends mutable.Set[E => Boolean] with Serializable {
 
-  import scala.collection.JavaConverters._
   def contains(key: E => Boolean) = {
     iterator.contains(key)
   }

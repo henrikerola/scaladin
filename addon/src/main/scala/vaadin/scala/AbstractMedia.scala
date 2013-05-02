@@ -23,20 +23,20 @@ class AbstractMedia(override val p: com.vaadin.ui.AbstractMedia with AbstractMed
   def addSource(source: Resource) { p.addSource(source.p) }
 
   def showControls: Boolean = p.isShowControls
-  def showControls_=(showControls: Boolean): Unit = p.setShowControls(showControls)
+  def showControls_=(showControls: Boolean) { p.setShowControls(showControls) }
 
   def altText: Option[String] = Option(p.getAltText)
-  def altText_=(altText: Option[String]): Unit = p.setAltText(altText.orNull)
-  def altText_=(altText: String): Unit = p.setAltText(altText)
+  def altText_=(altText: Option[String]) { p.setAltText(altText.orNull) }
+  def altText_=(altText: String) { p.setAltText(altText) }
 
   def htmlContentAllowed: Boolean = p.isHtmlContentAllowed
-  def htmlContentAllowed_=(htmlContentAllowed: Boolean): Unit = p.setHtmlContentAllowed(htmlContentAllowed)
+  def htmlContentAllowed_=(htmlContentAllowed: Boolean) { p.setHtmlContentAllowed(htmlContentAllowed) }
 
   def autoplay: Boolean = p.isAutoplay
-  def autoplay_=(autoplay: Boolean): Unit = p.setAutoplay(autoplay)
+  def autoplay_=(autoplay: Boolean) { p.setAutoplay(autoplay) }
 
   def muted: Boolean = p.isMuted
-  def muted_=(muted: Boolean): Unit = p.setMuted(muted)
+  def muted_=(muted: Boolean) { p.setMuted(muted) }
 
   def pause(): Unit = p.pause()
 

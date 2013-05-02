@@ -27,7 +27,7 @@ class FileSystemContainerTests extends FunSuite with BeforeAndAfter {
 
   ignore("getItem") {
     assert(2 === container.size)
-    val item = container.item(temp1).get
+    val item = container.getItem(temp1).get
 
     val nameProperty = item.property(FilesystemContainer.PropertyName)
     val iconProperty = item.property(FilesystemContainer.PropertyIcon)

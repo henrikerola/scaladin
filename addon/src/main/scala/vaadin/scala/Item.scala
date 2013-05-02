@@ -1,7 +1,5 @@
 package vaadin.scala
 
-import vaadin.scala.mixins.ScaladinMixin
-
 object Item {
   def apply(properties: Tuple2[Any, Any]*): Item = fill(new PropertysetItem, properties: _*)
 

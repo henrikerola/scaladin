@@ -1,6 +1,5 @@
 package vaadin.scala
 
-import vaadin.scala.mixins.ScaladinMixin
 import vaadin.scala.mixins.ContainerMixin
 import vaadin.scala.mixins.ContainerIndexedMixin
 import vaadin.scala.mixins.ContainerHierarchicalMixin
@@ -24,13 +23,14 @@ trait Container extends Wrapper {
 
   def p: com.vaadin.data.Container with ContainerMixin
 
-  def item(id: Any): Option[Item] = optionalWrapItem(p.getItem(id))
+  def getItem(id: Any): Option[Item] = optionalWrapItem(p.getItem(id))
 
   def itemIds: Iterable[Any] = p.getItemIds.asScala
 
-  def removeAllItems(): Boolean = p.removeAllItems
+  def removeAllItems(): Boolean = p.removeAllItems()
 
-  def addContainerProperty(propertyId: Any, propertyType: Class[_], defaultValue: Option[Any] = None): Boolean = p.addContainerProperty(propertyId, propertyType, defaultValue.orNull)
+  def addContainerProperty(propertyId: Any, propertyType: Class[_], defaultValue: Option[Any] = None): Boolean =
+    p.addContainerProperty(propertyId, propertyType, defaultValue.orNull)
 
   def removeContainerProperty(propertyId: Any): Boolean = p.removeContainerProperty(propertyId)
 
@@ -45,9 +45,10 @@ trait Container extends Wrapper {
 
   def size: Int = p.size()
 
-  def property(itemId: Any, propertyId: Any): Option[Property[_]] = optionalWrapProperty(p.getContainerProperty(itemId, propertyId))
+  def getProperty(itemId: Any, propertyId: Any): Option[Property[_]] =
+    optionalWrapProperty(p.getContainerProperty(itemId, propertyId))
 
-  def propertyIds(): Iterable[Any] = p.getContainerPropertyIds().asScala
+  def propertyIds: Iterable[Any] = p.getContainerPropertyIds().asScala
 
   def getType(propertyId: Any): Class[_] = p.getType(propertyId)
 
@@ -68,11 +69,12 @@ trait Container extends Wrapper {
 }
 
 object Container {
-  def apply(items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): Container = fill(new IndexedContainer, items: _*)
+  def apply(items: (Any, Seq[(Any, Any)])*): Container = fill(new IndexedContainer, items: _*)
 
-  def filterable(items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): FilterableContainer = fill(new IndexedContainer with FilterableContainer, items: _*)
+  def filterable(items: (Any, Seq[(Any, Any)])*): FilterableContainer =
+    fill(new IndexedContainer with FilterableContainer, items: _*)
 
-  def fill[C <: Container](container: C, items: Tuple2[Any, Seq[Tuple2[Any, Any]]]*): C = {
+  def fill[C <: Container](container: C, items: (Any, Seq[(Any, Any)])*): C = {
     for (item <- items) {
       container.addItem(item._1) match {
 
@@ -98,18 +100,20 @@ object Container {
 
     import scala.collection.JavaConverters._
 
-    def children(itemId: Any): Iterable[Any] = p.getChildren(itemId) match {
+    def getChildren(itemId: Any): Iterable[Any] = p.getChildren(itemId) match {
       case null => List.empty
       case result => result.asScala
     }
 
-    def parent(itemId: Any): Any = p.getParent(itemId)
-    def setParent(itemToParent: (Any, Any)): Unit = p.setParent(itemToParent._1, itemToParent._2)
+    def getParent(itemId: Any): Any = p.getParent(itemId) // should return Option[Any]?
+    def setParent(itemToParent: (Any, Any)) { p.setParent(itemToParent._1, itemToParent._2) }
 
     def rootItemIds: Iterable[Any] = p.rootItemIds.asScala
 
-    def childrenAllowed(itemId: Any): Boolean = p.areChildrenAllowed(itemId)
-    def setChildrenAllowed(childrenAllowedForItem: (Any, Boolean)): Unit = p.setChildrenAllowed(childrenAllowedForItem._1, childrenAllowedForItem._2)
+    def isChildrenAllowed(itemId: Any): Boolean = p.areChildrenAllowed(itemId)
+    def setChildrenAllowed(childrenAllowedForItem: (Any, Boolean)) {
+      p.setChildrenAllowed(childrenAllowedForItem._1, childrenAllowedForItem._2)
+    }
 
     def isRoot(itemId: Any): Boolean = p.isRoot(itemId)
 
@@ -119,6 +123,8 @@ object Container {
   trait Ordered extends Container {
 
     def p: com.vaadin.data.Container.Ordered with ContainerOrderedMixin
+
+    // TODO: nextItemId, prevItemId, firstItemId, lastItemId should return Option[Any]?
 
     def nextItemId(itemId: Any): Any = p.nextItemId(itemId)
 
@@ -140,9 +146,9 @@ object Container {
   trait Viewer extends Wrapper {
     def p: com.vaadin.data.Container.Viewer with ContainerViewerMixin
 
-    def container_=(container: Option[Container]): Unit = if (container.isDefined) p.setContainerDataSource(container.get.p) else p.setContainerDataSource(null)
-    def container_=(container: Container): Unit = if (container != null) p.setContainerDataSource(container.p) else p.setContainerDataSource(null)
-    def container: Option[Container] = wrapperFor[Container](p.getContainerDataSource)
+    def container_=(container: Option[Container]) { p.setContainerDataSource(peerFor(container)) }
+    def container_=(container: Container) { p.setContainerDataSource(container.p) }
+    def container: Option[Container] = wrapperFor(p.getContainerDataSource)
   }
 
   trait Sortable extends Ordered {
@@ -150,7 +156,7 @@ object Container {
 
     def p: com.vaadin.data.Container.Sortable with ContainerSortableMixin
 
-    def sort(propertyId: Array[AnyRef], ascending: Array[Boolean]): Unit = p.sort(propertyId, ascending)
+    def sort(propertyId: Array[AnyRef], ascending: Array[Boolean]) { p.sort(propertyId, ascending) }
 
     def sortableContainerPropertyIds(): Iterable[Any] = p.getSortableContainerPropertyIds.asScala
   }

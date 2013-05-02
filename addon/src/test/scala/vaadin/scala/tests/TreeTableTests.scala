@@ -23,8 +23,8 @@ class TreeTableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     treeTable = new TreeTable(spy)
   }
 
-  test("collapsed(itemId, collapsed)") {
-    treeTable.collapsed('itemId, true)
+  test("setCollapsed(itemId, collapsed)") {
+    treeTable.setCollapsed('itemId, true)
     Mockito.verify(spy).setCollapsed('itemId, true)
   }
 
@@ -41,8 +41,8 @@ class TreeTableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(treeTable.hierarchyColumn === Some('col1))
   }
 
-  test("collapsed(itemId)") {
-    assert(treeTable.collapsed('itemId))
+  test("isCollapsed(itemId)") {
+    assert(treeTable.isCollapsed('itemId))
     Mockito.verify(spy).isCollapsed('itemId)
   }
 

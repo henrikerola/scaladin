@@ -38,6 +38,6 @@ class BeanItemContainerTests extends FunSuite
 
     val bean = new Foo("test", 123)
     val container = new BeanItemContainer(bean :: Nil)
-    assert(container.item(bean).get.propertyIds.toSeq === List("bar", "baz").toSeq)
+    assert(container.getItem(bean).get.propertyIds.toSeq === List("bar", "baz").toSeq)
   }
 }

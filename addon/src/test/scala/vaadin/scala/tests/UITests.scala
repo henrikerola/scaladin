@@ -6,6 +6,7 @@ import internal.WrappedVaadinUI
 import org.scalatest.BeforeAndAfter
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import java.io.{ ByteArrayOutputStream, ObjectOutputStream }
 
 @RunWith(classOf[JUnitRunner])
 class UITests extends FunSuite with BeforeAndAfter {
@@ -134,5 +135,9 @@ class UITests extends FunSuite with BeforeAndAfter {
     nui.setNavigator(None)
     assert(nui.navigator == null)
     assert(nui.p.getNavigator == null)
+  }
+
+  ignore("serialization") {
+    new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(ui)
   }
 }

@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import event.ValueChangeNotifier
 import vaadin.scala.converter.Converter
 import scala.xml.Node
 import scala.xml.NodeBuffer
@@ -24,23 +25,24 @@ object Label {
     sizeUndefined()
   }
 
-  def html(htmlValue: Node) = new Label { value = htmlValue.toString; contentMode = ContentMode.Html }
-  def apply(labelValue: String) = new Label { value = labelValue }
+  def html(htmlValue: Node): Label = new Label { value = htmlValue.toString; contentMode = ContentMode.Html }
+  def apply(labelValue: String): Label = new Label { value = labelValue }
 }
 
-class Label(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin.ui.Label with LabelMixin) extends AbstractComponent(p) with PropertyViewer with Property[String] with ValueChangeNotifier {
+class Label(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin.ui.Label with LabelMixin)
+    extends AbstractComponent(p) with PropertyViewer with Property[String] with ValueChangeNotifier {
 
-  def contentMode = Label.ContentMode(p.getContentMode.ordinal)
-  def contentMode_=(contentMode: Label.ContentMode.Value) = p.setContentMode(ContentMode.values.apply(contentMode.id))
+  def contentMode: Label.ContentMode.Value = Label.ContentMode(p.getContentMode.ordinal)
+  def contentMode_=(contentMode: Label.ContentMode.Value) { p.setContentMode(ContentMode.values.apply(contentMode.id)) }
 
-  def value_=(value: Node): Unit = p.setValue(value.mkString)
-  def value_=(value: NodeBuffer): Unit = p.setValue(value.mkString)
+  def value_=(value: Node) { p.setValue(value.mkString) }
+  def value_=(value: NodeBuffer) { p.setValue(value.mkString) }
 
   //readOnly is inherited from Component and Property, needs override
   override def readOnly: Boolean = p.isReadOnly
-  override def readOnly_=(readOnly: Boolean): Unit = p.setReadOnly(readOnly)
+  override def readOnly_=(readOnly: Boolean) { p.setReadOnly(readOnly) }
 
-  def converter: Option[Converter[String, Any]] = wrapperFor[Converter[String, Any]](p.getConverter)
-  def converter_=(converter: Converter[String, _]): Unit = p.setConverter(converter.p)
+  def converter: Option[Converter[String, Any]] = wrapperFor(p.getConverter)
+  def converter_=(converter: Converter[String, _]) { p.setConverter(converter.p) }
 }
 

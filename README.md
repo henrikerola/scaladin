@@ -3,6 +3,11 @@
 Scaladin makes easier to use [Vaadin Framework](https://vaadin.com) with [Scala](http://www.scala-lang.org/) programming language. It's a wrapper library that provides a pure Scala API for Vaadin Framework. 
 
 [![Build Status](https://secure.travis-ci.org/henrikerola/scaladin.png?branch=3.0)](http://travis-ci.org/henrikerola/scaladin)
+
+## Discussion
+
+[Vaadin Forum](https://vaadin.com/forum) is the place for discussion about Scaladin. You can use the existing [Vaadin & Scala](https://vaadin.com/forum#!/thread/530127) thread or create your own.
+
 ## How to use it?
 
 Scaladin 2 is for Vaadin 6 and Scaladin 3 for Vaadin 7. Scaladin 3 is still under development and not yet released but you can build your own version from sources. Scaladin 3 requires Scala 2.10. The JAR file and a Maven dependency for Scaladin 2 and Scala 2.9 can be found from the [Vaadin Directory](http://vaadin.com/addon/scaladin).
