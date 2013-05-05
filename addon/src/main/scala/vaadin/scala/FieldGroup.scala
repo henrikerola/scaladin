@@ -9,6 +9,9 @@ import vaadin.scala.internal.PreCommitHandler
 import vaadin.scala.internal.HandlersTrait
 import vaadin.scala.FieldGroup.PostCommitEvent
 import vaadin.scala.internal.PostCommitHandler
+import scala.reflect.runtime.universe._
+import scala.reflect.ClassTag
+import scala.annotation.StaticAnnotation
 
 package mixins {
   trait FieldGroupMixin extends TypedScaladinMixin[FieldGroup]
@@ -21,6 +24,8 @@ object FieldGroup {
   case class CommitSuccess()
   case class CommitFailed(error: String)
   type CommitResult = Either[CommitFailed, CommitSuccess]
+
+  case class propertyId(value: String) extends StaticAnnotation
 }
 
 class FieldGroup(override val p: com.vaadin.data.fieldgroup.FieldGroup with FieldGroupMixin = new com.vaadin.data.fieldgroup.FieldGroup with FieldGroupMixin) extends Wrapper {
@@ -95,6 +100,56 @@ class FieldGroup(override val p: com.vaadin.data.fieldgroup.FieldGroup with Fiel
   def fieldFactory_=(factory: Option[FieldGroupFieldFactory]): Unit = p.setFieldFactory(factory map (_.p) orNull)
   def fieldFactory_=(factory: FieldGroupFieldFactory): Unit = p.setFieldFactory(if (factory != null) factory.p else null)
   def fieldFactory_=[FT <: Field[_]](fieldFunction: (Class[_], Class[_]) => Option[FT]): Unit = this.fieldFactory = FieldGroupFieldFactory(fieldFunction)
+
+  protected def build[T <: Field[_]](caption: String, dataType: Class[_], fieldType: Class[T]): Option[T] = {
+    fieldFactory.get.createField[T](dataType, fieldType) map { f =>
+      f.caption = caption
+      f
+    }
+  }
+
+  private def findAnnotation[T: TypeTag](member: Symbol): Option[T] = {
+    val propertyIdAnnotation = member.annotations.find { a => a.tpe <:< typeOf[T] }
+    propertyIdAnnotation map { constructAnnotationInstance(_) }
+  }
+
+  private def constructAnnotationInstance[T: TypeTag](annotation: Annotation): T = {
+    val rm = runtimeMirror(getClass.getClassLoader)
+    val annotationArgValues = annotation.scalaArgs.map { _.productElement(0).asInstanceOf[Constant].value }
+    val classSymbol = typeOf[T].typeSymbol.asClass
+    val classMirror = rm.reflectClass(classSymbol)
+    val constructorMethodSymbol = typeOf[T].declaration(nme.CONSTRUCTOR).asMethod
+    val constructorMethodMirror = classMirror.reflectConstructor(constructorMethodSymbol)
+    constructorMethodMirror(annotationArgValues: _*).asInstanceOf[T]
+  }
+
+  def getFieldValue[T: TypeTag](objectWithMemberFields: T, name: Name): Option[Any] = {
+    val rm = runtimeMirror(objectWithMemberFields.getClass.getClassLoader)
+    val symbol = typeOf[T].declaration(name).asTerm
+    implicit val classTag = ClassTag[T](objectWithMemberFields.getClass) // rm.reflect needs ClassTag
+    val mirror = rm.reflect(objectWithMemberFields).reflectField(symbol)
+    Option(mirror.get)
+  }
+
+  def bindMemberFields[T: TypeTag](objectWithMemberFields: T) {
+    buildAndBindMemberFields(objectWithMemberFields, false)
+  }
+
+  protected def buildAndBindMemberFields[T: TypeTag](objectWithMemberFields: T, buildFields: Boolean) {
+    typeOf[T].members.filter(_.typeSignature <:< typeOf[Field[_]]).foreach { m =>
+      val field = getFieldValue(objectWithMemberFields, m.name).asInstanceOf[Option[Field[_]]]
+      val annotatedPropertyId = findAnnotation[FieldGroup.propertyId](m)
+      // See why .trim is needed: https://issues.scala-lang.org/browse/SI-5736
+      val propertyId = annotatedPropertyId.fold(m.name.decoded.trim) { _.value }
+
+      // TODO: implement the build part
+
+      field.foreach {
+        bind(_, propertyId)
+      }
+    }
+
+  }
 
   //TODO build & bind
 }

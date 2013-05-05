@@ -11,7 +11,7 @@ class ScaladinItem[T: Manifest](bean: T)
     extends PropertysetItem(new util.PropertysetItem) {
 
   getPropertyDescriptors(bean) foreach { pd =>
-    addItemProperty(pd.name, pd.createProperty(pd));
+    addItemProperty(pd.name, pd.createProperty(pd))
   }
 
   def getPropertyDescriptors(b: T): Iterable[ScaladinPropertyDescriptor[_]] = {
