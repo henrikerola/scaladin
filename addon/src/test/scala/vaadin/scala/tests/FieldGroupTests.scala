@@ -5,6 +5,7 @@ import org.mockito.Mockito._
 import org.mockito.Matchers._
 
 import scala.beans.BeanProperty
+import vaadin.scala.FieldGroup.propertyId
 
 class FieldGroupTests extends ScaladinTestSuite {
 
@@ -105,4 +106,20 @@ class FieldGroupTests extends ScaladinTestSuite {
   }
 
   case class Person(@BeanProperty var firstName: String, @BeanProperty var lastName: String)
+
+  class MyFormLayout extends GridLayout {
+    val firstName = new TextField
+    @propertyId("lastName")
+    val last = new TextField
+  }
+
+  test("bindMemberFields") {
+    val myFormLayout = new MyFormLayout
+    val item = new BeanItem[Person](Person("John", "Doe"))
+    fieldGroup.item = item
+    fieldGroup.bindMemberFields(myFormLayout)
+
+    assert(Some("John") === myFormLayout.firstName.value)
+    assert(Some("Doe") === myFormLayout.last.value)
+  }
 }
