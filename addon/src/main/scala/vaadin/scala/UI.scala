@@ -107,8 +107,4 @@ abstract class UI(override val p: WrappedVaadinUI)
 
   def preserveOnRefresh: Boolean = _preserveOnRefresh
 
-  def access[R](runnable: => R): Unit = p.access(new java.lang.Runnable() {
-    def run() = runnable
-  })
-
 }
