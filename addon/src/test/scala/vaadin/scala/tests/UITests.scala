@@ -7,9 +7,12 @@ import org.scalatest.BeforeAndAfter
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import java.io.{ ByteArrayOutputStream, ObjectOutputStream }
+import org.mockito.Mockito.when
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.times
+import org.mockito.Matchers.any
 
-@RunWith(classOf[JUnitRunner])
-class UITests extends FunSuite with BeforeAndAfter {
+class UITests extends ScaladinTestSuite {
 
   var ui: UI = _
 
@@ -140,4 +143,26 @@ class UITests extends FunSuite with BeforeAndAfter {
   ignore("serialization") {
     new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(ui)
   }
+
+  test("access") {
+    //needs some special setup because of the session requirement
+    val mockSession = mock[com.vaadin.server.VaadinSession]
+    val mockWrapped = mock[WrappedVaadinUI]
+    
+    when(mockWrapped.getSession()).thenReturn(mockSession)
+    
+    val testui = new MockUI(mockWrapped)
+
+    val layout = new VerticalLayout
+    testui.access(() => layout.spacing)
+    testui.access(() => layout.spacing = true)
+    testui.access(() => {
+      layout.data = "foobar"
+    })
+    
+    verify(mockWrapped, times(3)).access(any(classOf[java.lang.Runnable]))
+  }
+  
 }
+
+class MockUI(val mock: WrappedVaadinUI) extends UI(mock)  
