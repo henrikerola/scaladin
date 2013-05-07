@@ -31,4 +31,6 @@ class ScaladinUIProvider extends DefaultUIProvider {
 
   override def isPreservedOnRefresh(e: UICreateEvent) = getScaladinUiInstance(e).preserveOnRefresh
 
+  override def getPushMode(e: UICreateEvent) = com.vaadin.shared.communication.PushMode.values.apply(getScaladinUiInstance(e).pushMode.id)
+
 }

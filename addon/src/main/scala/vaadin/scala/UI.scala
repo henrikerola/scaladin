@@ -14,6 +14,13 @@ object UI {
   def current_=(ui: UI): Unit = com.vaadin.ui.UI.setCurrent(ui.p)
 }
 
+object PushMode extends Enumeration {
+  import com.vaadin.shared.communication.{ PushMode => VaadinPushMode }
+  val Automatic = Value(VaadinPushMode.AUTOMATIC.ordinal)
+  val Disabled = Value(VaadinPushMode.DISABLED.ordinal)
+  val Manual = Value(VaadinPushMode.MANUAL.ordinal)
+}
+
 /**
  * @see com.vaadin.ui.UI
  * @author Henri Kerola / Vaadin
@@ -28,17 +35,21 @@ abstract class UI(override val p: WrappedVaadinUI)
   private[this] var _widgetset: Option[String] = None
   private[this] var _preserveOnRefresh: Boolean = false
 
+  var pushMode: PushMode.Value = PushMode.Disabled
+
   def this(
     title: String = null,
     theme: String = null,
     widgetset: String = null,
     preserveOnRefresh: Boolean = false,
+    pushMode: PushMode.Value = PushMode.Disabled,
     p: WrappedVaadinUI = new WrappedVaadinUI) {
     this(p)
     this._title = Option(title)
     this._theme = Option(theme)
     this._widgetset = Option(widgetset)
     this._preserveOnRefresh = preserveOnRefresh
+    this.pushMode = pushMode
   }
 
   def delayedInit(body: => Unit) {
