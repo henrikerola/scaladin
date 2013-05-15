@@ -53,6 +53,6 @@ class ScaladinItem[T: TypeTag](bean: T, propertyDescriptors: Iterable[ScaladinPr
     extends PropertysetItem(new util.PropertysetItem) {
 
   propertyDescriptors foreach { pd =>
-    addItemProperty(pd.name, pd.createProperty(pd))
+    addProperty(pd.name, pd.createProperty(pd))
   }
 }

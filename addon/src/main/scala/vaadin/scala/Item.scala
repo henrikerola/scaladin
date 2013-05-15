@@ -9,7 +9,7 @@ object Item {
   }
 
   def fill[I <: Item](item: I, properties: Tuple2[Any, Any]*) = {
-    properties foreach (p => item.addItemProperty(p._1, Property(p._2)))
+    properties foreach (p => item.addProperty(p._1, Property(p._2)))
     item
   }
 
@@ -46,9 +46,9 @@ trait Item extends Wrapper {
 
   def propertyIds(): Iterable[Any] = p.getItemPropertyIds.asScala
 
-  def addItemProperty(id: Any, property: Property[_]): Boolean = p.addItemProperty(id, property.p)
+  def addProperty(id: Any, property: Property[_]): Boolean = p.addItemProperty(id, property.p)
 
-  def removeItemProperty(id: Any): Boolean = p.removeItemProperty(id)
+  def removeProperty(id: Any): Boolean = p.removeItemProperty(id)
 
   protected def optionalWrapProperty(property: com.vaadin.data.Property[_]): Option[Property[_]] = property match {
     case p: com.vaadin.data.Property[_] => Some(wrapProperty(p))
