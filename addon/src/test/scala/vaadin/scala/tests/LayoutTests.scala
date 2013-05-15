@@ -29,7 +29,7 @@ class LayoutTests extends FunSuite {
 
     assert(layout.p.getComponent(0) === label.p)
     assert(layout.p.getExpandRatio(label.p) === 2)
-    assert(layout.alignment(label) === Alignment.BottomCenter)
+    assert(layout.getAlignment(label) === Alignment.BottomCenter)
     assert(layout.p.getComponentAlignment(label.p) === com.vaadin.ui.Alignment.BOTTOM_CENTER)
 
     assert(layout.p.getComponentIndex(label.p) === 0)

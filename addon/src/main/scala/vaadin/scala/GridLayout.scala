@@ -31,7 +31,7 @@ class GridLayout(
       p.addComponent(component.p)
 
     if (alignment != null) {
-      this.alignment(component, alignment)
+      this.setAlignment(component, alignment)
     }
 
     component

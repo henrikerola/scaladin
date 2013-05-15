@@ -122,10 +122,11 @@ trait AlignmentHandler {
 
   def p: com.vaadin.ui.Layout.AlignmentHandler
 
-  def alignment(component: Component) = Alignment(p.getComponentAlignment(component.p).getBitMask())
+  def getAlignment(component: Component) = Alignment(p.getComponentAlignment(component.p).getBitMask())
 
-  def alignment(component: Component, alignment: Alignment.Value) = p.setComponentAlignment(component.p, new com.vaadin.ui.Alignment(alignment.id))
-  def alignment(componentAlignment: Tuple2[Component, Alignment.Value]) = p.setComponentAlignment(componentAlignment._1.p, new com.vaadin.ui.Alignment(componentAlignment._2.id))
+  def setAlignment(component: Component, alignment: Alignment.Value) {
+    p.setComponentAlignment(component.p, new com.vaadin.ui.Alignment(alignment.id))
+  }
 }
 
 trait MarginHandler {
