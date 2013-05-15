@@ -2,13 +2,12 @@ package vaadin.scala
 
 import com.vaadin.data.util.VaadinPropertyDescriptor
 import vaadin.scala.mixins.{ DelegatingVaadinPropertyDescriptor }
+import scala.reflect.runtime.universe.MethodMirror
 
 package mixins {
 
-  trait DelegatingVaadinPropertyDescriptor[T] extends ScaladinMixin {
+  trait DelegatingVaadinPropertyDescriptor[T] extends TypedScaladinMixin[ScaladinPropertyDescriptor[T]] {
     self: VaadinPropertyDescriptor[T] =>
-
-    override def wrapper = super.wrapper.asInstanceOf[ScaladinPropertyDescriptor[T]]
 
     def getName: String = wrapper.name
 
@@ -25,14 +24,14 @@ package mixins {
 class ScaladinPropertyDescriptor[T](
   val name: String,
   val propertyType: Class[_],
-  val mirror: scala.reflect.runtime.universe.type#FieldMirror)
+  val getterMirror: MethodMirror,
+  val setterMirror: Option[MethodMirror])
     extends Wrapper {
 
   val p = new VaadinPropertyDescriptor[T] with DelegatingVaadinPropertyDescriptor[T]
   p.wrapper = this
 
-  // TODO should be bean: T
-  def createProperty(bean: Any): Property[_] = {
-    new ScaladinProperty[T](propertyType.asInstanceOf[Class[_ <: T]], bean.asInstanceOf[T], mirror)
+  def createProperty[T](bean: T): Property[_] = {
+    new ScaladinProperty[T](propertyType.asInstanceOf[Class[_ <: T]], bean, getterMirror, setterMirror)
   }
 }

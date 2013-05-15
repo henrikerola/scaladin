@@ -1,6 +1,5 @@
 package vaadin.scala
 
-import vaadin.scala.mixins.ContainerIndexedMixin
 import vaadin.scala.mixins.BeanItemContainerMixin
 import scala.collection.JavaConverters._
 

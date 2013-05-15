@@ -1,20 +1,13 @@
 package vaadin.scala
 
 import scala.reflect.runtime.universe._
-import scala.reflect.Manifest
 import com.vaadin.data.util
+import scala.reflect.ClassTag
 
-/**
- * @author Henri Kerola / Vaadin
- */
-class ScaladinItem[T: Manifest](bean: T)
-    extends PropertysetItem(new util.PropertysetItem) {
+object ScaladinItem {
 
-  getPropertyDescriptors(bean) foreach { pd =>
-    addItemProperty(pd.name, pd.createProperty(pd))
-  }
-
-  def getPropertyDescriptors(b: T): Iterable[ScaladinPropertyDescriptor[_]] = {
+  protected def getPropertyDescriptors[T: TypeTag](b: T): Iterable[ScaladinPropertyDescriptor[T]] = {
+    implicit val classTag = ClassTag[T](b.getClass)
     lazy val rm = runtimeMirror(b.getClass.getClassLoader)
     val getters = typeOf[T].members filter { m =>
       m.typeSignature match {
@@ -22,12 +15,44 @@ class ScaladinItem[T: Manifest](bean: T)
         case _ => false
       }
     }
+
     getters.map { m =>
       val clazz = rm.runtimeClass(m.asMethod.returnType.typeSymbol.asClass)
-      val symbol = typeOf[T].declaration(m.name).asTerm
-      val mirror = rm.reflect(b).reflectField(symbol)
+      val getterSymbol = typeOf[T].member(m.name).asMethod
+      val getterMirror = rm.reflect(b).reflectMethod(getterSymbol)
+      val setterSymbol = getterSymbol.setter match {
+        case ms: MethodSymbol => Some(ms)
+        case _ => {
+          typeOf[T].member(newTermName(m.name.encoded + "_$eq")) match {
+            case ms: MethodSymbol => Some(ms)
+            case _ => None
+          }
+        }
+      }
+      val setterMirror = setterSymbol map { s => rm.reflect(b).reflectMethod(s.asMethod) }
 
-      new ScaladinPropertyDescriptor[T](m.name.decoded, clazz, mirror)
+      new ScaladinPropertyDescriptor[T](m.name.decoded, clazz, getterMirror, setterMirror)
     }
+  }
+
+  def apply[T: TypeTag](bean: T): ScaladinItem[T] = {
+    new ScaladinItem(bean, getPropertyDescriptors(bean))
+  }
+
+  def apply[T: TypeTag](bean: T, propertyIds: Iterable[String]): ScaladinItem[T] = {
+    val propertyDescriptorsMap = getPropertyDescriptors(bean) map { pd => (pd.name, pd) } toMap
+    val propertyDescriptors = propertyIds flatMap { propertyDescriptorsMap.get(_) }
+    new ScaladinItem(bean, propertyDescriptors)
+  }
+}
+
+/**
+ * @author Henri Kerola / Vaadin
+ */
+class ScaladinItem[T: TypeTag](bean: T, propertyDescriptors: Iterable[ScaladinPropertyDescriptor[T]])
+    extends PropertysetItem(new util.PropertysetItem) {
+
+  propertyDescriptors foreach { pd =>
+    addItemProperty(pd.name, pd.createProperty(pd))
   }
 }
