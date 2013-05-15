@@ -2,6 +2,8 @@ package vaadin.scala.tests
 
 import vaadin.scala._
 import org.mockito.Mockito._
+import org.mockito.Matchers._
+
 import scala.beans.BeanProperty
 import vaadin.scala.FieldGroup.propertyId
 
@@ -13,7 +15,7 @@ class FieldGroupTests extends ScaladinTestSuite {
     fieldGroup = new FieldGroup
   }
 
-  ignore("setting FieldGroupFieldFactory") {
+  test("setting FieldGroupFieldFactory") {
     val factory = DefaultFieldGroupFieldFactory
 
     fieldGroup.fieldFactory = factory
@@ -23,32 +25,39 @@ class FieldGroupTests extends ScaladinTestSuite {
     assertSameFactory(factory, fieldGroup.fieldFactory)
 
     val factoryFunctionMock = mock[Function2[Class[_], Class[_], Option[Field[_]]]]
-    val itemMock = mock[Item]
+
     fieldGroup.fieldFactory = factoryFunctionMock
 
     assert(fieldGroup.fieldFactory.isDefined, "No field factory created for field function")
+
+  }
+
+  ignore("creating fields") {
+    val field = new TextField
+
+    val factoryFunctionMock = mock[Function2[Class[_], Class[_], Option[Field[_]]]]
+    when(factoryFunctionMock(any(), any())).thenReturn(Option(field))
+
+    fieldGroup.fieldFactory = factoryFunctionMock
 
     val dataType = classOf[String]
     val fieldType = classOf[TextField]
     val fieldfactory = fieldGroup.fieldFactory.get
     fieldfactory.createField(dataType, fieldType)
 
+    fieldGroup.bind(field, 'propertyId)
     verify(factoryFunctionMock)(dataType, fieldType)
   }
 
-  //TODO
-  test("creating fields") {
+  test("add field") {
+    val field = new TextField
 
+    fieldGroup.bind(field, 'testId)
+    val addedField = fieldGroup.field('testId)
+    assert(addedField.isDefined)
+    assert(field === addedField.get)
+    assert(field.p === addedField.get.p)
   }
-
-  //  test("add field") {
-  //    val field = new TextField
-  //    fieldGroup.addField('testId, field)
-  //    val addedField = fieldGroup.field('testId)
-  //    assert(addedField.isDefined)
-  //    assert(field === addedField.get)
-  //    assert(field.p === addedField.get.p)
-  //  }
 
   test("item datasource") {
     val item = new IndexedContainer().addItem('id).get
@@ -64,7 +73,9 @@ class FieldGroupTests extends ScaladinTestSuite {
     assert(fieldGroup.item == None)
   }
 
-  ignore("commit") {
+  test("commit") {
+    val item = new IndexedContainer().addItem('id).get
+    fieldGroup.item = item
     assert(fieldGroup.commit.isRight)
 
     val field = new TextField { value = "value" }
@@ -76,10 +87,11 @@ class FieldGroupTests extends ScaladinTestSuite {
     assert(!fieldGroup.commit.isRight)
   }
 
-  ignore("buffered") {
+  test("buffered") {
     fieldGroup.buffered = true
     val person = Person("test", "tester")
     fieldGroup.item = new BeanItem(person)
+    fieldGroup.bind(new TextField, "firstName")
     fieldGroup.field("firstName").foreach(_.value = "newValue")
 
     assert("test" === person.firstName)

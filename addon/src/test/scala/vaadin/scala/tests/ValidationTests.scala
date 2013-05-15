@@ -6,6 +6,7 @@ import org.scalatest.junit.JUnitRunner
 import vaadin.scala._
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
+import com.vaadin.data.validator.EmailValidator
 
 @RunWith(classOf[JUnitRunner])
 class ValidationTests extends FunSuite with MockitoSugar {
@@ -68,5 +69,45 @@ class ValidationTests extends FunSuite with MockitoSugar {
     assert(field1.validate :: field2.validate === Invalid(List("reason")))
     assert(field2.validate :: field1.validate === Invalid(List("reason")))
     assert(field2.validate :: field2.validate === Invalid(List("reason", "reason")))
+  }
+
+  test("Use Java Vaadin validators, inline wrap") {
+    import scala.util._
+    import scala.util.control.Exception._
+
+    val field1 = new TextField
+    field1.validators += Validator(value => {
+      catching(classOf[com.vaadin.data.Validator.InvalidValueException]) withTry (new com.vaadin.data.validator.EmailValidator("foo").validate(value.orNull)) match {
+        case Success(value) => Valid
+        case Failure(exception) => Invalid(List(exception.getMessage))
+      }
+    })
+
+    field1.value = "foo"
+    assert(field1.validate === Invalid(List("foo")))
+
+    field1.value = "test@email.com"
+    assert(field1.validate === Valid)
+  }
+
+  test("Use Java Vaadin validators, extension wrap") {
+    import scala.util._
+    import scala.util.control.Exception._
+
+    val field1 = new TextField
+    field1.validators += new Validator {
+      def validate(value: Option[Any]): Validation = {
+        catching(classOf[com.vaadin.data.Validator.InvalidValueException]) withTry (new com.vaadin.data.validator.EmailValidator("foo").validate(value.orNull)) match {
+          case Success(value) => Valid
+          case Failure(exception) => Invalid(List(exception.getMessage))
+        }
+      }
+    }
+
+    field1.value = "foo"
+    assert(field1.validate === Invalid(List("foo")))
+
+    field1.value = "test@email.com"
+    assert(field1.validate === Valid)
   }
 }
