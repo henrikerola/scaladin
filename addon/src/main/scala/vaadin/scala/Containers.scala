@@ -22,7 +22,7 @@ trait FilterableContainer extends Container {
   /**
    * Filter based on property id
    */
-  def \\(propertyId: Any): List[Property[_]] = itemIds.map(getItem).flatten.map(_.property(propertyId)).flatten.toList
+  def \\(propertyId: Any): List[Property[_]] = itemIds.map(getItem).flatten.map(_.getPropertyOption(propertyId)).flatten.toList
 }
 
 trait FilterableItem extends Item {
@@ -34,7 +34,7 @@ trait FilterableItem extends Item {
   /**
    * Filter based on property id
    */
-  def \(propertyId: Any): Option[Property[_]] = property(propertyId)
+  def \(propertyId: Any): Option[Property[_]] = getPropertyOption(propertyId)
 
   def values: List[Any] = Item.getProperties(this).map(_.value).toList
 }

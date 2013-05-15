@@ -29,14 +29,14 @@ class FileSystemContainerTests extends FunSuite with BeforeAndAfter {
     assert(2 === container.size)
     val item = container.getItem(temp1).get
 
-    val nameProperty = item.property(FilesystemContainer.PropertyName)
-    val iconProperty = item.property(FilesystemContainer.PropertyIcon)
+    val nameProperty = item.getPropertyOption(FilesystemContainer.PropertyName)
+    val iconProperty = item.getPropertyOption(FilesystemContainer.PropertyIcon)
 
     assert(nameProperty != None)
     assert(nameProperty.flatMap(_.value).map(_.asInstanceOf[String]).exists(_.startsWith("FileSystemContainerTest")))
 
     assert(iconProperty != None)
     // how should work with Vaadin 7 and generics: ??
-    assert(iconProperty.flatMap(_.value).get.isInstanceOf[ThemeResource], "File icon was " + item.property(FilesystemContainer.PropertyIcon).get.value.get.getClass + " instead of ThemeResource")
+    assert(iconProperty.flatMap(_.value).get.isInstanceOf[ThemeResource], "File icon was " + item.getProperty(FilesystemContainer.PropertyIcon).value.get.getClass + " instead of ThemeResource")
   }
 }

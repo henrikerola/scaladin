@@ -35,13 +35,13 @@ class ScaladinItemTests extends ScaladinTestSuite {
 
   test("binding") {
     assert(4 === item.propertyIds.size)
-    assert(Some("John") === item.property("firstName").get.value)
-    assert(Some("Smith") === item.property("lastName").get.value)
-    assert(Some("This is a message") === item.property("message").get.value)
+    assert(Some("John") === item.getProperty("firstName").value)
+    assert(Some("Smith") === item.getProperty("lastName").value)
+    assert(Some("This is a message") === item.getProperty("message").value)
 
-    item.property("lastName").get.value = "Doe"
+    item.getProperty("lastName").value = "Doe"
 
-    assert(Some("Doe") === item.property("lastName").get.value)
+    assert(Some("Doe") === item.getProperty("lastName").value)
     assert("Doe" === person.lastName)
 
     //assert(None === item.property("age").get.value)
@@ -53,19 +53,19 @@ class ScaladinItemTests extends ScaladinTestSuite {
   }
 
   test("readOnly for val is always true") {
-    assert(item.property("firstName").get.readOnly)
+    assert(item.getProperty("firstName").readOnly)
 
-    item.property("firstName").get.readOnly = false
+    item.getProperty("firstName").readOnly = false
 
-    assert(item.property("firstName").get.readOnly)
+    assert(item.getProperty("firstName").readOnly)
   }
 
   test("readOnly for non-val is toggable") {
-    assert(!item.property("lastName").get.readOnly)
+    assert(!item.getProperty("lastName").readOnly)
 
-    item.property("firstName").get.readOnly = true
+    item.getProperty("firstName").readOnly = true
 
-    assert(item.property("firstName").get.readOnly)
+    assert(item.getProperty("firstName").readOnly)
   }
 
 }
