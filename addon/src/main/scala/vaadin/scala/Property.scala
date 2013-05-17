@@ -1,7 +1,7 @@
 package vaadin.scala
 
 object Property {
-  def apply[T](value: T): Property[_] = new ObjectProperty[T](value)
+  def apply[T](value: T): Property[T] = new ObjectProperty[T](value)
 
   def unapply(property: Property[_]): Option[Any] = {
     if (property != null) property.value
@@ -55,7 +55,7 @@ class ObjectProperty[T](value: T) extends Property[T] {
 class VaadinPropertyDelegator[T](scaladinProperty: Property[T]) extends com.vaadin.data.Property[T] {
   def getValue: T = scaladinProperty.value.get.asInstanceOf[T]
   def setValue(v: T) = scaladinProperty.value = v
-  def getType: Class[_ <: T] = null //scaladinProperty.getType // FIXME
+  def getType: Class[_ <: T] = scaladinProperty.getType
   def isReadOnly = scaladinProperty.readOnly
   def setReadOnly(ro: Boolean) = scaladinProperty.readOnly = ro
 }
