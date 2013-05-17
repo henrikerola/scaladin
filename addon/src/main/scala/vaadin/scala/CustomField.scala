@@ -2,6 +2,7 @@ package vaadin.scala
 
 import vaadin.scala.mixins.CustomFieldMixin
 import com.vaadin.ui.{ CustomField => VaadinCustomField }
+import scala.reflect.{ ClassTag, classTag }
 
 package mixins {
 
@@ -27,13 +28,13 @@ package mixins {
  * @see com.vaadin.ui.CustomField
  * @author Henri Kerola / Vaadin
  */
-abstract class CustomField[T: Manifest](
+abstract class CustomField[T: ClassTag](
   override val p: VaadinCustomField[T] with CustomFieldMixin[T] = new VaadinCustomField[T] with CustomFieldMixin[T])
     extends AbstractField[T](p) with HasComponents {
 
   protected def content: Component = wrapperFor[Component](p.getContent).get
 
-  override def getType: Class[_ <: T] = manifest[T].runtimeClass.asInstanceOf[Class[_ <: T]]
+  override def getType: Class[_ <: T] = classTag[T].runtimeClass.asInstanceOf[Class[_ <: T]]
 
   // should be protected
   def initContent(): Component

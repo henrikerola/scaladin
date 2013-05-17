@@ -1,6 +1,6 @@
 package vaadin.scala.converter
 
-import scala.reflect.Manifest
+import scala.reflect.{ ClassTag, classTag }
 import java.util.Locale
 import vaadin.scala.Wrapper
 import vaadin.scala.mixins.ScaladinMixin
@@ -8,7 +8,8 @@ import vaadin.scala.converter.mixins.{ DelegatingConverterMixin, ConverterMixin 
 
 package mixins {
   trait ConverterMixin[Presentation, Model] extends ScaladinMixin
-  trait DelegatingConverterMixin[Presentation, Model] extends ConverterMixin[Presentation, Model] { self: com.vaadin.data.util.converter.Converter[Presentation, Model] =>
+  trait DelegatingConverterMixin[Presentation, Model] extends ConverterMixin[Presentation, Model] {
+    self: com.vaadin.data.util.converter.Converter[Presentation, Model] =>
 
     override def wrapper = super.wrapper.asInstanceOf[Converter[Presentation, Model]]
 
@@ -28,29 +29,23 @@ package mixins {
  * @see com.vaadin.data.util.converter.Converter
  * @author Henri Kerola / Vaadin
  */
-abstract class Converter[Presentation: Manifest, Model: Manifest](val p: com.vaadin.data.util.converter.Converter[Presentation, Model] with ConverterMixin[Presentation, Model] = new com.vaadin.data.util.converter.Converter[Presentation, Model] with DelegatingConverterMixin[Presentation, Model])
+abstract class Converter[Presentation: ClassTag, Model: ClassTag](val p: com.vaadin.data.util.converter.Converter[Presentation, Model] with ConverterMixin[Presentation, Model] = new com.vaadin.data.util.converter.Converter[Presentation, Model] with DelegatingConverterMixin[Presentation, Model])
     extends Wrapper {
 
   p.wrapper = this
 
-  private var presentationManifest: Option[Manifest[Presentation]] = None
-  private var modelManifest: Option[Manifest[Model]] = None
-  setManifests()
-
-  private def setManifests()(implicit presentationManifest: Manifest[Presentation], modelManifest: Manifest[Model]) {
-    this.presentationManifest = Option(presentationManifest)
-    this.modelManifest = Option(modelManifest)
-  }
+  private val presentationClassTag = classTag[Presentation]
+  private val modelClassTag = classTag[Model]
 
   def convertToPresentation(value: Option[Model], locale: Locale): Option[Presentation]
 
   def convertToModel(value: Option[Presentation], locale: Locale): Option[Model]
 
-  def presentationType: Class[Presentation] = presentationManifest.get.runtimeClass.asInstanceOf[Class[Presentation]]
+  def presentationType: Class[Presentation] = presentationClassTag.runtimeClass.asInstanceOf[Class[Presentation]]
 
-  def modelType: Class[Model] = modelManifest.get.runtimeClass.asInstanceOf[Class[Model]]
+  def modelType: Class[Model] = modelClassTag.runtimeClass.asInstanceOf[Class[Model]]
 }
-abstract class DeletagePeerConverter[Presentation: Manifest, Model: Manifest](override val p: com.vaadin.data.util.converter.Converter[Presentation, Model] with ConverterMixin[Presentation, Model]) extends Converter[Presentation, Model](p) {
+abstract class DeletagePeerConverter[Presentation: ClassTag, Model: ClassTag](override val p: com.vaadin.data.util.converter.Converter[Presentation, Model] with ConverterMixin[Presentation, Model]) extends Converter[Presentation, Model](p) {
 
   def convertToPresentation(value: Option[Model], locale: Locale): Option[Presentation] =
     Option(p.convertToPresentation(value.getOrElse(null).asInstanceOf[Model], locale))

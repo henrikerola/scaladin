@@ -23,19 +23,19 @@ trait ComponentContainer extends HasComponents {
   }
   def addComponent[C <: Component](component: C): C = add(component)
 
-  def removeComponent(c: Component): Unit = {
+  def removeComponent(c: Component) {
     p.removeComponent(c.p)
   }
 
-  def removeAllComponents(): Unit = {
+  def removeAllComponents() {
     p.removeAllComponents()
   }
 
-  def replaceComponent(oldComponent: Component, newComponent: Component): Unit = {
+  def replaceComponent(oldComponent: Component, newComponent: Component) {
     p.replaceComponent(oldComponent.p, newComponent.p)
   }
 
-  def moveComponentsFrom(source: ComponentContainer): Unit = {
+  def moveComponentsFrom(source: ComponentContainer) {
     p.moveComponentsFrom(source.p)
   }
 
