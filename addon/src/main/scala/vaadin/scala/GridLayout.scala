@@ -2,7 +2,7 @@ package vaadin.scala
 
 import event.LayoutClickNotifier
 import vaadin.scala.mixins.GridLayoutMixin
-import vaadin.scala.internal.WrapperUtil
+import vaadin.scala.Layout._
 
 package mixins {
   trait GridLayoutMixin extends AbstractLayoutMixin { self: com.vaadin.ui.GridLayout => }

@@ -2,6 +2,7 @@ package vaadin.scala
 
 import event.LayoutClickNotifier
 import vaadin.scala.mixins.AbstractOrderedLayoutMixin
+import vaadin.scala.Layout._
 
 package mixins {
   trait AbstractOrderedLayoutMixin extends AbstractLayoutMixin { self: com.vaadin.ui.AbstractOrderedLayout => }
