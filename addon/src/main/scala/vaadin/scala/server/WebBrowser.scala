@@ -1,6 +1,7 @@
-package vaadin.scala
+package vaadin.scala.server
 
 import java.util.{ Date, Locale }
+import vaadin.scala.Wrapper
 
 /**
  * @see com.vaadin.server.WebBrowser

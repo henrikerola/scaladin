@@ -1,8 +1,8 @@
-package vaadin.scala
+package vaadin.scala.server
 
 import com.vaadin.server.{ SessionInitEvent, SessionInitListener, VaadinPortlet }
-import internal.ScaladinUIProvider
 import javax.portlet.PortletConfig
+import vaadin.scala.internal.ScaladinUIProvider
 
 /**
  * @see com.vaadin.server.VaadinPortlet

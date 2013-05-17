@@ -1,8 +1,8 @@
 package vaadin.scala.tests
 
-import vaadin.scala._
 import com.vaadin.server.{ Page => VaadinPage, VaadinRequest }
 import org.mockito.Mockito
+import vaadin.scala.server.Page
 
 class PageTests extends ScaladinTestSuite {
 

@@ -1,4 +1,4 @@
-package vaadin.scala
+package vaadin.scala.server
 
 import vaadin.scala.event.{ ClickEvent, Event }
 import vaadin.scala.internal.WrapperUtil
@@ -7,6 +7,7 @@ import vaadin.scala.internal.UriFragmentChangedListener
 import vaadin.scala.internal.BrowserWindowResizeListener
 import com.vaadin.shared.ui.BorderStyle
 import java.net.URI
+import vaadin.scala.{ ListenersSet, Wrapper }
 
 object Page {
 

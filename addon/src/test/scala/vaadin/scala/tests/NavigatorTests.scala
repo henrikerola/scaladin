@@ -6,6 +6,7 @@ import internal.{ BeforeViewChangeListener, AfterViewChangeListener }
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.mockito.Mockito
+import vaadin.scala.server.Page
 
 object ClassBasedTestView {
   var count = 0

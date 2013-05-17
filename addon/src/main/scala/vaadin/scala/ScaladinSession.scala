@@ -9,6 +9,7 @@ import collection.mutable
 import vaadin.scala.mixins.VaadinSessionMixin
 import org.jsoup.nodes.{ Document, Node }
 import com.vaadin.server.UIProvider
+import vaadin.scala.server.DeploymentConfiguration
 
 package mixins {
   trait VaadinSessionMixin extends ScaladinMixin

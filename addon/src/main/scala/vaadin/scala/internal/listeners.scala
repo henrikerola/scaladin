@@ -6,6 +6,7 @@ import event.BlurEvent
 import event.ClickEvent
 import event.FocusEvent
 import event.LayoutClickEvent
+import vaadin.scala.server.Page
 
 class LayoutClickListener(val action: LayoutClickEvent => Unit) extends com.vaadin.event.LayoutEvents.LayoutClickListener with Listener {
   def layoutClick(e: com.vaadin.event.LayoutEvents.LayoutClickEvent) = action(LayoutClickEvent(wrapperFor[Component](e.getComponent).get, wrapperFor[Component](e.getClickedComponent).get, wrapperFor[Component](e.getChildComponent).get, MouseButton(e.getButton.ordinal), e.getClientX, e.getClientY, e.getRelativeX, e.getRelativeY, e.isDoubleClick, e.isAltKey, e.isCtrlKey, e.isMetaKey, e.isShiftKey))

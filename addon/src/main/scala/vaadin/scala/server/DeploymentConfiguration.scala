@@ -1,4 +1,4 @@
-package vaadin.scala
+package vaadin.scala.server
 
 /**
  * @see com.vaadin.server.DeploymentConfiguration

@@ -1,9 +1,10 @@
-package vaadin.scala
+package vaadin.scala.server
 
 import com.vaadin.server.{ VaadinServlet, SessionInitListener, SessionInitEvent }
 import javax.servlet.ServletConfig
-import internal.{ WrapperUtil, ScaladinUIProvider }
 import vaadin.scala.mixins.ScaladinServletServiceMixin
+import vaadin.scala.internal.{ WrapperUtil, ScaladinUIProvider }
+import vaadin.scala.ScaladinServletService
 
 class ScaladinServlet extends VaadinServlet {
 
