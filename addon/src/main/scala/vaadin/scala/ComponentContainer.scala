@@ -11,7 +11,6 @@ import vaadin.scala.mixins.AbstractSingleComponentContainerMixin
 
 package mixins {
   trait ComponentContainerMixin extends HasComponentsMixin { self: com.vaadin.ui.ComponentContainer => }
-  trait AbstractComponentContainerMixin extends AbstractComponentMixin with ComponentContainerMixin { self: com.vaadin.ui.AbstractComponentContainer => }
   trait SingleComponentContainerMixin extends HasComponentsMixin { self: com.vaadin.ui.SingleComponentContainer => }
   trait AbstractSingleComponentContainerMixin extends AbstractComponentMixin with SingleComponentContainerMixin { self: com.vaadin.ui.AbstractSingleComponentContainer => }
   trait AbstractLayoutMixin extends AbstractComponentContainerMixin with LayoutMixin { self: com.vaadin.ui.AbstractLayout => }
@@ -57,8 +56,6 @@ trait ComponentContainer extends HasComponents {
 
   // TODO: listeners
 }
-
-abstract class AbstractComponentContainer(override val p: com.vaadin.ui.AbstractComponentContainer with AbstractComponentContainerMixin) extends AbstractComponent(p) with ComponentContainer
 
 trait SingleComponentContainer extends HasComponents { // TODO: implements also ComponentAttachDetachNotifier
 
