@@ -11,7 +11,6 @@ import vaadin.scala.mixins.AbstractSingleComponentContainerMixin
 
 package mixins {
   trait ComponentContainerMixin extends HasComponentsMixin { self: com.vaadin.ui.ComponentContainer => }
-  trait AbstractSingleComponentContainerMixin extends AbstractComponentMixin with SingleComponentContainerMixin { self: com.vaadin.ui.AbstractSingleComponentContainer => }
 }
 
 trait ComponentContainer extends HasComponents {
@@ -53,16 +52,4 @@ trait ComponentContainer extends HasComponents {
   }
 
   // TODO: listeners
-}
-
-trait SelectiveRenderer extends HasComponents {
-
-  def p: com.vaadin.ui.SelectiveRenderer with HasComponentsMixin
-
-  def isRendered(component: Component): Boolean = p.isRendered(component.p)
-}
-
-abstract class AbstractSingleComponentContainer(override val p: com.vaadin.ui.AbstractSingleComponentContainer with AbstractSingleComponentContainerMixin) extends AbstractComponent(p) with SingleComponentContainer {
-
-  // TODO
 }
