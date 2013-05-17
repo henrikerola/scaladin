@@ -8,6 +8,7 @@ import org.scalatest.junit.JUnitRunner
 import vaadin.scala.mixins.WindowMixin
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
+import vaadin.scala.Layout.Margin
 
 @RunWith(classOf[JUnitRunner])
 class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {

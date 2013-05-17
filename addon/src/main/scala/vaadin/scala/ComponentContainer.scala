@@ -60,8 +60,6 @@ trait ComponentContainer extends HasComponents {
 
 abstract class AbstractComponentContainer(override val p: com.vaadin.ui.AbstractComponentContainer with AbstractComponentContainerMixin) extends AbstractComponent(p) with ComponentContainer
 
-case class Margin(top: Boolean = false, right: Boolean = false, bottom: Boolean = false, left: Boolean = false)
-
 trait SingleComponentContainer extends HasComponents { // TODO: implements also ComponentAttachDetachNotifier
 
   def p: com.vaadin.ui.SingleComponentContainer with SingleComponentContainerMixin

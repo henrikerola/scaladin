@@ -5,6 +5,7 @@ import vaadin.scala._
 import com.vaadin.server.Sizeable
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import vaadin.scala.Layout.Margin
 
 @RunWith(classOf[JUnitRunner])
 class LayoutTests extends FunSuite {

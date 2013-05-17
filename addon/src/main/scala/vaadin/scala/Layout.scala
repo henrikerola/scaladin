@@ -8,6 +8,8 @@ package mixins {
 
 object Layout {
 
+  case class Margin(top: Boolean = false, right: Boolean = false, bottom: Boolean = false, left: Boolean = false)
+
   trait SpacingHandler {
 
     def p: com.vaadin.ui.Layout.SpacingHandler

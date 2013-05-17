@@ -4,6 +4,7 @@ import vaadin.scala._
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import vaadin.scala.Layout.Margin
 
 @RunWith(classOf[JUnitRunner])
 class PanelTests extends FunSuite {
