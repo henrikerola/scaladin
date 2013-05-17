@@ -10,26 +10,11 @@ import vaadin.scala.mixins.SingleComponentContainerMixin
 import vaadin.scala.mixins.AbstractSingleComponentContainerMixin
 
 package mixins {
-  trait HasComponentsMixin extends ComponentMixin { self: com.vaadin.ui.HasComponents => }
   trait ComponentContainerMixin extends HasComponentsMixin { self: com.vaadin.ui.ComponentContainer => }
   trait AbstractComponentContainerMixin extends AbstractComponentMixin with ComponentContainerMixin { self: com.vaadin.ui.AbstractComponentContainer => }
   trait SingleComponentContainerMixin extends HasComponentsMixin { self: com.vaadin.ui.SingleComponentContainer => }
   trait AbstractSingleComponentContainerMixin extends AbstractComponentMixin with SingleComponentContainerMixin { self: com.vaadin.ui.AbstractSingleComponentContainer => }
   trait AbstractLayoutMixin extends AbstractComponentContainerMixin with LayoutMixin { self: com.vaadin.ui.AbstractLayout => }
-}
-
-trait HasComponents extends Component {
-
-  override def p: com.vaadin.ui.HasComponents with HasComponentsMixin
-
-  def components: Iterable[Component] = new Iterable[Component] {
-    def iterator: Iterator[Component] = {
-      import scala.collection.JavaConverters._
-      p.iterator.asScala.map(wrapperFor(_).get)
-    }
-  }
-
-  // TODO: Component attach, detach...
 }
 
 trait ComponentContainer extends HasComponents {
