@@ -56,8 +56,8 @@ object Dependencies {
   val vaadin = "com.vaadin" % "vaadin-server" % vaadinVersion
   val vaadinClientCompiled = "com.vaadin" % "vaadin-client-compiled" % vaadinVersion
   val vaadinThemes = "com.vaadin" % "vaadin-themes" % vaadinVersion
-  val servletApi = "javax.servlet" % "servlet-api" % "2.4"
-  val portletApi = "javax.portlet" % "portlet-api" % "2.0"
+  val servletApi = "javax.servlet" % "servlet-api" % "2.4" % "provided"
+  val portletApi = "javax.portlet" % "portlet-api" % "2.0" % "provided"
   val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
   val scalaTest = "org.scalatest" % "scalatest_2.10.0-RC5" % scalaTestVersion % "test"
   val junitInterface = "com.novocode" % "junit-interface" % "0.7" % "test->default"
