@@ -9,7 +9,7 @@ import com.typesafe.sbt.SbtScalariform._
 object BuildSettings {
   val buildOrganization = "vaadin.scala"
   val buildName = "Scaladin"
-  val buildVersion = "3.0.0-SNAPSHOT"
+  val buildVersion = "3.0-SNAPSHOT"
   val buildScalaVersion = "2.10.1"
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
