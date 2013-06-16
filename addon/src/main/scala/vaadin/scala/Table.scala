@@ -6,31 +6,25 @@ import com.vaadin.ui.Table.RowHeaderMode
 import com.vaadin.ui.Table.Align
 import event.{ ItemDescriptionGeneratorOwner, ItemClickNotifier, AbstractClickEvent, Event }
 import vaadin.scala.mixins.TableMixin
-import vaadin.scala.mixins.ContainerOrderedMixin
-import vaadin.scala.mixins.ContainerSortableMixin
 import vaadin.scala.internal.HeaderClickListener
 import vaadin.scala.internal.FooterClickListener
 import vaadin.scala.internal.ColumnReorderListener
 import vaadin.scala.internal.ColumnResizeListener
 import vaadin.scala.internal.TableColumnGenerator
 import vaadin.scala.internal.CellStyleGenerator
-import vaadin.scala.internal.WrapperUtil
+import vaadin.scala.internal.WrapperUtil.wrapperFor
 import vaadin.scala.internal.ListenersTrait
 import collection.mutable
 
 package mixins {
   trait TableMixin extends AbstractSelectMixin with ActionContainerMixin with ContainerOrderedMixin
-    with ContainerSortableMixin with HasComponentsMixin { self: com.vaadin.ui.Table => }
-
-  /* Property value formatter is disabled because of SI-2296. Re-enable it when fixed in the 2.9.x line 
-   * or after upgrading to 2.10
-   * { self: com.vaadin.ui.Table =>
-   * override protected def formatPropertyValue(rowId: Any, colId: Any, property: com.vaadin.data.Property): String = wrapper.asInstanceOf[Table].propertyValueFormatter match {
-   *   case Some(formatter) => formatter(Table.FormatPropertyEvent(WrapperUtil.wrapperFor[Table](this).get, rowId, colId)).orNull
-   *   case None => self.formatPropertyValue(rowId, colId, property)
-   * }
-   * }
-   */
+      with ContainerSortableMixin with HasComponentsMixin { self: com.vaadin.ui.Table =>
+    override protected def formatPropertyValue(rowId: Any, colId: Any, property: com.vaadin.data.Property[_]): String =
+      wrapper.asInstanceOf[Table].propertyValueFormatter match {
+        case Some(formatter) => formatter(Table.FormatPropertyEvent(wrapperFor[Table](this).get, rowId, colId)).orNull
+        case None => self.formatPropertyValue(rowId, colId, property)
+      }
+  }
 }
 
 object Table {
@@ -233,12 +227,10 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
     }
   }
 
-  /* Property value formatter is disabled because of SI-2296. Re-enable it when fixed in the 2.9.x line 
-   * or after upgrading to 2.10
-   *  var propertyValueFormatter: Option[Table.FormatPropertyEvent => Option[String]] = None
-   *  def propertyValueFormatter_=(propertyValueFormatter: Table.FormatPropertyEvent => Option[String]): Unit =
-   *  this.propertyValueFormatter = Some(propertyValueFormatter)
-   */
+  var propertyValueFormatter: Option[Table.FormatPropertyEvent => Option[String]] = None
+  def propertyValueFormatter_=(propertyValueFormatter: Table.FormatPropertyEvent => Option[String]): Unit =
+    this.propertyValueFormatter = Some(propertyValueFormatter)
+
   lazy val headerClickListeners: ListenersSet[Table.HeaderClickEvent => Unit] =
     new ListenersTrait[Table.HeaderClickEvent, HeaderClickListener] {
       override def listeners = p.getListeners(classOf[com.vaadin.ui.Table.HeaderClickListener])
