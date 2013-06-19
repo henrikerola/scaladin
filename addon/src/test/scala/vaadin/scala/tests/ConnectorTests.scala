@@ -34,11 +34,11 @@ class ConnectorTests extends ScaladinTestSuite {
     when(mockScaladinUI.p).thenReturn(mockVaadinUI)
     when(mockVaadinUI.getConnectorTracker()).thenReturn(mockConnectionTracker)
 
-    connector.parent = mockScaladinUI
+    connector.asInstanceOf[Component].parent = mockScaladinUI
 
     val listenerMock: DetachEvent => Unit = mock[Function1[DetachEvent, Unit]]
     connector.detachListeners += listenerMock
-
+    connector.detachListeners += ((foo: DetachEvent) => ())
     connector.detach()
 
     verify(listenerMock).apply(any(classOf[DetachEvent]))
@@ -63,7 +63,7 @@ class ConnectorTests extends ScaladinTestSuite {
     when(mockScaladinUI.p).thenReturn(mockVaadinUI)
     when(mockVaadinUI.getConnectorTracker()).thenReturn(mockConnectionTracker)
 
-    connector.parent = mockScaladinUI
+    connector.asInstanceOf[Component].parent = mockScaladinUI
 
     val listenerMock: AttachEvent => Unit = mock[Function1[AttachEvent, Unit]]
     connector.attachListeners += listenerMock

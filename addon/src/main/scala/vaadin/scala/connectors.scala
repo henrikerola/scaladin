@@ -36,9 +36,6 @@ trait ClientConnector extends Connector {
   def attach(): Unit = p.attach()
   def detach(): Unit = p.detach()
 
-  def parent_=(parentConnector: ClientConnector): Unit = p.setParent(WrapperUtil.peerFor(parentConnector))
-  def parent_=(parentConnector: Option[ClientConnector]): Unit = p.setParent(WrapperUtil.peerFor(parentConnector))
-
   /* p.asInstanceOf[AbstractClientConnector]
    * Bit of an assumption, it means we only support implementations of ClientConnector that are actually AbstractClientConnectors. 
    * This is needed if we want to handle listeners here, since getListeners is defined in the abstract class. */

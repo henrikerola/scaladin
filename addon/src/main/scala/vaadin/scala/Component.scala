@@ -1,8 +1,11 @@
 package vaadin.scala
 
-import scala.collection.mutable
-import vaadin.scala.mixins.ComponentMixin
 import java.util.Locale
+
+import scala.collection.mutable
+
+import vaadin.scala.internal.WrapperUtil
+import vaadin.scala.mixins.ClientConnectorMixin
 import vaadin.scala.server.Resource
 
 package mixins {
@@ -73,7 +76,8 @@ trait Component extends ClientConnector {
   def visible: Boolean = p.isVisible
   def visible_=(visible: Boolean) { p.setVisible(visible) }
 
-  // TODO parent setter?
+  def parent_=(parentConnector: HasComponents): Unit = p.setParent(WrapperUtil.peerFor(parentConnector))
+  def parent_=(parentConnector: Option[HasComponents]): Unit = p.setParent(WrapperUtil.peerFor(parentConnector))
   override def parent: Option[HasComponents] = wrapperFor(p.getParent())
 
   def readOnly: Boolean = p.isReadOnly

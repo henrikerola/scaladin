@@ -52,5 +52,4 @@ abstract class DeletagePeerConverter[Presentation: ClassTag, Model: ClassTag](ov
 
   def convertToModel(value: Option[Presentation], targetType: Class[_ <: Model], locale: Locale): Option[Model] =
     Option(p.convertToModel(value.getOrElse(null).asInstanceOf[Presentation], targetType, locale))
-
 }
