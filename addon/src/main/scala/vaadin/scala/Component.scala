@@ -6,7 +6,34 @@ import java.util.Locale
 import vaadin.scala.server.Resource
 
 package mixins {
-  trait ComponentMixin extends ScaladinMixin { self: com.vaadin.ui.Component =>
+
+  trait ScaladinMixin {
+    private[this] var _wrapper: Wrapper = _
+    def wrapper: Wrapper = _wrapper
+    def wrapper_=(wrapper: Wrapper) = {
+      if (_wrapper != null)
+        throw new RuntimeException("wrapper cannot be reset once set")
+      else
+        _wrapper = wrapper
+    }
+  }
+
+  trait ScaladinInterfaceMixin {
+    private[this] var _wrapper: InterfaceWrapper = _
+    def wrapper: InterfaceWrapper = _wrapper
+    def wrapper_=(wrapper: InterfaceWrapper) = {
+      if (_wrapper != null)
+        throw new RuntimeException("wrapper cannot be reset once set")
+      else
+        _wrapper = wrapper
+    }
+  }
+
+  trait TypedScaladinMixin[C <: Wrapper] extends ScaladinMixin {
+    override def wrapper: C = super.wrapper.asInstanceOf[C]
+  }
+
+  trait ComponentMixin extends ClientConnectorMixin { self: com.vaadin.ui.Component =>
     def wrapperComponent: Component = wrapper.asInstanceOf[Component]
   }
 }
@@ -23,7 +50,7 @@ object Component {
   }
 }
 
-trait Component extends Wrapper {
+trait Component extends ClientConnector {
   def p: com.vaadin.ui.Component with ComponentMixin
 
   // TODO: add methods styleName, addStyleName, removeStyleName?
@@ -47,7 +74,7 @@ trait Component extends Wrapper {
   def visible_=(visible: Boolean) { p.setVisible(visible) }
 
   // TODO parent setter?
-  def parent: Option[Component] = wrapperFor(p.getParent())
+  override def parent: Option[HasComponents] = wrapperFor(p.getParent())
 
   def readOnly: Boolean = p.isReadOnly
   def readOnly_=(readOnly: Boolean) { p.setReadOnly(readOnly) }
