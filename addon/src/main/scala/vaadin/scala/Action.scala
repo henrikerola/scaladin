@@ -1,6 +1,6 @@
 package vaadin.scala
 
-import event.Event
+import event.ComponentEvent
 import internal.ActionHandler
 import vaadin.scala.mixins.{ ActionContainerMixin, ActionMixin }
 import vaadin.scala.server.Resource
@@ -40,8 +40,8 @@ object Action {
     def actions_=(actions: Seq[Action]) { this.actions = (a => actions) }
   }
 
-  case class GetActionsEvent(target: Option[Any], sender: Any) extends Event
-  case class HandleActionEvent(action: Action, sender: Any, target: Option[Any]) extends Event
+  case class GetActionsEvent(target: Option[Any], sender: Any)
+  case class HandleActionEvent(action: Action, sender: Any, target: Option[Any])
 
   def apply(caption: String): Action = {
     val action = new Action

@@ -4,7 +4,7 @@ import com.vaadin.shared.ui.MultiSelectMode._
 import com.vaadin.ui.Table.ColumnHeaderMode
 import com.vaadin.ui.Table.RowHeaderMode
 import com.vaadin.ui.Table.Align
-import event.{ ItemDescriptionGeneratorOwner, ItemClickNotifier, AbstractClickEvent, Event }
+import event.{ ItemDescriptionGeneratorOwner, ItemClickNotifier, AbstractClickEvent, ComponentEvent }
 import vaadin.scala.mixins.TableMixin
 import vaadin.scala.internal.HeaderClickListener
 import vaadin.scala.internal.FooterClickListener
@@ -58,11 +58,11 @@ object Table {
 
   case class HeaderClickEvent(component: Component, propertyId: Any, button: MouseButton.Value, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
   case class FooterClickEvent(component: Component, propertyId: Any, button: MouseButton.Value, clientX: Int, clientY: Int, relativeX: Int, relativeY: Int, doubleClick: Boolean, altKey: Boolean, ctrlKey: Boolean, metaKey: Boolean, shiftKey: Boolean) extends AbstractClickEvent(component, button, clientX, clientY, relativeX, relativeY, doubleClick, altKey, ctrlKey, metaKey, shiftKey)
-  case class ColumnResizeEvent(component: Component, propertyId: Any, previousWidth: Int, currentWidth: Int) extends Event
-  case class ColumnReorderEvent(component: Component) extends Event
-  case class ColumnGenerationEvent(table: Table, itemId: Any, propertyId: Any) extends Event
-  case class CellStyleGenerationEvent(table: Table, itemId: Any, propertyId: Any) extends Event
-  case class FormatPropertyEvent(table: Table, itemId: Any, propertyId: Any) extends Event
+  case class ColumnResizeEvent(component: Component, propertyId: Any, previousWidth: Int, currentWidth: Int) extends ComponentEvent(component)
+  case class ColumnReorderEvent(component: Component) extends ComponentEvent(component)
+  case class ColumnGenerationEvent(table: Table, itemId: Any, propertyId: Any) extends ComponentEvent(table)
+  case class CellStyleGenerationEvent(table: Table, itemId: Any, propertyId: Any) extends ComponentEvent(table)
+  case class FormatPropertyEvent(table: Table, itemId: Any, propertyId: Any) extends ComponentEvent(table)
 
 }
 

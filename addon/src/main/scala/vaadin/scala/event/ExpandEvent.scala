@@ -2,4 +2,4 @@ package vaadin.scala.event
 
 import vaadin.scala.Component
 
-case class ExpandEvent(component: Component, itemId: Any) extends Event
+case class ExpandEvent(component: Component, itemId: Any) extends ComponentEvent(component)

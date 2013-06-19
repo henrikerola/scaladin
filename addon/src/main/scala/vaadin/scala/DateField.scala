@@ -1,6 +1,6 @@
 package vaadin.scala
 
-import event.{ FocusNotifier, BlurNotifier, Event }
+import event.{ FocusNotifier, BlurNotifier, ComponentEvent }
 import vaadin.scala.mixins.DateFieldMixin
 import internal.WrapperUtil
 import java.util.TimeZone
@@ -30,7 +30,7 @@ object DateField {
     val Year = Value(YEAR.ordinal)
   }
 
-  case class UnparsableDateStringEvent(dateField: DateField, dateString: String) extends Event
+  case class UnparsableDateStringEvent(dateField: DateField, dateString: String) extends ComponentEvent(dateField)
 
   val DefaultUnparsableDateStringHandler: (UnparsableDateStringEvent => Option[java.util.Date]) = e => {
     throw new RuntimeException(e.dateField.parseErrorMessage.getOrElse(""))

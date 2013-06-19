@@ -1,7 +1,7 @@
 package vaadin.scala
 
 import com.vaadin.ui.{ TabSheet => VaadinTabSheet }
-import event.{ FocusNotifier, BlurNotifier, Event }
+import event.{ FocusNotifier, BlurNotifier, ComponentEvent }
 import vaadin.scala.mixins.TabSheetMixin
 import internal.{ TabCloseHandler, SelectedTabChangeListener, ListenersTrait }
 import collection.mutable
@@ -45,8 +45,8 @@ object TabSheet {
     def styleName_=(styleName: String) { p.setStyleName(styleName) }
   }
 
-  case class TabCloseEvent(tabSheet: TabSheet, component: Component, tab: TabSheet.Tab) extends Event
-  case class SelectedTabChangeEvent(tabSheet: TabSheet) extends Event
+  case class TabCloseEvent(tabSheet: TabSheet, component: Component, tab: TabSheet.Tab) extends ComponentEvent(tabSheet)
+  case class SelectedTabChangeEvent(tabSheet: TabSheet) extends ComponentEvent(tabSheet)
 
 }
 

@@ -1,6 +1,6 @@
 package vaadin.scala
 
-import event.Event
+import event.ComponentEvent
 import vaadin.scala.mixins.FieldGroupMixin
 import vaadin.scala.mixins.FieldMixin
 import scala.util.Try
@@ -19,8 +19,8 @@ package mixins {
 }
 
 object FieldGroup {
-  case class PreCommitEvent(fieldBinder: FieldGroup) extends Event
-  case class PostCommitEvent(fieldBinder: FieldGroup) extends Event
+  case class PreCommitEvent(fieldBinder: FieldGroup)
+  case class PostCommitEvent(fieldBinder: FieldGroup)
 
   case class CommitSuccess()
   case class CommitFailed(error: String)

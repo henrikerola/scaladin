@@ -1,10 +1,11 @@
 package vaadin.scala
 
-import event.{ FocusNotifier, BlurNotifier, Event }
+import event.{ FocusNotifier, BlurNotifier, ComponentEvent }
 import vaadin.scala.mixins.AbstractTextFieldMixin
 import vaadin.scala.internal.TextChangeListener
 import vaadin.scala.internal.ListenersTrait
 import com.vaadin.event.FieldEvents
+import vaadin.scala.event.ComponentEvent
 
 package mixins {
   trait AbstractTextFieldMixin extends AbstractFieldMixin[String] { self: com.vaadin.ui.AbstractTextField => }
@@ -18,7 +19,7 @@ object AbstractTextField {
     val Lazy = Value(LAZY.ordinal)
   }
 
-  case class TextChangeEvent(textField: AbstractTextField, text: String, cursorPosition: Int) extends Event
+  case class TextChangeEvent(textField: AbstractTextField, text: String, cursorPosition: Int) extends ComponentEvent(textField)
 }
 
 abstract class AbstractTextField(override val p: com.vaadin.ui.AbstractTextField with AbstractTextFieldMixin)

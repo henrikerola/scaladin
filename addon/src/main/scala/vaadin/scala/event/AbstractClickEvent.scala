@@ -13,4 +13,4 @@ abstract class AbstractClickEvent(
   altKey: Boolean,
   ctrlKey: Boolean,
   metaKey: Boolean,
-  shiftKey: Boolean) extends Event
+  shiftKey: Boolean) extends ComponentEvent(component)
