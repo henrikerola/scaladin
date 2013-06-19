@@ -35,7 +35,7 @@ class ButtonTests extends FunSuite {
   }
 
   test("Button.apply(caption, clickListener 2") {
-    val listener = {}
+    val listener: Button.ClickEvent => Unit = (x => ())
     val button = Button("Test", listener)
     assert(button.caption === Some("Test"))
     assert(button.clickListeners.size === 1)

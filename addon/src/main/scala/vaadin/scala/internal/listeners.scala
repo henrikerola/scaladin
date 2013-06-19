@@ -1,11 +1,14 @@
 package vaadin.scala.internal
 
 import vaadin.scala._
-import event._
-import event.BlurEvent
-import event.ClickEvent
-import event.FocusEvent
-import event.LayoutClickEvent
+import vaadin.scala.event.BlurEvent
+import vaadin.scala.event.ClickEvent
+import vaadin.scala.event.CollapseEvent
+import vaadin.scala.event.DetachEvent
+import vaadin.scala.event.ExpandEvent
+import vaadin.scala.event.FocusEvent
+import vaadin.scala.event.LayoutClickEvent
+import vaadin.scala.event.ValueChangeEvent
 import vaadin.scala.server.Page
 
 class LayoutClickListener(val action: LayoutClickEvent => Unit) extends com.vaadin.event.LayoutEvents.LayoutClickListener with Listener {
@@ -125,4 +128,8 @@ class AfterViewChangeListener(val action: Navigator.ViewChangeEvent => Unit) ext
   override def afterViewChange(e: com.vaadin.navigator.ViewChangeListener.ViewChangeEvent) {
     action(Navigator.ViewChangeEvent(wrapperFor[Navigator](e.getNavigator).get, wrapperFor[Navigator.View](e.getOldView), wrapperFor[Navigator.View](e.getNewView).get, Option(e.getViewName), e.getParameters))
   }
+}
+
+class DetachListener(val action: DetachEvent => Unit) extends com.vaadin.server.ClientConnector.DetachListener with Listener {
+  def detach(e: com.vaadin.server.ClientConnector.DetachEvent) = action(DetachEvent(wrapperFor[ClientConnector](e.getConnector()).get))
 }

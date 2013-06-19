@@ -3,22 +3,11 @@ package vaadin.scala
 import vaadin.scala.mixins.AbstractComponentMixin
 
 package mixins {
-  trait AbstractComponentSuperCalls {
-    def attach(): Unit
-    def detach(): Unit
-  }
-
-  trait AbstractComponentMixin extends ComponentMixin with AbstractComponentSuperCalls {
+  trait AbstractComponentMixin extends ComponentMixin {
 
     self: com.vaadin.ui.AbstractComponent =>
 
     override def wrapper = super.wrapper.asInstanceOf[AbstractComponent]
-
-    abstract override def attach(): Unit = wrapper.attach()
-    def __super__attach() { super.attach() }
-
-    abstract override def detach(): Unit = wrapper.detach()
-    def __super__detach() { super.detach() }
   }
 }
 
@@ -38,10 +27,5 @@ abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with Abs
   def data_=(data: Any) { p.setData(data) }
 
   def markAsDirty() { p.markAsDirty() }
-
-  def attach() { p.__super__attach() }
-
-  def detach() { p.__super__detach() }
-
 }
 
