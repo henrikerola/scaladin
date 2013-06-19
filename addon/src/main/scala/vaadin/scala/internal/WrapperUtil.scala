@@ -17,4 +17,7 @@ object WrapperUtil {
 
   def peerFor[T](wrapper: Option[Wrapper]): T =
     wrapper.fold(null.asInstanceOf[T])(_.p.asInstanceOf[T])
+
+  def peerFor[T](wrapper: Wrapper): T =
+    if (wrapper != null) wrapper.p.asInstanceOf[T] else null.asInstanceOf[T]
 }

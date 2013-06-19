@@ -24,7 +24,7 @@ trait ListenersTrait[E, L <: Listener] extends mutable.Set[E => Unit] with Liste
     }
     this
   }
-  
+
   protected def listeners: java.util.Collection[_]
 
   protected def addListener(elem: E => Unit)

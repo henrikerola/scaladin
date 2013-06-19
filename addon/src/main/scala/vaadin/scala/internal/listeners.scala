@@ -133,3 +133,7 @@ class AfterViewChangeListener(val action: Navigator.ViewChangeEvent => Unit) ext
 class DetachListener(val action: DetachEvent => Unit) extends com.vaadin.server.ClientConnector.DetachListener with Listener {
   def detach(e: com.vaadin.server.ClientConnector.DetachEvent) = action(DetachEvent(wrapperFor[ClientConnector](e.getConnector()).get))
 }
+
+class AttachListener(val action: AttachEvent => Unit) extends com.vaadin.server.ClientConnector.AttachListener with Listener {
+  def attach(e: com.vaadin.server.ClientConnector.AttachEvent) = action(AttachEvent(wrapperFor[ClientConnector](e.getConnector()).get))
+}

@@ -5,6 +5,7 @@ import vaadin.scala.event.DetachEvent
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 import vaadin.scala.internal.WrappedVaadinUI
+import vaadin.scala.event.AttachEvent
 
 class ConnectorTests extends ScaladinTestSuite {
 
@@ -41,5 +42,34 @@ class ConnectorTests extends ScaladinTestSuite {
     connector.detach()
 
     verify(listenerMock).apply(any(classOf[DetachEvent]))
+  }
+
+  test("AttachListener add/remove") {
+    val listenerMock: AttachEvent => Unit = mock[Function1[AttachEvent, Unit]]
+
+    assert(connector.attachListeners.size === 0)
+    connector.attachListeners += listenerMock
+    assert(connector.attachListeners.size === 1)
+    connector.attachListeners -= listenerMock
+    assert(connector.attachListeners.size === 0)
+  }
+
+  test("attaching a ClientConnector calls AttachListeners") {
+    //setup
+    val mockScaladinUI = mock[UI]
+    val mockVaadinUI = mock[WrappedVaadinUI]
+    val mockConnectionTracker = mock[com.vaadin.ui.ConnectorTracker]
+
+    when(mockScaladinUI.p).thenReturn(mockVaadinUI)
+    when(mockVaadinUI.getConnectorTracker()).thenReturn(mockConnectionTracker)
+
+    connector.parent = mockScaladinUI
+
+    val listenerMock: AttachEvent => Unit = mock[Function1[AttachEvent, Unit]]
+    connector.attachListeners += listenerMock
+
+    connector.attach()
+
+    verify(listenerMock).apply(any(classOf[AttachEvent]))
   }
 }

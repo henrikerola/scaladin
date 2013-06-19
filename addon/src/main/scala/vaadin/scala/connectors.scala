@@ -6,6 +6,9 @@ import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.internal.DetachListener
 import com.vaadin.server.AbstractClientConnector
 import vaadin.scala.event.DetachEvent
+import vaadin.scala.event.AttachEvent
+import vaadin.scala.internal.AttachListener
+import vaadin.scala.internal.WrapperUtil
 
 package mixins {
 
@@ -33,8 +36,8 @@ trait ClientConnector extends Connector {
   def attach(): Unit = p.attach()
   def detach(): Unit = p.detach()
 
-  def parent_=(parentConnector: ClientConnector): Unit = if (parentConnector != null) p.setParent(parentConnector.p) else p.setParent(null)
-  def parent_=(parentConnector: Option[ClientConnector]): Unit = p.setParent(parentConnector map ((c: ClientConnector) => c.p) orNull)
+  def parent_=(parentConnector: ClientConnector): Unit = p.setParent(WrapperUtil.peerFor(parentConnector))
+  def parent_=(parentConnector: Option[ClientConnector]): Unit = p.setParent(WrapperUtil.peerFor(parentConnector))
 
   /* p.asInstanceOf[AbstractClientConnector]
    * Bit of an assumption, it means we only support implementations of ClientConnector that are actually AbstractClientConnectors. 
@@ -45,5 +48,12 @@ trait ClientConnector extends Connector {
     override def listeners = p.asInstanceOf[AbstractClientConnector].getListeners(classOf[com.vaadin.server.ClientConnector.DetachEvent])
     override def addListener(elem: DetachEvent => Unit) = p.addDetachListener(new DetachListener(elem))
     override def removeListener(elem: DetachListener) = p.removeDetachListener(elem)
+  }
+
+  lazy val attachListeners = new ListenersTrait[AttachEvent, AttachListener] {
+
+    override def listeners = p.asInstanceOf[AbstractClientConnector].getListeners(classOf[com.vaadin.server.ClientConnector.AttachEvent])
+    override def addListener(elem: AttachEvent => Unit) = p.addAttachListener(new AttachListener(elem))
+    override def removeListener(elem: AttachListener) = p.removeAttachListener(elem)
   }
 }
