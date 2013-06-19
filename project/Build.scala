@@ -46,9 +46,9 @@ object Format {
 object Dependencies {
   val vaadinVersion = "7.1.7"
   val jettyVersion = "7.3.0.v20110203"
-  val scalaTestVersion = "2.0.M5-B1"
+  val scalaTestVersion = "2.0.M5b"
   val junitVersion = "4.9"
-  val mockitoVersion = "1.9.0"
+  val mockitoVersion = "1.9.5"
 
   val scala = "org.scala-lang" % "scala-library" % BuildSettings.buildScalaVersion % "provided"
   val scalaReflect = "org.scala-lang" % "scala-reflect" % BuildSettings.buildScalaVersion
@@ -59,7 +59,7 @@ object Dependencies {
   val servletApi = "javax.servlet" % "servlet-api" % "2.4"
   val portletApi = "javax.portlet" % "portlet-api" % "2.0"
   val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
-  val scalaTest = "org.scalatest" % "scalatest_2.10.0-RC5" % scalaTestVersion % "test"
+  val scalaTest = "org.scalatest" % "scalatest_2.10" % scalaTestVersion % "test"
   val junitInterface = "com.novocode" % "junit-interface" % "0.7" % "test->default"
   val mockito = "org.mockito" % "mockito-all" % mockitoVersion % "test" 
 }
