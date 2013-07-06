@@ -1,15 +1,16 @@
-package vaadin.scala
+package vaadin.scala.server
 
-import event.Event
-import internal._
 import java.util.Locale
 import java.util.concurrent.locks.Lock
 import collection.JavaConverters._
 import collection.mutable
-import vaadin.scala.mixins.VaadinSessionMixin
 import org.jsoup.nodes.{ Document, Node }
+import vaadin.scala.event.Event
+import vaadin.scala.internal._
+import vaadin.scala._
 import com.vaadin.server.UIProvider
-import vaadin.scala.server.DeploymentConfiguration
+import vaadin.scala.mixins.ScaladinMixin
+import vaadin.scala.server.mixins.VaadinSessionMixin
 
 package mixins {
   trait VaadinSessionMixin extends ScaladinMixin

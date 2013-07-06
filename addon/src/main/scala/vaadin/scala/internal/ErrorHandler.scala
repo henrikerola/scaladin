@@ -1,7 +1,7 @@
 package vaadin.scala.internal
 
 import com.vaadin.server.ErrorEvent
-import vaadin.scala.ScaladinSession
+import vaadin.scala.server.ScaladinSession
 
 /**
  * @author Henri Kerola / Vaadin

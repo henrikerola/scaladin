@@ -1,11 +1,11 @@
 package vaadin.scala.tests
 
-import vaadin.scala.ScaladinSession
-import vaadin.scala.mixins.VaadinSessionMixin
+import vaadin.scala.server.mixins.VaadinSessionMixin
 import com.vaadin.server.{ BootstrapPageResponse, BootstrapFragmentResponse }
 import org.mockito.Mockito
 import org.jsoup.nodes.Element
 import org.jsoup.parser.Tag
+import vaadin.scala.server.ScaladinSession
 
 class ScaladinSessionTests extends ScaladinTestSuite {
 

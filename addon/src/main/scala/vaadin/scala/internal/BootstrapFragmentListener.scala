@@ -4,7 +4,8 @@ import com.vaadin.server.{ BootstrapFragmentResponse, BootstrapPageResponse }
 import collection.JavaConverters._
 import collection.mutable
 import org.jsoup.nodes.Node
-import vaadin.scala.{ UI, ScaladinRequest, ScaladinSession }
+import vaadin.scala.{ UI, ScaladinRequest }
+import vaadin.scala.server.ScaladinSession
 
 /**
  * @author Henri Kerola / Vaadin
