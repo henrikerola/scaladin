@@ -39,18 +39,18 @@ object Validator {
   }
 }
 
-class Validators(p: com.vaadin.data.Validatable with ValidatableMixin)
+class ValidatorsSet(p: com.vaadin.data.Validatable with ValidatableMixin)
     extends mutable.Set[Validator] with Serializable {
 
-  def contains(key: Validator) = iterator.contains(key)
+  override def contains(key: Validator) = iterator.contains(key)
 
   import scala.collection.JavaConverters._
-  def iterator(): Iterator[Validator] =
+  override def iterator: Iterator[Validator] =
     p.getValidators.asScala.filter(_.isInstanceOf[ValidatorMixin]).map(_.asInstanceOf[ValidatorMixin].wrapper).map(_.asInstanceOf[Validator]).iterator
 
   def +=(elem: Option[Any] => Validation) = { p.addValidator(Validator(elem).p); this }
-  def +=(elem: Validator) = { p.addValidator(elem.p); this }
-  def -=(elem: Validator) = {
+  override def +=(elem: Validator) = { p.addValidator(elem.p); this }
+  override def -=(elem: Validator) = {
     iterator.foreach { e =>
       if (e == elem) {
         p.removeValidator(e.p)
@@ -63,7 +63,7 @@ class Validators(p: com.vaadin.data.Validatable with ValidatableMixin)
 trait Validatable extends Wrapper {
   override def p: com.vaadin.data.Validatable with ValidatableMixin
 
-  lazy val validators: Validators = new Validators(p)
+  lazy val validators: ValidatorsSet = new ValidatorsSet(p)
 
   def validate: Validation = Validation.wrapToValidation(p.validate)
 
