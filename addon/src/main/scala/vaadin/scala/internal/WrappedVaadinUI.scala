@@ -1,7 +1,7 @@
 package vaadin.scala.internal
 
 import vaadin.scala.mixins.AbstractSingleComponentContainerMixin
-import vaadin.scala.ScaladinRequest
+import vaadin.scala.server.ScaladinRequest
 
 class WrappedVaadinUI extends com.vaadin.ui.UI with AbstractSingleComponentContainerMixin {
   protected def init(request: com.vaadin.server.VaadinRequest): Unit = {

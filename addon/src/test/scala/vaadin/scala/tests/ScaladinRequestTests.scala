@@ -11,6 +11,7 @@ import com.vaadin.server.VaadinRequest
 import java.io.InputStream
 import java.util.Locale
 import scala.collection.mutable
+import vaadin.scala.server.ScaladinRequest
 
 @RunWith(classOf[JUnitRunner])
 class ScaladinRequestTests extends FunSuite with BeforeAndAfter with MockitoSugar {

@@ -1,6 +1,7 @@
 package vaadin.scala.demo
 
 import vaadin.scala._
+import vaadin.scala.server.ScaladinRequest
 
 class DemoUI extends UI(title = "Hello World") {
 

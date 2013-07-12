@@ -1,9 +1,9 @@
 package vaadin.scala.internal
 
-import vaadin.scala.{ UI, ScaladinRequest }
+import vaadin.scala.{ UI }
 import com.vaadin.server.{ BootstrapFragmentResponse, BootstrapPageResponse }
 import collection.mutable
-import vaadin.scala.server.ScaladinSession
+import vaadin.scala.server.{ ScaladinRequest, ScaladinSession }
 
 /**
  * @author Henri Kerola / Vaadin

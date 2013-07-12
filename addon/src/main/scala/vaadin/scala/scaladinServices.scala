@@ -4,7 +4,7 @@ import event.Event
 import internal.{ SessionInitListener, ListenersTrait }
 import vaadin.scala.mixins.ScaladinServletServiceMixin
 import com.vaadin.server.VaadinRequest
-import vaadin.scala.server.ScaladinSession
+import vaadin.scala.server.{ ScaladinRequest, ScaladinSession }
 import vaadin.scala.server.mixins.VaadinSessionMixin
 
 package mixins {

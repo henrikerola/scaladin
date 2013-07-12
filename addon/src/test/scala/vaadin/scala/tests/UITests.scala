@@ -7,6 +7,7 @@ import org.scalatest.BeforeAndAfter
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import java.io.{ ByteArrayOutputStream, ObjectOutputStream }
+import vaadin.scala.server.ScaladinRequest
 
 @RunWith(classOf[JUnitRunner])
 class UITests extends FunSuite with BeforeAndAfter {

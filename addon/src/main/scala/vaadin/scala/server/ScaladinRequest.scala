@@ -2,7 +2,6 @@ package vaadin.scala.server
 
 import java.util.Locale
 import java.io.InputStream
-import java.util.Date
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 

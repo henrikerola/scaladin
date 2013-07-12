@@ -6,7 +6,7 @@ import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.internal.ClickListener
 import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.internal.WrappedVaadinUI
-import vaadin.scala.server.Page
+import vaadin.scala.server.{ ScaladinRequest, Page }
 
 object UI {
   def current: UI = WrapperUtil.wrapperFor[UI](com.vaadin.ui.UI.getCurrent).orNull
