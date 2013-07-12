@@ -1,4 +1,4 @@
-package vaadin.scala
+package vaadin.scala.server
 
 import java.util.Locale
 import java.io.InputStream
