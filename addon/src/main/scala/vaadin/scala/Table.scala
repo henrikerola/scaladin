@@ -15,6 +15,7 @@ import vaadin.scala.internal.CellStyleGenerator
 import vaadin.scala.internal.WrapperUtil.wrapperFor
 import vaadin.scala.internal.ListenersTrait
 import collection.mutable
+import vaadin.scala.server.Resource
 
 package mixins {
   trait TableMixin extends AbstractSelectMixin with ActionContainerMixin with ContainerOrderedMixin

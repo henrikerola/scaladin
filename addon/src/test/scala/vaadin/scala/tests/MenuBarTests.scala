@@ -3,6 +3,7 @@ package vaadin.scala.tests
 import vaadin.scala._
 import org.scalatest.FunSuite
 import org.scalatest.BeforeAndAfter
+import vaadin.scala.server.ThemeResource
 
 class MenuBarTests extends FunSuite with BeforeAndAfter {
 

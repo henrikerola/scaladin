@@ -4,6 +4,7 @@ import vaadin.scala._
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import vaadin.scala.server.ThemeResource
 
 @RunWith(classOf[JUnitRunner])
 class EmbeddedTests extends FunSuite {

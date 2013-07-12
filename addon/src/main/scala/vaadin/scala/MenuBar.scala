@@ -3,6 +3,7 @@ package vaadin.scala
 import vaadin.scala.mixins.MenuBarMixin
 import vaadin.scala.internal.WrapperUtil
 import scala.collection._
+import vaadin.scala.server.Resource
 
 package mixins {
   trait MenuBarMixin extends AbstractComponentMixin { self: com.vaadin.ui.MenuBar => }

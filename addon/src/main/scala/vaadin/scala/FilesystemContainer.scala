@@ -3,8 +3,8 @@ package vaadin.scala
 import java.io.File
 import java.io.FilenameFilter
 import java.util.Date
-import vaadin.scala.mixins.ContainerHierarchicalMixin
 import vaadin.scala.mixins.FilesystemContainerMixin
+import vaadin.scala.server.{ ThemeResource, Resource }
 
 package mixins {
   trait FilesystemContainerMixin extends ContainerHierarchicalMixin

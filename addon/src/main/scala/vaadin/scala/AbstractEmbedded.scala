@@ -1,6 +1,7 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.AbstractEmbeddedMixin
+import vaadin.scala.server.Resource
 
 package mixins {
   trait AbstractEmbeddedMixin extends AbstractComponentMixin {

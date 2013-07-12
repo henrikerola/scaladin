@@ -2,14 +2,13 @@ package vaadin.scala.tests
 
 import vaadin.scala._
 import org.scalatest.FunSuite
-import com.vaadin.server.Sizeable
 import org.scalatest.BeforeAndAfter
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
 import vaadin.scala.mixins.TabSheetMixin
-import vaadin.scala.mixins.TabSheetMixin
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import vaadin.scala.server.ThemeResource
 
 @RunWith(classOf[JUnitRunner])
 class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {

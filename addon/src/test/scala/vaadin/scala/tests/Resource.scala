@@ -1,9 +1,9 @@
 package vaadin.scala.tests
 
 import org.scalatest.FunSuite
-import vaadin.scala._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import vaadin.scala.server.ExternalResource
 
 @RunWith(classOf[JUnitRunner])
 class Resource extends FunSuite {

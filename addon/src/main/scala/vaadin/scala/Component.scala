@@ -3,6 +3,7 @@ package vaadin.scala
 import scala.collection.mutable
 import vaadin.scala.mixins.ComponentMixin
 import java.util.Locale
+import vaadin.scala.server.Resource
 
 package mixins {
 

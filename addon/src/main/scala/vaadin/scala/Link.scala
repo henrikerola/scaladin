@@ -3,6 +3,7 @@ package vaadin.scala
 import vaadin.scala.mixins.LinkMixin
 import com.vaadin.shared.ui.BorderStyle
 import com.vaadin.shared.ui.BorderStyle._
+import vaadin.scala.server.Resource
 
 package mixins {
   trait LinkMixin extends AbstractComponentMixin { self: com.vaadin.ui.Link => }

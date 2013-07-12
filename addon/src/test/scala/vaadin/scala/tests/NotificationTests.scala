@@ -7,6 +7,7 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito
+import vaadin.scala.server.ThemeResource
 
 @RunWith(classOf[JUnitRunner])
 class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {

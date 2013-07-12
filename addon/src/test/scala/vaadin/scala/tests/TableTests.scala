@@ -9,6 +9,7 @@ import org.scalatest.mock.MockitoSugar
 import vaadin.scala.mixins.TableMixin
 import org.mockito.Mockito
 import org.mockito.ArgumentCaptor
+import vaadin.scala.server.ThemeResource
 
 @RunWith(classOf[JUnitRunner])
 class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {

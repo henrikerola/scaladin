@@ -3,6 +3,7 @@ package vaadin.scala
 import event.Event
 import internal.ActionHandler
 import vaadin.scala.mixins.{ ActionContainerMixin, ActionMixin }
+import vaadin.scala.server.Resource
 
 package mixins {
   trait ActionMixin extends ScaladinMixin

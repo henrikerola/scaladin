@@ -2,6 +2,7 @@ package vaadin.scala
 
 import com.vaadin.ui.{ Notification => VaadinNotification }
 import com.vaadin.shared.{ Position => VaadinPosition }
+import vaadin.scala.server.Resource
 
 object Notification {
 

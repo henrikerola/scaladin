@@ -5,6 +5,7 @@ import event.{ FocusNotifier, BlurNotifier, Event }
 import vaadin.scala.mixins.TabSheetMixin
 import internal.{ TabCloseHandler, SelectedTabChangeListener, ListenersTrait }
 import collection.mutable
+import vaadin.scala.server.Resource
 
 package mixins {
   trait TabSheetMixin extends AbstractComponentContainerMixin { self: com.vaadin.ui.TabSheet => }

@@ -6,7 +6,7 @@ import org.scalatest.FunSuite
 import org.scalatest.BeforeAndAfter
 import vaadin.scala.FilesystemContainer
 import java.io.File
-import vaadin.scala.ThemeResource
+import vaadin.scala.server.ThemeResource
 
 @RunWith(classOf[JUnitRunner])
 class FileSystemContainerTests extends FunSuite with BeforeAndAfter {

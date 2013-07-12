@@ -9,6 +9,7 @@ import internal.ActionHandler
 import vaadin.scala.mixins.ActionContainerMixin
 import org.mockito.{ Matchers, ArgumentCaptor, Mockito }
 import vaadin.scala.Action.{ HandleActionEvent, GetActionsEvent }
+import vaadin.scala.server.ThemeResource
 
 @RunWith(classOf[JUnitRunner])
 class ActionTests extends FunSuite with BeforeAndAfter with MockitoSugar {

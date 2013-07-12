@@ -1,10 +1,9 @@
 package vaadin.scala
 
-import vaadin.scala.event.{ ClickNotifier, ClickEvent }
-import vaadin.scala.internal.ListenersTrait
-import vaadin.scala.internal.ClickListener
+import vaadin.scala.event.ClickNotifier
 import vaadin.scala.mixins.EmbeddedMixin
 import scala.collection.mutable
+import vaadin.scala.server.Resource
 
 package mixins {
   trait EmbeddedMixin extends AbstractComponentMixin { self: com.vaadin.ui.Embedded => }

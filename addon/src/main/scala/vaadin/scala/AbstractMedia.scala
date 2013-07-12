@@ -2,7 +2,7 @@ package vaadin.scala
 
 import vaadin.scala.mixins.AbstractMediaMixin
 import collection.JavaConverters._
-import collection.mutable
+import vaadin.scala.server.Resource
 
 package mixins {
   trait AbstractMediaMixin extends AbstractComponentMixin { self: com.vaadin.ui.AbstractMedia => }
