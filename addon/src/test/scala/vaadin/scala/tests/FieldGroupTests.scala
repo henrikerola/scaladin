@@ -1,6 +1,7 @@
 package vaadin.scala.tests
 
 import vaadin.scala._
+import vaadin.scala.Validator._
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 

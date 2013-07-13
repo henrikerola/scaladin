@@ -12,7 +12,7 @@ trait Buffered extends Wrapper {
 
   def p: com.vaadin.data.Buffered with BufferedMixin
 
-  def commit(): Validation = Validation.wrapToValidation(p.commit)
+  def commit(): Validator.Validation = Validator.Validation.wrapToValidation(p.commit)
 
   def discard(): Unit = p.discard()
 

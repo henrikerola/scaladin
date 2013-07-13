@@ -4,9 +4,8 @@ import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import vaadin.scala._
+import vaadin.scala.Validator._
 import org.scalatest.mock.MockitoSugar
-import org.mockito.Mockito._
-import com.vaadin.data.validator.EmailValidator
 
 @RunWith(classOf[JUnitRunner])
 class ValidationTests extends FunSuite with MockitoSugar {
@@ -110,4 +109,17 @@ class ValidationTests extends FunSuite with MockitoSugar {
     field1.value = "test@email.com"
     assert(field1.validate === Valid)
   }
+
+  test("wrap an existing Vaadin validator") {
+    val validator = Validator(new com.vaadin.data.validator.EmailValidator("fail"))
+    assert(validator.validate(None) === Valid)
+    assert(validator.validate(Some("foo@example.com")) === Valid)
+    assert(validator.validate(Some("example.com")) === Invalid(List("fail")))
+
+  }
+
+  test("wrapped IntValidator") {
+    //class IntValidator extends scala.Validator()
+  }
+
 }
