@@ -103,9 +103,9 @@ class LabelTests extends FunSuite {
 
     val converter = new Converter[String, Integer]() {
 
-      def convertToPresentation(value: Option[Integer], locale: Locale) = ???
+      def convertToPresentation(value: Option[Integer], targetType: Class[_ <: String], locale: Locale) = ???
 
-      def convertToModel(value: Option[String], locale: Locale) = ???
+      def convertToModel(value: Option[String], targetType: Class[_ <: Integer], locale: Locale) = ???
     }
 
     assert(label.converter === None)

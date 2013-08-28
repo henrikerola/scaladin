@@ -33,8 +33,8 @@ class AbstractFieldTests extends ScaladinTestSuite {
   test("converter") {
 
     val converter = new Converter[String, Object]() {
-      def convertToPresentation(value: Option[Object], locale: Locale) = ???
-      def convertToModel(value: Option[String], locale: Locale) = ???
+      def convertToPresentation(value: Option[Object], targetType: Class[_ <: String], locale: Locale) = ???
+      def convertToModel(value: Option[String], targetType: Class[_ <: Object], locale: Locale) = ???
     }
 
     Mockito.when(vaadinAbstractField.getConverter).thenReturn(converter.p)

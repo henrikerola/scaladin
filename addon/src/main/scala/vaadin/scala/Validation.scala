@@ -19,7 +19,7 @@ package mixins {
           if (reasons.isEmpty)
             throw new InvalidValueException("")
           else
-            throw new InvalidValueException(reasons.head, reasons.tail.map(new InvalidValueException(_)).toArray)
+            throw new InvalidValueException(reasons.head, reasons.tail.map(new InvalidValueException(_)): _*)
         }
       }
     }

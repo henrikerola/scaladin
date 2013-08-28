@@ -42,4 +42,6 @@ trait ScaladinService extends Wrapper {
 class ScaladinServletService(override val p: com.vaadin.server.VaadinServletService with ScaladinServletServiceMixin)
     extends ScaladinService {
   p.wrapper = this
+
+  def init(): Unit = p.init()
 }

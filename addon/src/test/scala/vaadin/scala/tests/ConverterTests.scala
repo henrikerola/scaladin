@@ -12,10 +12,10 @@ import java.util.Locale
 class ConverterTests extends FunSuite {
 
   class MyConverter extends Converter[String, Date] {
-    override def convertToModel(value: Option[String], locale: Locale): Option[Date] = {
+    override def convertToModel(value: Option[String], targetType: Class[_ <: Date], locale: Locale): Option[Date] = {
       Some(new Date)
     }
-    override def convertToPresentation(value: Option[Date], locale: Locale): Option[String] = {
+    override def convertToPresentation(value: Option[Date], targetType: Class[_ <: String], locale: Locale): Option[String] = {
       Some("")
     }
   }
@@ -48,11 +48,11 @@ class ConverterTests extends FunSuite {
     assert(converter.presentationType === classOf[java.util.Date])
     assert(converter.modelType === classOf[java.lang.Long])
 
-    assert(converter.convertToModel(None, locale) === None)
-    assert(converter.convertToPresentation(None, locale) === None)
+    assert(converter.convertToModel(None, classOf[java.lang.Long], locale) === None)
+    assert(converter.convertToPresentation(None, classOf[java.util.Date], locale) === None)
 
-    assert(converter.convertToModel(Some(new Date(1358627734477L)), locale) === Some(1358627734477L))
-    assert(converter.convertToPresentation(Some(1358627734477L), locale) === Some(new Date(1358627734477L)))
+    assert(converter.convertToModel(Some(new Date(1358627734477L)), classOf[java.lang.Long], locale) === Some(1358627734477L))
+    assert(converter.convertToPresentation(Some(1358627734477L), classOf[java.util.Date], locale) === Some(new Date(1358627734477L)))
   }
 
 }

@@ -1,6 +1,6 @@
 import sbt._
 import Keys._
-import com.github.siasia.WebPlugin._
+import com.earldouglas.xsbtwebplugin.WebPlugin._
 import de.johoop.jacoco4sbt._
 import JacocoPlugin._
 import java.util.jar.{Attributes, Manifest}
@@ -44,7 +44,7 @@ object Format {
 }
 
 object Dependencies {
-  val vaadinVersion = "7.0.5"
+  val vaadinVersion = "7.1.3"
   val jettyVersion = "7.3.0.v20110203"
   val scalaTestVersion = "2.0.M5-B1"
   val junitVersion = "4.9"
@@ -56,8 +56,8 @@ object Dependencies {
   val vaadin = "com.vaadin" % "vaadin-server" % vaadinVersion
   val vaadinClientCompiled = "com.vaadin" % "vaadin-client-compiled" % vaadinVersion
   val vaadinThemes = "com.vaadin" % "vaadin-themes" % vaadinVersion
-  val servletApi = "javax.servlet" % "servlet-api" % "2.4" % "provided"
-  val portletApi = "javax.portlet" % "portlet-api" % "2.0" % "provided"
+  val servletApi = "javax.servlet" % "servlet-api" % "2.4"
+  val portletApi = "javax.portlet" % "portlet-api" % "2.0"
   val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
   val scalaTest = "org.scalatest" % "scalatest_2.10.0-RC5" % scalaTestVersion % "test"
   val junitInterface = "com.novocode" % "junit-interface" % "0.7" % "test->default"

@@ -76,25 +76,25 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
 
   def visibleColumns: Seq[Any] = p.getVisibleColumns
   def visibleColumns_=(visibleColumns: Seq[Any]) {
-    p.setVisibleColumns(visibleColumns map { _.asInstanceOf[Object] } toArray)
+    p.setVisibleColumns(visibleColumns map { _.asInstanceOf[Object] }: _*)
   }
 
   def columnHeaders: Seq[Option[String]] = p.getColumnHeaders map {
     case null => None
     case header => Some(header)
   }
-  def columnHeaders_=(columnHeaders: => Seq[String]): Unit = p.setColumnHeaders(columnHeaders toArray)
+  def columnHeaders_=(columnHeaders: => Seq[String]): Unit = p.setColumnHeaders(columnHeaders: _*)
   def columnHeaders_=(columnHeaders: Seq[Option[String]]): Unit = p.setColumnHeaders(columnHeaders map {
     case None => null
     case Some(header) => header
-  } toArray)
+  }: _*)
 
   def columnIcons: Seq[Option[Resource]] = p.getColumnIcons map { wrapperFor[Resource](_) }
-  def columnIcons_=(columnIcons: => Seq[Resource]): Unit = p.setColumnIcons(columnIcons map { _.p } toArray)
+  def columnIcons_=(columnIcons: => Seq[Resource]): Unit = p.setColumnIcons(columnIcons map { _.p }: _*)
   def columnIcons_=(columnIcons: Seq[Option[Resource]]): Unit = p.setColumnIcons(columnIcons map {
     case None => null
     case Some(icon) => icon.p
-  } toArray)
+  }: _*)
 
   def columnAlignments: Seq[Table.ColumnAlignment.Value] =
     p.getColumnAlignments map { align => Table.ColumnAlignment(align.ordinal) }
