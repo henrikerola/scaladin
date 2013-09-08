@@ -41,9 +41,14 @@ trait Item extends Wrapper {
 
   def p: com.vaadin.data.Item
 
+  def getProperty(id: Any): Property[_] = p.getItemProperty(id) match {
+    case null => null
+    case p => wrapProperty(p)
+  }
+
   def getPropertyOption(id: Any): Option[Property[_]] = optionalWrapProperty(p.getItemProperty(id))
 
-  def propertyIds(): Iterable[Any] = p.getItemPropertyIds().asScala
+  def propertyIds: Iterable[Any] = p.getItemPropertyIds().asScala
 
   def addItemProperty(id: Any, property: Property[_]): Boolean = p.addItemProperty(id, property.p)
 
