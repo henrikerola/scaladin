@@ -16,7 +16,7 @@ class ContainerTests extends FunSuite {
     assert(1 === result.size)
     val item = result.getItem('itemId).get
     assert(1 === item.propertyIds.size)
-    val property = item.property('propertyId).get
+    val property = item.getPropertyOption('propertyId).get
     assert(classOf[String] === property.getType)
     assert(Some("foobar") === property.value)
   }

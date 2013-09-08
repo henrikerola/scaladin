@@ -35,37 +35,37 @@ class ScaladinItemTests extends ScaladinTestSuite {
 
   test("binding") {
     assert(4 === item.propertyIds.size)
-    assert(Some("John") === item.property("firstName").get.value)
-    assert(Some("Smith") === item.property("lastName").get.value)
-    assert(Some("This is a message") === item.property("message").get.value)
+    assert(Some("John") === item.getPropertyOption("firstName").get.value)
+    assert(Some("Smith") === item.getPropertyOption("lastName").get.value)
+    assert(Some("This is a message") === item.getPropertyOption("message").get.value)
 
-    item.property("lastName").get.value = "Doe"
+    item.getPropertyOption("lastName").get.value = "Doe"
 
-    assert(Some("Doe") === item.property("lastName").get.value)
+    assert(Some("Doe") === item.getPropertyOption("lastName").get.value)
     assert("Doe" === person.lastName)
 
-    //assert(None === item.property("age").get.value)
+    //assert(None === item.getPropertyOption("age").get.value)
 
-    //    item.property("age").get.value = 2
-    //    item.property("age").get.value = Some(2)
-    //    item.property("age").get.value = None
+    //    item.getPropertyOption("age").get.value = 2
+    //    item.getPropertyOption("age").get.value = Some(2)
+    //    item.getPropertyOption("age").get.value = None
 
   }
 
   test("readOnly for val is always true") {
-    assert(item.property("firstName").get.readOnly)
+    assert(item.getPropertyOption("firstName").get.readOnly)
 
-    item.property("firstName").get.readOnly = false
+    item.getPropertyOption("firstName").get.readOnly = false
 
-    assert(item.property("firstName").get.readOnly)
+    assert(item.getPropertyOption("firstName").get.readOnly)
   }
 
   test("readOnly for non-val is toggable") {
-    assert(!item.property("lastName").get.readOnly)
+    assert(!item.getPropertyOption("lastName").get.readOnly)
 
-    item.property("firstName").get.readOnly = true
+    item.getPropertyOption("firstName").get.readOnly = true
 
-    assert(item.property("firstName").get.readOnly)
+    assert(item.getPropertyOption("firstName").get.readOnly)
   }
 
 }

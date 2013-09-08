@@ -47,7 +47,7 @@ class IndexedContainerTests extends ContainerTestIndexed with BeforeAndAfter {
     container.addContainerProperty('propertyId, classOf[String], Some(""))
     val item = container.addItem('itemId).get
     assert(1 === item.propertyIds.size)
-    val property = item.property('propertyId).get
+    val property = item.getPropertyOption('propertyId).get
     assert(Some("") === property.value)
   }
 }

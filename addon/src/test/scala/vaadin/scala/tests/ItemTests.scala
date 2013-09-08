@@ -30,7 +30,7 @@ class ItemTests extends FunSuite with BeforeAndAfter {
   test("item creation with one property") {
     val result = Item('testId -> "foobar")
     assert(1 === result.propertyIds.size)
-    val property = result.property('testId).get
+    val property = result.getPropertyOption('testId).get
     assert(classOf[String] === property.getType)
     assert(Some("foobar") === property.value)
   }
@@ -39,7 +39,7 @@ class ItemTests extends FunSuite with BeforeAndAfter {
     val result = Item('testId1 -> "foobar1", 'testId2 -> "foobar2", 'testId3 -> "foobar3")
     assert(3 === result.propertyIds.size)
     for (propertyId <- result.propertyIds) {
-      val property = result.property(propertyId).get
+      val property = result.getPropertyOption(propertyId).get
       assert(classOf[String] === property.getType)
       assert(true === property.value.get.asInstanceOf[String].startsWith("foobar"))
     }
