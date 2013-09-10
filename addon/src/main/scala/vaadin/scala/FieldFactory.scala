@@ -164,7 +164,7 @@ object DefaultFieldFactory extends TableFieldFactory {
   val Bool = classOf[Boolean]
 
   def createField(ingredients: TableFieldIngredients): Option[Field[_]] =
-    ingredients.container.getProperty(ingredients.itemId, ingredients.propertyId) match {
+    ingredients.container.getPropertyOption(ingredients.itemId, ingredients.propertyId) match {
       case Some(property) => {
         val propertyType: Class[_] = property.getType
         val field: Field[_] = createFieldByPropertyType(propertyType)
