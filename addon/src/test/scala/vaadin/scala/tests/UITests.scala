@@ -8,14 +8,21 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import java.io.{ ByteArrayOutputStream, ObjectOutputStream }
 import vaadin.scala.server.ScaladinRequest
+import org.mockito.{ Mockito, ArgumentCaptor }
+import vaadin.scala.Action.GetActionsEvent
+import com.vaadin.server.VaadinSession
+import org.scalatest.mock.MockitoSugar
 
 @RunWith(classOf[JUnitRunner])
-class UITests extends FunSuite with BeforeAndAfter {
+class UITests extends FunSuite with MockitoSugar with BeforeAndAfter {
 
   var ui: UI = _
 
+  var spy: WrappedVaadinUI = _
+
   before {
-    ui = new UI {
+    spy = Mockito.spy(new WrappedVaadinUI)
+    ui = new UI(spy) {
       override def init(request: ScaladinRequest) {
       }
     }
@@ -140,5 +147,21 @@ class UITests extends FunSuite with BeforeAndAfter {
 
   ignore("serialization") {
     new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(ui)
+  }
+
+  test("access should execute passed code block") {
+
+    Mockito.when(spy.getSession).thenReturn(mock[VaadinSession])
+
+    var i = 0
+    ui.access {
+      i = i + 1
+    }
+
+    val argument = ArgumentCaptor.forClass(classOf[Runnable])
+    Mockito.verify(spy).access(argument.capture())
+    argument.getValue.run()
+
+    assert(i == 1)
   }
 }

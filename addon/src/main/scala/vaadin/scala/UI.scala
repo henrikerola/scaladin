@@ -110,4 +110,10 @@ abstract class UI(override val p: WrappedVaadinUI)
 
   def session: ScaladinSession = wrapperFor(p.getSession) orNull
 
+  // TODO should return a Future
+  def access(runnable: => Unit): Unit =
+    p.access(new Runnable {
+      def run(): Unit = runnable
+    })
+
 }
