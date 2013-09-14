@@ -9,9 +9,9 @@ import org.scalatest.junit.JUnitRunner
 import java.io.{ ByteArrayOutputStream, ObjectOutputStream }
 import vaadin.scala.server.ScaladinRequest
 import org.mockito.{ Mockito, ArgumentCaptor }
-import vaadin.scala.Action.GetActionsEvent
 import com.vaadin.server.VaadinSession
 import org.scalatest.mock.MockitoSugar
+import vaadin.scala.PushConfiguration.{ Transport }
 
 @RunWith(classOf[JUnitRunner])
 class UITests extends FunSuite with MockitoSugar with BeforeAndAfter {
@@ -171,5 +171,13 @@ class UITests extends FunSuite with MockitoSugar with BeforeAndAfter {
 
     assert(5 === ui.pollInterval)
     Mockito.verify(spy).getPollInterval
+  }
+
+  test("pushConfiguration.pushMode") {
+    assert(PushMode.Disabled === ui.pushConfiguration.pushMode)
+
+    ui.pushConfiguration.pushMode = PushMode.Manual
+    assert(PushMode.Manual === ui.pushConfiguration.pushMode)
+
   }
 }
