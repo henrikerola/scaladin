@@ -116,4 +116,12 @@ abstract class UI(override val p: WrappedVaadinUI)
       def run(): Unit = runnable
     })
 
+  def pollInterval: Int = p.getPollInterval
+  def pollInterval_=(intervalInMillis: Int): Unit = p.setPollInterval(intervalInMillis)
+
+  def push(): Unit = p.push()
+
+  def pushConfiguration: PushConfiguration = new PushConfiguration {
+    val p = UI.this.p.getPushConfiguration
+  }
 }

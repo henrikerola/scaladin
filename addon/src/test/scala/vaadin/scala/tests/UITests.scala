@@ -164,4 +164,12 @@ class UITests extends FunSuite with MockitoSugar with BeforeAndAfter {
 
     assert(i == 1)
   }
+
+  test("pollInterval") {
+    ui.pollInterval = 5
+    Mockito.verify(spy).setPollInterval(5)
+
+    assert(5 === ui.pollInterval)
+    Mockito.verify(spy).getPollInterval
+  }
 }
