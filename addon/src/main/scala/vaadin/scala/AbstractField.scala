@@ -24,6 +24,7 @@ abstract class AbstractField[T](override val p: com.vaadin.ui.AbstractField[T] w
   def converter_=(converter: Converter[T, _]): Unit = p.setConverter(converter.p)
   def converter_=(datamodelType: Class[_]): Unit = p.setConverter(datamodelType)
 
-  //override def getType: Class[_ <: T]
+  override def value: Option[T] = super.value.asInstanceOf[Option[T]]
+
 }
 
