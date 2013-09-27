@@ -12,7 +12,14 @@ class ScaladinUIProvider extends DefaultUIProvider {
 
   private def createScaladinUiInstance(e: UIProviderEvent): vaadin.scala.UI = {
     val classLoader = Some(e.getService.getClassLoader).getOrElse(getClass.getClassLoader)
-    Class.forName(getUiClassName(e), true, classLoader).newInstance.asInstanceOf[vaadin.scala.UI]
+    //Class.forName(getUiClassName(e), true, classLoader).newInstance.asInstanceOf[vaadin.scala.UI]
+    import scala.reflect.runtime.universe
+
+    val runtimeMirror = universe.runtimeMirror(classLoader)
+
+    val module = runtimeMirror.staticModule(getUiClassName(e))
+
+    runtimeMirror.reflectModule(module).instance.asInstanceOf[vaadin.scala.UI]
   }
 
   private def getScaladinUiInstance(e: UIProviderEvent) =
