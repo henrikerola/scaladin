@@ -35,8 +35,6 @@ abstract class UI(override val p: WrappedVaadinUI)
   private[this] var _widgetset: Option[String] = None
   private[this] var _preserveOnRefresh: Boolean = false
 
-  var pushMode: PushMode.Value = PushMode.Disabled
-
   def this(
     title: String = null,
     theme: String = null,
@@ -49,7 +47,7 @@ abstract class UI(override val p: WrappedVaadinUI)
     this._theme = Option(theme)
     this._widgetset = Option(widgetset)
     this._preserveOnRefresh = preserveOnRefresh
-    this.pushMode = pushMode
+    pushConfiguration.pushMode = pushMode
   }
 
   def delayedInit(body: => Unit) {

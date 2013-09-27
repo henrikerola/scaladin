@@ -47,17 +47,17 @@ class UITests extends FunSuite with MockitoSugar with BeforeAndAfter {
     assert(ui.widgetset === None)
     assert(ui.preserveOnRefresh === false)
     assert(ui.p != null)
-    assert(ui.pushMode == PushMode.Disabled)
+    assert(ui.pushConfiguration.pushMode == PushMode.Disabled)
 
     val wrappedVaadinUI = new WrappedVaadinUI
-    ui = new UI("mytitle", "mytheme", "mywidgetset", true, PushMode.Manual, wrappedVaadinUI) {}
+    ui = new UI(title = "mytitle", theme = "mytheme", widgetset = "mywidgetset", preserveOnRefresh = true, pushMode = PushMode.Automatic, p = wrappedVaadinUI) {}
 
     assert(ui.title === Some("mytitle"))
     assert(ui.theme === "mytheme")
     assert(ui.widgetset === Some("mywidgetset"))
     assert(ui.preserveOnRefresh === true)
     assert(ui.p === wrappedVaadinUI)
-    assert(ui.pushMode == PushMode.Manual)
+    assert(ui.pushConfiguration.pushMode === PushMode.Automatic)
   }
 
   test("initialization without init(request: ScaladinRequest)") {
