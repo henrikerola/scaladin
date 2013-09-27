@@ -11,15 +11,14 @@ class ScaladinUIProvider extends DefaultUIProvider {
     e.getService.getDeploymentConfiguration.getInitParameters.getProperty("ScaladinUI")
 
   private def createScaladinUiInstance(e: UIProviderEvent): vaadin.scala.UI = {
-    val classLoader = Some(e.getService.getClassLoader).getOrElse(getClass.getClassLoader)
-    //Class.forName(getUiClassName(e), true, classLoader).newInstance.asInstanceOf[vaadin.scala.UI]
-    import scala.reflect.runtime.universe
-
-    val runtimeMirror = universe.runtimeMirror(classLoader)
-
-    val module = runtimeMirror.staticModule(getUiClassName(e))
-
-    runtimeMirror.reflectModule(module).instance.asInstanceOf[vaadin.scala.UI]
+    if (uiMap.isEmpty) {
+      val existingUI = uiMap.head._2
+      uiMap.clear
+      existingUI
+    } else {
+      val classLoader = Some(e.getService.getClassLoader).getOrElse(getClass.getClassLoader)
+      Class.forName(getUiClassName(e), true, classLoader).newInstance.asInstanceOf[vaadin.scala.UI]
+    }
   }
 
   private def getScaladinUiInstance(e: UIProviderEvent) =
@@ -38,6 +37,6 @@ class ScaladinUIProvider extends DefaultUIProvider {
 
   override def isPreservedOnRefresh(e: UICreateEvent) = getScaladinUiInstance(e).preserveOnRefresh
 
-  override def getPushMode(e: UICreateEvent) = com.vaadin.shared.communication.PushMode.values.apply(getScaladinUiInstance(e).pushMode.id)
+  override def getPushMode(e: UICreateEvent) = com.vaadin.shared.communication.PushMode.values.apply(getScaladinUiInstance(e).pushConfiguration.pushMode.id)
 
 }
