@@ -31,6 +31,8 @@ trait Connector extends Wrapper {
 trait ClientConnector extends Connector {
   def p: com.vaadin.server.ClientConnector with ClientConnectorMixin
 
+  override def parent: Option[ClientConnector] = super.parent.map(_.asInstanceOf[ClientConnector])
+
   /* Overriding attach or detach will not affect anything.
    * Use listeners instead. */
   def attach(): Unit = p.attach()
