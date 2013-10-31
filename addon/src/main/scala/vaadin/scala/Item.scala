@@ -25,7 +25,8 @@ object Item {
     //make sure that the Item wrapper instance is the same (type) all the time
     protected var itemWrapper: Option[Item] = None
     protected def internalSetItem(optionWrap: Option[Item]): Unit = optionWrap match {
-      case Some(wrapper) => itemWrapper = optionWrap; p.setItemDataSource(wrapper.p)
+      case Some(wrapper) =>
+        itemWrapper = optionWrap; p.setItemDataSource(wrapper.p)
       case None => itemWrapper = None; p.setItemDataSource(null)
     }
 

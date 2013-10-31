@@ -1,6 +1,6 @@
 import sbt._
 import Keys._
-import com.github.siasia.WebPlugin._
+import com.earldouglas.xsbtwebplugin.WebPlugin._
 import de.johoop.jacoco4sbt._
 import JacocoPlugin._
 import java.util.jar.{Attributes, Manifest}
@@ -10,7 +10,7 @@ object BuildSettings {
   val buildOrganization = "vaadin.scala"
   val buildName = "Scaladin"
   val buildVersion = "2.2.0-SNAPSHOT"
-  val buildScalaVersion = "2.9.2"
+  val buildScalaVersion = "2.10.3"
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
     organization := buildOrganization,
@@ -28,11 +28,11 @@ object BuildSettings {
 }
 
 object Dependencies {
-  val vaadinVersion = "6.8.7"
+  val vaadinVersion = "6.8.13"
   val jettyVersion = "7.3.0.v20110203"
-  val scalaTestVersion = "2.0.M3"
+  val scalaTestVersion = "2.0.RC3"
   val junitVersion = "4.9"
-  val mockitoVersion = "1.9.0"
+  val mockitoVersion = "1.9.5"
 
   val scala = "org.scala-lang" % "scala-library" % BuildSettings.buildScalaVersion % "provided"
   val vaadin = "com.vaadin" % "vaadin" % vaadinVersion
