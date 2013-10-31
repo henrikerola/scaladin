@@ -24,7 +24,7 @@ class ScaladinUIProviderTest extends ScaladinTestSuite {
     assert(com.vaadin.shared.communication.PushMode.AUTOMATIC === provider.getPushMode(event))
 
     assert(1 === UIProviderTestUI.created)
-    
+
     provider.createInstance(event)
 
     assert(1 === UIProviderTestUI.created)

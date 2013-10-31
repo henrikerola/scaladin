@@ -1,9 +1,7 @@
 package vaadin.scala
 
 import java.util.Locale
-
 import scala.collection.mutable
-
 import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.mixins.ClientConnectorMixin
 import vaadin.scala.server.Resource
@@ -13,6 +11,8 @@ package mixins {
     def wrapperComponent: Component = wrapper.asInstanceOf[Component]
   }
 }
+
+import vaadin.scala.mixins.ComponentMixin
 
 object Component {
   trait Focusable extends Component {

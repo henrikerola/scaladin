@@ -14,13 +14,6 @@ object UI {
   def current_=(ui: UI): Unit = com.vaadin.ui.UI.setCurrent(ui.p)
 }
 
-object PushMode extends Enumeration {
-  import com.vaadin.shared.communication.{ PushMode => VaadinPushMode }
-  val Automatic = Value(VaadinPushMode.AUTOMATIC.ordinal)
-  val Disabled = Value(VaadinPushMode.DISABLED.ordinal)
-  val Manual = Value(VaadinPushMode.MANUAL.ordinal)
-}
-
 /**
  * @see com.vaadin.ui.UI
  * @author Henri Kerola / Vaadin
