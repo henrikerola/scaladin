@@ -9,7 +9,7 @@
 	</context-param>
 	<servlet>
 		<servlet-name>Demo Application</servlet-name>
-		<servlet-class>vaadin.scala.ScaladinServlet</servlet-class>
+		<servlet-class>vaadin.scala.server.ScaladinServlet</servlet-class>
 		<init-param>
 			<description>
 			Vaadin application class to start</description>
