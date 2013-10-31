@@ -34,7 +34,7 @@ object Dependencies {
   val junitVersion = "4.9"
   val mockitoVersion = "1.9.5"
 
-  val scala = "org.scala-lang" % "scala-library" % BuildSettings.buildScalaVersion % "provided"
+  val scala = "org.scala-lang" % "scala-library" % BuildSettings.buildScalaVersion
   val vaadin = "com.vaadin" % "vaadin" % vaadinVersion
   val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container"
   val scalaTest = "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
