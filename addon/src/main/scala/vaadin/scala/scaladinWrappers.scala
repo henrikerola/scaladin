@@ -13,5 +13,10 @@ object ScaladinWrapper {
   //  def componentContainerWrapper[P <: com.vaadin.ui.ComponentContainer](implicit m: ClassManifest[P]): ComponentContainer = new ScaladinComponentContainerWrapper(m.erasure.newInstance.asInstanceOf[P] with ComponentContainerMixin)
 }
 
-class ScaladinComponentWrapper[P <: com.vaadin.ui.Component with ComponentMixin](override val p: P) extends Component
-class ScaladinComponentContainerWrapper[P <: com.vaadin.ui.ComponentContainer with ComponentContainerMixin](override val p: P) extends ComponentContainer
+class ScaladinComponentWrapper[P <: com.vaadin.ui.Component with ComponentMixin](override val p: P) extends Component {
+  p.wrapper = this
+}
+
+class ScaladinComponentContainerWrapper[P <: com.vaadin.ui.ComponentContainer with ComponentContainerMixin](override val p: P) extends ComponentContainer {
+  p.wrapper = this
+}

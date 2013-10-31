@@ -29,4 +29,12 @@ class ScaladinWrapperTests extends FunSuite {
     //can call without cast
     wrapper.getExpandRatio(label.p)
   }
+
+  test("wrapped has wrapper reference") {
+    val wrapperComponent = ScaladinWrapper.wrapComponent(new com.vaadin.ui.TextField with ComponentMixin)
+    assert(wrapperComponent === wrapperComponent.p.wrapper)
+    
+    val wrapperContainer = ScaladinWrapper.wrapComponentContainer(new com.vaadin.ui.VerticalLayout with ComponentContainerMixin)
+    assert(wrapperContainer === wrapperContainer.p.wrapper)
+  }
 }
