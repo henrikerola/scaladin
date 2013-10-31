@@ -16,8 +16,11 @@ class WrapperUtilTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
     val peer = new MyPeer
     val res: MyPeer = WrapperUtil.peerFor(Option(new MyWrapper(peer)))
-    assert(res == peer)
-    assert(WrapperUtil.peerFor(None) == null)
+    assert(res === peer)
+
+    //upcast Nothing -> Any
+    val emptyRes: Any = WrapperUtil.peerFor(None)
+    assert(emptyRes === null)
   }
 
 }

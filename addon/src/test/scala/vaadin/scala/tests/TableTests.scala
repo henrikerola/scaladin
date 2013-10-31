@@ -249,15 +249,13 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   }
 
   test("selectionMode, None") {
-    import SelectionMode._
-    table.selectionMode = None
-    assert(table.selectionMode === None)
+    table.selectionMode = SelectionMode.None
+    assert(table.selectionMode === SelectionMode.None)
   }
 
   test("selectionMode, Single") {
-    import SelectionMode._
-    table.selectionMode = Single
-    assert(table.selectionMode === Single)
+    table.selectionMode = SelectionMode.Single
+    assert(table.selectionMode === SelectionMode.Single)
   }
 
   test("selectionMode, Multi") {
