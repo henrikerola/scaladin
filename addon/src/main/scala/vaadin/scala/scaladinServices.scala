@@ -37,6 +37,9 @@ trait ScaladinService extends Wrapper {
       override def removeListener(elem: SessionInitListener) = p.removeSessionInitListener(elem)
     }
 
+  def classLoader: ClassLoader = p.getClassLoader()
+
+  def deploymentConfiguration = p.getDeploymentConfiguration()
 }
 
 class ScaladinServletService(override val p: com.vaadin.server.VaadinServletService with ScaladinServletServiceMixin)

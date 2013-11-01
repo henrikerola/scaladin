@@ -3,8 +3,10 @@ package vaadin.scala.server
 import com.vaadin.server.{ VaadinServlet, SessionInitListener, SessionInitEvent }
 import javax.servlet.ServletConfig
 import vaadin.scala.mixins.ScaladinServletServiceMixin
-import vaadin.scala.internal.{ WrapperUtil, ScaladinUIProvider }
+import vaadin.scala.internal.{ WrapperUtil }
 import vaadin.scala.ScaladinServletService
+import vaadin.scala.internal.DefaultScaladinUIProvider
+import vaadin.scala.ScaladinService
 
 class ScaladinServlet extends VaadinServlet {
 
@@ -14,8 +16,12 @@ class ScaladinServlet extends VaadinServlet {
   }
 
   private def registerUIProvider() {
-    service.sessionInitListeners += {
-      _.session.p.addUIProvider(new ScaladinUIProvider) // FIXME .p.
+    service.sessionInitListeners += { event: ScaladinService.SessionInitEvent =>
+      event.session.p.addUIProvider(new DefaultScaladinUIProvider) // FIXME .p.
+
+      val customUIProvider = service.deploymentConfiguration.getInitParameters.getProperty("ScaladinUIProvider")
+      if (customUIProvider != null)
+        event.session.p.addUIProvider(createScaladinUiProviderInstance(customUIProvider)) // FIXME .p.
     }
   }
 
@@ -23,4 +29,9 @@ class ScaladinServlet extends VaadinServlet {
     new ScaladinServletService(new com.vaadin.server.VaadinServletService(this, c) with ScaladinServletServiceMixin).init().p
 
   def service: ScaladinServletService = WrapperUtil.wrapperFor(getService).get
+
+  protected def createScaladinUiProviderInstance(className: String): vaadin.scala.server.ScaladinUIProvider = {
+    val classLoader = Some(service.classLoader).getOrElse(getClass.getClassLoader)
+    Class.forName(className, true, classLoader).newInstance.asInstanceOf[vaadin.scala.server.ScaladinUIProvider]
+  }
 }

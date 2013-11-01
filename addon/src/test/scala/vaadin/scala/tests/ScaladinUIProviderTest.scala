@@ -1,6 +1,6 @@
 package vaadin.scala.tests
 
-import vaadin.scala.internal.ScaladinUIProvider
+import vaadin.scala.server.ScaladinUIProvider
 import com.vaadin.server.UICreateEvent
 import com.vaadin.server.VaadinRequest
 import vaadin.scala._

@@ -1,17 +1,15 @@
-package vaadin.scala.internal
+package vaadin.scala.server
 
 import com.vaadin.server.{ UIProviderEvent, DefaultUIProvider, UIClassSelectionEvent, UICreateEvent }
 import collection.mutable
-import scala.reflect.ClassTag
-import com.vaadin.annotations.PreserveOnRefresh
-import vaadin.scala.UI
+import vaadin.scala.internal.WrappedVaadinUI
 
 object UIConfiguration extends Enumeration {
   type ConfigurationType = Value
   val Title, Widgetset, Theme, PreservedOnRefresh, PushMode = Value
 }
 
-class ScaladinUIProvider extends DefaultUIProvider {
+abstract class ScaladinUIProvider extends DefaultUIProvider {
 
   import UIConfiguration._
 
@@ -19,13 +17,10 @@ class ScaladinUIProvider extends DefaultUIProvider {
   // (ui-class, config key) -> config value
   private val configurationCache = mutable.Map.empty[Tuple2[String, UIConfiguration.ConfigurationType], Any]
 
-  private def getUiClassName(e: UIProviderEvent) =
+  protected def getUiClassName(e: UIProviderEvent) =
     e.getService.getDeploymentConfiguration.getInitParameters.getProperty("ScaladinUI")
 
-  private def createScaladinUiInstance(e: UIProviderEvent): vaadin.scala.UI = {
-    val classLoader = Some(e.getService.getClassLoader).getOrElse(getClass.getClassLoader)
-    Class.forName(getUiClassName(e), true, classLoader).newInstance.asInstanceOf[vaadin.scala.UI]
-  }
+  protected def createScaladinUiInstance(e: UIProviderEvent): vaadin.scala.UI
 
   private def getConfigurationUiInstance(e: UIProviderEvent) =
     uiMap.getOrElseUpdate(getUiClassName(e), createScaladinUiInstance(e))

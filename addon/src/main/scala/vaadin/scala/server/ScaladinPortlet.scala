@@ -2,7 +2,7 @@ package vaadin.scala.server
 
 import com.vaadin.server.{ SessionInitEvent, SessionInitListener, VaadinPortlet }
 import javax.portlet.PortletConfig
-import vaadin.scala.internal.ScaladinUIProvider
+import vaadin.scala.internal.DefaultScaladinUIProvider
 
 /**
  * @see com.vaadin.server.VaadinPortlet
@@ -18,7 +18,7 @@ class ScaladinPortlet extends VaadinPortlet {
   private def registerUIProvider() {
     getService.addSessionInitListener(new SessionInitListener {
       def sessionInit(e: SessionInitEvent) {
-        e.getSession.addUIProvider(new ScaladinUIProvider)
+        e.getSession.addUIProvider(new DefaultScaladinUIProvider)
       }
     })
   }
