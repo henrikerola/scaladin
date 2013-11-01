@@ -21,7 +21,9 @@ object ScaladinSession {
   def current_=(session: Option[ScaladinSession]): Unit = com.vaadin.server.VaadinSession.setCurrent(if (session.isDefined) session.get.p else null)
   def current_=(session: ScaladinSession): Unit = com.vaadin.server.VaadinSession.setCurrent(session.p)
 
-  case class ErrorEvent(throwable: Throwable) extends Event
+  case class ErrorEvent(p: com.vaadin.server.ErrorEvent) extends Event {
+    val throwable = p.getThrowable()
+  }
 
   sealed class BootstrapResponse(request: ScaladinRequest, session: ScaladinSession, uiClass: Class[_ <: UI], uiProvider: UIProvider) extends Event
   case class BootstrapFragmentResponse(request: ScaladinRequest, session: ScaladinSession, uiClass: Class[_ <: UI], uiProvider: UIProvider, nodes: mutable.Buffer[Node])
@@ -30,7 +32,7 @@ object ScaladinSession {
     extends BootstrapResponse(request, session, uiClass, uiProvider)
 
   val DefaultErrorHandler: (ScaladinSession.ErrorEvent => Unit) = e =>
-    com.vaadin.server.DefaultErrorHandler.doDefault(new com.vaadin.server.ErrorEvent(e.throwable))
+    com.vaadin.server.DefaultErrorHandler.doDefault(e.p)
 }
 
 /**
