@@ -13,8 +13,8 @@
 		<init-param>
 			<description>
 			Vaadin application class to start</description>
-			<param-name>ScaladinUI</param-name>
-			<param-value>vaadin.scala.demo.DemoUI</param-value>
+			<param-name>ScaladinUIProvider</param-name>
+			<param-value>vaadin.scala.demo.DemoUIProvider</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
