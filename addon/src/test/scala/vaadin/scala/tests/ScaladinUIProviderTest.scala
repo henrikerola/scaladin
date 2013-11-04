@@ -5,11 +5,12 @@ import com.vaadin.server.UICreateEvent
 import com.vaadin.server.VaadinRequest
 import vaadin.scala._
 import org.mockito.Mockito._
+import vaadin.scala.internal.DefaultScaladinUIProvider
 
 class ScaladinUIProviderTest extends ScaladinTestSuite {
 
   test("configuration value caching") {
-    val provider = new ScaladinUIProvider
+    val provider = new DefaultScaladinUIProvider
     val mockRequest = mock[VaadinRequest]
     val event = mock[UICreateEvent](RETURNS_DEEP_STUBS)
 
