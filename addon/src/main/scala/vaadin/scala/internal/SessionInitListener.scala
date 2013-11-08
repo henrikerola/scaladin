@@ -1,8 +1,7 @@
 package vaadin.scala.internal
 
 import com.vaadin.server.SessionInitEvent
-import vaadin.scala.{ ScaladinService }
-import vaadin.scala.server.{ ScaladinRequest, ScaladinSession }
+import vaadin.scala.server.{ ScaladinRequest, ScaladinSession, ScaladinService }
 
 /**
  * @author Henri Kerola / Vaadin

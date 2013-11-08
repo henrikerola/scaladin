@@ -1,13 +1,14 @@
-package vaadin.scala
+package vaadin.scala.server
 
-import event.Event
-import internal.{ SessionInitListener, ListenersTrait }
-import vaadin.scala.mixins.ScaladinServletServiceMixin
+import vaadin.scala.event.Event
+import vaadin.scala.internal.{ SessionInitListener, ListenersTrait }
+import vaadin.scala.server.mixins.ScaladinServletServiceMixin
 import com.vaadin.server.VaadinRequest
-import vaadin.scala.server.{ ScaladinRequest, ScaladinSession }
-import vaadin.scala.server.mixins.VaadinSessionMixin
+import vaadin.scala.{ ListenersSet, Wrapper }
 
 package mixins {
+
+  import vaadin.scala.mixins.ScaladinMixin
 
   trait ScaladinServletServiceMixin extends ScaladinMixin { self: com.vaadin.server.VaadinServletService =>
     override def createVaadinSession(request: VaadinRequest) =
