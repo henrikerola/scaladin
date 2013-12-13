@@ -1,8 +1,14 @@
 package vaadin.scala
 
+import vaadin.scala.internal.VaadinShortcutAction
+
+case class ShortcutAction(val caption: String, keyCode: KeyCode, modifiers: KeyModifier*)
+  extends VaadinShortcutAction(caption, keyCode.value, modifiers map { _.value } toArray)
+
 case class KeyShortcut(keyCode: KeyCode, modifiers: KeyModifier*)
 
 case class KeyCode(value: Int)
+
 case class KeyModifier(value: Int)
 
 object KeyCode {
