@@ -10,7 +10,7 @@ Scaladin makes easier to use [Vaadin Framework](https://vaadin.com) with [Scala]
 
 ## How to use it?
 
-Scaladin 2 is for Vaadin 6 and Scaladin 3 for Vaadin 7. Scaladin 3 is still under development and not yet released but you can build your own version from sources. Scaladin 3 requires Scala 2.10. The JAR file and a Maven dependency for Scaladin 2 and Scala 2.9 can be found from the [Vaadin Directory](http://vaadin.com/addon/scaladin).
+Scaladin 2 is for Vaadin 6 and Scaladin 3 for Vaadin 7. Scaladin 3 requires Scala 2.10. The JAR files and a Maven dependencies for Scaladin can be found from the [Vaadin Directory](http://vaadin.com/addon/scaladin).
 
 The following listing shows what Scaladin 3 code looks like:
 
