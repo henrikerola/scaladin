@@ -9,11 +9,13 @@ class ScaladinServlet extends VaadinServlet {
 
   override def init(servletConfig: ServletConfig) {
     super.init(servletConfig)
-    registerUIProvider()
+    registerSessionInitListener()
   }
 
-  private def registerUIProvider() {
+  private def registerSessionInitListener() {
     service.sessionInitListeners += { event: ScaladinService.SessionInitEvent =>
+      event.session.init()
+
       event.session.p.addUIProvider(new DefaultScaladinUIProvider) // FIXME .p.
 
       val customUIProvider = service.deploymentConfiguration.getInitParameters.getProperty("ScaladinUIProvider")

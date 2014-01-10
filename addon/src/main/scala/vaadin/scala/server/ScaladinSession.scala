@@ -22,7 +22,7 @@ object ScaladinSession {
   def current_=(session: ScaladinSession): Unit = com.vaadin.server.VaadinSession.setCurrent(session.p)
 
   case class ErrorEvent(p: com.vaadin.server.ErrorEvent) extends Event {
-    val throwable = p.getThrowable()
+    val throwable = p.getThrowable
   }
 
   sealed class BootstrapResponse(request: ScaladinRequest, session: ScaladinSession, uiClass: Class[_ <: UI], uiProvider: UIProvider) extends Event
@@ -43,7 +43,9 @@ class ScaladinSession(val p: com.vaadin.server.VaadinSession with VaadinSessionM
 
   p.wrapper = this
 
-  errorHandler = ScaladinSession.DefaultErrorHandler
+  def init(): Unit = {
+    errorHandler = ScaladinSession.DefaultErrorHandler
+  }
 
   def cumulativeRequestDuration: Long = p.getCumulativeRequestDuration
 
