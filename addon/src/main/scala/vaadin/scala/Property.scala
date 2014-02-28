@@ -3,7 +3,9 @@ package vaadin.scala
 import scala.reflect.ClassTag
 
 object Property {
-  def apply[T](value: T): Property[T] = new ObjectProperty[T](value)
+  def apply[T](value: T): Property[T] = new ObjectProperty[T](value, value.getClass.asInstanceOf[Class[T]])
+
+  def apply[T](classOfT: Class[T]): Property[T] = new ObjectProperty[T](null.asInstanceOf[T], classOfT)
 
   def unapply(property: Property[_]): Option[Any] = {
     if (property != null) property.value
@@ -50,8 +52,8 @@ trait PropertyEditor extends PropertyViewer {
  */
 class BasicProperty[T](override val p: com.vaadin.data.Property[T]) extends Property[T]
 
-class ObjectProperty[T](value: T) extends Property[T] {
-  val p = new com.vaadin.data.util.ObjectProperty[T](value)
+class ObjectProperty[T](value: T, classOfT: Class[T]) extends Property[T] {
+  val p = new com.vaadin.data.util.ObjectProperty[T](value, classOfT)
 }
 
 class VaadinPropertyDelegator[T](scaladinProperty: Property[T]) extends com.vaadin.data.Property[T] {
