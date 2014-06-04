@@ -11,6 +11,7 @@ import vaadin.scala._
 import com.vaadin.server.UIProvider
 import vaadin.scala.mixins.ScaladinMixin
 import vaadin.scala.server.mixins.VaadinSessionMixin
+import com.vaadin.server.VaadinSession.State
 
 package mixins {
   trait VaadinSessionMixin extends ScaladinMixin
@@ -89,8 +90,6 @@ class ScaladinSession(val p: com.vaadin.server.VaadinSession with VaadinSessionM
 
   def nextUiId(): Int = p.getNextUIid
 
-  def preserveOnRefreshUIs: mutable.Map[String, Integer] = p.getPreserveOnRefreshUIs.asScala
-
   def addUI(ui: UI): Unit = p.addUI(ui.p)
 
   // TODO: UI Providers
@@ -100,7 +99,7 @@ class ScaladinSession(val p: com.vaadin.server.VaadinSession with VaadinSessionM
   // TODO: this should be overridable?
   def close(): Unit = p.close()
 
-  def isClosing: Boolean = p.isClosing
+  def isClosing: Boolean = p.getState() != State.OPEN
 
   lazy val bootstrapFragmentListeners: ListenersSet[ScaladinSession.BootstrapFragmentResponse => Unit] =
     new ListenersTrait[ScaladinSession.BootstrapFragmentResponse, BootstrapFragmentListener] {

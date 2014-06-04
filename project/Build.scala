@@ -45,7 +45,7 @@ object Format {
 
 object Dependencies {
 
-  val vaadinVersion = "7.1.7"
+  val vaadinVersion = "7.2.1"
   val jettyVersion = "7.3.0.v20110203"
   val scalaTestVersion = "2.0.M5b"
   val junitVersion = "4.9"
