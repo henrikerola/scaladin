@@ -57,16 +57,16 @@ trait Page extends Wrapper { page =>
   }
 
   def browserWindowSize: (Int, Int) = (browserWindowWidth, browserWindowHeight)
-  def browserWindowSize_=(size: (Int, Int)) { p.updateBrowserWindowSize(size._1, size._2) }
+  def browserWindowSize_=(size: (Int, Int)) { p.updateBrowserWindowSize(size._1, size._2, true) }
 
   def browserWindowHeight: Int = p.getBrowserWindowHeight
   def browserWindowHeight_=(browserWindowHeight: Int) {
-    p.updateBrowserWindowSize(browserWindowWidth, browserWindowHeight)
+    p.updateBrowserWindowSize(browserWindowWidth, browserWindowHeight, true)
   }
 
   def browserWindowWidth: Int = p.getBrowserWindowWidth
   def browserWindowWidth_=(browserWindowWidth: Int) {
-    p.updateBrowserWindowSize(browserWindowWidth, browserWindowHeight)
+    p.updateBrowserWindowSize(browserWindowWidth, browserWindowHeight, true)
   }
 
   def javaScript: JavaScript = new JavaScript {
