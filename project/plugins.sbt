@@ -1,11 +1,11 @@
-// xsbt-web-plugin
-addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "0.4.2")
+// sbt-vaadin-plugin
+resolvers += "sbt-vaadin-plugin repo" at "http://henrikerola.github.io/repository/releases"
+
+addSbtPlugin("org.vaadin.sbt" % "sbt-vaadin-plugin" % "1.0.0")
 
 // sbteclipse
 resolvers += Classpaths.typesafeResolver
 
-addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.3.0")
+addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.5.0")
 
-addSbtPlugin("de.johoop" % "jacoco4sbt" % "2.1.1")
-
-addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.2.0")
+addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.3.0")
