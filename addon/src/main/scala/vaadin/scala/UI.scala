@@ -27,6 +27,7 @@ abstract class UI(override val p: WrappedVaadinUI)
   private[this] var _theme: Option[String] = None
   private[this] var _widgetset: Option[String] = None
   private[this] var _preserveOnRefresh: Boolean = false
+  private[this] var _pushMode: PushMode.Value = PushMode.Disabled
 
   def this(
     title: String = null,
@@ -40,7 +41,7 @@ abstract class UI(override val p: WrappedVaadinUI)
     this._theme = Option(theme)
     this._widgetset = Option(widgetset)
     this._preserveOnRefresh = preserveOnRefresh
-    pushConfiguration.pushMode = pushMode
+    this._pushMode = pushMode
   }
 
   def delayedInit(body: => Unit) {
@@ -111,6 +112,8 @@ abstract class UI(override val p: WrappedVaadinUI)
   def preserveOnRefresh: Boolean = _preserveOnRefresh
 
   def session: ScaladinSession = wrapperFor(p.getSession) orNull
+
+  def pushMode: PushMode.Value = _pushMode
 
   // TODO should return a Future
   def access(runnable: => Unit): Unit =
