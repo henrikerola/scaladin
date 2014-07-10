@@ -72,7 +72,7 @@ class FunctionProperty[T](getter: Unit => T, setter: T => Unit = null)(implicit 
 
   override def getType: Class[T] = m.runtimeClass.asInstanceOf[Class[T]]
 
-  override def readOnly: Boolean = setter != null
+  override def readOnly: Boolean = setter == null
 
   override def readOnly_=(ro: Boolean): Unit = () // NOOP
 

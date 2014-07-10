@@ -57,7 +57,7 @@ class UITests extends FunSuite with MockitoSugar with BeforeAndAfter {
     assert(ui.widgetset === Some("mywidgetset"))
     assert(ui.preserveOnRefresh === true)
     assert(ui.p === wrappedVaadinUI)
-    assert(ui.pushConfiguration.pushMode === PushMode.Automatic)
+    assert(ui.pushMode === PushMode.Automatic)
   }
 
   test("initialization without init(request: ScaladinRequest)") {
@@ -176,10 +176,19 @@ class UITests extends FunSuite with MockitoSugar with BeforeAndAfter {
   }
 
   test("pushConfiguration.pushMode") {
-    assert(PushMode.Disabled === ui.pushConfiguration.pushMode)
+    val spyWithSession = Mockito.spy(new WrappedVaadinUI)
+    val pushConfiguration = mock[com.vaadin.ui.PushConfiguration]
 
-    ui.pushConfiguration.pushMode = PushMode.Manual
-    assert(PushMode.Manual === ui.pushConfiguration.pushMode)
+    Mockito.when(spyWithSession.getSession).thenReturn(mock[VaadinSession])
+    Mockito.when(spyWithSession.getPushConfiguration).thenReturn(pushConfiguration)
+
+    val uiWithSession = new UI(spyWithSession) {
+      override def init(request: ScaladinRequest) {
+      }
+    }
+
+    uiWithSession.pushConfiguration.pushMode = PushMode.Manual
+    Mockito.verify(pushConfiguration).setPushMode(com.vaadin.shared.communication.PushMode.MANUAL)
 
   }
 }

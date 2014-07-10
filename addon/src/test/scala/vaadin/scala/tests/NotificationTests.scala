@@ -44,7 +44,7 @@ class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   test("Notification(caption)") {
     val notification: Notification = Notification("Caption")
     assert(notification.caption === Some("Caption"))
-    assert(notification.styleName === None)
+    assert(notification.styleName === Some("humanized"))
     assert(!notification.htmlContentAllowed)
   }
 
@@ -58,7 +58,7 @@ class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   test("Notification(caption, description)") {
     val notification: Notification = Notification("Caption", "Some text...")
     assert(notification.caption === Some("Caption"))
-    assert(notification.styleName === None)
+    assert(notification.styleName === Some("humanized"))
     assert(notification.description === Some("Some text..."))
     assert(!notification.htmlContentAllowed)
   }
@@ -135,7 +135,7 @@ class NotificationTests extends FunSuite with BeforeAndAfter with MockitoSugar {
   }
 
   test("styleName") {
-    assert(notification.styleName === None)
+    assert(notification.styleName === Some("humanized"))
 
     notification.styleName = "style1 style2"
     assert(notification.styleName === Some("style1 style2"))
