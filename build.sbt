@@ -6,7 +6,9 @@ version in ThisBuild := "3.1-SNAPSHOT"
 
 organization in ThisBuild := "vaadin.scala"
 
-scalaVersion in ThisBuild := "2.10.4"
+scalaVersion in ThisBuild := "2.11.1"
+
+crossScalaVersions in ThisBuild := Seq("2.10.4", "2.11.1")
 
 scalacOptions in ThisBuild ++= Seq("-deprecation", "-unchecked", "-encoding", "UTF-8")
 
@@ -16,7 +18,7 @@ lazy val root = project.in(file(".")).aggregate(addon, demo)
 
 lazy val addon = project.settings(vaadinAddOnSettings :_*).settings(
   name := "Scaladin",
-  libraryDependencies := Dependencies.addonDeps
+  libraryDependencies := Dependencies.addonDeps(scalaVersion.value)
 )
 
 lazy val demo = project.settings(vaadinWebSettings :_*).settings(

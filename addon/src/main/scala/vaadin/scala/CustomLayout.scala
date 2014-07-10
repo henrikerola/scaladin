@@ -1,6 +1,5 @@
 package vaadin.scala
 
-import scala.xml.Node
 import vaadin.scala.mixins.CustomLayoutMixin
 
 package mixins {
@@ -14,7 +13,6 @@ class CustomLayout(override val p: com.vaadin.ui.CustomLayout with CustomLayoutM
 
   def templateContents = Option(p.getTemplateContents)
   def templateContents_=(templateContents: String) = p.setTemplateContents(templateContents)
-  def templateContents_=(templateContents: Node) = p.setTemplateContents(templateContents.toString)
 
   def add[C <: Component](component: C, location: String): C = {
     p.addComponent(component.p, location)

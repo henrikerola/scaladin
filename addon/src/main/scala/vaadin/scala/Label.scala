@@ -2,8 +2,6 @@ package vaadin.scala
 
 import event.ValueChangeNotifier
 import vaadin.scala.converter.Converter
-import scala.xml.Node
-import scala.xml.NodeBuffer
 import vaadin.scala.mixins.LabelMixin
 import com.vaadin.shared.ui.label.ContentMode
 
@@ -25,7 +23,6 @@ object Label {
     sizeUndefined()
   }
 
-  def html(htmlValue: Node): Label = new Label { value = htmlValue.toString; contentMode = ContentMode.Html }
   def apply(labelValue: String): Label = new Label { value = labelValue }
 }
 
@@ -34,9 +31,6 @@ class Label(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin
 
   def contentMode: Label.ContentMode.Value = Label.ContentMode(p.getContentMode.ordinal)
   def contentMode_=(contentMode: Label.ContentMode.Value) { p.setContentMode(ContentMode.values.apply(contentMode.id)) }
-
-  def value_=(value: Node) { p.setValue(value.mkString) }
-  def value_=(value: NodeBuffer) { p.setValue(value.mkString) }
 
   //readOnly is inherited from Component and Property, needs override
   override def readOnly: Boolean = p.isReadOnly

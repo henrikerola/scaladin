@@ -27,12 +27,6 @@ class CustomLayoutTests extends FunSuite with BeforeAndAfter {
     assert(layout.templateContents === Some("<p><div location=\"mylocation\"></div></p>"))
   }
 
-  test("templateContents, Node") {
-    assert(layout.templateContents === None)
-    layout.templateContents = <p><div location="mylocation"></div></p>
-    assert(layout.templateContents === Some("<p><div location=\"mylocation\"></div></p>"))
-  }
-
   test("add/component") {
     val label = new Label
     assert(layout.component("location") === None)
