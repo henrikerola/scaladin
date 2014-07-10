@@ -19,7 +19,7 @@ object UI {
  * @author Henri Kerola / Vaadin
  */
 abstract class UI(override val p: WrappedVaadinUI)
-    extends AbstractSingleComponentContainer(p) with DelayedInit with ClickNotifier {
+  extends AbstractSingleComponentContainer(p) with DelayedInit with ClickNotifier {
 
   private[this] var initCode: Option[() => Unit] = None
 
@@ -27,20 +27,21 @@ abstract class UI(override val p: WrappedVaadinUI)
   private[this] var _theme: Option[String] = None
   private[this] var _widgetset: Option[String] = None
   private[this] var _preserveOnRefresh: Boolean = false
+  private[this] var _pushMode: Option[PushMode.Value] = None
 
   def this(
     title: String = null,
     theme: String = null,
     widgetset: String = null,
     preserveOnRefresh: Boolean = false,
-    pushMode: PushMode.Value = PushMode.Disabled,
+    pushMode: PushMode.Value = null,
     p: WrappedVaadinUI = new WrappedVaadinUI) {
     this(p)
     this._title = Option(title)
     this._theme = Option(theme)
     this._widgetset = Option(widgetset)
     this._preserveOnRefresh = preserveOnRefresh
-    pushConfiguration.pushMode = pushMode
+    this._pushMode = Option(pushMode)
   }
 
   def delayedInit(body: => Unit) {
@@ -51,8 +52,11 @@ abstract class UI(override val p: WrappedVaadinUI)
   }
 
   def doInit(request: ScaladinRequest) {
-    for (proc <- initCode) proc()
+    initCode foreach { _() }
+
     init(request)
+
+    _pushMode foreach { pushConfiguration.pushMode = _ }
   }
 
   def init(request: ScaladinRequest) {
