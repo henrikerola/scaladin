@@ -6,6 +6,8 @@ version in ThisBuild := "3.1-SNAPSHOT"
 
 organization in ThisBuild := "vaadin.scala"
 
+scalaVersion in ThisBuild := "2.10.4"
+
 scalacOptions in ThisBuild ++= Seq("-deprecation", "-unchecked", "-encoding", "UTF-8")
 
 scalariformSettings
