@@ -57,7 +57,7 @@ class WrapperUtilTests extends ScaladinTestSuite {
     val peer = new MyPeer
     val res: MyPeer = WrapperUtil.peerFor(Option(new MyWrapper(peer)))
     assert(res == peer)
-    assert(WrapperUtil.peerFor(None) == null)
+    assert(WrapperUtil.peerFor[Any](None) === null)
   }
 
 }

@@ -32,7 +32,7 @@ abstract class ScaladinUIProvider extends DefaultUIProvider {
     case Widgetset => getConfigurationUiInstance(e).widgetset.orNull
     case Theme => getConfigurationUiInstance(e).theme
     case PreservedOnRefresh => getConfigurationUiInstance(e).preserveOnRefresh
-    case PushMode => com.vaadin.shared.communication.PushMode.values.apply(getConfigurationUiInstance(e).pushConfiguration.pushMode.id)
+    case PushMode => com.vaadin.shared.communication.PushMode.values.apply(getConfigurationUiInstance(e).pushMode.id)
   }
 
   override def createInstance(e: UICreateEvent): com.vaadin.ui.UI = {

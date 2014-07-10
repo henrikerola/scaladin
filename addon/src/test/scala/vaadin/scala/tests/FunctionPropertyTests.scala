@@ -23,4 +23,18 @@ class FunctionPropertyTests extends FunSuite {
 
     assert("StartEnd" === y)
   }
+
+  test("function property without setter is readonly") {
+    val fp: Property[String] = new FunctionProperty(_ => "testValue")
+    assert(fp.readOnly === true)
+
+  }
+
+  test("function property with setter is not readonly") {
+    var y: String = "Start"
+    val fp: Property[String] = new FunctionProperty[String](_ => "testValue", x => (y += x))
+
+    assert(fp.readOnly === false)
+
+  }
 }
