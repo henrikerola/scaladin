@@ -11,6 +11,7 @@ object PushConfiguration {
 
     val WebSocket = Value(WEBSOCKET.ordinal)
     val Streaming = Value(STREAMING.ordinal)
+    val LongPolling = Value(LONG_POLLING.ordinal)
   }
 }
 
