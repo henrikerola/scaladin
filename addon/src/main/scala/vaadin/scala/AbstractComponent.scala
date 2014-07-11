@@ -1,6 +1,7 @@
 package vaadin.scala
 
 import vaadin.scala.mixins.AbstractComponentMixin
+import java.util.Locale
 
 package mixins {
   trait AbstractComponentMixin extends ComponentMixin {
@@ -15,6 +16,9 @@ abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with Abs
     extends Component with Sizeable {
 
   p.wrapper = this
+
+  def locale_=(locale: Option[Locale]): Unit = p.setLocale(locale.orNull)
+  def locale_=(locale: Locale): Unit = p.setLocale(locale)
 
   def description: Option[String] = Option(p.getDescription)
   def description_=(description: Option[String]) { p.setDescription(description.orNull) }
