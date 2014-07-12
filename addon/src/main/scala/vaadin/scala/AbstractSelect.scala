@@ -65,7 +65,7 @@ abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with 
 
   def getItemIcon(item: Any): Option[Resource] = wrapperFor(p.getItemIcon(item))
   def setItemIcon(item: Any, icon: Option[Resource]) { p.setItemIcon(item, peerFor(icon)) }
-  def setItemIcon(item: Any, icon: Resource) { p.setItemIcon(item, icon.p) }
+  def setItemIcon(item: Any, icon: Resource) { p.setItemIcon(item, icon.pResource) }
 
   def nullSelectionAllowed: Boolean = p.isNullSelectionAllowed
   def nullSelectionAllowed_=(nullSelectionAllowed: Boolean) { p.setNullSelectionAllowed(nullSelectionAllowed) }

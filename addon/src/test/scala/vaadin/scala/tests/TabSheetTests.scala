@@ -177,7 +177,7 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
     assert(tabSheet.tabs.size === 2)
     val addedTab: TabSheet.Tab = tabSheet.addTab(labelToBeAdded, "my caption", icon)
-    Mockito.verify(spy).addTab(labelToBeAdded.p, "my caption", icon.p)
+    Mockito.verify(spy).addTab(labelToBeAdded.p, "my caption", icon.pResource)
     assert(tabSheet.tabs.size === 3)
     assert(tabSheet.tabs.contains(addedTab.p))
     assert(tabSheet.tabs.get(addedTab.p) === Some(addedTab))
@@ -189,7 +189,7 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
     assert(tabSheet.tabs.size === 2)
     val addedTab: TabSheet.Tab = tabSheet.addTab(labelToBeAdded, "my caption", icon, 0)
-    Mockito.verify(spy).addTab(labelToBeAdded.p, "my caption", icon.p, 0)
+    Mockito.verify(spy).addTab(labelToBeAdded.p, "my caption", icon.pResource, 0)
     assert(tabSheet.tabs.size === 3)
     assert(tabSheet.tabs.contains(addedTab.p))
     assert(tabSheet.tabs.get(addedTab.p) === Some(addedTab))

@@ -86,7 +86,7 @@ class Notification(val p: VaadinNotification = new VaadinNotification(null)) ext
 
   def icon: Option[Resource] = { wrapperFor(p.getIcon) }
   def icon_=(icon: Option[Resource]) { p.setIcon(peerFor(icon)) }
-  def icon_=(icon: Resource) { p.setIcon(icon.p) }
+  def icon_=(icon: Resource) { p.setIcon(icon.pResource) }
 
   def delayMsec: Int = p.getDelayMsec
   def delayMsec_=(delayMsec: Int) { p.setDelayMsec(delayMsec) }

@@ -87,7 +87,7 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(table.columnIcons === None :: None :: Nil)
 
     table.columnIcons = icons
-    Mockito.verify(spy).setColumnIcons(icons(0).get.p, null)
+    Mockito.verify(spy).setColumnIcons(icons(0).get.pResource, null)
 
     assert(table.columnIcons === icons)
   }

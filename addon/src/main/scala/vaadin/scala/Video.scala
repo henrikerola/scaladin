@@ -16,5 +16,5 @@ class Video(override val p: com.vaadin.ui.Video with VideoMixin = new com.vaadin
 
   def poster: Option[Resource] = wrapperFor(p.getPoster)
   def poster_=(poster: Option[Resource]) { p.setPoster(peerFor(poster)) }
-  def poster_=(poster: Resource) { p.setPoster(poster.p) }
+  def poster_=(poster: Resource) { p.setPoster(poster.pResource) }
 }

@@ -32,7 +32,7 @@ object Page {
 
     def add(css: String): Unit = p.add(css)
 
-    def add(resource: Resource) = p.add(resource.p)
+    def add(resource: Resource) = p.add(resource.pResource)
 
     def +=(css: String): Unit = add(css)
 

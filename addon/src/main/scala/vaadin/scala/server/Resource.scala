@@ -1,11 +1,11 @@
 package vaadin.scala.server
 
-import vaadin.scala.Wrapper
-import vaadin.scala.mixins.ScaladinMixin
+import vaadin.scala.{InterfaceWrapper, Wrapper}
+import vaadin.scala.mixins.ScaladinInterfaceMixin
 import vaadin.scala.server.mixins.ResourceMixin
 
 package mixins {
-  trait ResourceMixin extends ScaladinMixin
+  trait ResourceMixin extends ScaladinInterfaceMixin
 }
 
 object Resource {
@@ -19,10 +19,10 @@ object Resource {
     }
 }
 
-trait Resource extends Wrapper {
+trait Resource extends InterfaceWrapper {
 
-  def p: com.vaadin.server.Resource with ResourceMixin
-  p.wrapper = this
+  def pResource: com.vaadin.server.Resource with ResourceMixin
+  pResource.wrapper = this
 
-  def mimeType = p.getMIMEType
+  def mimeType = pResource.getMIMEType
 }

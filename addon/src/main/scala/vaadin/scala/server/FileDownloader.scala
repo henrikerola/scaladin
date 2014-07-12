@@ -11,7 +11,7 @@ package mixins {
 object FileDownloader {
 
   def apply(resource: Resource): FileDownloader = {
-    new FileDownloader(new VaadinFileDownloader(resource.p) with FileDownloaderMixin)
+    new FileDownloader(new VaadinFileDownloader(resource.pResource) with FileDownloaderMixin)
   }
 }
 
@@ -25,7 +25,7 @@ class FileDownloader(override val p: VaadinFileDownloader with FileDownloaderMix
 
   def resource: Resource = wrapperFor(p.getFileDownloadResource).get
 
-  def resource_=(resource: Resource): Unit = p.setFileDownloadResource(resource.p)
+  def resource_=(resource: Resource): Unit = p.setFileDownloadResource(resource.pResource)
 
   def overrideContentType: Boolean = p.isOverrideContentType
 

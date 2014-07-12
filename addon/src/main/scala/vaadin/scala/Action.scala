@@ -103,7 +103,7 @@ class Action(val p: com.vaadin.event.Action with ActionMixin = new com.vaadin.ev
 
   def icon: Option[Resource] = wrapperFor(p.getIcon)
   def icon_=(icon: Option[Resource]) { p.setIcon(peerFor(icon)) }
-  def icon_=(icon: Resource) { p.setIcon(icon.p) }
+  def icon_=(icon: Resource) { p.setIcon(icon.pResource) }
 
   var handler: Option[Action.HandleActionEvent => Unit] = None
 }

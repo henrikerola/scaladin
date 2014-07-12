@@ -46,7 +46,7 @@ class Embedded(override val p: com.vaadin.ui.Embedded with EmbeddedMixin = new c
 
   def source: Option[Resource] = wrapperFor(p.getSource)
   def source_=(source: Option[Resource]) = p.setSource(peerFor(source))
-  def source_=(source: Resource) = p.setSource(source.p)
+  def source_=(source: Resource) = p.setSource(source.pResource)
 
   def codebase: Option[String] = Option(p.getCodebase)
   def codebase_=(codebase: Option[String]) = p.setCodebase(codebase.orNull)

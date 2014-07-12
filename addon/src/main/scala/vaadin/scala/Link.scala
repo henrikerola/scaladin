@@ -37,5 +37,5 @@ class Link(override val p: com.vaadin.ui.Link with LinkMixin = new com.vaadin.ui
 
   def resource: Option[Resource] = wrapperFor(p.getResource)
   def resource_=(resource: Option[Resource]) { p.setResource(peerFor(resource)) }
-  def resource_=(resource: Resource) { p.setResource(resource.p) }
+  def resource_=(resource: Resource) { p.setResource(resource.pResource) }
 }

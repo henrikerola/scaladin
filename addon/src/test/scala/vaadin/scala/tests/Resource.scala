@@ -11,9 +11,9 @@ class Resource extends FunSuite {
   test("ExternalResource, non-null url param") {
     val resource = new ExternalResource("http://example.com")
     assert(resource.url === "http://example.com")
-    assert(resource.p.getURL === "http://example.com")
+    assert(resource.pResource.getURL === "http://example.com")
     assert(resource.mimeType === "application/x-msdos-program")
-    assert(resource.p.getMIMEType === "application/x-msdos-program")
+    assert(resource.pResource.getMIMEType === "application/x-msdos-program")
   }
 
   test("ExternalResource, null url throws RuntimeException") {
@@ -25,7 +25,7 @@ class Resource extends FunSuite {
   test("ExternalResource, mime param specified") {
     val resource = new ExternalResource(sourceUrl = "http://example.com", mimeType = "my mime type")
     assert(resource.mimeType === "my mime type")
-    assert(resource.p.getMIMEType === "my mime type")
+    assert(resource.pResource.getMIMEType === "my mime type")
   }
 
 }

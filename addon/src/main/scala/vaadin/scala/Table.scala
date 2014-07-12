@@ -90,10 +90,10 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
   }: _*)
 
   def columnIcons: Seq[Option[Resource]] = p.getColumnIcons map { wrapperFor[Resource](_) }
-  def columnIcons_=(columnIcons: => Seq[Resource]): Unit = p.setColumnIcons(columnIcons map { _.p }: _*)
+  def columnIcons_=(columnIcons: => Seq[Resource]): Unit = p.setColumnIcons(columnIcons map { _.pResource }: _*)
   def columnIcons_=(columnIcons: Seq[Option[Resource]]): Unit = p.setColumnIcons(columnIcons map {
     case None => null
-    case Some(icon) => icon.p
+    case Some(icon) => icon.pResource
   }: _*)
 
   def columnAlignments: Seq[Table.ColumnAlignment.Value] =
@@ -110,7 +110,7 @@ class Table(override val p: com.vaadin.ui.Table with TableMixin = new com.vaadin
 
   def getColumnIcon(propertyId: Any): Option[Resource] = wrapperFor(p.getColumnIcon(propertyId))
   def setColumnIcon(propertyId: Any, icon: Option[Resource]) { p.setColumnIcon(propertyId, peerFor(icon)) }
-  def setColumnIcon(propertyId: Any, icon: Resource) { p.setColumnIcon(propertyId, icon.p) }
+  def setColumnIcon(propertyId: Any, icon: Resource) { p.setColumnIcon(propertyId, icon.pResource) }
 
   def getColumnHeader(propertyId: Any): Option[String] = Option(p.getColumnHeader(propertyId))
   def setColumnHeader(propertyId: Any, header: Option[String]) { p.setColumnHeader(propertyId, header.orNull) }

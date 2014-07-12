@@ -16,11 +16,11 @@ class AbstractMedia(override val p: com.vaadin.ui.AbstractMedia with AbstractMed
     extends AbstractComponent(p) {
 
   def source: Option[Resource] = p.getSources.asScala.headOption map { wrapperFor(_).get }
-  def source_=(source: Resource) { p.setSource(source.p) }
+  def source_=(source: Resource) { p.setSource(source.pResource) }
 
   def sources: Seq[Resource] = p.getSources.asScala map { wrapperFor(_).get }
 
-  def addSource(source: Resource) { p.addSource(source.p) }
+  def addSource(source: Resource) { p.addSource(source.pResource) }
 
   def showControls: Boolean = p.isShowControls
   def showControls_=(showControls: Boolean) { p.setShowControls(showControls) }

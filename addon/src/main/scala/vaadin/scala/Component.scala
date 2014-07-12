@@ -62,7 +62,7 @@ trait Component extends ClientConnector {
 
   def icon: Option[Resource] = wrapperFor(p.getIcon)
   def icon_=(icon: Option[Resource]) { p.setIcon(peerFor(icon)) }
-  def icon_=(icon: Resource) { p.setIcon(icon.p) }
+  def icon_=(icon: Resource) { p.setIcon(icon.pResource) }
 
   def ui: UI = wrapperFor(p.getUI).orNull
 

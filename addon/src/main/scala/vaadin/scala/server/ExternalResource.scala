@@ -7,12 +7,12 @@ object ExternalResource {
   def apply(sourceUrl: String, mimeType: String): ExternalResource = new ExternalResource(sourceUrl, mimeType)
 }
 
-class ExternalResource(override val p: com.vaadin.server.ExternalResource with ResourceMixin) extends Resource {
+class ExternalResource(override val pResource: com.vaadin.server.ExternalResource with ResourceMixin) extends Resource {
 
   def this(sourceUrl: String, mimeType: String = null) {
     this(new com.vaadin.server.ExternalResource(sourceUrl, mimeType) with ResourceMixin)
   }
 
-  def url = p.getURL
+  def url = pResource.getURL
 
 }

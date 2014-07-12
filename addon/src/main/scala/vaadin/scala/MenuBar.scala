@@ -38,20 +38,20 @@ object MenuBar {
     def addItem(caption: String) = new MenuItem(p.addItem(caption, null), menuItemsMap)
     def addItem(caption: String, command: MenuItem => Unit) = new MenuItem(p.addItem(caption, new Command(command, menuItemsMap)), menuItemsMap)
 
-    def addItem(caption: String, icon: Resource) = new MenuItem(p.addItem(caption, icon.p, null), menuItemsMap)
-    def addItem(caption: String, icon: Resource, command: MenuItem => Unit) = new MenuItem(p.addItem(caption, icon.p, new Command(command, menuItemsMap)), menuItemsMap)
+    def addItem(caption: String, icon: Resource) = new MenuItem(p.addItem(caption, icon.pResource, null), menuItemsMap)
+    def addItem(caption: String, icon: Resource, command: MenuItem => Unit) = new MenuItem(p.addItem(caption, icon.pResource, new Command(command, menuItemsMap)), menuItemsMap)
 
-    def addItemBefore(caption: String, icon: Resource, itemToAddBefore: MenuItemTrait) = new MenuItem(p.addItemBefore(caption, icon.p, null, itemToAddBefore.p), menuItemsMap)
-    def addItemBefore(caption: String, icon: Resource, command: MenuItem => Unit, itemToAddBefore: MenuItemTrait) = new MenuItem(p.addItemBefore(caption, icon.p, new Command(command, menuItemsMap), itemToAddBefore.p), menuItemsMap)
+    def addItemBefore(caption: String, icon: Resource, itemToAddBefore: MenuItemTrait) = new MenuItem(p.addItemBefore(caption, icon.pResource, null, itemToAddBefore.p), menuItemsMap)
+    def addItemBefore(caption: String, icon: Resource, command: MenuItem => Unit, itemToAddBefore: MenuItemTrait) = new MenuItem(p.addItemBefore(caption, icon.pResource, new Command(command, menuItemsMap), itemToAddBefore.p), menuItemsMap)
 
     def addCheckableItem(caption: String) = new CheckableMenuItem(p.addItem(caption, null), menuItemsMap)
     def addCheckableItem(caption: String, command: MenuItem => Unit) = new CheckableMenuItem(p.addItem(caption, new Command(command, menuItemsMap)), menuItemsMap)
 
-    def addCheckableItem(caption: String, icon: Resource) = new CheckableMenuItem(p.addItem(caption, icon.p, null), menuItemsMap)
-    def addCheckableItem(caption: String, icon: Resource, command: MenuItem => Unit) = new CheckableMenuItem(p.addItem(caption, icon.p, new Command(command, menuItemsMap)), menuItemsMap)
+    def addCheckableItem(caption: String, icon: Resource) = new CheckableMenuItem(p.addItem(caption, icon.pResource, null), menuItemsMap)
+    def addCheckableItem(caption: String, icon: Resource, command: MenuItem => Unit) = new CheckableMenuItem(p.addItem(caption, icon.pResource, new Command(command, menuItemsMap)), menuItemsMap)
 
-    def addCheckableItemBefore(caption: String, icon: Resource, itemToAddBefore: MenuItemTrait) = new CheckableMenuItem(p.addItemBefore(caption, icon.p, null, itemToAddBefore.p), menuItemsMap)
-    def addCheckableItemBefore(caption: String, icon: Resource, command: MenuItem => Unit, itemToAddBefore: MenuItemTrait) = new CheckableMenuItem(p.addItemBefore(caption, icon.p, new Command(command, menuItemsMap), itemToAddBefore.p), menuItemsMap)
+    def addCheckableItemBefore(caption: String, icon: Resource, itemToAddBefore: MenuItemTrait) = new CheckableMenuItem(p.addItemBefore(caption, icon.pResource, null, itemToAddBefore.p), menuItemsMap)
+    def addCheckableItemBefore(caption: String, icon: Resource, command: MenuItem => Unit, itemToAddBefore: MenuItemTrait) = new CheckableMenuItem(p.addItemBefore(caption, icon.pResource, new Command(command, menuItemsMap), itemToAddBefore.p), menuItemsMap)
 
     def command = p.getCommand match {
       case null => None
@@ -61,8 +61,8 @@ object MenuBar {
     def command_=(command: MenuItem => Unit) = p.setCommand(new Command(command, menuItemsMap))
 
     def icon: Option[Resource] = WrapperUtil.wrapperFor[Resource](p.getIcon)
-    def icon_=(icon: Option[Resource]) = p.setIcon(if (icon.isDefined) icon.get.p else null)
-    def icon_=(icon: Resource) = p.setIcon(icon.p)
+    def icon_=(icon: Option[Resource]) = p.setIcon(if (icon.isDefined) icon.get.pResource else null)
+    def icon_=(icon: Resource) = p.setIcon(icon.pResource)
 
     // TODO: for consistency rename to caption?
     def text = p.getText
@@ -95,10 +95,10 @@ class MenuBar(override val p: com.vaadin.ui.MenuBar with MenuBarMixin = new com.
 
   def addItem(caption: String): MenuBar.MenuItem = new MenuBar.MenuItem(p.addItem(caption, null), menuItems)
   def addItem(caption: String, command: MenuBar.MenuItem => Unit): MenuBar.MenuItem = new MenuBar.MenuItem(p.addItem(caption, new MenuBar.Command(command, menuItems)), menuItems)
-  def addItem(caption: String, icon: Resource): MenuBar.MenuItem = new MenuBar.MenuItem(p.addItem(caption, icon.p, null), menuItems)
-  def addItem(caption: String, icon: Resource, command: MenuBar.MenuItem => Unit): MenuBar.MenuItem = new MenuBar.MenuItem(p.addItem(caption, icon.p, new MenuBar.Command(command, menuItems)), menuItems)
-  def addItemBefore(caption: String, icon: Resource, itemToAddBefore: MenuBar.MenuItem): MenuBar.MenuItem = new MenuBar.MenuItem(p.addItemBefore(caption, icon.p, null, itemToAddBefore.p), menuItems)
-  def addItemBefore(caption: String, icon: Resource, command: MenuBar.MenuItem => Unit, itemToAddBefore: MenuBar.MenuItem): MenuBar.MenuItem = new MenuBar.MenuItem(p.addItemBefore(caption, icon.p, new MenuBar.Command(command, menuItems), itemToAddBefore.p), menuItems)
+  def addItem(caption: String, icon: Resource): MenuBar.MenuItem = new MenuBar.MenuItem(p.addItem(caption, icon.pResource, null), menuItems)
+  def addItem(caption: String, icon: Resource, command: MenuBar.MenuItem => Unit): MenuBar.MenuItem = new MenuBar.MenuItem(p.addItem(caption, icon.pResource, new MenuBar.Command(command, menuItems)), menuItems)
+  def addItemBefore(caption: String, icon: Resource, itemToAddBefore: MenuBar.MenuItem): MenuBar.MenuItem = new MenuBar.MenuItem(p.addItemBefore(caption, icon.pResource, null, itemToAddBefore.p), menuItems)
+  def addItemBefore(caption: String, icon: Resource, command: MenuBar.MenuItem => Unit, itemToAddBefore: MenuBar.MenuItem): MenuBar.MenuItem = new MenuBar.MenuItem(p.addItemBefore(caption, icon.pResource, new MenuBar.Command(command, menuItems), itemToAddBefore.p), menuItems)
 
   def moreMenuItem = menuItems.get(p.getMoreMenuItem) map { _.asInstanceOf[MenuBar.MenuItem] }
   def moreMenuItem_=(menuItem: Option[MenuBar.MenuItem]) = menuItem match {
