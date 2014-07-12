@@ -9,7 +9,7 @@ import org.scalatest.junit.JUnitRunner
 import java.io.{ ByteArrayOutputStream, ObjectOutputStream }
 import vaadin.scala.server.ScaladinRequest
 import org.mockito.{ Mockito, ArgumentCaptor }
-import com.vaadin.server.VaadinSession
+import com.vaadin.server.{VaadinRequest, VaadinSession}
 import org.scalatest.mock.MockitoSugar
 import vaadin.scala.PushConfiguration.{ Transport }
 
@@ -190,5 +190,20 @@ class UITests extends FunSuite with MockitoSugar with BeforeAndAfter {
     uiWithSession.pushConfiguration.pushMode = PushMode.Manual
     Mockito.verify(pushConfiguration).setPushMode(com.vaadin.shared.communication.PushMode.MANUAL)
 
+  }
+
+  test("refresh") {
+    val vaadinUI = new WrappedVaadinUI
+
+    var cnt = 0;
+    val ui = new UI(vaadinUI) {
+      override def refresh(request: ScaladinRequest): Unit = {
+        cnt = cnt + 1
+      }
+    }
+
+    vaadinUI.refresh(mock[VaadinRequest])
+
+    assert(1 == cnt)
   }
 }

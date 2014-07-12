@@ -3,8 +3,6 @@ package vaadin.scala
 import vaadin.scala.event.{ ClickNotifier, ClickEvent }
 import scala.collection.mutable
 import vaadin.scala.internal.WrapperUtil
-import vaadin.scala.internal.ClickListener
-import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.internal.WrappedVaadinUI
 import vaadin.scala.server.{ ScaladinSession, ScaladinRequest, Page }
 
@@ -59,6 +57,12 @@ abstract class UI(override val p: WrappedVaadinUI)
   def init(request: ScaladinRequest) {
     // This can be overridden in subclass if access to ScaladinRequest is needed in initialization code  
   }
+
+  /**
+   * When preserveOnRefresh is true for the UI, this method can be
+   * overridden to refresh the UI on a browser refresh.
+   */
+  def refresh(request: ScaladinRequest): Unit = { }
 
   def uiId: Int = p.getUIId
 
