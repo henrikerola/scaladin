@@ -12,6 +12,9 @@ crossScalaVersions in ThisBuild := Seq("2.10.4", "2.11.4")
 
 scalacOptions in ThisBuild ++= Seq("-deprecation", "-unchecked", "-encoding", "UTF-8")
 
+// sbt -Dscaladin.repository.path=../henrikerola.github.io/repository/releases publish
+publishTo in ThisBuild := Some(Resolver.file("GitHub", file(Option(System.getProperty("scaladin.repository.path")).getOrElse("../henrikerola.github.io/repository/snapshots"))))
+
 scalariformSettings
 
 lazy val root = project.in(file(".")).aggregate(addon, demo)
