@@ -2,7 +2,7 @@ import org.vaadin.sbt.VaadinPlugin._
 
 name := "Scaladin"
 
-version in ThisBuild := "3.1-SNAPSHOT"
+version in ThisBuild := "3.1.0"
 
 organization in ThisBuild := "org.vaadin.addons"
 
