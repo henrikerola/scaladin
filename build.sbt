@@ -4,7 +4,7 @@ name := "Scaladin"
 
 version in ThisBuild := "3.1-SNAPSHOT"
 
-organization in ThisBuild := "vaadin.scala"
+organization in ThisBuild := "org.vaadin.addons"
 
 scalaVersion in ThisBuild := "2.11.4"
 
