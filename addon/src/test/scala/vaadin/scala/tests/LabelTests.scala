@@ -64,14 +64,14 @@ class LabelTests extends FunSuite {
   }
 
   ignore("property: Property") {
-    val property = new ObjectProperty("test")
+    val property = new ObjectProperty("test", classOf[String])
     val label = new Label
     label.property = property
     assert(label.property === Some(property))
   }
 
   test("property: Some") {
-    val option = Some(new ObjectProperty("test"))
+    val option = Some(new ObjectProperty("test", classOf[String]))
     val label = new Label
     label.property = option
     assert(label.property.get.value === option.get.value)
