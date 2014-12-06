@@ -15,6 +15,8 @@ scalacOptions in ThisBuild ++= Seq("-deprecation", "-unchecked", "-encoding", "U
 // sbt -Dscaladin.repository.path=../henrikerola.github.io/repository/releases publish
 publishTo in ThisBuild := Some(Resolver.file("GitHub", file(Option(System.getProperty("scaladin.repository.path")).getOrElse("../henrikerola.github.io/repository/snapshots"))))
 
+resolvers in ThisBuild += "Vaadin snapshots" at "https://oss.sonatype.org/content/repositories/vaadin-snapshots"
+
 scalariformSettings
 
 lazy val root = project.in(file(".")).aggregate(addon, demo)
