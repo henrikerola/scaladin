@@ -23,11 +23,17 @@ object Layout {
     def p: com.vaadin.ui.Layout.AlignmentHandler
 
     def getAlignment(component: Component): Alignment.Value =
-      Alignment(p.getComponentAlignment(component.p).getBitMask())
+      Alignment(p.getComponentAlignment(component.p).getBitMask)
 
-    def setAlignment(component: Component, alignment: Alignment.Value) {
+    def setAlignment(component: Component, alignment: Alignment.Value): Unit =
       p.setComponentAlignment(component.p, new com.vaadin.ui.Alignment(alignment.id))
-    }
+
+    def defaultComponentAlignment: Alignment.Value =
+      Alignment(p.getDefaultComponentAlignment.getBitMask)
+
+    def defaultComponentAlignment_=(defaultComponentAlignment: Alignment.Value): Unit =
+      p.setDefaultComponentAlignment(new com.vaadin.ui.Alignment(defaultComponentAlignment.id))
+
   }
 
   trait MarginHandler {

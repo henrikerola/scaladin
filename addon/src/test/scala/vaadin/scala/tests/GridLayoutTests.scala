@@ -48,4 +48,11 @@ class GridLayoutTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     layout.add(label, 0, 0, 0, 0)
     Mockito.verify(spy).addComponent(label.p, 0, 0, 0, 0)
   }
+
+  test("defaultComponentAlignment") {
+    assert(Alignment.TopLeft == layout.defaultComponentAlignment)
+
+    layout.defaultComponentAlignment = Alignment.BottomCenter
+    assert(Alignment.BottomCenter == layout.defaultComponentAlignment)
+  }
 }
