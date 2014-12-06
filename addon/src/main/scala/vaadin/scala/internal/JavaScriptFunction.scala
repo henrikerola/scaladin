@@ -1,8 +1,8 @@
 package vaadin.scala.internal
 
-import org.json.JSONArray
+import elemental.json.JsonArray
 
-class JavaScriptFunction(val function: org.json.JSONArray => Unit) extends com.vaadin.ui.JavaScriptFunction {
+class JavaScriptFunction(val function: JsonArray => Unit) extends com.vaadin.ui.JavaScriptFunction {
 
-  def call(arguments: JSONArray): Unit = function(arguments)
+  def call(arguments: JsonArray): Unit = function(arguments)
 }

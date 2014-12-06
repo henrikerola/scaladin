@@ -15,7 +15,7 @@ trait JavaScript extends Wrapper {
 
   def execute(script: String): Unit = p.execute(script)
 
-  def addFunction(name: String, function: org.json.JSONArray => Unit): Unit =
+  def addFunction(name: String, function: elemental.json.JsonArray => Unit): Unit =
     p.addFunction(name, new JavaScriptFunction(function))
 
   def removeFunction(name: String): Unit = p.removeFunction(name)

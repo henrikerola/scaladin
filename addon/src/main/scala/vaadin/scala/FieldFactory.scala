@@ -65,7 +65,7 @@ object DefaultFieldGroupFieldFactory extends DefaultFieldGroupFieldFactory
 
 class DefaultFieldGroupFieldFactory extends FieldGroupFieldFactory {
   override val p: com.vaadin.data.fieldgroup.FieldGroupFieldFactory with FieldGroupFieldFactoryMixin = new FieldGroupFieldFactoryDelegator { wrapper = DefaultFieldGroupFieldFactory.this }
-  private val vaadinFactory = new com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory
+  private val vaadinFactory = com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory.get
 
   def createField[T <: Field[_]](dataType: Class[_], fieldType: Class[T]): Option[T] = {
     if (Boolean.getClass.isAssignableFrom(dataType)) createBooleanField(fieldType)
