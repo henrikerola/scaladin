@@ -89,6 +89,8 @@ trait Page extends Wrapper { page =>
 
   def setTitle(title: String) { p.setTitle(title) }
 
+  def reload(): Unit = p.reload()
+
   lazy val uriFragmentChangedListeners: ListenersSet[Page.UriFragmentChangedEvent => Unit] =
     new ListenersTrait[Page.UriFragmentChangedEvent, UriFragmentChangedListener] {
       override def listeners = null // TODO

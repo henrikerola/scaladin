@@ -71,4 +71,10 @@ class PageTests extends ScaladinTestSuite {
     page.browserWindowWidth = 1300
     Mockito.verify(vaadinPage).updateBrowserWindowSize(1300, 0, true)
   }
+
+  test("reload") {
+    page.reload()
+
+    Mockito.verify(vaadinPage).reload()
+  }
 }
