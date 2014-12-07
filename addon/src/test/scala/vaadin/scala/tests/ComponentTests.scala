@@ -171,4 +171,13 @@ class ComponentTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(label.width.get === Measure(200, Units.px))
     assert(label.height === None)
   }
+
+  test("primaryStyleName") {
+    val label = new Label
+
+    assert("v-label" == label.primaryStyleName)
+
+    label.primaryStyleName = "test"
+    assert("test" == label.primaryStyleName)
+  }
 }

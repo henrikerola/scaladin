@@ -41,7 +41,8 @@ trait Component extends ClientConnector {
     def -=(elem: String) = { p.removeStyleName(elem); this }
   }
 
-  // TODO: setPrimaryStyleName
+  def primaryStyleName: String = p.getPrimaryStyleName
+  def primaryStyleName_=(primaryStyleName: String): Unit = p.setPrimaryStyleName(primaryStyleName)
 
   override def parent: Option[HasComponents] = super.parent.map(_.asInstanceOf[HasComponents])
   def parent_=(parent: HasComponents) = p.setParent(parent.p)
