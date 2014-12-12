@@ -2,8 +2,6 @@ package vaadin.scala
 
 import java.util.Locale
 import scala.collection.mutable
-import vaadin.scala.internal.WrapperUtil
-import vaadin.scala.mixins.ClientConnectorMixin
 import vaadin.scala.server.Resource
 
 package mixins {
