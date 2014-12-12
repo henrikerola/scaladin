@@ -1,8 +1,7 @@
 package vaadin.scala
 
-import event.{ FocusNotifier, BlurNotifier, ComponentEvent, AbstractClickEvent }
+import event.{ FocusNotifier, BlurNotifier, ComponentEvent }
 import vaadin.scala.mixins.ButtonMixin
-import vaadin.scala.internal.WrapperUtil
 import vaadin.scala.internal.ButtonClickListener
 import vaadin.scala.internal.ListenersTrait
 
