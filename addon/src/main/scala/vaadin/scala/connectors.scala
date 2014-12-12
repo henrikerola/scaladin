@@ -1,14 +1,12 @@
 package vaadin.scala
 
 import vaadin.scala.mixins._
-import vaadin.scala.event.ConnectorEvent
 import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.internal.DetachListener
 import com.vaadin.server.AbstractClientConnector
 import vaadin.scala.event.DetachEvent
 import vaadin.scala.event.AttachEvent
 import vaadin.scala.internal.AttachListener
-import vaadin.scala.internal.WrapperUtil
 
 package mixins {
 
