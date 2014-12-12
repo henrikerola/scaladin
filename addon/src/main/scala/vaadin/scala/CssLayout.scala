@@ -2,7 +2,7 @@ package vaadin.scala
 
 import event.LayoutClickNotifier
 import scala.collection.mutable.Map
-import com.vaadin.ui.{ Alignment => VaadinAlignment, Component => VaadinComponent }
+import com.vaadin.ui.{ Component => VaadinComponent }
 import vaadin.scala.mixins.CssLayoutMixin
 import internal.WrapperUtil
 
