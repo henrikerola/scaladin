@@ -1,5 +1,4 @@
 package vaadin.scala
-import scala.collection.JavaConverters._
 import vaadin.scala.mixins.ContainerMixin
 
 trait FilterableContainer extends Container {
