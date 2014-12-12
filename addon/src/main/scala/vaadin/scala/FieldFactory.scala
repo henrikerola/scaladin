@@ -2,10 +2,8 @@ package vaadin.scala
 
 import java.util.Date
 import vaadin.scala.mixins.ScaladinMixin
-import vaadin.scala.mixins.FormFieldFactoryMixin
 import vaadin.scala.mixins.TableFieldFactoryMixin
 import vaadin.scala.mixins.FieldGroupFieldFactoryMixin
-import scala.reflect.ClassTag
 
 package mixins {
   trait FormFieldFactoryMixin extends ScaladinMixin
