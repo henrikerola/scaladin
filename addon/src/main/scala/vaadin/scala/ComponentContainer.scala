@@ -2,12 +2,7 @@ package vaadin.scala
 
 import scala.collection.mutable
 import vaadin.scala.mixins.HasComponentsMixin
-import vaadin.scala.mixins.AbstractComponentContainerMixin
-import vaadin.scala.mixins.AbstractLayoutMixin
 import vaadin.scala.mixins.ComponentContainerMixin
-import vaadin.scala.mixins.LayoutMixin
-import vaadin.scala.mixins.SingleComponentContainerMixin
-import vaadin.scala.mixins.AbstractSingleComponentContainerMixin
 
 package mixins {
   trait ComponentContainerMixin extends HasComponentsMixin { self: com.vaadin.ui.ComponentContainer => }
