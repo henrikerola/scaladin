@@ -1,10 +1,9 @@
 package vaadin.scala
 
-import event.{ FocusNotifier, BlurNotifier, ComponentEvent }
+import event.{ FocusNotifier, BlurNotifier }
 import vaadin.scala.mixins.AbstractTextFieldMixin
 import vaadin.scala.internal.TextChangeListener
 import vaadin.scala.internal.ListenersTrait
-import com.vaadin.event.FieldEvents
 import vaadin.scala.event.ComponentEvent
 
 package mixins {
