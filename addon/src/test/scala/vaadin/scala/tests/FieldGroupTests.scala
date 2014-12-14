@@ -4,6 +4,7 @@ import vaadin.scala._
 import vaadin.scala.Validator._
 import org.mockito.Mockito._
 import org.mockito.Matchers._
+import vaadin.scala.internal.WrapperUtil
 
 import scala.beans.BeanProperty
 import vaadin.scala.FieldGroup.propertyId
@@ -14,6 +15,10 @@ class FieldGroupTests extends ScaladinTestSuite {
 
   before {
     fieldGroup = new FieldGroup
+  }
+
+  test("wrapper") {
+    assert(Some(fieldGroup) == WrapperUtil.wrapperFor(fieldGroup.p))
   }
 
   test("setting FieldGroupFieldFactory") {

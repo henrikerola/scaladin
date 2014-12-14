@@ -40,6 +40,8 @@ class FieldGroup(override val p: VaadinFieldGroup with FieldGroupMixin = new Vaa
   import scala.util.control.Exception._
   import scala.collection.mutable
 
+  p.wrapper = this
+
   fieldFactory = DefaultFieldGroupFieldFactory
 
   val preCommitHandlers: mutable.Set[PreCommitEvent => FieldGroup.CommitResult] =
