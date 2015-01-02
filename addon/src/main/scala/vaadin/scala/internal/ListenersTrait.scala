@@ -10,15 +10,15 @@ trait ListenersTrait[E, L <: Listener] extends mutable.Set[E => Unit] with Liste
     iterator.contains(key)
   }
   def iterator(): Iterator[E => Unit] = {
-    val list = listeners.asScala.filter(_.isInstanceOf[L]).map(_.asInstanceOf[L].action)
+    val list = listeners.asScala.collect { case l: L => l.action }
     list.iterator.asInstanceOf[Iterator[E => Unit]]
   }
   def +=(elem: => Unit) = { addListener((e: E) => elem); this }
   def +=(elem: E => Unit) = { addListener(elem); this }
   def -=(elem: E => Unit) = {
-    val list = listeners.asScala.filter(_.isInstanceOf[L]).foreach { e =>
-      if (e.asInstanceOf[L].action == elem) {
-        removeListener(e.asInstanceOf[L])
+    val list = listeners.asScala.collect { case l: L =>
+      if (l.action == elem) {
+        removeListener(l)
         this
       }
     }
