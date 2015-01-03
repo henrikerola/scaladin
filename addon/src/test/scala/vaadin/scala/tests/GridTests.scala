@@ -1,6 +1,7 @@
 package vaadin.scala.tests
 
 import com.vaadin.data.sort.SortOrder
+import vaadin.scala.event.SelectionEvent
 import com.vaadin.shared.data.sort.SortDirection
 import com.vaadin.ui.Grid.{RowReference, Column}
 import org.mockito.{ArgumentCaptor, Mockito}
@@ -208,9 +209,9 @@ class GridTests extends ScaladinTestSuite {
     val itemId = grid.addRow("value")
     var cnt = 0
 
-    val selectionListener = { e: Grid.SelectionEvent =>
+    val selectionListener = { e: SelectionEvent =>
       cnt = cnt + 1
-      assert(grid == e.grid)
+      assert(grid == e.component)
       assert(Seq(itemId) == e.added)
       assert(e.removed.isEmpty)
     }

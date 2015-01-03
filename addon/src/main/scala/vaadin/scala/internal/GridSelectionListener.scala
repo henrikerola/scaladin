@@ -1,19 +1,20 @@
 package vaadin.scala.internal
 
-import com.vaadin.event.SelectionEvent
+import com.vaadin.event.{SelectionEvent => VaadinSelectionEvent}
 import com.vaadin.event.SelectionEvent.SelectionListener
-import vaadin.scala.Grid
+import vaadin.scala.Component
+import vaadin.scala.event.SelectionEvent
 
 /**
  *
  * @author Henri Kerola / Vaadin
  */
-class GridSelectionListener(val action: Grid.SelectionEvent => Unit)
+class GridSelectionListener(val action: SelectionEvent => Unit)
     extends SelectionListener with Listener {
-  override def select(event: SelectionEvent): Unit = {
-    val grid = wrapperFor[Grid](event.getSource).get
+  override def select(event: VaadinSelectionEvent): Unit = {
+    val component = wrapperFor[Component](event.getSource).get
     val added = event.getAdded.toArray
     val removed = event.getRemoved.toArray
-    action(Grid.SelectionEvent(grid, added, removed))
+    action(SelectionEvent(component, added, removed))
   }
 }

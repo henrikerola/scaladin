@@ -8,6 +8,7 @@ import com.vaadin.ui.{Grid => VaadinGrid}
 import vaadin.scala.Grid._
 import collection.JavaConverters._
 import scala.reflect.ClassTag
+import vaadin.scala.event.SelectionNotifier
 
 package mixins {
   trait GridMixin extends AbstractComponentMixin { self: com.vaadin.ui.Grid => }
@@ -84,7 +85,7 @@ object Grid {
     def value: Option[Any] = property.value
   }
 
-  case class SelectionEvent(grid: Grid, added: Seq[Any], removed: Seq[Any]) extends ComponentEvent(grid)
+  //case class SelectionEvent(grid: Grid, added: Seq[Any], removed: Seq[Any]) extends ComponentEvent(grid)
 
   case class SortEvent(grid: Grid, sortOrder: Seq[(Any, SortDirection.Value)], userOriginated: Boolean) extends ComponentEvent(grid)
 
@@ -137,7 +138,7 @@ object Grid {
  * @author Henri Kerola / Vaadin
  */
 class Grid(override val p: VaadinGrid with GridMixin)
-  extends AbstractComponent(p) {
+  extends AbstractComponent(p) with SelectionNotifier {
 
   def this() {
     this(new VaadinGrid(new IndexedContainer().p) with GridMixin)
@@ -229,13 +230,6 @@ class Grid(override val p: VaadinGrid with GridMixin)
   def select(itemId: Any): Boolean = p.select(itemId)
 
   def deselect(itemId: Any): Boolean = p.deselect(itemId)
-
-  lazy val selectionListeners: ListenersSet[Grid.SelectionEvent => Unit] =
-    new ListenersTrait[Grid.SelectionEvent, GridSelectionListener] {
-      override def listeners = p.getListeners(classOf[com.vaadin.event.SelectionEvent])
-      override def addListener(elem: Grid.SelectionEvent => Unit) = p.addSelectionListener(new GridSelectionListener(elem))
-      override def removeListener(elem: GridSelectionListener) = p.removeSelectionListener(elem)
-    }
 
   def sortOrder: Seq[(Any, SortDirection.Value)] =
     p.getSortOrder.asScala map { so => (so.getPropertyId, SortDirection(so.getDirection.ordinal)) }
