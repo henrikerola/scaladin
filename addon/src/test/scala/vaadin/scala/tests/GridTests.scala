@@ -1,7 +1,7 @@
 package vaadin.scala.tests
 
 import com.vaadin.data.sort.SortOrder
-import vaadin.scala.event.SelectionEvent
+import vaadin.scala.event.{SortEvent, SelectionEvent}
 import com.vaadin.shared.data.sort.SortDirection
 import com.vaadin.ui.Grid.{RowReference, Column}
 import org.mockito.{ArgumentCaptor, Mockito}
@@ -227,7 +227,7 @@ class GridTests extends ScaladinTestSuite {
 
 
   test("sortOrder") {
-    import vaadin.scala.Grid.SortDirection._
+    import vaadin.scala.SortDirection._
 
     vaadinGrid.setContainerDataSource(new IndexedContainer().p)
 
@@ -250,7 +250,7 @@ class GridTests extends ScaladinTestSuite {
   }
 
   test("sortOrder = Some") {
-    import vaadin.scala.Grid.SortDirection._
+    import vaadin.scala.SortDirection._
 
     grid.container.addContainerProperty("propertyId1", classOf[String], None)
     grid.container.addContainerProperty("propertyId2", classOf[String], None)
@@ -277,15 +277,15 @@ class GridTests extends ScaladinTestSuite {
     grid.addColumn[String]("propertyId")
     var cnt = 0
 
-    val sortListener = { e: Grid.SortEvent =>
+    val sortListener = { e: SortEvent =>
       cnt = cnt + 1
-      assert(grid == e.grid)
-      assert(Seq(("propertyId", Grid.SortDirection.Ascending)) == e.sortOrder)
+      assert(grid == e.component)
+      assert(Seq(("propertyId", vaadin.scala.SortDirection.Ascending)) == e.sortOrder)
       assert(!e.userOriginated)
     }
     grid.sortListeners += sortListener
 
-    grid.sort("propertyId", Grid.SortDirection.Ascending)
+    grid.sort("propertyId", vaadin.scala.SortDirection.Ascending)
     assert(1 == cnt)
 
     assert(1 == grid.sortListeners.size)
@@ -296,14 +296,14 @@ class GridTests extends ScaladinTestSuite {
   test("sort, ascending") {
     grid.addColumn[String]("propertyId")
 
-    grid.sort("propertyId", Grid.SortDirection.Ascending)
+    grid.sort("propertyId", vaadin.scala.SortDirection.Ascending)
     Mockito.verify(spy).sort("propertyId", com.vaadin.shared.data.sort.SortDirection.ASCENDING)
   }
 
   test("sort, descending") {
     grid.addColumn[String]("propertyId")
 
-    grid.sort("propertyId", Grid.SortDirection.Descending)
+    grid.sort("propertyId", vaadin.scala.SortDirection.Descending)
     Mockito.verify(spy).sort("propertyId", com.vaadin.shared.data.sort.SortDirection.DESCENDING)
   }
 

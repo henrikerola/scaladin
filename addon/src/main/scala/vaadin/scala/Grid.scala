@@ -1,14 +1,13 @@
 package vaadin.scala
 
 import com.vaadin.data.sort.SortOrder
-import vaadin.scala.event.ComponentEvent
 import vaadin.scala.internal._
 import vaadin.scala.mixins._
 import com.vaadin.ui.{Grid => VaadinGrid}
 import vaadin.scala.Grid._
 import collection.JavaConverters._
 import scala.reflect.ClassTag
-import vaadin.scala.event.SelectionNotifier
+import vaadin.scala.event.{SortNotifier, SelectionNotifier}
 
 package mixins {
   trait GridMixin extends AbstractComponentMixin { self: com.vaadin.ui.Grid => }
@@ -36,13 +35,6 @@ object Grid {
 
     val Css = Value(CSS.ordinal)
     val Row = Value(ROW.ordinal)
-  }
-
-  object SortDirection extends Enumeration {
-    import com.vaadin.shared.data.sort.SortDirection._
-
-    val Ascending = Value(ASCENDING.ordinal)
-    val Descending = Value(DESCENDING.ordinal)
   }
 
   object ScrollDestination extends Enumeration {
@@ -84,8 +76,6 @@ object Grid {
     def property: Property[_] = item.getProperty(propertyId)
     def value: Option[Any] = property.value
   }
-
-  case class SortEvent(grid: Grid, sortOrder: Seq[(Any, SortDirection.Value)], userOriginated: Boolean) extends ComponentEvent(grid)
 
   sealed trait SelectionModel extends Wrapper {
 
@@ -136,7 +126,7 @@ object Grid {
  * @author Henri Kerola / Vaadin
  */
 class Grid(override val p: VaadinGrid with GridMixin)
-  extends AbstractComponent(p) with SelectionNotifier {
+  extends AbstractComponent(p) with SelectionNotifier with SortNotifier {
 
   def this() {
     this(new VaadinGrid(new IndexedContainer().p) with GridMixin)
@@ -241,14 +231,7 @@ class Grid(override val p: VaadinGrid with GridMixin)
     if (sortOrder.isEmpty) p.clearSortOrder()
     else this.sortOrder = sortOrder.get
 
-  lazy val sortListeners: ListenersSet[Grid.SortEvent => Unit] =
-    new ListenersTrait[Grid.SortEvent, GridSortListener] {
-      override def listeners = p.getListeners(classOf[com.vaadin.event.SortEvent])
-      override def addListener(elem: Grid.SortEvent => Unit) = p.addSortListener(new GridSortListener(elem))
-      override def removeListener(elem: GridSortListener) = p.removeSortistener(elem)
-    }
-
-  def sort(propertyId: Any, direction: Grid.SortDirection.Value): Unit =
+  def sort(propertyId: Any, direction: SortDirection.Value): Unit =
     p.sort(propertyId, com.vaadin.shared.data.sort.SortDirection.values.apply(direction.id))
 
   def removeHeaderRow(rowIndex: Int): Unit = {
