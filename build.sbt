@@ -17,16 +17,14 @@ publishTo in ThisBuild := Some(Resolver.file("GitHub", file(Option(System.getPro
 
 resolvers in ThisBuild += "Vaadin snapshots" at "https://oss.sonatype.org/content/repositories/vaadin-snapshots"
 
-scalariformSettings
-
 lazy val root = project.in(file(".")).aggregate(addon, demo)
 
-lazy val addon = project.settings(vaadinAddOnSettings :_*).settings(
+lazy val addon = project.settings(vaadinAddOnSettings :_*).settings(scalariformSettings :_*).settings(
   name := "Scaladin",
   libraryDependencies := Dependencies.addonDeps(scalaVersion.value)
 )
 
-lazy val demo = project.settings(vaadinWebSettings :_*).settings(
+lazy val demo = project.settings(vaadinWebSettings :_*).settings(scalariformSettings :_*).settings(
   name := "scaladin-demo",
   libraryDependencies := Dependencies.demoDeps
 ).dependsOn(addon)
