@@ -2,7 +2,7 @@
 
 Scaladin makes easier to use [Vaadin Framework](https://vaadin.com) with [Scala](http://www.scala-lang.org/) programming language. It's a wrapper library that provides a pure Scala API for Vaadin Framework. 
 
-[![Build Status](https://secure.travis-ci.org/henrikerola/scaladin.png?branch=3.1)](http://travis-ci.org/henrikerola/scaladin)
+[![Build Status](https://secure.travis-ci.org/henrikerola/scaladin.png?branch=3.2)](http://travis-ci.org/henrikerola/scaladin)
 
 ## Discussion
 
