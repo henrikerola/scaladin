@@ -61,9 +61,6 @@ object Grid {
 
     def widthUndefined() = p.setWidthUndefined()
 
-    //def visible: Boolean = p.isVisible
-    //def visible_=(visible: Boolean): Unit = p.setVisible(visible)
-
     def setLastFrozenColumn(): Unit = p.setLastFrozenColumn()
 
     def renderer: Renderer[_] = p.getRenderer match {
@@ -349,7 +346,6 @@ class Grid(override val p: VaadinGrid with GridMixin)
   def setEditorField(propertyId: Any, field: Field[_]): Unit =
     p.setEditorField(propertyId, field.p)
 
-  // TODO: how to handle CommitException?
   def saveEditor(): Unit = p.saveEditor()
 
   def cancelEditor(): Unit = p.cancelEditor()
