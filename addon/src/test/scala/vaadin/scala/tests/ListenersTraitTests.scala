@@ -1,6 +1,6 @@
 package vaadin.scala.tests
 
-import com.vaadin.ui.Button.{ClickEvent, ClickListener}
+import com.vaadin.ui.Button.{ ClickEvent, ClickListener }
 import vaadin.scala._
 
 /**

@@ -1,7 +1,7 @@
 package vaadin.scala.tests
 
 import com.vaadin.server.Extension
-import org.mockito.{Matchers, Mockito}
+import org.mockito.{ Matchers, Mockito }
 import vaadin.scala.Label
 import vaadin.scala.mixins.LabelMixin
 import vaadin.scala.server.Responsive

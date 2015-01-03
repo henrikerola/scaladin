@@ -9,7 +9,7 @@ import org.scalatest.junit.JUnitRunner
 import java.io.{ ByteArrayOutputStream, ObjectOutputStream }
 import vaadin.scala.server.ScaladinRequest
 import org.mockito.{ Mockito, ArgumentCaptor }
-import com.vaadin.server.{VaadinRequest, VaadinSession}
+import com.vaadin.server.{ VaadinRequest, VaadinSession }
 import org.scalatest.mock.MockitoSugar
 import vaadin.scala.PushConfiguration.{ Transport }
 
