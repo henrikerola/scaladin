@@ -85,8 +85,6 @@ object Grid {
     def value: Option[Any] = property.value
   }
 
-  //case class SelectionEvent(grid: Grid, added: Seq[Any], removed: Seq[Any]) extends ComponentEvent(grid)
-
   case class SortEvent(grid: Grid, sortOrder: Seq[(Any, SortDirection.Value)], userOriginated: Boolean) extends ComponentEvent(grid)
 
   sealed trait SelectionModel extends Wrapper {
