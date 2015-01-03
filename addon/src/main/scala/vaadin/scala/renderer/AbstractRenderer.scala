@@ -14,4 +14,5 @@ package mixins {
 class AbstractRenderer[T](val p: VaadinAbstractRenderer[T] with AbstractRendererMixin)
     extends Renderer[T] {
 
+  p.wrapper = this
 }

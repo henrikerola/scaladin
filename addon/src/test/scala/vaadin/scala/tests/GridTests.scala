@@ -8,6 +8,7 @@ import org.mockito.{ ArgumentCaptor, Mockito }
 import vaadin.scala.mixins.GridMixin
 import vaadin.scala._
 import vaadin.scala.Grid.HeightMode
+import vaadin.scala.renderer.TextRenderer
 
 /**
  *
@@ -107,6 +108,17 @@ class GridTests extends ScaladinTestSuite {
 
     column.widthUndefined()
     assert(-1 == column.width)
+  }
+
+  test("Column.renderer") {
+    val column = grid.addColumn[String]("myColumn")
+
+    assert(column.renderer.isInstanceOf[TextRenderer])
+
+    val textRenderer = new TextRenderer
+    column.renderer = textRenderer
+
+    assert(textRenderer == column.renderer)
   }
 
   test("Column.sortable") {

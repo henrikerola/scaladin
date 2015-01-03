@@ -5,9 +5,11 @@ import vaadin.scala.internal._
 import vaadin.scala.mixins._
 import com.vaadin.ui.{ Grid => VaadinGrid }
 import vaadin.scala.Grid._
+import vaadin.scala.renderer.mixins.RendererMixin
 import collection.JavaConverters._
 import scala.reflect.ClassTag
 import vaadin.scala.event.{ SortNotifier, SelectionNotifier }
+import vaadin.scala.renderer.{ TextRenderer, Renderer }
 
 package mixins {
   trait GridMixin extends AbstractComponentMixin { self: com.vaadin.ui.Grid => }
@@ -64,7 +66,21 @@ object Grid {
 
     def setLastFrozenColumn(): Unit = p.setLastFrozenColumn()
 
-    // TODO: renderer / sortable
+    def renderer: Renderer[_] = p.getRenderer match {
+      case r: RendererMixin => wrapperFor[Renderer[_]](r).get
+      case tr: com.vaadin.ui.renderer.TextRenderer => {
+        // Assuming that using the default TextRenderer,
+        // setting a wrapped TextRenderer as a side-effect
+        // Not really other place to do this.
+        val r = new TextRenderer
+        renderer = r
+        r
+      }
+    }
+
+    def renderer_=(renderer: Renderer[_]): Unit = p.setRenderer(renderer.p)
+
+    // TODO: converter
 
     def sortable: Boolean = p.isSortable
     def sortable_=(sortable: Boolean): Unit = p.setSortable(sortable)
