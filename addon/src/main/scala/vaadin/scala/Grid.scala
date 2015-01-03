@@ -49,10 +49,13 @@ object Grid {
 
     val p: com.vaadin.ui.Grid.Column
 
-      def headerCaption: String = p.getHeaderCaption
+      def propertyId: Any = p.getColumnProperty
 
-      def width = p.getWidth
-      def width_=(pixelWidth: Int): Unit = p.setWidth(pixelWidth)
+      def headerCaption: String = p.getHeaderCaption
+      def headerCaption_=(headerCaption: String): Unit = p.setHeaderCaption(headerCaption)
+
+      def width: Double = p.getWidth
+      def width_=(pixelWidth: Double): Unit = p.setWidth(pixelWidth)
 
       def widthUndefined() = p.setWidthUndefined()
 

@@ -79,7 +79,44 @@ class GridTests extends ScaladinTestSuite {
     Mockito.verify(spy).removeColumn("propertyId")
   }
 
+  test("Column.propertyId") {
+    val column = grid.addColumn[String]("myColumn")
 
+    assert("myColumn" == column.propertyId)
+  }
+
+  test("Column.headerCaption") {
+    val column = grid.addColumn[String]("myColumn")
+    assert("My Column" == column.headerCaption)
+
+    column.headerCaption = "Header for Column"
+    assert("Header for Column" == column.headerCaption)
+  }
+
+  test("Column.width") {
+    val column = grid.addColumn[String]("myColumn")
+    assert(-1 == column.width)
+
+    column.width = 25.6
+    assert(25.6 == column.width)
+  }
+
+  test("Column.widthUndefined") {
+    val column = grid.addColumn[String]("myColumn")
+    column.width = 25.6
+
+    column.widthUndefined()
+    assert(-1 == column.width)
+  }
+
+  test("sortable") {
+    val column = grid.addColumn[String]("myColumn")
+
+    assert(column.sortable)
+
+    column.sortable = false
+    assert(!column.sortable)
+  }
 
   // TODO tests for Grid.Column class
 
