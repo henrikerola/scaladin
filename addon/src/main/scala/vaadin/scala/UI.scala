@@ -62,7 +62,7 @@ abstract class UI(override val p: WrappedVaadinUI)
    * When preserveOnRefresh is true for the UI, this method can be
    * overridden to refresh the UI on a browser refresh.
    */
-  def refresh(request: ScaladinRequest): Unit = { }
+  def refresh(request: ScaladinRequest): Unit = {}
 
   def uiId: Int = p.getUIId
 

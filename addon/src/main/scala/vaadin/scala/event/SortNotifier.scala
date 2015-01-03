@@ -1,9 +1,9 @@
 package vaadin.scala.event
 
 import vaadin.scala.ListenersSet
-import vaadin.scala.internal.{GridSortListener, ListenersTrait}
+import vaadin.scala.internal.{ GridSortListener, ListenersTrait }
 import com.vaadin.ui.{ AbstractComponent => VaadinAbstractComponent }
-import com.vaadin.event.SortEvent.{SortNotifier => VaadinSortNotifier}
+import com.vaadin.event.SortEvent.{ SortNotifier => VaadinSortNotifier }
 
 /**
  *

@@ -3,11 +3,11 @@ package vaadin.scala
 import com.vaadin.data.sort.SortOrder
 import vaadin.scala.internal._
 import vaadin.scala.mixins._
-import com.vaadin.ui.{Grid => VaadinGrid}
+import com.vaadin.ui.{ Grid => VaadinGrid }
 import vaadin.scala.Grid._
 import collection.JavaConverters._
 import scala.reflect.ClassTag
-import vaadin.scala.event.{SortNotifier, SelectionNotifier}
+import vaadin.scala.event.{ SortNotifier, SelectionNotifier }
 
 package mixins {
   trait GridMixin extends AbstractComponentMixin { self: com.vaadin.ui.Grid => }
@@ -49,25 +49,25 @@ object Grid {
 
     val p: com.vaadin.ui.Grid.Column
 
-      def propertyId: Any = p.getColumnProperty
+    def propertyId: Any = p.getColumnProperty
 
-      def headerCaption: String = p.getHeaderCaption
-      def headerCaption_=(headerCaption: String): Unit = p.setHeaderCaption(headerCaption)
+    def headerCaption: String = p.getHeaderCaption
+    def headerCaption_=(headerCaption: String): Unit = p.setHeaderCaption(headerCaption)
 
-      def width: Double = p.getWidth
-      def width_=(pixelWidth: Double): Unit = p.setWidth(pixelWidth)
+    def width: Double = p.getWidth
+    def width_=(pixelWidth: Double): Unit = p.setWidth(pixelWidth)
 
-      def widthUndefined() = p.setWidthUndefined()
+    def widthUndefined() = p.setWidthUndefined()
 
-      //def visible: Boolean = p.isVisible
-      //def visible_=(visible: Boolean): Unit = p.setVisible(visible)
+    //def visible: Boolean = p.isVisible
+    //def visible_=(visible: Boolean): Unit = p.setVisible(visible)
 
-      def setLastFrozenColumn(): Unit = p.setLastFrozenColumn()
+    def setLastFrozenColumn(): Unit = p.setLastFrozenColumn()
 
-      // TODO: renderer / sortable
+    // TODO: renderer / sortable
 
-      def sortable: Boolean = p.isSortable
-      def sortable_=(sortable: Boolean): Unit = p.setSortable(sortable)
+    def sortable: Boolean = p.isSortable
+    def sortable_=(sortable: Boolean): Unit = p.setSortable(sortable)
   }
 
   case class RowReference(grid: Grid, itemId: Any) {
@@ -129,7 +129,7 @@ object Grid {
  * @author Henri Kerola / Vaadin
  */
 class Grid(override val p: VaadinGrid with GridMixin)
-  extends AbstractComponent(p) with SelectionNotifier with SortNotifier {
+    extends AbstractComponent(p) with SelectionNotifier with SortNotifier {
 
   def this() {
     this(new VaadinGrid(new IndexedContainer().p) with GridMixin)
@@ -146,7 +146,6 @@ class Grid(override val p: VaadinGrid with GridMixin)
         return super.getPropertyType(propertyId)
   }
   editorFieldGroup = new FieldGroup(new CustomVaadinFieldGroup with FieldGroupMixin)
-
 
   def container: Container.Indexed = wrapperFor(p.getContainerDataSource).get
   def container_=(container: Container.Indexed) { p.setContainerDataSource(container.p) }
@@ -169,7 +168,7 @@ class Grid(override val p: VaadinGrid with GridMixin)
 
   def removeColumn(propertyId: Any): Unit = p.removeColumn(propertyId)
 
-  def setColumnOrder(propertyIds: Seq[Any]) = p.setColumnOrder(propertyIds.asInstanceOf[Seq[Object]] : _*)
+  def setColumnOrder(propertyIds: Seq[Any]) = p.setColumnOrder(propertyIds.asInstanceOf[Seq[Object]]: _*)
 
   def frozenColumnCount: Int = p.getFrozenColumnCount
   def frozenColumnCount_=(frozenColumnCount: Int): Unit = p.setFrozenColumnCount(frozenColumnCount)
@@ -226,7 +225,7 @@ class Grid(override val p: VaadinGrid with GridMixin)
     p.getSortOrder.asScala map { so => (so.getPropertyId, SortDirection(so.getDirection.ordinal)) }
 
   def sortOrder_=(sortOrder: Seq[(Any, SortDirection.Value)]): Unit = {
-    val so = sortOrder map { so => new SortOrder(so._1, com.vaadin.shared.data.sort.SortDirection.values.apply(so._2.id))}
+    val so = sortOrder map { so => new SortOrder(so._1, com.vaadin.shared.data.sort.SortDirection.values.apply(so._2.id)) }
     p.setSortOrder(so.asJava)
   }
 

@@ -1,6 +1,6 @@
 package vaadin.scala.server
 
-import vaadin.scala.{InterfaceWrapper, Wrapper}
+import vaadin.scala.{ InterfaceWrapper, Wrapper }
 import vaadin.scala.mixins.ScaladinInterfaceMixin
 import vaadin.scala.server.mixins.ResourceMixin
 

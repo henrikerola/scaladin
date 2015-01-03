@@ -1,6 +1,6 @@
 package vaadin.scala.internal
 
-import com.vaadin.event.{SelectionEvent => VaadinSelectionEvent}
+import com.vaadin.event.{ SelectionEvent => VaadinSelectionEvent }
 import com.vaadin.event.SelectionEvent.SelectionListener
 import vaadin.scala.Component
 import vaadin.scala.event.SelectionEvent

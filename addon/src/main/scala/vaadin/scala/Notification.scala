@@ -50,9 +50,9 @@ object Notification {
   }
 
   def apply(caption: String,
-            description: String,
-            notificationType: Notification.Type.Value,
-            htmlContentAllowed: Boolean): Notification = {
+    description: String,
+    notificationType: Notification.Type.Value,
+    htmlContentAllowed: Boolean): Notification = {
     val t = VaadinNotification.Type.values.apply(notificationType.id)
     new Notification(new VaadinNotification(caption, description, t, htmlContentAllowed))
   }

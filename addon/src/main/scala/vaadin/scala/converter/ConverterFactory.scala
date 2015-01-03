@@ -16,7 +16,7 @@ package mixins {
     override def wrapper = super.wrapper.asInstanceOf[ConverterFactory]
 
     override def createConverter[Presentation, Model](presentationType: Class[Presentation],
-                                                      modelType: Class[Model]): VaadinConverter[Presentation, Model] = {
+      modelType: Class[Model]): VaadinConverter[Presentation, Model] = {
       WrapperUtil.peerFor(wrapper.createConverter[Presentation, Model](ClassTag(presentationType), ClassTag(modelType)))
     }
   }
@@ -32,5 +32,5 @@ trait ConverterFactory extends InterfaceWrapper {
   pConverterFactory.wrapper = this
 
   def createConverter[Presentation, Model](implicit presentationType: ClassTag[Presentation],
-                                           modelType: ClassTag[Model]): Option[Converter[Presentation, Model]]
+    modelType: ClassTag[Model]): Option[Converter[Presentation, Model]]
 }

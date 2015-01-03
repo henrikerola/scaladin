@@ -1,8 +1,8 @@
 package vaadin.scala.internal
 
-import com.vaadin.event.{SortEvent => VaadinSortEvent}
+import com.vaadin.event.{ SortEvent => VaadinSortEvent }
 import com.vaadin.event.SortEvent.SortListener
-import vaadin.scala.{Component, Grid}
+import vaadin.scala.{ Component, Grid }
 import vaadin.scala.SortDirection
 import collection.JavaConverters._
 import vaadin.scala.event.SortEvent

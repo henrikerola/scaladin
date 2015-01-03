@@ -1,9 +1,9 @@
 package vaadin.scala.event
 
 import com.vaadin.ui.{ AbstractComponent => VaadinAbstractComponent }
-import com.vaadin.event.SelectionEvent.{SelectionNotifier => VaadinSelectionNotifier}
+import com.vaadin.event.SelectionEvent.{ SelectionNotifier => VaadinSelectionNotifier }
 import vaadin.scala.ListenersSet
-import vaadin.scala.internal.{ListenersTrait, GridSelectionListener}
+import vaadin.scala.internal.{ ListenersTrait, GridSelectionListener }
 
 /**
  *
