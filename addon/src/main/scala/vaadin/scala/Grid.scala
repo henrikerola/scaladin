@@ -68,6 +68,20 @@ object Grid {
 
     def sortable: Boolean = p.isSortable
     def sortable_=(sortable: Boolean): Unit = p.setSortable(sortable)
+
+    def expandRatio: Int = p.getExpandRatio
+    def expandRatio_=(expandRatio: Int): Unit = p.setExpandRatio(expandRatio)
+    def expandRatio_=(expandRatio: Option[Int]): Unit = {
+      if (expandRatio.isEmpty) p.clearExpandRatio()
+      else p.setExpandRatio(expandRatio.get)
+    }
+
+    def minimumWidth: Double = p.getMinimumWidth
+    def minimumWidth_=(minimumWidth: Double): Unit = p.setMinimumWidth(minimumWidth)
+
+    def maximumWidth: Double = p.getMaximumWidth
+    def maximumWidth_=(maximumWidth: Double): Unit = p.setMaximumWidth(maximumWidth)
+
   }
 
   case class RowReference(grid: Grid, itemId: Any) {

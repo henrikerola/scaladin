@@ -1,10 +1,10 @@
 package vaadin.scala.tests
 
 import com.vaadin.data.sort.SortOrder
-import vaadin.scala.event.{SortEvent, SelectionEvent}
+import vaadin.scala.event.{ SortEvent, SelectionEvent }
 import com.vaadin.shared.data.sort.SortDirection
-import com.vaadin.ui.Grid.{RowReference, Column}
-import org.mockito.{ArgumentCaptor, Mockito}
+import com.vaadin.ui.Grid.{ RowReference, Column }
+import org.mockito.{ ArgumentCaptor, Mockito }
 import vaadin.scala.mixins.GridMixin
 import vaadin.scala._
 import vaadin.scala.Grid.HeightMode
@@ -109,13 +109,46 @@ class GridTests extends ScaladinTestSuite {
     assert(-1 == column.width)
   }
 
-  test("sortable") {
+  test("Column.sortable") {
     val column = grid.addColumn[String]("myColumn")
 
     assert(column.sortable)
 
     column.sortable = false
     assert(!column.sortable)
+  }
+
+  test("Column.expandRatio") {
+    val column = grid.addColumn[String]("myColumn")
+
+    assert(-1 == column.expandRatio)
+
+    column.expandRatio = 2
+    assert(2 == column.expandRatio)
+
+    column.expandRatio = None
+    assert(-1 == column.expandRatio)
+
+    column.expandRatio = Some(1)
+    assert(1 == column.expandRatio)
+  }
+
+  test("minimumWidth") {
+    val column = grid.addColumn[String]("myColumn")
+
+    assert(10 == column.minimumWidth)
+
+    column.minimumWidth = 5
+    assert(5 == column.minimumWidth)
+  }
+
+  test("maximumWidth") {
+    val column = grid.addColumn[String]("myColumn")
+
+    assert(-1 == column.maximumWidth)
+
+    column.maximumWidth = 20
+    assert(20 == column.maximumWidth)
   }
 
   // TODO tests for Grid.Column class
@@ -262,7 +295,6 @@ class GridTests extends ScaladinTestSuite {
     assert(grid.selectionListeners.isEmpty)
   }
 
-
   test("sortOrder") {
     import vaadin.scala.SortDirection._
 
@@ -366,7 +398,6 @@ class GridTests extends ScaladinTestSuite {
     assert(!grid.headerVisible)
   }
 
-
   test("getFooterRow") {
     grid.appendFooterRow()
 
@@ -421,7 +452,7 @@ class GridTests extends ScaladinTestSuite {
     grid.rowStyleGenerator = None
     assert(grid.rowStyleGenerator.isEmpty)
 
-    grid.rowStyleGenerator = Some({ e: Grid.RowReference => None})
+    grid.rowStyleGenerator = Some({ e: Grid.RowReference => None })
     assert(grid.rowStyleGenerator.isDefined)
   }
 
@@ -442,7 +473,7 @@ class GridTests extends ScaladinTestSuite {
     grid.cellStyleGenerator = None
     assert(grid.cellStyleGenerator.isEmpty)
 
-    grid.cellStyleGenerator = Some({ e: Grid.CellReference => None})
+    grid.cellStyleGenerator = Some({ e: Grid.CellReference => None })
     assert(grid.cellStyleGenerator.isDefined)
   }
 
