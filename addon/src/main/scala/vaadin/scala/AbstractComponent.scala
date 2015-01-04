@@ -17,6 +17,9 @@ abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with Abs
 
   p.wrapper = this
 
+  def captionAsHtml: Boolean = p.isCaptionAsHtml
+  def captionAsHtml_=(captionAsHtml: Boolean): Unit = p.setCaptionAsHtml(captionAsHtml)
+
   def locale_=(locale: Option[Locale]): Unit = p.setLocale(locale.orNull)
   def locale_=(locale: Locale): Unit = p.setLocale(locale)
 

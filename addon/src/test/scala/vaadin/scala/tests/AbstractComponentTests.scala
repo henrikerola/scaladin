@@ -21,6 +21,14 @@ class AbstractComponentTests extends ScaladinTestSuite {
     abstractComponent = new AbstractComponent(vaadinAbstractComponent) {}
   }
 
+  test("captionAsHtml") {
+    assert(!abstractComponent.captionAsHtml)
+    Mockito.verify(vaadinAbstractComponent).isCaptionAsHtml
+
+    abstractComponent.captionAsHtml = true
+    Mockito.verify(vaadinAbstractComponent).setCaptionAsHtml(true)
+  }
+
   test("locale") {
     assert(abstractComponent.locale.isEmpty)
 
