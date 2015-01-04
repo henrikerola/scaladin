@@ -100,14 +100,12 @@ class GridTests extends ScaladinTestSuite {
 
     column.width = 25.6
     assert(25.6 == column.width)
-  }
 
-  test("Column.widthUndefined") {
-    val column = grid.addColumn[String]("myColumn")
-    column.width = 25.6
-
-    column.widthUndefined()
+    column.width = None
     assert(-1 == column.width)
+
+    column.width = Some(50.0)
+    assert(50.0 == column.width)
   }
 
   test("Column.renderer") {

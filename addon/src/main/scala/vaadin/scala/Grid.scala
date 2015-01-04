@@ -59,8 +59,10 @@ object Grid {
 
     def width: Double = p.getWidth
     def width_=(pixelWidth: Double): Unit = p.setWidth(pixelWidth)
-
-    def widthUndefined() = p.setWidthUndefined()
+    def width_=(pixelWidth: Option[Double]): Unit = {
+      if (pixelWidth.isEmpty) p.setWidthUndefined()
+      else p.setWidth(pixelWidth.get)
+    }
 
     def setLastFrozenColumn(): Unit = p.setLastFrozenColumn()
 
