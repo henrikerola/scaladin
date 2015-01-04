@@ -10,6 +10,7 @@ import collection.JavaConverters._
 import scala.reflect.ClassTag
 import vaadin.scala.event.{ SortNotifier, SelectionNotifier }
 import vaadin.scala.renderer.{ TextRenderer, Renderer }
+import vaadin.scala.converter.Converter
 
 package mixins {
   trait GridMixin extends AbstractComponentMixin { self: com.vaadin.ui.Grid => }
@@ -77,7 +78,8 @@ object Grid {
 
     def renderer_=(renderer: Renderer[_]): Unit = p.setRenderer(renderer.p)
 
-    // TODO: converter
+    def converter: Option[Converter[_, _]] = wrapperFor[Converter[_, _]](p.getConverter)
+    def converter_=(converter: Converter[_, _]) = p.setConverter(converter.p)
 
     def sortable: Boolean = p.isSortable
     def sortable_=(sortable: Boolean): Unit = p.setSortable(sortable)

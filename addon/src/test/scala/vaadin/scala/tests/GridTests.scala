@@ -121,6 +121,16 @@ class GridTests extends ScaladinTestSuite {
     assert(textRenderer == column.renderer)
   }
 
+  test("Column.converter") {
+    val column = grid.addColumn[java.lang.Boolean]("myColumn")
+
+    assert(column.converter.isEmpty)
+
+    val converter = new vaadin.scala.converter.StringToBooleanConverter
+    column.converter = converter
+    assert(Some(converter) == column.converter)
+  }
+
   test("Column.sortable") {
     val column = grid.addColumn[String]("myColumn")
 
