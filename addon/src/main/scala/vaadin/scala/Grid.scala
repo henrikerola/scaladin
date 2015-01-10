@@ -18,19 +18,74 @@ package mixins {
 
 object Grid {
 
-  class Header {
+  protected trait StaticRow[CellType] extends Wrapper {
+    def getCell(propertyId: Any): Option[CellType]
 
+    def styleName: Option[String]
+    def styleName_=(styleName: String): Unit
+    def styleName_=(styleName: Option[String]): Unit
+
+    def join(propertyIds: Any*): CellType
+    //TODO DummyImplicit
+    def join(cells: CellType*)(implicit ignore: DummyImplicit): CellType
   }
 
-  class Footer {
+  class HeaderRow(val p: VaadinGrid.HeaderRow) extends StaticRow[HeaderCell] {
+
+    override def getCell(propertyId: Any): Option[HeaderCell] = Option(p.getCell(propertyId)) map { new HeaderCell(_) }
+
+    override def styleName: Option[String] = Option(p.getStyleName)
+    override def styleName_=(styleName: String): Unit = p.setStyleName(styleName)
+    override def styleName_=(styleName: Option[String]): Unit = p.setStyleName(styleName.orNull)
+
+    override def join(propertyIds: Any*): HeaderCell = new HeaderCell(p.join(propertyIds.asInstanceOf[Seq[Object]]: _*))
+    //TODO DummyImplicit
+    override def join(cells: Grid.HeaderCell*)(implicit ignore: DummyImplicit): HeaderCell =
+      new HeaderCell(p.join(cells.map(_.p): _*))
   }
 
-  trait HeaderRow extends Wrapper {
-    val p: VaadinGrid.HeaderRow
+  class HeaderCell(val p: VaadinGrid.HeaderCell) extends Wrapper {
+
+    def text: String = p.getText
+    def text_=(text: String): Unit = p.setText(text)
+
+    def html: String = p.getHtml
+    def html_=(html: String): Unit = p.setHtml(html)
+
+    def component: Component = wrapperFor[Component](p.getComponent).get
+    def component_=(component: Component): Unit = p.setComponent(component.p)
+
+    def styleName: Option[String] = Option(p.getStyleName)
+    def styleName_=(styleName: String): Unit = p.setStyleName(styleName)
+    def styleName_=(styleName: Option[String]): Unit = p.setStyleName(styleName.orNull)
   }
 
-  trait FooterRow extends Wrapper {
-    override val p: VaadinGrid.FooterRow
+  class FooterRow(val p: VaadinGrid.FooterRow) extends StaticRow[FooterCell] {
+    override def getCell(propertyId: Any): Option[FooterCell] = Option(p.getCell(propertyId)) map { new FooterCell(_) }
+
+    override def styleName: Option[String] = Option(p.getStyleName)
+    override def styleName_=(styleName: String): Unit = p.setStyleName(styleName)
+    override def styleName_=(styleName: Option[String]): Unit = p.setStyleName(styleName.orNull)
+
+    override def join(propertyIds: Any*): FooterCell = new FooterCell(p.join(propertyIds.asInstanceOf[Seq[Object]]: _*))
+    //TODO DummyImplicit
+    override def join(cells: Grid.FooterCell*)(implicit ignore: DummyImplicit): FooterCell =
+      new FooterCell(p.join(cells.map(_.p): _*))
+  }
+
+  class FooterCell(val p: VaadinGrid.FooterCell) extends Wrapper {
+    def text: String = p.getText
+    def text_=(text: String): Unit = p.setText(text)
+
+    def html: String = p.getHtml
+    def html_=(html: String): Unit = p.setHtml(html)
+
+    def component: Component = wrapperFor[Component](p.getComponent).get
+    def component_=(component: Component): Unit = p.setComponent(component.p)
+
+    def styleName: Option[String] = Option(p.getStyleName)
+    def styleName_=(styleName: String): Unit = p.setStyleName(styleName)
+    def styleName_=(styleName: Option[String]): Unit = p.setStyleName(styleName.orNull)
   }
 
   object HeightMode extends Enumeration {
@@ -267,38 +322,36 @@ class Grid(override val p: VaadinGrid with GridMixin)
   def sort(propertyId: Any, direction: SortDirection.Value): Unit =
     p.sort(propertyId, com.vaadin.shared.data.sort.SortDirection.values.apply(direction.id))
 
-  def removeHeaderRow(rowIndex: Int): Unit = {
-    p.removeHeaderRow(rowIndex)
-  }
+  def getHeaderRow(rowIndex: Int): Grid.HeaderRow = new Grid.HeaderRow(p.getHeaderRow(rowIndex))
 
-  def defaultHeaderRow: Option[HeaderRow] = Option(p.getDefaultHeaderRow) map { vaadinHeaderRow =>
-    new HeaderRow {
-      override val p = vaadinHeaderRow
-    }
-  }
+  def addHeaderRowAt(index: Int): Grid.HeaderRow = new Grid.HeaderRow(p.addHeaderRowAt(index))
+
+  def appendHeaderRow(): Grid.HeaderRow = new Grid.HeaderRow(p.appendHeaderRow())
+
+  def headerRowCount: Int = p.getHeaderRowCount
+
+  def prependHeaderRow(): Grid.HeaderRow = new Grid.HeaderRow(p.prependHeaderRow())
+
+  def removeHeaderRow(row: Grid.HeaderRow): Unit = p.removeHeaderRow(row.p)
+
+  def removeHeaderRow(rowIndex: Int): Unit = p.removeHeaderRow(rowIndex)
+
+  def defaultHeaderRow: Option[HeaderRow] = Option(p.getDefaultHeaderRow) map { new HeaderRow(_) }
   def defaultHeaderRow_=(defaultHeaderRow: HeaderRow): Unit = p.setDefaultHeaderRow(defaultHeaderRow.p)
   def defaultHeaderRow_=(defaultHeaderRow: Option[HeaderRow]): Unit = p.setDefaultHeaderRow(peerFor(defaultHeaderRow))
 
   def headerVisible: Boolean = p.isHeaderVisible
   def headerVisible_=(headerVisible: Boolean): Unit = p.setHeaderVisible(headerVisible)
 
-  def getFooterRow(rowIndex: Int): Grid.FooterRow = new Grid.FooterRow {
-    override val p: VaadinGrid.FooterRow = Grid.this.p.getFooterRow(rowIndex)
-  }
+  def getFooterRow(rowIndex: Int): Grid.FooterRow = new Grid.FooterRow(p.getFooterRow(rowIndex))
 
-  def addFooterRowAt(index: Int): Grid.FooterRow = new Grid.FooterRow {
-    override val p: VaadinGrid.FooterRow = Grid.this.p.addFooterRowAt(index)
-  }
+  def addFooterRowAt(index: Int): Grid.FooterRow = new Grid.FooterRow(p.addFooterRowAt(index))
 
-  def appendFooterRow(): Grid.FooterRow = new Grid.FooterRow {
-    override val p: VaadinGrid.FooterRow = Grid.this.p.appendFooterRow
-  }
+  def appendFooterRow(): Grid.FooterRow = new Grid.FooterRow(p.appendFooterRow)
 
   def footerRowCount: Int = p.getFooterRowCount
 
-  def prependFooterRow(): Grid.FooterRow = new Grid.FooterRow {
-    override val p: VaadinGrid.FooterRow = Grid.this.p.prependFooterRow
-  }
+  def prependFooterRow(): Grid.FooterRow = new Grid.FooterRow(p.prependFooterRow)
 
   def removeFooterRow(row: Grid.FooterRow): Unit = p.removeFooterRow(row.p)
 

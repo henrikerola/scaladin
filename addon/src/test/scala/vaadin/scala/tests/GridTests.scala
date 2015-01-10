@@ -49,6 +49,50 @@ class GridTests extends ScaladinTestSuite {
     assert(grid.getColumn("myid").isDefined)
   }
 
+  test("HeaderCell.text") {
+    grid.addColumn("col1")
+    val cell = grid.getHeaderRow(0).getCell("col1").get
+
+    assert("Col1" == cell.text)
+
+    cell.text = "test"
+    assert("test" == cell.text)
+  }
+
+  test("HeaderCell.html") {
+    grid.addColumn("col1")
+    val cell = grid.getHeaderRow(0).getCell("col1").get
+
+    cell.html = "<b>myhtml</b>"
+    assert("<b>myhtml</b>" == cell.html)
+  }
+
+  test("HeaderCell.component") {
+    grid.addColumn("col1")
+    val cell = grid.getHeaderRow(0).getCell("col1").get
+
+    val label = Label("")
+    cell.component = label
+    assert(label == cell.component)
+  }
+
+  test("HeaderCell.styleName") {
+    grid.addColumn("col1")
+    val cell = grid.getHeaderRow(0).getCell("col1").get
+
+    assert(None == cell.styleName)
+
+    cell.styleName = "test"
+    assert(Some("test") == cell.styleName)
+
+    cell.styleName = None
+    assert(None == cell.styleName)
+
+    cell.styleName = Some("test")
+    assert(Some("test") == cell.styleName)
+
+  }
+
   test("columns") {
     assert(grid.columns.isEmpty)
 
@@ -394,6 +438,36 @@ class GridTests extends ScaladinTestSuite {
 
     grid.sort("propertyId", vaadin.scala.SortDirection.Descending)
     Mockito.verify(spy).sort("propertyId", com.vaadin.shared.data.sort.SortDirection.DESCENDING)
+  }
+
+  test("getHeaderRow") {
+    grid.appendHeaderRow()
+
+    assert(null != grid.getHeaderRow(0))
+  }
+
+  test("addHeaderRowAt") {
+    assert(null != grid.addHeaderRowAt(0))
+
+    Mockito.verify(spy).addHeaderRowAt(0)
+  }
+
+  test("appendHeaderRow") {
+    assert(null != grid.appendHeaderRow())
+
+    Mockito.verify(spy).appendHeaderRow()
+  }
+
+  test("headerRowCount") {
+    assert(1 == grid.headerRowCount)
+
+    Mockito.verify(spy).getHeaderRowCount
+  }
+
+  test("prependHeaderRow") {
+    assert(null != grid.prependHeaderRow())
+
+    Mockito.verify(spy).prependHeaderRow()
   }
 
   test("removeHeaderRow") {
