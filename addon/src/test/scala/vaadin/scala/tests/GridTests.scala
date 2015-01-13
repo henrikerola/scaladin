@@ -651,4 +651,15 @@ class GridTests extends ScaladinTestSuite {
     Mockito.verify(spy).cancelEditor()
   }
 
+  test("editorFieldFactory") {
+    assert(grid.editorFieldFactory.isInstanceOf[vaadin.scala.DefaultFieldGroupFieldFactory])
+
+    val fieldFactory = new FieldGroupFieldFactory {
+      override def createField[T <: Field[_]](dataType: Class[_], fieldType: Class[T]): Option[T] = ???
+    }
+
+    grid.editorFieldFactory = fieldFactory
+    assert(fieldFactory == grid.editorFieldFactory)
+  }
+
 }
