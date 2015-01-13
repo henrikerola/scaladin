@@ -103,9 +103,7 @@ object Grid {
     val End = Value(END.ordinal)
   }
 
-  trait Column extends Wrapper { column =>
-
-    val p: com.vaadin.ui.Grid.Column
+  class Column(val p: com.vaadin.ui.Grid.Column) extends Wrapper {
 
     def propertyId: Any = p.getPropertyId
 
@@ -236,9 +234,7 @@ class Grid(override val p: VaadinGrid with GridMixin)
   def container: Container.Indexed = wrapperFor(p.getContainerDataSource).get
   def container_=(container: Container.Indexed) { p.setContainerDataSource(container.p) }
 
-  private[this] def wrapColumn(vaadinColumn: com.vaadin.ui.Grid.Column) = new Column {
-    override val p = vaadinColumn
-  }
+  private[this] def wrapColumn(vaadinColumn: com.vaadin.ui.Grid.Column) = new Column(vaadinColumn)
 
   def getColumn(propertyId: Any): Option[Column] = Option(p.getColumn(propertyId)).map(wrapColumn(_))
 
