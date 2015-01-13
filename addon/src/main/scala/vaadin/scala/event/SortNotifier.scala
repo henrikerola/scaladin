@@ -16,6 +16,6 @@ trait SortNotifier {
     new ListenersTrait[SortEvent, GridSortListener] {
       override def listeners = p.getListeners(classOf[com.vaadin.event.SortEvent])
       override def addListener(elem: SortEvent => Unit) = p.addSortListener(new GridSortListener(elem))
-      override def removeListener(elem: GridSortListener) = p.removeSortistener(elem)
+      override def removeListener(elem: GridSortListener) = p.removeSortListener(elem)
     }
 }

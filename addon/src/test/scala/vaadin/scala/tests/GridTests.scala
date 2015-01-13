@@ -164,7 +164,7 @@ class GridTests extends ScaladinTestSuite {
     assert(textRenderer == column.renderer)
   }
 
-  test("Column.renderer") {
+  test("Column.renderer (html)") {
     val column = grid.addColumn[String]("myColumn")
 
     val htmlRenderer = new HtmlRenderer
@@ -288,8 +288,8 @@ class GridTests extends ScaladinTestSuite {
   }
 
   test("selectionMode / selectionModel") {
-    assert(SelectionMode.Multi == grid.selectionMode)
-    assert(grid.selectionModel.isInstanceOf[Grid.SelectionModel.Multi])
+    assert(SelectionMode.Single == grid.selectionMode)
+    assert(grid.selectionModel.isInstanceOf[Grid.SelectionModel.Single])
 
     grid.selectionMode = SelectionMode.None
     assert(SelectionMode.None == grid.selectionMode)
@@ -339,15 +339,16 @@ class GridTests extends ScaladinTestSuite {
     val itemId = grid.addRow()
 
     assert(grid.select(itemId))
-    Mockito.verify(spy).select(itemId);
+    Mockito.verify(spy).select(itemId)
   }
 
   test("deselect") {
-    Mockito.when(spy.deselect("itemId")).thenReturn(true)
+    val itemId = grid.addRow()
+    grid.select(itemId)
 
-    assert(grid.deselect("itemId"))
+    assert(grid.deselect(itemId))
 
-    Mockito.verify(spy).deselect("itemId");
+    Mockito.verify(spy).deselect(itemId)
   }
 
   ignore("selectionListeners") {

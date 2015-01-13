@@ -107,7 +107,7 @@ object Grid {
 
     val p: com.vaadin.ui.Grid.Column
 
-    def propertyId: Any = p.getColumnProperty
+    def propertyId: Any = p.getPropertyId
 
     def headerCaption: String = p.getHeaderCaption
     def headerCaption_=(headerCaption: String): Unit = p.setHeaderCaption(headerCaption)
