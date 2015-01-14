@@ -176,10 +176,7 @@ object Grid {
   }
 
   object SelectionModel {
-    trait Multi extends SelectionModel {
-
-      val p: com.vaadin.ui.Grid.SelectionModel.Multi
-
+    class Multi(val p: com.vaadin.ui.Grid.SelectionModel.Multi) extends SelectionModel {
       def select(itemIds: Any*): Boolean = p.select(itemIds)
 
       def deselect(itemIds: Any*): Boolean = p.deselect(itemIds)
@@ -189,18 +186,13 @@ object Grid {
       def deselectAll(): Boolean = p.deselectAll()
     }
 
-    trait Single extends SelectionModel {
-
-      val p: com.vaadin.ui.Grid.SelectionModel.Single
-
+    class Single(val p: com.vaadin.ui.Grid.SelectionModel.Single) extends SelectionModel {
       def select(itemId: Any): Boolean = p.select(itemId)
 
       def selectedRow: Option[Any] = Option(p.getSelectedRow)
     }
 
-    trait None extends SelectionModel {
-      val p: com.vaadin.ui.Grid.SelectionModel.None
-    }
+    class None(val p: com.vaadin.ui.Grid.SelectionModel.None) extends SelectionModel
   }
 
   def apply(container: Container.Indexed): Grid = {
@@ -288,9 +280,9 @@ class Grid(override val p: VaadinGrid with GridMixin)
   }
 
   def selectionModel: Grid.SelectionModel = p.getSelectionModel match {
-    case n: VaadinGrid.NoSelectionModel => new SelectionModel.None { val p = n }
-    case s: VaadinGrid.SingleSelectionModel => new SelectionModel.Single { val p = s }
-    case m: VaadinGrid.MultiSelectionModel => new SelectionModel.Multi { val p = m }
+    case n: VaadinGrid.NoSelectionModel => new SelectionModel.None(n)
+    case s: VaadinGrid.SingleSelectionModel => new SelectionModel.Single(s)
+    case m: VaadinGrid.MultiSelectionModel => new SelectionModel.Multi(m)
   }
 
   def isSelected(itemId: Any): Boolean = p.isSelected(itemId)
