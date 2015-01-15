@@ -21,7 +21,7 @@ object ClickableRenderer {
  *
  * @author Henri Kerola / Vaadin
  */
-class ClickableRenderer[T](override val p: VaadinClickableRenderer[_] with ClickableRendererMixin)
+class ClickableRenderer[T](override val p: VaadinClickableRenderer[T] with ClickableRendererMixin)
     extends AbstractRenderer[T](p) {
 
   lazy val clickListeners: ListenersSet[RendererClickEvent => Unit] =
