@@ -108,6 +108,7 @@ abstract class UI(override val p: WrappedVaadinUI)
   def isClosing: Boolean = p.isClosing
 
   def theme: String = Option(p.getTheme).getOrElse(_theme.orNull)
+  def theme_=(theme: String): Unit = p.setTheme(theme)
 
   def title: Option[String] = _title
 

@@ -206,4 +206,9 @@ class UITests extends FunSuite with MockitoSugar with BeforeAndAfter {
 
     assert(1 == cnt)
   }
+
+  test("theme setter") {
+    ui.theme = "valo"
+    Mockito.verify(spy).setTheme("valo")
+  }
 }
