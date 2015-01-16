@@ -282,6 +282,14 @@ class TabSheetTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(tabSheet.closeHandler === myCloseHandler)
   }
 
+  test("tabCaptionsAsHtml") {
+    assert(!tabSheet.tabCaptionsAsHtml)
+
+    tabSheet.tabCaptionsAsHtml = true
+    Mockito.verify(spy).setTabCaptionsAsHtml(true)
+    assert(tabSheet.tabCaptionsAsHtml)
+  }
+
   test("Example") {
     val tabSheet = new TabSheet {
       sizeFull()

@@ -118,4 +118,8 @@ class TabSheet(override val p: VaadinTabSheet with TabSheetMixin = new VaadinTab
         p.addSelectedTabChangeListener(new SelectedTabChangeListener(elem))
       override def removeListener(elem: SelectedTabChangeListener) = p.removeSelectedTabChangeListener(elem)
     }
+
+  def tabCaptionsAsHtml: Boolean = p.isTabCaptionsAsHtml
+  def tabCaptionsAsHtml_=(tabCaptionsAsHtml: Boolean): Unit = p.setTabCaptionsAsHtml(tabCaptionsAsHtml)
+
 }
