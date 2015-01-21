@@ -7,7 +7,9 @@ import vaadin.scala.mixins.FilesystemContainerMixin
 import vaadin.scala.server.{ ThemeResource, Resource }
 
 package mixins {
-  trait FilesystemContainerMixin extends ContainerHierarchicalMixin
+  trait FilesystemContainerMixin extends ContainerHierarchicalMixin {
+    self: com.vaadin.data.util.FilesystemContainer =>
+  }
 }
 
 object FilesystemContainer {

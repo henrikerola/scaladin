@@ -5,7 +5,7 @@ import scala.collection.JavaConverters._
 import scala.reflect.ClassTag
 
 package mixins {
-  trait BeanItemContainerMixin extends ContainerIndexedMixin
+  trait BeanItemContainerMixin extends ContainerIndexedMixin { self: com.vaadin.data.util.BeanItemContainer[_] => }
 }
 
 class BeanItemContainer[BT](override val p: com.vaadin.data.util.BeanItemContainer[BT] with BeanItemContainerMixin)

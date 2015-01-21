@@ -8,12 +8,12 @@ import vaadin.scala.mixins.ContainerViewerMixin
 import vaadin.scala.mixins.ContainerSortableMixin
 
 package mixins {
-  trait ContainerMixin extends ScaladinMixin
-  trait ContainerHierarchicalMixin extends ContainerMixin
-  trait ContainerOrderedMixin extends ContainerMixin
+  trait ContainerMixin extends ScaladinMixin { self: com.vaadin.data.Container => }
+  trait ContainerHierarchicalMixin extends ContainerMixin { self: com.vaadin.data.Container.Hierarchical => }
+  trait ContainerOrderedMixin extends ContainerMixin { self: com.vaadin.data.Container.Ordered => }
   trait ContainerViewerMixin extends ScaladinMixin
-  trait ContainerSortableMixin extends ContainerOrderedMixin
-  trait ContainerIndexedMixin extends ContainerOrderedMixin
+  trait ContainerSortableMixin extends ContainerOrderedMixin { self: com.vaadin.data.Container.Sortable => }
+  trait ContainerIndexedMixin extends ContainerOrderedMixin { self: com.vaadin.data.Container.Indexed => }
 }
 
 //Base Container trait is outside the companion object so extending classes can have nicer syntax

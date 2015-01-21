@@ -3,7 +3,9 @@ package vaadin.scala
 import vaadin.scala.mixins.HierarchicalContainerMixin
 
 package mixins {
-  trait HierarchicalContainerMixin extends IndexedContainerMixin with ContainerHierarchicalMixin
+  trait HierarchicalContainerMixin extends IndexedContainerMixin with ContainerHierarchicalMixin {
+    self: com.vaadin.data.util.HierarchicalContainer =>
+  }
 }
 
 object HierarchicalContainer {
