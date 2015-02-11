@@ -1,6 +1,6 @@
 package vaadin.scala.renderer
 
-import com.vaadin.ui.renderer.{ ButtonRenderer => VaadinButtonRenderer }
+import com.vaadin.ui.renderers.{ ButtonRenderer => VaadinButtonRenderer }
 import vaadin.scala.renderer.mixins.ButtonRendererMixin
 
 package mixins {

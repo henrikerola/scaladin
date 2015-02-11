@@ -158,7 +158,7 @@ class GridTests extends ScaladinTestSuite {
     assert(column.renderer.isInstanceOf[TextRenderer])
 
     val textRenderer = new TextRenderer
-    assert(textRenderer.p.isInstanceOf[com.vaadin.ui.renderer.TextRenderer])
+    assert(textRenderer.p.isInstanceOf[com.vaadin.ui.renderers.TextRenderer])
     column.renderer = textRenderer
 
     assert(textRenderer == column.renderer)
@@ -168,7 +168,7 @@ class GridTests extends ScaladinTestSuite {
     val column = grid.addColumn[String]("myColumn")
 
     val htmlRenderer = new HtmlRenderer
-    assert(htmlRenderer.p.isInstanceOf[com.vaadin.ui.renderer.HtmlRenderer])
+    assert(htmlRenderer.p.isInstanceOf[com.vaadin.ui.renderers.HtmlRenderer])
 
     column.renderer = htmlRenderer
 
@@ -622,14 +622,6 @@ class GridTests extends ScaladinTestSuite {
     grid.editorActive
 
     Mockito.verify(spy).isEditorActive
-  }
-
-  ignore("getEditorRowField") {
-    val myGrid = new Grid()
-
-    myGrid.addColumn("propertyId")
-
-    myGrid.getEditorRowField("propertyId")
   }
 
   test("editItem") {

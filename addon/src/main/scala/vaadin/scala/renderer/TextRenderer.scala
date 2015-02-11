@@ -1,6 +1,6 @@
 package vaadin.scala.renderer
 
-import com.vaadin.ui.renderer.{ TextRenderer => VaadinTextRenderer }
+import com.vaadin.ui.renderers.{ TextRenderer => VaadinTextRenderer }
 import vaadin.scala.renderer.mixins.TextRendererMixin
 
 package mixins {

@@ -121,7 +121,7 @@ object Grid {
 
     def renderer: Renderer[_] = p.getRenderer match {
       case r: RendererMixin => wrapperFor[Renderer[_]](r).get
-      case tr: com.vaadin.ui.renderer.TextRenderer => {
+      case tr: com.vaadin.ui.renderers.TextRenderer => {
         // Assuming that using the default TextRenderer,
         // setting a wrapped TextRenderer as a side-effect
         // Not really other place to do this.
@@ -384,12 +384,7 @@ class Grid(override val p: VaadinGrid with GridMixin)
 
   def editorActive: Boolean = p.isEditorActive
 
-  def getEditorRowField(propertyId: Any): Field[_] = wrapperFor(p.getEditorField(propertyId)).get
-
   def editItem(itemId: Any): Unit = p.editItem(itemId)
-
-  def setEditorField(propertyId: Any, field: Field[_]): Unit =
-    p.setEditorField(propertyId, field.p)
 
   def saveEditor(): Unit = p.saveEditor()
 

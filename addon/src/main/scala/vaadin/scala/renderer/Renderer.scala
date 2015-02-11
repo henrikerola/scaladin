@@ -14,7 +14,7 @@ package mixins {
  */
 trait Renderer[T] extends Wrapper {
 
-  def p: com.vaadin.ui.renderer.Renderer[T] with RendererMixin
+  def p: com.vaadin.ui.renderers.Renderer[T] with RendererMixin
 
   def presentationType: Class[T] = p.getPresentationType
 }

@@ -3,7 +3,7 @@ package vaadin.scala.renderer
 import java.text.DateFormat
 import java.util.{ Locale, Date }
 
-import com.vaadin.ui.renderer.{ DateRenderer => VaadinDateRenderer }
+import com.vaadin.ui.renderers.{ DateRenderer => VaadinDateRenderer }
 import vaadin.scala.renderer.mixins.DateRendererMixin
 
 package mixins {
