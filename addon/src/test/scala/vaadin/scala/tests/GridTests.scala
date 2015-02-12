@@ -654,4 +654,18 @@ class GridTests extends ScaladinTestSuite {
     assert(fieldFactory == grid.editorFieldFactory)
   }
 
+  test("editorSaveCaption") {
+    assert("Save" == grid.editorSaveCaption)
+
+    grid.editorSaveCaption = "Tallenna"
+    assert("Tallenna" == grid.editorSaveCaption)
+  }
+
+  test("editorCancelCaption") {
+    assert("Cancel" == grid.editorCancelCaption)
+
+    grid.editorCancelCaption = "Peruuta"
+    assert("Peruuta" == grid.editorCancelCaption)
+  }
+
 }
