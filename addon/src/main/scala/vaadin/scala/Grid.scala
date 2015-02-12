@@ -8,7 +8,7 @@ import vaadin.scala.Grid._
 import vaadin.scala.renderer.mixins.RendererMixin
 import collection.JavaConverters._
 import scala.reflect.ClassTag
-import vaadin.scala.event.{ SortNotifier, SelectionNotifier }
+import vaadin.scala.event.{ ItemClickNotifier, SortNotifier, SelectionNotifier }
 import vaadin.scala.renderer.{ TextRenderer, Renderer }
 import vaadin.scala.converter.Converter
 
@@ -205,7 +205,7 @@ object Grid {
  * @author Henri Kerola / Vaadin
  */
 class Grid(override val p: VaadinGrid with GridMixin)
-    extends AbstractComponent(p) with SelectionNotifier with SortNotifier {
+    extends AbstractComponent(p) with SelectionNotifier with SortNotifier with ItemClickNotifier {
 
   def this() {
     this(new VaadinGrid(new IndexedContainer().p) with GridMixin)
