@@ -190,6 +190,9 @@ object Grid {
       def select(itemId: Any): Boolean = p.select(itemId)
 
       def selectedRow: Option[Any] = Option(p.getSelectedRow)
+
+      def deselectAllowed: Boolean = p.isDeselectAllowed
+      def deselectAllowed_=(deselectAllowed: Boolean) = p.setDeselectAllowed(deselectAllowed)
     }
 
     class None(val p: com.vaadin.ui.Grid.SelectionModel.None) extends SelectionModel
