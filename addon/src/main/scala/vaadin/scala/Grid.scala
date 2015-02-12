@@ -390,7 +390,7 @@ class Grid(override val p: VaadinGrid with GridMixin)
 
   def cancelEditor(): Unit = p.cancelEditor()
 
-  def editorFieldFactory = wrapperFor[FieldGroupFieldFactory](p.getEditorFieldGroup.getFieldFactory).get
+  def editorFieldFactory = wrapperFor[FieldGroupFieldFactory](p.getEditorFieldFactory).get
   def editorFieldFactory_=(fieldFactory: FieldGroupFieldFactory) = p.setEditorFieldFactory(fieldFactory.p)
 
   def editorSaveCaption: String = p.getEditorSaveCaption
