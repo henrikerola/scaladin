@@ -2,7 +2,7 @@ package vaadin.scala.internal
 
 import com.vaadin.ui.renderers.ClickableRenderer.RendererClickEvent
 import vaadin.scala.Grid
-import vaadin.scala.renderer.ClickableRenderer
+import vaadin.scala.renderers.ClickableRenderer
 
 /**
  *

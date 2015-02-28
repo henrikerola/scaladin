@@ -5,11 +5,11 @@ import vaadin.scala.internal._
 import vaadin.scala.mixins._
 import com.vaadin.ui.{ Grid => VaadinGrid }
 import vaadin.scala.Grid._
-import vaadin.scala.renderer.mixins.RendererMixin
+import vaadin.scala.renderers.mixins.RendererMixin
 import collection.JavaConverters._
 import scala.reflect.ClassTag
 import vaadin.scala.event.{ ItemClickNotifier, SortNotifier, SelectionNotifier }
-import vaadin.scala.renderer.{ TextRenderer, Renderer }
+import vaadin.scala.renderers.{ TextRenderer, Renderer }
 import vaadin.scala.converter.Converter
 
 package mixins {
