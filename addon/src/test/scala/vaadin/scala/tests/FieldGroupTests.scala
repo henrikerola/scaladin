@@ -30,7 +30,7 @@ class FieldGroupTests extends ScaladinTestSuite {
     fieldGroup.fieldFactory = Option(factory)
     assertSameFactory(factory, fieldGroup.fieldFactory)
 
-    val factoryFunctionMock = mock[Function2[Class[_], Class[_], Option[Field[_]]]]
+    val factoryFunctionMock = mock[Function2[Class[_], Class[_], Option[Field[_, _]]]]
 
     fieldGroup.fieldFactory = factoryFunctionMock
 
@@ -41,7 +41,7 @@ class FieldGroupTests extends ScaladinTestSuite {
   ignore("creating fields") {
     val field = new TextField
 
-    val factoryFunctionMock = mock[Function2[Class[_], Class[_], Option[Field[_]]]]
+    val factoryFunctionMock = mock[Function2[Class[_], Class[_], Option[Field[_, _]]]]
     when(factoryFunctionMock(any(), any())).thenReturn(Option(field))
 
     fieldGroup.fieldFactory = factoryFunctionMock

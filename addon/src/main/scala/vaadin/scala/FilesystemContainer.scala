@@ -25,7 +25,7 @@ object FilesystemContainer {
   import scala.collection.JavaConverters._
   val FileProperties: Iterable[String] = com.vaadin.data.util.FilesystemContainer.FILE_PROPERTIES.asScala
 
-  def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_] = new BasicProperty(unwrapped) //TODO: new FileProperty(unwrapped)
+  def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_, _] = new BasicProperty(unwrapped) //TODO: new FileProperty(unwrapped)
 
   class FileItem(override val p: com.vaadin.data.util.FilesystemContainer#FileItem) extends Item {
     def lastModified: Date = p.lastModified
@@ -33,7 +33,7 @@ object FilesystemContainer {
     def icon: Resource = new ThemeResource(p.getIcon.asInstanceOf[com.vaadin.server.ThemeResource].getResourceId)
     def size: Long = p.getSize
 
-    protected override def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_] = FilesystemContainer.wrapProperty(unwrapped)
+    protected override def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_, _] = FilesystemContainer.wrapProperty(unwrapped)
   }
 
   //  class FileProperty(override val p: com.vaadin.data.Property[_]) extends BasicProperty(p) {
@@ -73,5 +73,5 @@ class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContain
 
   def wrapItem(unwrapped: com.vaadin.data.Item): Item = new FilesystemContainer.FileItem(unwrapped.asInstanceOf[com.vaadin.data.util.FilesystemContainer#FileItem])
 
-  override def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_] = FilesystemContainer.wrapProperty(unwrapped)
+  override def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_, _] = FilesystemContainer.wrapProperty(unwrapped)
 }

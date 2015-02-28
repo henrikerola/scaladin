@@ -6,7 +6,7 @@ import internal.WrapperUtil
 import java.util.TimeZone
 
 package mixins {
-  trait DateFieldMixin extends AbstractFieldMixin[java.util.Date] { self: com.vaadin.ui.DateField =>
+  trait DateFieldMixin extends AbstractFieldMixin[java.util.Date, java.util.Date] { self: com.vaadin.ui.DateField =>
     override def handleUnparsableDateString(dateString: String): java.util.Date = {
       // FIXME: asInstanceOf
       wrapper.asInstanceOf[DateField].unparsableDateStringHandler match {
@@ -39,7 +39,7 @@ object DateField {
 
 class DateField(
   override val p: com.vaadin.ui.DateField with DateFieldMixin = new com.vaadin.ui.DateField with DateFieldMixin)
-    extends AbstractField[java.util.Date](p) with BlurNotifier with FocusNotifier {
+    extends AbstractField[java.util.Date, java.util.Date](p) with BlurNotifier with FocusNotifier {
 
   resolution = DateField.Resolution.Second
 

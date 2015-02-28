@@ -88,12 +88,12 @@ class FieldGroup(override val p: VaadinFieldGroup with FieldGroupMixin = new Vaa
   def readOnly: Boolean = p.isReadOnly
   def readOnly_=(isReadOnly: Boolean) { p.setReadOnly(isReadOnly) }
 
-  def fields: Iterable[Field[_]] =
-    p.getFields.asScala.map(vaadinField => vaadinField.asInstanceOf[com.vaadin.ui.Field[_] with FieldMixin[_]].wrapper)
+  def fields: Iterable[Field[_, _]] =
+    p.getFields.asScala.map(vaadinField => vaadinField.asInstanceOf[com.vaadin.ui.Field[_] with FieldMixin[_, _]].wrapper)
 
-  def bind(field: Field[_], propertyId: Any): Try[Unit] =
+  def bind(field: Field[_, _], propertyId: Any): Try[Unit] =
     catching(classOf[com.vaadin.data.fieldgroup.FieldGroup.BindException]) withTry (p.bind(field.p, propertyId))
-  def unbind(field: Field[_]): Try[Unit] =
+  def unbind(field: Field[_, _]): Try[Unit] =
     catching(classOf[com.vaadin.data.fieldgroup.FieldGroup.BindException]) withTry (p.unbind(field.p))
 
   def boundPropertyIds: Iterable[Any] = p.getBoundPropertyIds.asScala
@@ -105,9 +105,9 @@ class FieldGroup(override val p: VaadinFieldGroup with FieldGroupMixin = new Vaa
 
   def discard() { p.discard() }
 
-  def field(propertyId: Any): Option[Field[_]] =
-    Option(p.getField(propertyId)) map (_.asInstanceOf[com.vaadin.ui.Field[_] with FieldMixin[_]]) map (_.wrapper)
-  def propertyId(field: Field[_]): Option[Any] = Option(p.getPropertyId(field.p))
+  def field(propertyId: Any): Option[Field[_, _]] =
+    Option(p.getField(propertyId)) map (_.asInstanceOf[com.vaadin.ui.Field[_] with FieldMixin[_, _]]) map (_.wrapper)
+  def propertyId(field: Field[_, _]): Option[Any] = Option(p.getPropertyId(field.p))
 
   def valid: Boolean = p.isValid
   def modified: Boolean = p.isModified
@@ -115,11 +115,11 @@ class FieldGroup(override val p: VaadinFieldGroup with FieldGroupMixin = new Vaa
   def fieldFactory: Option[FieldGroupFieldFactory] = wrapperFor(p.getFieldFactory)
   def fieldFactory_=(factory: Option[FieldGroupFieldFactory]) { p.setFieldFactory(peerFor(factory)) }
   def fieldFactory_=(factory: FieldGroupFieldFactory) { p.setFieldFactory(factory.p) }
-  def fieldFactory_=[FT <: Field[_]](fieldFunction: (Class[_], Class[_]) => Option[FT]) {
+  def fieldFactory_=[FT <: Field[_, _]](fieldFunction: (Class[_], Class[_]) => Option[FT]) {
     this.fieldFactory = FieldGroupFieldFactory(fieldFunction)
   }
 
-  protected def build[T <: Field[_]](caption: String, dataType: Class[_], fieldType: Class[T]): Option[T] = {
+  protected def build[T <: Field[_, _]](caption: String, dataType: Class[_], fieldType: Class[T]): Option[T] = {
     fieldFactory.get.createField[T](dataType, fieldType) map { f =>
       f.caption = caption
       f
@@ -154,8 +154,8 @@ class FieldGroup(override val p: VaadinFieldGroup with FieldGroupMixin = new Vaa
   }
 
   protected def buildAndBindMemberFields[T: TypeTag](objectWithMemberFields: T, buildFields: Boolean) {
-    typeOf[T].members.filter(_.typeSignature <:< typeOf[Field[_]]).foreach { m =>
-      val field = getFieldValue(objectWithMemberFields, m.name).asInstanceOf[Option[Field[_]]]
+    typeOf[T].members.filter(_.typeSignature <:< typeOf[Field[_, _]]).foreach { m =>
+      val field = getFieldValue(objectWithMemberFields, m.name).asInstanceOf[Option[Field[_, _]]]
       val annotatedPropertyId = findAnnotation[FieldGroup.propertyId](m)
       // See why .trim is needed: https://issues.scala-lang.org/browse/SI-5736
       val propertyId = annotatedPropertyId.fold(m.name.decoded.trim) { _.value }

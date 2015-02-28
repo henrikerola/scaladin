@@ -160,7 +160,7 @@ object Grid {
 
   case class CellReference(grid: Grid, itemId: Any, propertyId: Any) {
     def item: Item = grid.container.getItem(itemId)
-    def property: Property[_] = item.getProperty(propertyId)
+    def property: Property[_, _] = item.getProperty(propertyId)
     def value: Option[Any] = property.value
   }
 

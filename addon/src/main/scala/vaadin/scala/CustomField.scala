@@ -10,7 +10,7 @@ package mixins {
     def getContent: com.vaadin.ui.Component
   }
 
-  trait CustomFieldMixin[T] extends AbstractFieldMixin[T] with HasComponentsMixin with CustomFieldSuperCalls {
+  trait CustomFieldMixin[T] extends AbstractFieldMixin[T, T] with HasComponentsMixin with CustomFieldSuperCalls {
 
     self: com.vaadin.ui.CustomField[T] =>
 
@@ -30,7 +30,7 @@ package mixins {
  */
 abstract class CustomField[T: ClassTag](
   override val p: VaadinCustomField[T] with CustomFieldMixin[T] = new VaadinCustomField[T] with CustomFieldMixin[T])
-    extends AbstractField[T](p) with HasComponents {
+    extends AbstractField[T, T](p) with HasComponents {
 
   protected def content: Component = wrapperFor[Component](p.getContent).get
 

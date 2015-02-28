@@ -4,11 +4,11 @@ import com.vaadin.ui.{ CheckBox => VaadinCheckBox }
 import vaadin.scala.mixins.CheckBoxMixin
 
 package mixins {
-  trait CheckBoxMixin extends AbstractFieldMixin[java.lang.Boolean] { self: com.vaadin.ui.CheckBox => }
+  trait CheckBoxMixin extends AbstractFieldMixin[Boolean, java.lang.Boolean] { self: com.vaadin.ui.CheckBox => }
 }
 
 class CheckBox(override val p: VaadinCheckBox with CheckBoxMixin = new VaadinCheckBox with CheckBoxMixin)
-    extends AbstractField[java.lang.Boolean](p) {
+    extends AbstractField[Boolean, java.lang.Boolean](p) {
 
   def value_=(value: Boolean) { p.setValue(value) }
 

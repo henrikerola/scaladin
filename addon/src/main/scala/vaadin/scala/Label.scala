@@ -27,7 +27,7 @@ object Label {
 }
 
 class Label(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin.ui.Label with LabelMixin)
-    extends AbstractComponent(p) with PropertyViewer with Property[String] with ValueChangeNotifier {
+    extends AbstractComponent(p) with PropertyViewer with Property[String, String] with ValueChangeNotifier {
 
   def contentMode: Label.ContentMode.Value = Label.ContentMode(p.getContentMode.ordinal)
   def contentMode_=(contentMode: Label.ContentMode.Value) { p.setContentMode(ContentMode.values.apply(contentMode.id)) }

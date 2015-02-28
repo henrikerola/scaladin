@@ -32,12 +32,12 @@ object FieldGroupFieldFactory {
   //TODO    		
   //classOf[com.vaadin.ui.CustomField[_]] -> classOf[CustomField[_]]
 
-  def mapVaadinType[VT <: com.vaadin.ui.Field[_], ST <: Field[_]](vaadinType: Class[VT]): Class[ST] = vaadinFieldToWrapperField(vaadinType).asInstanceOf[Class[ST]]
-  def mapScalaType[VT <: com.vaadin.ui.Field[_], ST <: Field[_]](scalaType: Class[ST]): Class[VT] = wrapperFieldToVaadinField(scalaType).asInstanceOf[Class[VT]]
+  def mapVaadinType[VT <: com.vaadin.ui.Field[_], ST <: Field[_, _]](vaadinType: Class[VT]): Class[ST] = vaadinFieldToWrapperField(vaadinType).asInstanceOf[Class[ST]]
+  def mapScalaType[VT <: com.vaadin.ui.Field[_], ST <: Field[_, _]](scalaType: Class[ST]): Class[VT] = wrapperFieldToVaadinField(scalaType).asInstanceOf[Class[VT]]
 
-  def apply[FT <: Field[_]](fieldFunction: (Class[_], Class[_]) => Option[FT]): FieldGroupFieldFactory = {
+  def apply[FT <: Field[_, _]](fieldFunction: (Class[_], Class[_]) => Option[FT]): FieldGroupFieldFactory = {
     new FieldGroupFieldFactory {
-      override def createField[T <: Field[_]](dataType: Class[_], fieldType: Class[T]): Option[T] = fieldFunction(dataType, fieldType).map(_.asInstanceOf[T])
+      override def createField[T <: Field[_, _]](dataType: Class[_], fieldType: Class[T]): Option[T] = fieldFunction(dataType, fieldType).map(_.asInstanceOf[T])
     }
   }
 }
@@ -45,15 +45,15 @@ object FieldGroupFieldFactory {
 trait FieldGroupFieldFactory extends Wrapper {
   override val p: com.vaadin.data.fieldgroup.FieldGroupFieldFactory with FieldGroupFieldFactoryMixin = new FieldGroupFieldFactoryDelegator { wrapper = FieldGroupFieldFactory.this }
 
-  def createField[T <: Field[_]](dataType: Class[_], fieldType: Class[T]): Option[T]
+  def createField[T <: Field[_, _]](dataType: Class[_], fieldType: Class[T]): Option[T]
 
-  def mapFieldToWrapper[VT <: com.vaadin.ui.Field[_], ST <: Field[_]](fieldType: Class[VT]): Class[ST] = FieldGroupFieldFactory.mapVaadinType(fieldType)
+  def mapFieldToWrapper[VT <: com.vaadin.ui.Field[_], ST <: Field[_, _]](fieldType: Class[VT]): Class[ST] = FieldGroupFieldFactory.mapVaadinType(fieldType)
 }
 
 trait FieldGroupFieldFactoryDelegator extends com.vaadin.data.fieldgroup.FieldGroupFieldFactory with FieldGroupFieldFactoryMixin {
 
   def createField[T <: com.vaadin.ui.Field[_]](dataType: Class[_], fieldType: Class[T]): T = {
-    val wrapperType: Class[Field[_]] = wrapper.mapFieldToWrapper(fieldType)
+    val wrapperType: Class[Field[_, _]] = wrapper.mapFieldToWrapper(fieldType)
     val result = wrapper.createField(dataType, wrapperType).map[com.vaadin.ui.Field[_]](_.p).orNull
     result.asInstanceOf[T]
   }
@@ -65,7 +65,7 @@ class DefaultFieldGroupFieldFactory extends FieldGroupFieldFactory {
   override val p: com.vaadin.data.fieldgroup.FieldGroupFieldFactory with FieldGroupFieldFactoryMixin = new FieldGroupFieldFactoryDelegator { wrapper = DefaultFieldGroupFieldFactory.this }
   private val vaadinFactory = com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory.get
 
-  def createField[T <: Field[_]](dataType: Class[_], fieldType: Class[T]): Option[T] = {
+  def createField[T <: Field[_, _]](dataType: Class[_], fieldType: Class[T]): Option[T] = {
     if (Boolean.getClass.isAssignableFrom(dataType)) createBooleanField(fieldType)
     else if (AbstractTextField.getClass.isAssignableFrom(fieldType))
       createAbstractTextField(fieldType.asSubclass(classOf[AbstractTextField])) map (fieldType.cast(_))
@@ -93,7 +93,7 @@ class DefaultFieldGroupFieldFactory extends FieldGroupFieldFactory {
     select
   }
 
-  def createBooleanField[T <: Field[_]](fieldType: Class[T]): Option[T] = {
+  def createBooleanField[T <: Field[_, _]](fieldType: Class[T]): Option[T] = {
     if (fieldType.isAssignableFrom(CheckBox.getClass)) Some(new CheckBox { immediate = true }) map (_.asInstanceOf[T])
     else if (classOf[AbstractTextField].isAssignableFrom(fieldType))
       createAbstractTextField[AbstractTextField](fieldType.asInstanceOf[Class[AbstractTextField]]) map (_.asInstanceOf[T])
@@ -109,7 +109,7 @@ class DefaultFieldGroupFieldFactory extends FieldGroupFieldFactory {
     Some(field)
   }
 
-  def createDefaultField[T <: Field[_]](dataType: Class[_],
+  def createDefaultField[T <: Field[_, _]](dataType: Class[_],
     fieldType: Class[T]): Option[T] = {
     if (fieldType.isAssignableFrom(TextField.getClass))
       createAbstractTextField[TextField](classOf[TextField]) map (fieldType.cast(_))
@@ -119,15 +119,15 @@ class DefaultFieldGroupFieldFactory extends FieldGroupFieldFactory {
 }
 
 object TableFieldFactory {
-  def apply(tableFieldFunction: TableFieldIngredients => Option[Field[_]]): TableFieldFactory = new TableFieldFactory {
-    def createField(ingredients: TableFieldIngredients): Option[Field[_]] = tableFieldFunction(ingredients)
+  def apply(tableFieldFunction: TableFieldIngredients => Option[Field[_, _]]): TableFieldFactory = new TableFieldFactory {
+    def createField(ingredients: TableFieldIngredients): Option[Field[_, _]] = tableFieldFunction(ingredients)
   }
 }
 
 trait TableFieldFactory extends Wrapper {
   override val p: com.vaadin.ui.TableFieldFactory with TableFieldFactoryMixin = new TableFieldFactoryDelegator { wrapper = TableFieldFactory.this }
 
-  def createField(ingredients: TableFieldIngredients): Option[Field[_]]
+  def createField(ingredients: TableFieldIngredients): Option[Field[_, _]]
 }
 
 trait TableFieldFactoryDelegator extends com.vaadin.ui.TableFieldFactory with TableFieldFactoryMixin {
@@ -161,11 +161,11 @@ object DefaultFieldFactory extends TableFieldFactory {
   val Date = classOf[Date]
   val Bool = classOf[Boolean]
 
-  def createField(ingredients: TableFieldIngredients): Option[Field[_]] =
+  def createField(ingredients: TableFieldIngredients): Option[Field[_, _]] =
     ingredients.container.getPropertyOption(ingredients.itemId, ingredients.propertyId) match {
       case Some(property) => {
         val propertyType: Class[_] = property.getType
-        val field: Field[_] = createFieldByPropertyType(propertyType)
+        val field: Field[_, _] = createFieldByPropertyType(propertyType)
         field.caption = createCaptionByPropertyId(ingredients.propertyId)
         Option(field)
       }
@@ -173,7 +173,7 @@ object DefaultFieldFactory extends TableFieldFactory {
       case None => None
     }
 
-  def createFieldByPropertyType(propertyType: Class[_]): Field[_] = propertyType match {
+  def createFieldByPropertyType(propertyType: Class[_]): Field[_, _] = propertyType match {
     case null => null
     case Date => new DateField { resolution = DateField.Resolution.Day }
     case Bool => new CheckBox

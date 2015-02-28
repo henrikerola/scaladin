@@ -11,14 +11,14 @@ import vaadin.scala.converter.Converter
  */
 class AbstractFieldTests extends ScaladinTestSuite {
 
-  abstract class VaadinAbstractField extends com.vaadin.ui.AbstractField[String] with AbstractFieldMixin[String]
+  abstract class VaadinAbstractField extends com.vaadin.ui.AbstractField[String] with AbstractFieldMixin[String, String]
 
   var vaadinAbstractField: VaadinAbstractField = _
-  var abstractField: AbstractField[String] = _
+  var abstractField: AbstractField[String, String] = _
 
   before {
     vaadinAbstractField = mock[VaadinAbstractField]
-    abstractField = new AbstractField[String](vaadinAbstractField) {}
+    abstractField = new AbstractField[String, String](vaadinAbstractField) {}
   }
 
   test("conversionError") {

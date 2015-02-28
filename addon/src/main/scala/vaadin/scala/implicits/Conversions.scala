@@ -11,7 +11,7 @@ package object implicits {
     case None => EmptyFilterableItem
   }
 
-  implicit def propertyListToValueWrap[P <: Property[_]](pl: List[P]) = new PropertyListWrap(pl)
+  implicit def propertyListToValueWrap[P <: Property[_, _]](pl: List[P]) = new PropertyListWrap(pl)
 
   import vaadin.scala.mixins.ComponentMixin
   import vaadin.scala.mixins.ComponentContainerMixin

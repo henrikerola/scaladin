@@ -647,7 +647,7 @@ class GridTests extends ScaladinTestSuite {
     assert(grid.editorFieldFactory.isInstanceOf[vaadin.scala.DefaultFieldGroupFieldFactory])
 
     val fieldFactory = new FieldGroupFieldFactory {
-      override def createField[T <: Field[_]](dataType: Class[_], fieldType: Class[T]): Option[T] = ???
+      override def createField[T <: Field[_, _]](dataType: Class[_], fieldType: Class[T]): Option[T] = ???
     }
 
     grid.editorFieldFactory = fieldFactory

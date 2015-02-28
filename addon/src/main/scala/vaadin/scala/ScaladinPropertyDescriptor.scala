@@ -31,7 +31,7 @@ class ScaladinPropertyDescriptor[T](
   val p = new VaadinPropertyDescriptor[T] with DelegatingVaadinPropertyDescriptor[T]
   p.wrapper = this
 
-  def createProperty[T](bean: T): Property[_] = {
+  def createProperty[T](bean: T): Property[_, _] = {
     new ScaladinProperty[T](propertyType.asInstanceOf[Class[_ <: T]], bean, getterMirror, setterMirror)
   }
 }

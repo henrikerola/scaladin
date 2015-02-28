@@ -32,7 +32,7 @@ class ScaladinProperty[T](
   val instance: T,
   val getterMirror: MethodMirror,
   val setterMirror: Option[MethodMirror])
-    extends Property[T] {
+    extends Property[T, T] {
 
   val p = new com.vaadin.data.Property[T] with DelegatingPropertyMixin[T]
   p.wrapper = this

@@ -16,24 +16,24 @@ trait FilterableContainer extends Container {
   /**
    * Filter based on property
    */
-  def filterProperties(propertyFilter: Property[_] => Boolean): List[Property[_]] = itemIds.map(getItemOption).flatten.flatMap(Item.getProperties).filter(propertyFilter).toList
+  def filterProperties(propertyFilter: Property[_, _] => Boolean): List[Property[_, _]] = itemIds.map(getItemOption).flatten.flatMap(Item.getProperties).filter(propertyFilter).toList
 
   /**
    * Filter based on property id
    */
-  def \\(propertyId: Any): List[Property[_]] = itemIds.map(getItemOption).flatten.map(_.getPropertyOption(propertyId)).flatten.toList
+  def \\(propertyId: Any): List[Property[_, _]] = itemIds.map(getItemOption).flatten.map(_.getPropertyOption(propertyId)).flatten.toList
 }
 
 trait FilterableItem extends Item {
   /**
    * Filter based on property
    */
-  def filterProperties(propertyFilter: Property[_] => Boolean): List[Property[_]] = Item.getProperties(this).filter(propertyFilter).toList
+  def filterProperties(propertyFilter: Property[_, _] => Boolean): List[Property[_, _]] = Item.getProperties(this).filter(propertyFilter).toList
 
   /**
    * Filter based on property id
    */
-  def \(propertyId: Any): Option[Property[_]] = getPropertyOption(propertyId)
+  def \(propertyId: Any): Option[Property[_, _]] = getPropertyOption(propertyId)
 
   def values: List[Any] = Item.getProperties(this).map(_.value).toList
 }
@@ -51,15 +51,15 @@ class FilterableItemWrap(wrapped: com.vaadin.data.Item) extends FilterableItem {
 object EmptyFilterableItem extends FilterableItem {
   val p = null
 
-  override def filterProperties(propertyFilter: Property[_] => Boolean): List[Property[_]] = List()
+  override def filterProperties(propertyFilter: Property[_, _] => Boolean): List[Property[_, _]] = List()
 
-  override def \(propertyId: Any): Option[Property[_]] = None
+  override def \(propertyId: Any): Option[Property[_, _]] = None
 
   override def values: List[Any] = List()
 
   override def wrapProperty(unwrapped: com.vaadin.data.Property[_]) = null
 }
 
-class PropertyListWrap(wrapped: List[Property[_]]) {
+class PropertyListWrap(wrapped: List[Property[_, _]]) {
   def values = wrapped.map(_.value)
 }

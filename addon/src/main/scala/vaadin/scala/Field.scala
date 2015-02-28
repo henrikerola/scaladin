@@ -3,14 +3,14 @@ package vaadin.scala
 import vaadin.scala.mixins.FieldMixin
 
 package mixins {
-  trait FieldMixin[T] extends ComponentMixin with BufferedValidatableMixin { self: com.vaadin.ui.Field[T] =>
-    override def wrapper = super.wrapper.asInstanceOf[Field[T]]
+  trait FieldMixin[T, V] extends ComponentMixin with BufferedValidatableMixin { self: com.vaadin.ui.Field[V] =>
+    override def wrapper = super.wrapper.asInstanceOf[Field[T, V]]
   }
 }
 
-trait Field[T] extends Component with BufferedValidatable with Property[T] with Component.Focusable with Wrapper {
+trait Field[T, V] extends Component with BufferedValidatable with Property[T, V] with Component.Focusable with Wrapper {
 
-  def p: com.vaadin.ui.Field[T] with FieldMixin[T]
+  def p: com.vaadin.ui.Field[V] with FieldMixin[T, V]
 
   //readOnly is inherited from Component and Property, needs override
   override def readOnly: Boolean = p.isReadOnly
