@@ -37,5 +37,28 @@ class CheckBoxTests extends FunSuite {
     assert(checkBox.booleanValue === true)
   }
 
+  test("null value from Java is considered as false in Scaladin") {
+    val checkBox = new CheckBox
+
+    checkBox.p.setValue(null)
+
+    assert(!checkBox.booleanValue)
+    assert(Some(false) == checkBox.value)
+  }
+
+  test("property binding") {
+    val property = new ObjectProperty[Boolean](true)
+
+    val checkBox = new CheckBox
+    checkBox.property = property
+
+    assert(checkBox.booleanValue)
+    assert(checkBox.p.getValue)
+
+    property.value = false
+    assert(!checkBox.booleanValue)
+    assert(!checkBox.p.getValue)
+  }
+
   // TODO test focus and blur listeners
 }
