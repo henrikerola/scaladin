@@ -6,7 +6,7 @@ import org.scalatest.junit.JUnitRunner
 import vaadin.scala.server.ExternalResource
 
 @RunWith(classOf[JUnitRunner])
-class Resource extends FunSuite {
+class ResourceTests extends FunSuite {
 
   test("ExternalResource, non-null url param") {
     val resource = new ExternalResource("http://example.com")
