@@ -1,6 +1,7 @@
 package vaadin.scala.tests
 
 import com.vaadin.data.sort.SortOrder
+import vaadin.scala.converter.ResourceConverter
 import vaadin.scala.event.{ SortEvent, SelectionEvent }
 import com.vaadin.shared.data.sort.SortDirection
 import com.vaadin.ui.Grid.{ RowReference, Column }
@@ -8,7 +9,8 @@ import org.mockito.{ ArgumentCaptor, Mockito }
 import vaadin.scala.mixins.GridMixin
 import vaadin.scala._
 import vaadin.scala.Grid.HeightMode
-import vaadin.scala.renderers.{ HtmlRenderer, TextRenderer }
+import vaadin.scala.renderers.{ImageRenderer, HtmlRenderer, TextRenderer}
+import vaadin.scala.server.Resource
 
 /**
  *
@@ -173,6 +175,19 @@ class GridTests extends ScaladinTestSuite {
     column.renderer = htmlRenderer
 
     assert(htmlRenderer == column.renderer)
+  }
+
+  test("Column.renderer_=(Renderer, Converter)") {
+    val column = grid.addColumn[Resource]("myColumn")
+
+    val renderer = ImageRenderer()
+    val converter = ResourceConverter()
+
+    column.renderer = (renderer, converter)
+
+    assert(renderer === column.renderer)
+    assert(Some(converter) === column.converter)
+
   }
 
   test("Column.converter") {

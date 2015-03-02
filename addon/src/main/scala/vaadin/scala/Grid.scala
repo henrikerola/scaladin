@@ -132,6 +132,8 @@ object Grid {
     }
 
     def renderer_=(renderer: Renderer[_]): Unit = p.setRenderer(renderer.p)
+    def renderer_=[T](rendererAndConverterTuple: (Renderer[T], Converter[_ <: T, _])): Unit =
+      p.setRenderer(rendererAndConverterTuple._1.p, rendererAndConverterTuple._2.p)
 
     def converter: Option[Converter[_, _]] = wrapperFor[Converter[_, _]](p.getConverter)
     def converter_=(converter: Converter[_, _]) = p.setConverter(converter.p)
