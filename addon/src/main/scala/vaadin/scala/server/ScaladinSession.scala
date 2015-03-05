@@ -2,7 +2,7 @@ package vaadin.scala.server
 
 import java.util.Locale
 import java.util.concurrent.locks.Lock
-import vaadin.scala.converter.ConverterFactory
+import vaadin.scala.converter.{ DefaultConverterFactory, ConverterFactory }
 
 import collection.JavaConverters._
 import collection.mutable
@@ -48,6 +48,7 @@ class ScaladinSession(val p: com.vaadin.server.VaadinSession with VaadinSessionM
 
   def init(): Unit = {
     errorHandler = ScaladinSession.DefaultErrorHandler
+    converterFactory = DefaultConverterFactory
   }
 
   def cumulativeRequestDuration: Long = p.getCumulativeRequestDuration
