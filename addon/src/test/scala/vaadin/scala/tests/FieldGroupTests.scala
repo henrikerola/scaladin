@@ -79,6 +79,12 @@ class FieldGroupTests extends ScaladinTestSuite {
     assert(fieldGroup.item == None)
   }
 
+  test("item defined in constructor") {
+    val item = ScaladinItem(Person("John", "Doe"))
+    val fieldGroup = FieldGroup(item)
+    assert(Some(item) === fieldGroup.item)
+  }
+
   test("commit") {
     val item = new IndexedContainer().addItem('id).get
     fieldGroup.item = item
