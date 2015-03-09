@@ -29,7 +29,9 @@ object FieldGroup {
   case class propertyId(value: String) extends StaticAnnotation
 
   def apply(item: Item): FieldGroup = {
-    new FieldGroup(new VaadinFieldGroup(item.p) with FieldGroupMixin)
+    val fieldGroup = new FieldGroup(new VaadinFieldGroup() with FieldGroupMixin)
+    fieldGroup.item_=(item)
+    fieldGroup
   }
 }
 

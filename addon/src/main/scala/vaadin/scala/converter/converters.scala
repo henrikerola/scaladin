@@ -25,3 +25,12 @@ class StringToLongConverter extends DeletagePeerConverter[java.lang.String, java
 
 class StringToBigDecimalConverter extends DeletagePeerConverter[java.lang.String, java.math.BigDecimal](
   new com.vaadin.data.util.converter.StringToBigDecimalConverter with ConverterMixin[java.lang.String, java.math.BigDecimal])
+
+class StringToBigIntegerConverter extends DeletagePeerConverter[java.lang.String, java.math.BigInteger](
+  new com.vaadin.data.util.converter.StringToBigIntegerConverter with ConverterMixin[java.lang.String, java.math.BigInteger])
+
+class StringToShortConverter extends DeletagePeerConverter[java.lang.String, java.lang.Short](
+  new com.vaadin.data.util.converter.StringToShortConverter with ConverterMixin[java.lang.String, java.lang.Short])
+
+class StringToByteConverter extends DeletagePeerConverter[java.lang.String, java.lang.Byte](
+  new com.vaadin.data.util.converter.StringToByteConverter with ConverterMixin[java.lang.String, java.lang.Byte])

@@ -1,5 +1,6 @@
 package vaadin.scala.tests
 
+import vaadin.scala.converter.Converter
 import vaadin.scala.server.mixins.VaadinSessionMixin
 import com.vaadin.server.{ BootstrapPageResponse, BootstrapFragmentResponse }
 import org.mockito.Mockito
@@ -44,6 +45,16 @@ class ScaladinSessionTests extends ScaladinTestSuite {
     vaadinSession.modifyBootstrapResponse(mockedResponse)
 
     Mockito.verify(mockedResponse).setHeader("key", "value")
+  }
+
+  test("converterFactory") {
+
+    val myConverterFactory = new vaadin.scala.converter.ConverterFactory {
+      override def createConverter[Presentation, Model](implicit presentationType: ClassManifest[Presentation], modelType: ClassManifest[Model]): Option[Converter[Presentation, Model]] = ???
+    }
+
+    session.converterFactory = myConverterFactory
+    assert(myConverterFactory === session.converterFactory)
   }
 
 }

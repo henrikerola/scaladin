@@ -2,6 +2,8 @@ package vaadin.scala.server
 
 import java.util.Locale
 import java.util.concurrent.locks.Lock
+import vaadin.scala.converter.{ DefaultConverterFactory, ConverterFactory }
+
 import collection.JavaConverters._
 import collection.mutable
 import org.jsoup.nodes.{ Document, Node }
@@ -46,6 +48,7 @@ class ScaladinSession(val p: com.vaadin.server.VaadinSession with VaadinSessionM
 
   def init(): Unit = {
     errorHandler = ScaladinSession.DefaultErrorHandler
+    converterFactory = DefaultConverterFactory
   }
 
   def cumulativeRequestDuration: Long = p.getCumulativeRequestDuration
@@ -71,7 +74,11 @@ class ScaladinSession(val p: com.vaadin.server.VaadinSession with VaadinSessionM
   def errorHandler_=(errorHandler: ScaladinSession.ErrorEvent => Unit): Unit =
     p.setErrorHandler(new ErrorHandler(errorHandler))
 
-  // TODO ConverterFactory, bootstrapListener, getGlobalResourceHandler
+  def converterFactory: ConverterFactory = wrapperFor(p.getConverterFactory).get
+  def converterFactory_=(converterFactory: ConverterFactory): Unit =
+    p.setConverterFactory(converterFactory.pConverterFactory)
+
+  // getGlobalResourceHandler
 
   // TODO better name than uIs
   def uIs: Iterable[UI] = p.getUIs.asScala.map(wrapperFor[UI](_).get)
