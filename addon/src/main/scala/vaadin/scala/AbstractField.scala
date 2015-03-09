@@ -4,6 +4,8 @@ import event.ValueChangeNotifier
 import vaadin.scala.converter.Converter
 import vaadin.scala.mixins.AbstractFieldMixin
 
+import scala.reflect.{ ClassTag, classTag }
+
 package mixins {
   trait AbstractFieldMixin[T, V] extends AbstractComponentMixin with FieldMixin[T, V] {
     self: com.vaadin.ui.AbstractField[V] =>
@@ -11,7 +13,7 @@ package mixins {
   }
 }
 
-abstract class AbstractField[T, V](override val p: com.vaadin.ui.AbstractField[V] with AbstractFieldMixin[T, V])
+abstract class AbstractField[T: ClassTag, V](override val p: com.vaadin.ui.AbstractField[V] with AbstractFieldMixin[T, V])
     extends AbstractComponent(p) with Field[T, V] with PropertyViewer with ValueChangeNotifier {
 
   def validationVisible: Boolean = p.isValidationVisible
@@ -25,6 +27,8 @@ abstract class AbstractField[T, V](override val p: com.vaadin.ui.AbstractField[V
   def converter_=(datamodelType: Class[_]): Unit = p.setConverter(datamodelType)
 
   override def value: Option[T] = super.value.asInstanceOf[Option[T]]
+
+  override def getType: Class[_ <: T] = classTag[T].runtimeClass.asInstanceOf[Class[_ <: T]]
 
 }
 

@@ -60,5 +60,11 @@ class CheckBoxTests extends FunSuite {
     assert(!checkBox.p.getValue)
   }
 
+  test("getType") {
+    val checkBox = new CheckBox
+    assert(classOf[Boolean] === checkBox.getType)
+    assert(classOf[java.lang.Boolean] === checkBox.p.getType)
+  }
+
   // TODO test focus and blur listeners
 }

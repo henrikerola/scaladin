@@ -18,7 +18,7 @@ trait Property[T, V] extends Wrapper {
   // TODO value argument is Any instead of T:
   def value_=(value: Option[Any]): Unit = value_=(value.getOrElse(null).asInstanceOf[T])
   def value_=(value: Any): Unit = p.setValue(value.asInstanceOf[V])
-  def getType: Class[_ <: T] = p.getType.asInstanceOf[Class[T]]
+  def getType: Class[_ <: T]
   def readOnly: Boolean = p.isReadOnly
   def readOnly_=(ro: Boolean): Unit = p.setReadOnly(ro)
   override def toString: String = p.toString
@@ -48,10 +48,14 @@ trait PropertyEditor extends PropertyViewer {
 /**
  * Basic property wrapper, wraps any instance of com.vaadin.data.Property
  */
-class BasicProperty[T, V](override val p: com.vaadin.data.Property[V]) extends Property[T, V]
+class BasicProperty[T, V](override val p: com.vaadin.data.Property[V]) extends Property[T, V] {
+  override def getType: Class[_ <: T] = p.getType.asInstanceOf[Class[_ <: T]]
+}
 
 class ObjectProperty[T](value: T) extends Property[T, T] {
   val p = new com.vaadin.data.util.ObjectProperty[T](value)
+
+  override def getType: Class[_ <: T] = p.getType
 }
 
 class VaadinPropertyDelegator[T](scaladinProperty: Property[T, T]) extends com.vaadin.data.Property[T] {
@@ -81,4 +85,6 @@ class FunctionProperty[T](getter: Unit => T, setter: T => Unit = null)(implicit 
 
 class TextFileProperty(file: Option[java.io.File]) extends Property[String, String] {
   override val p: com.vaadin.data.util.TextFileProperty = new com.vaadin.data.util.TextFileProperty(file.orNull)
+
+  override def getType: Class[_ <: String] = classOf[String]
 }

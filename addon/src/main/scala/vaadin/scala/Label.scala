@@ -38,5 +38,7 @@ class Label(override val p: com.vaadin.ui.Label with LabelMixin = new com.vaadin
 
   def converter: Option[Converter[String, Any]] = wrapperFor(p.getConverter)
   def converter_=(converter: Converter[String, _]) { p.setConverter(converter.p) }
+
+  override def getType: Class[_ <: String] = classOf[String]
 }
 
