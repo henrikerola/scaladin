@@ -56,5 +56,10 @@ class IndexedContainerTests extends ContainerTestIndexed with BeforeAndAfter {
 
     assert(classOf[Long] === container.getType("prop"))
     assert(classOf[java.lang.Long] === container.p.getType("prop"))
+
+    container.addItem(1)
+
+    assert(classOf[Long] === container.getItem(1).getProperty("prop").getType)
+    assert(classOf[java.lang.Long] === container.getItem(1).getProperty("prop").p.getType)
   }
 }

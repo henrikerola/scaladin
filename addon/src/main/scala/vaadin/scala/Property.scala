@@ -48,8 +48,8 @@ trait PropertyEditor extends PropertyViewer {
 /**
  * Basic property wrapper, wraps any instance of com.vaadin.data.Property
  */
-class BasicProperty[T, V](override val p: com.vaadin.data.Property[V]) extends Property[T, V] {
-  override def getType: Class[_ <: T] = p.getType.asInstanceOf[Class[_ <: T]]
+class BasicProperty[T, V](override val p: com.vaadin.data.Property[V], propertyType: Option[Class[_ <: T]] = None) extends Property[T, V] {
+  override def getType: Class[_ <: T] = propertyType.getOrElse(p.getType.asInstanceOf[Class[_ <: T]])
 }
 
 class ObjectProperty[T](value: T) extends Property[T, T] {
