@@ -9,7 +9,7 @@ import org.mockito.{ ArgumentCaptor, Mockito }
 import vaadin.scala.mixins.GridMixin
 import vaadin.scala._
 import vaadin.scala.Grid.HeightMode
-import vaadin.scala.renderers.{ImageRenderer, HtmlRenderer, TextRenderer}
+import vaadin.scala.renderers.{ ImageRenderer, HtmlRenderer, TextRenderer }
 import vaadin.scala.server.Resource
 
 /**

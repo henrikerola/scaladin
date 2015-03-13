@@ -1,7 +1,7 @@
 package vaadin.scala
 
 import scala.reflect.runtime.universe._
-import com.vaadin.data.util
+import com.vaadin.data.util.{ PropertysetItem => VaadinPropertysetItem }
 import scala.reflect.ClassTag
 
 object ScaladinItem {
@@ -50,7 +50,7 @@ object ScaladinItem {
  * @author Henri Kerola / Vaadin
  */
 class ScaladinItem[T: TypeTag](bean: T, propertyDescriptors: Iterable[ScaladinPropertyDescriptor[T]])
-    extends PropertysetItem(new util.PropertysetItem) {
+    extends PropertysetItem(new VaadinPropertysetItem) {
 
   propertyDescriptors foreach { pd =>
     addItemProperty(pd.name, pd.createProperty(bean))

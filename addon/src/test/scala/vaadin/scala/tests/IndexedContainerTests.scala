@@ -50,4 +50,11 @@ class IndexedContainerTests extends ContainerTestIndexed with BeforeAndAfter {
     val property = item.getPropertyOption('propertyId).get
     assert(Some("") === property.value)
   }
+
+  test("getType") {
+    container.addContainerProperty("prop", classOf[Long], None)
+
+    assert(classOf[Long] === container.getType("prop"))
+    assert(classOf[java.lang.Long] === container.p.getType("prop"))
+  }
 }

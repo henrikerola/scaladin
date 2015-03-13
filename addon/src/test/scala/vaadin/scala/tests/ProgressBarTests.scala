@@ -7,10 +7,10 @@ import vaadin.scala.ProgressBar
  */
 class ProgressBarTests extends ScaladinTestSuite {
 
-    test("getType") {
-      val progressBar = new ProgressBar
+  test("getType") {
+    val progressBar = new ProgressBar
 
-      assert(classOf[Float] == progressBar.getType)
-      assert(classOf[java.lang.Float] == progressBar.p.getType)
-    }
+    assert(classOf[Float] == progressBar.getType)
+    assert(classOf[java.lang.Float] == progressBar.p.getType)
+  }
 }
