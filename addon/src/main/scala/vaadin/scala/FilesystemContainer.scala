@@ -72,7 +72,8 @@ class FilesystemContainer(override val p: com.vaadin.data.util.FilesystemContain
   def recursive: Boolean = p.isRecursive
   def recursive_=(isRecursive: Boolean): Unit = p.setRecursive(isRecursive)
 
-  def wrapItem(unwrapped: com.vaadin.data.Item): Item = new FilesystemContainer.FileItem(unwrapped.asInstanceOf[com.vaadin.data.util.FilesystemContainer#FileItem])
+  def wrapItem(unwrapped: com.vaadin.data.Item, propertyTypeResolver: Any => Class[_]): Item =
+    new FilesystemContainer.FileItem(unwrapped.asInstanceOf[com.vaadin.data.util.FilesystemContainer#FileItem])
 
   override def wrapProperty(propertyId: Any, unwrapped: com.vaadin.data.Property[_]): Property[_, _] =
     FilesystemContainer.wrapProperty(unwrapped)

@@ -14,7 +14,8 @@ class IndexedContainer(override val p: com.vaadin.data.util.IndexedContainer wit
 
   p.wrapper = this
 
-  def wrapItem(unwrapped: com.vaadin.data.Item): Item = new IndexedContainerItem(unwrapped, p.getScalaType(_))
+  def wrapItem(unwrapped: com.vaadin.data.Item, propertyTypeResolver: Any => Class[_]): Item =
+    new IndexedContainerItem(unwrapped, propertyTypeResolver)
 }
 
 class IndexedContainerItem(override val p: com.vaadin.data.Item, propertyTypeResolver: Any => Class[_]) extends Item {

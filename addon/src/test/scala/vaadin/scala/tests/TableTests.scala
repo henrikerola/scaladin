@@ -368,4 +368,16 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
   }
 
+  test("getType") {
+    table.addContainerProperty("prop", classOf[Long], None)
+
+    assert(classOf[Long] === table.getType("prop"))
+    assert(classOf[java.lang.Long] === table.p.getType("prop"))
+
+    table.addItem(1)
+
+    assert(classOf[Long] === table.getItem(1).getProperty("prop").getType)
+    assert(classOf[java.lang.Long] === table.getItem(1).getProperty("prop").p.getType)
+  }
+
 }

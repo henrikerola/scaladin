@@ -29,7 +29,7 @@ class BeanItemContainer[BT](override val p: com.vaadin.data.util.BeanItemContain
   override def getItemOption(itemId: Any): Option[BeanItem[BT]] =
     super.getItemOption(itemId).map(_.asInstanceOf[BeanItem[BT]])
 
-  def wrapItem(unwrapped: com.vaadin.data.Item): BeanItem[BT] = {
+  def wrapItem(unwrapped: com.vaadin.data.Item, propertyTypeResolver: Any => Class[_]): BeanItem[BT] = {
     // must create BeanItem with the constructor that takes a Vaadin BeanItem not a bean.
     new BeanItem[BT](unwrapped.asInstanceOf[com.vaadin.data.util.BeanItem[BT]])
   }

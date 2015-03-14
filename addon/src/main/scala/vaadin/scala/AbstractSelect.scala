@@ -81,7 +81,8 @@ abstract class AbstractSelect(override val p: com.vaadin.ui.AbstractSelect with 
   def unselect(itemId: Any) { p.unselect(itemId) }
 
   // Container.Container:
-  def wrapItem(unwrapped: com.vaadin.data.Item): Item = container.get.wrapItem(unwrapped)
+  def wrapItem(unwrapped: com.vaadin.data.Item, propertyTypeResolver: Any => Class[_]): Item =
+    container.get.wrapItem(unwrapped, propertyTypeResolver)
 }
 
 trait NewItemHandler extends Wrapper {

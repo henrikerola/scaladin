@@ -48,7 +48,7 @@ trait Container extends Wrapper {
 
   def getItem(id: Any): Item = p.getItem(id) match {
     case null => null
-    case i => wrapItem(i)
+    case i => wrapItem(i, p.getScalaType)
   }
 
   def getItemOption(id: Any): Option[Item] = optionalWrapItem(p.getItem(id))
@@ -81,11 +81,11 @@ trait Container extends Wrapper {
   def getPropertyOption(itemId: Any, propertyId: Any): Option[Property[_, _]] =
     optionalWrapProperty(propertyId, p.getContainerProperty(itemId, propertyId))
 
-  def propertyIds: Iterable[Any] = p.getContainerPropertyIds().asScala
+  def propertyIds: Iterable[Any] = p.getContainerPropertyIds.asScala
 
   def getType(propertyId: Any): Class[_] = p.getScalaType(propertyId)
 
-  def wrapItem(unwrapped: com.vaadin.data.Item): Item
+  def wrapItem(unwrapped: com.vaadin.data.Item, propertyTypeResolver: Any => Class[_]): Item
 
   //override if needed
   protected def wrapProperty(propertyId: Any, unwrapped: com.vaadin.data.Property[_]): Property[_, _] = {
@@ -94,7 +94,7 @@ trait Container extends Wrapper {
   }
 
   protected def optionalWrapItem(item: com.vaadin.data.Item): Option[Item] = item match {
-    case i: com.vaadin.data.Item => Some(wrapItem(i))
+    case i: com.vaadin.data.Item => Some(wrapItem(i, p.getScalaType))
     case _ => None
   }
 
@@ -176,7 +176,8 @@ object Container {
 
     def addItemAfter(previousItemId: Any): Any = p.addItemAfter(previousItemId)
 
-    def addItemAfter(previousItemId: Any, newItemId: Any): Item = wrapItem(p.addItemAfter(previousItemId, newItemId))
+    def addItemAfter(previousItemId: Any, newItemId: Any): Item =
+      wrapItem(p.addItemAfter(previousItemId, newItemId), p.getScalaType)
   }
 
   trait Viewer extends Wrapper {
@@ -207,6 +208,6 @@ object Container {
 
     def addItemAt(index: Int): Any = p.addItemAt(index)
 
-    def addItemAt(index: Int, newItemId: Any): Item = wrapItem(p.addItemAt(index, newItemId))
+    def addItemAt(index: Int, newItemId: Any): Item = wrapItem(p.addItemAt(index, newItemId), p.getScalaType)
   }
 }

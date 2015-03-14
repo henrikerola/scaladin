@@ -41,7 +41,8 @@ trait FilterableItem extends Item {
 class FilterableContainerWrap(wrapped: com.vaadin.data.Container with ContainerMixin) extends Container with FilterableContainer {
   def p: com.vaadin.data.Container with ContainerMixin = wrapped
 
-  def wrapItem(unwrapped: com.vaadin.data.Item) = new FilterableItemWrap(unwrapped)
+  def wrapItem(unwrapped: com.vaadin.data.Item, propertyTypeResolver: Any => Class[_]) =
+    new FilterableItemWrap(unwrapped)
 }
 
 class FilterableItemWrap(wrapped: com.vaadin.data.Item) extends FilterableItem {
