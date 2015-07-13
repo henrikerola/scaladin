@@ -404,4 +404,5 @@ class Grid(override val p: VaadinGrid with GridMixin)
   def editorCancelCaption: String = p.getEditorCancelCaption
   def editorCancelCaption_=(cancelCaption: String): Unit = p.setEditorCancelCaption(cancelCaption)
 
+  def recalculateColumnWidths(): Unit = p.recalculateColumnWidths()
 }

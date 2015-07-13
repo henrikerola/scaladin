@@ -683,4 +683,10 @@ class GridTests extends ScaladinTestSuite {
     assert("Peruuta" == grid.editorCancelCaption)
   }
 
+  test("recalculateColumnWidths") {
+    grid.recalculateColumnWidths()
+
+    Mockito.verify(spy).recalculateColumnWidths()
+  }
+
 }
