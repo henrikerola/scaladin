@@ -405,4 +405,8 @@ class Grid(override val p: VaadinGrid with GridMixin)
   def editorCancelCaption_=(cancelCaption: String): Unit = p.setEditorCancelCaption(cancelCaption)
 
   def recalculateColumnWidths(): Unit = p.recalculateColumnWidths()
+
+  def isDetailsVisible(itemId: Any): Boolean = p.isDetailsVisible(itemId)
+  def setDetailsVisible(itemId: Any, visible: Boolean): Unit = p.setDetailsVisible(itemId, visible)
+
 }

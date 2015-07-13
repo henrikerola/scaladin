@@ -689,4 +689,16 @@ class GridTests extends ScaladinTestSuite {
     Mockito.verify(spy).recalculateColumnWidths()
   }
 
+  test("isDetailsVisible") {
+    assert(!grid.isDetailsVisible("myid"))
+
+    Mockito.verify(spy).isDetailsVisible("myid")
+  }
+
+  test("setDetailsVisible") {
+    grid.setDetailsVisible("myid", true)
+
+    Mockito.verify(spy).setDetailsVisible("myid", true)
+  }
+
 }
