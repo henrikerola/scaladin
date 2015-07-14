@@ -406,6 +406,21 @@ class Grid(override val p: VaadinGrid with GridMixin)
 
   def recalculateColumnWidths(): Unit = p.recalculateColumnWidths()
 
+  def detailsGenerator: Option[Grid.RowReference => Option[Component]] = {
+    p.getDetailsGenerator match {
+      case (g: internal.GridDetailsGenerator) => Some(g.action)
+      case VaadinGrid.DetailsGenerator.NULL => None
+    }
+  }
+
+  def detailsGenerator_=(generator: Grid.RowReference => Option[Component]): Unit =
+    p.setDetailsGenerator(new GridDetailsGenerator(generator))
+
+  def detailsGenerator_=(generator: Option[Grid.RowReference => Option[Component]]): Unit = {
+    val g = generator.map(new GridDetailsGenerator(_)).getOrElse(VaadinGrid.DetailsGenerator.NULL)
+    p.setDetailsGenerator(g)
+  }
+
   def isDetailsVisible(itemId: Any): Boolean = p.isDetailsVisible(itemId)
   def setDetailsVisible(itemId: Any, visible: Boolean): Unit = p.setDetailsVisible(itemId, visible)
 

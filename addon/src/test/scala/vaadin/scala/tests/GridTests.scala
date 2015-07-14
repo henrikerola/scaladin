@@ -689,6 +689,29 @@ class GridTests extends ScaladinTestSuite {
     Mockito.verify(spy).recalculateColumnWidths()
   }
 
+  test("detailsGenerator") {
+    assert(grid.detailsGenerator.isEmpty)
+
+    grid.detailsGenerator = { e => None }
+    assert(grid.detailsGenerator.isDefined)
+
+    grid.detailsGenerator = None
+    assert(grid.detailsGenerator.isEmpty)
+
+    grid.detailsGenerator = Some({ e: Grid.RowReference => None })
+    assert(grid.detailsGenerator.isDefined)
+  }
+
+  test("detailsGenerator generates correct details component") {
+    val detailsLabel = Label("details label")
+
+    grid.detailsGenerator = { e => Some(detailsLabel) }
+
+    val rr = new RowReference(grid.p)
+    rr.set("myItemId")
+    assert(detailsLabel.p == grid.p.getDetailsGenerator.getDetails(rr))
+  }
+
   test("isDetailsVisible") {
     assert(!grid.isDetailsVisible("myid"))
 
