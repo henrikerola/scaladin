@@ -243,6 +243,8 @@ class GridTests extends ScaladinTestSuite {
     assert(20 == column.maximumWidth)
   }
 
+  // TODO: test for Column.editorField
+
   test("Column.hidden") {
     val column = grid.addColumn[String]("myColumn")
 

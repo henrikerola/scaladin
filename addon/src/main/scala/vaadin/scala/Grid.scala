@@ -154,6 +154,10 @@ object Grid {
     def maximumWidth: Double = p.getMaximumWidth
     def maximumWidth_=(maximumWidth: Double): Unit = p.setMaximumWidth(maximumWidth)
 
+    def editorField: Option[Field[_]] = wrapperFor(p.getEditorField)
+    def editorField_=(editor: Option[Field[_]]): Unit = p.setEditorField(peerFor(editor))
+    def editorField_=(editor: Field[_]): Unit = p.setEditorField(editor.p)
+
     def hidden: Boolean = p.isHidden
     def hidden_=(hidden: Boolean): Unit = p.setHidden(hidden)
 
