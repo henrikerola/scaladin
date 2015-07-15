@@ -243,6 +243,15 @@ class GridTests extends ScaladinTestSuite {
     assert(20 == column.maximumWidth)
   }
 
+  test("Column.editable") {
+    val column = grid.addColumn[String]("myColumn")
+
+    assert(column.editable)
+
+    column.editable = false
+    assert(!column.editable)
+  }
+
   // TODO: test for Column.editorField
 
   test("Column.hidden") {
