@@ -367,7 +367,7 @@ class GridTests extends ScaladinTestSuite {
     Mockito.verify(spy).deselect(itemId)
   }
 
-  ignore("selectionListeners") {
+  test("selectionListeners") {
     grid.addColumn[String]("propertyId")
     val itemId = grid.addRow("value")
     var cnt = 0
