@@ -8,7 +8,7 @@ import vaadin.scala.Grid._
 import vaadin.scala.renderers.mixins.RendererMixin
 import collection.JavaConverters._
 import scala.reflect.ClassTag
-import vaadin.scala.event.{ ItemClickNotifier, SortNotifier, SelectionNotifier }
+import vaadin.scala.event.{ ComponentEvent, ItemClickNotifier, SortNotifier, SelectionNotifier }
 import vaadin.scala.renderers.{ TextRenderer, Renderer }
 import vaadin.scala.converter.Converter
 
@@ -154,6 +154,12 @@ object Grid {
     def maximumWidth: Double = p.getMaximumWidth
     def maximumWidth_=(maximumWidth: Double): Unit = p.setMaximumWidth(maximumWidth)
 
+    def hidden: Boolean = p.isHidden
+    def hidden_=(hidden: Boolean): Unit = p.setHidden(hidden)
+
+    def hidable: Boolean = p.isHidable
+    def hidable_=(hidable: Boolean): Unit = p.setHidable(hidable)
+
   }
 
   case class RowReference(grid: Grid, itemId: Any) {
@@ -165,6 +171,9 @@ object Grid {
     def property: Property[_] = item.getProperty(propertyId)
     def value: Option[Any] = property.value
   }
+
+  case class ColumnVisibilityChangeEvent(grid: Grid, column: Column, userOriginated: Boolean, hidden: Boolean)
+    extends ComponentEvent(grid)
 
   sealed trait SelectionModel extends Wrapper {
 
@@ -405,6 +414,13 @@ class Grid(override val p: VaadinGrid with GridMixin)
   def editorCancelCaption_=(cancelCaption: String): Unit = p.setEditorCancelCaption(cancelCaption)
 
   def recalculateColumnWidths(): Unit = p.recalculateColumnWidths()
+
+  lazy val columnVisibilityChangeListeners: ListenersSet[ColumnVisibilityChangeEvent => Unit] =
+    new ListenersTrait[ColumnVisibilityChangeEvent, GridColumnVisibilityChangeListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.Grid.ColumnVisibilityChangeEvent])
+      override def addListener(elem: ColumnVisibilityChangeEvent => Unit) = p.addColumnVisibilityChangeListener(new GridColumnVisibilityChangeListener(elem))
+      override def removeListener(elem: GridColumnVisibilityChangeListener) = p.removeColumnVisibilityChangeListener(elem)
+    }
 
   def detailsGenerator: Option[Grid.RowReference => Option[Component]] = {
     p.getDetailsGenerator match {
