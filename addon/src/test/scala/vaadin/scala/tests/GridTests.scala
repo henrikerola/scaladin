@@ -225,7 +225,7 @@ class GridTests extends ScaladinTestSuite {
     assert(1 == column.expandRatio)
   }
 
-  test("minimumWidth") {
+  test("Column.minimumWidth") {
     val column = grid.addColumn[String]("myColumn")
 
     assert(10 == column.minimumWidth)
@@ -234,7 +234,7 @@ class GridTests extends ScaladinTestSuite {
     assert(5 == column.minimumWidth)
   }
 
-  test("maximumWidth") {
+  test("Column.maximumWidth") {
     val column = grid.addColumn[String]("myColumn")
 
     assert(-1 == column.maximumWidth)
