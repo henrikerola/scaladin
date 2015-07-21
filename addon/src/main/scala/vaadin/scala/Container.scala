@@ -6,9 +6,39 @@ import vaadin.scala.mixins.ContainerHierarchicalMixin
 import vaadin.scala.mixins.ContainerOrderedMixin
 import vaadin.scala.mixins.ContainerViewerMixin
 import vaadin.scala.mixins.ContainerSortableMixin
+import vaadin.scala.util.TypeMapper
+import scala.collection.mutable
 
 package mixins {
-  trait ContainerMixin extends ScaladinMixin { self: com.vaadin.data.Container => }
+
+  trait ContainerSuperCalls {
+    def addContainerProperty(propertyId: Any, propertyType: Class[_], defaultValue: Any): Boolean
+    def removeContainerProperty(propertyId: Any): Boolean
+  }
+
+  trait ContainerMixin extends ScaladinMixin with ContainerSuperCalls {
+    this: com.vaadin.data.Container =>
+
+    private val scalaTypes = mutable.Map.empty[Any, Class[_]]
+
+    abstract override def addContainerProperty(propertyId: Any, propertyType: Class[_], defaultValue: Any): Boolean = {
+      val javaType = TypeMapper.toJavaType(propertyType)
+      if (propertyType != javaType) {
+        scalaTypes += propertyId -> propertyType
+      }
+      super.addContainerProperty(propertyId, javaType, defaultValue)
+    }
+
+    abstract override def removeContainerProperty(propertyId: Any): Boolean = {
+      if (super.removeContainerProperty(propertyId)) {
+        scalaTypes -= propertyId
+        true
+      } else false
+    }
+
+    def getScalaType(propertyId: Any): Class[_] = scalaTypes.getOrElse(propertyId, getType(propertyId))
+  }
+
   trait ContainerHierarchicalMixin extends ContainerMixin { self: com.vaadin.data.Container.Hierarchical => }
   trait ContainerOrderedMixin extends ContainerMixin { self: com.vaadin.data.Container.Ordered => }
   trait ContainerViewerMixin extends ScaladinMixin
@@ -60,7 +90,7 @@ trait Container extends Wrapper {
 
   def propertyIds: Iterable[Any] = p.getContainerPropertyIds().asScala
 
-  def getType(propertyId: Any): Class[_] = p.getType(propertyId)
+  def getType(propertyId: Any): Class[_] = p.getScalaType(propertyId)
 
   def wrapItem(unwrapped: com.vaadin.data.Item): Item
 
