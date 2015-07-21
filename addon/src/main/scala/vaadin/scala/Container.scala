@@ -23,10 +23,12 @@ package mixins {
 
     abstract override def addContainerProperty(propertyId: Any, propertyType: Class[_], defaultValue: Any): Boolean = {
       val javaType = TypeMapper.toJavaType(propertyType)
-      if (propertyType != javaType) {
-        scalaTypes += propertyId -> propertyType
-      }
-      super.addContainerProperty(propertyId, javaType, defaultValue)
+      if (super.addContainerProperty(propertyId, javaType, defaultValue)) {
+        if (propertyType != javaType) {
+          scalaTypes += propertyId -> propertyType
+        }
+        true
+      } else false
     }
 
     abstract override def removeContainerProperty(propertyId: Any): Boolean = {
