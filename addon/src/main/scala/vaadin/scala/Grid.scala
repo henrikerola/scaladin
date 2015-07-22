@@ -262,6 +262,9 @@ class Grid(override val p: VaadinGrid with GridMixin)
 
   def removeAllColumns(): Unit = p.removeAllColumns()
 
+  def columnReorderingAllowed: Boolean = p.isColumnReorderingAllowed
+  def columnReorderingAllowed_=(reorderingAllowed: Boolean): Unit = p.setColumnReorderingAllowed(reorderingAllowed)
+
   def removeColumn(propertyId: Any): Unit = p.removeColumn(propertyId)
 
   def setColumnOrder(propertyIds: Seq[Any]) = p.setColumnOrder(propertyIds.asInstanceOf[Seq[Object]]: _*)

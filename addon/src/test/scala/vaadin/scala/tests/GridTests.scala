@@ -120,6 +120,15 @@ class GridTests extends ScaladinTestSuite {
     Mockito.verify(spy).removeAllColumns()
   }
 
+  test("columnReorderingAllowed") {
+    assert(!grid.columnReorderingAllowed)
+
+    grid.columnReorderingAllowed = true
+    Mockito.verify(spy).setColumnReorderingAllowed(true)
+
+    assert(grid.columnReorderingAllowed)
+  }
+
   test("removeColumn") {
     grid.addColumn("propertyId")
 
