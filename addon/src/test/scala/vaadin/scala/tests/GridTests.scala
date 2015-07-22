@@ -150,6 +150,20 @@ class GridTests extends ScaladinTestSuite {
     assert("Header for Column" == column.headerCaption)
   }
 
+  test("Column.hidingToggleCaption") {
+    val column = grid.addColumn[String]("myColumn")
+    assert(column.hidingToggleCaption.isEmpty)
+
+    column.hidingToggleCaption = "My Caption"
+    assert(Some("My Caption") == column.hidingToggleCaption)
+
+    column.hidingToggleCaption = None
+    assert(column.hidingToggleCaption.isEmpty)
+
+    column.hidingToggleCaption = Some("My Caption 2")
+    assert(Some("My Caption 2") == column.hidingToggleCaption)
+  }
+
   test("Column.width") {
     val column = grid.addColumn[String]("myColumn")
     assert(-1 == column.width)

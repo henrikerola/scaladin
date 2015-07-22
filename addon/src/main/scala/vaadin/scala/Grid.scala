@@ -110,6 +110,10 @@ object Grid {
     def headerCaption: String = p.getHeaderCaption
     def headerCaption_=(headerCaption: String): Unit = p.setHeaderCaption(headerCaption)
 
+    def hidingToggleCaption: Option[String] = Option(p.getHidingToggleCaption)
+    def hidingToggleCaption_=(caption: String): Unit = p.setHidingToggleCaption(caption)
+    def hidingToggleCaption_=(caption: Option[String]): Unit = p.setHidingToggleCaption(caption.orNull)
+
     def width: Double = p.getWidth
     def width_=(pixelWidth: Double): Unit = p.setWidth(pixelWidth)
     def width_=(pixelWidth: Option[Double]): Unit = {
