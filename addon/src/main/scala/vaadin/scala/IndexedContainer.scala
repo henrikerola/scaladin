@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import com.vaadin.data.{ Property => VaadinProperty }
 import vaadin.scala.mixins.IndexedContainerMixin
 
 package mixins {
@@ -13,7 +14,12 @@ class IndexedContainer(override val p: com.vaadin.data.util.IndexedContainer wit
 
   p.wrapper = this
 
-  def wrapItem(unwrapped: com.vaadin.data.Item): Item = new IndexedContainerItem(unwrapped)
+  override def wrapItem(unwrapped: com.vaadin.data.Item): Item =
+    new IndexedContainerItem(unwrapped, p.getScalaType)
 }
 
-class IndexedContainerItem(override val p: com.vaadin.data.Item) extends Item
+class IndexedContainerItem(override val p: com.vaadin.data.Item, propertyTypeResolver: Any => Class[_]) extends Item {
+  override protected def wrapProperty(propertyId: Any, unwrapped: VaadinProperty[_]): Property[_] = {
+    new BasicProperty(unwrapped, Option(propertyTypeResolver(propertyId)))
+  }
+}

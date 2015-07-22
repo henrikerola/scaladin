@@ -84,11 +84,11 @@ trait Container extends Wrapper {
 
   def getProperty(itemId: Any, propertyId: Any): Property[_] = p.getContainerProperty(itemId, propertyId) match {
     case null => null
-    case p => wrapProperty(p)
+    case p => wrapProperty(propertyId, p)
   }
 
   def getPropertyOption(itemId: Any, propertyId: Any): Option[Property[_]] =
-    optionalWrapProperty(p.getContainerProperty(itemId, propertyId))
+    optionalWrapProperty(propertyId, p.getContainerProperty(itemId, propertyId))
 
   def propertyIds: Iterable[Any] = p.getContainerPropertyIds().asScala
 
@@ -97,15 +97,18 @@ trait Container extends Wrapper {
   def wrapItem(unwrapped: com.vaadin.data.Item): Item
 
   //override if needed
-  protected def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_] = new BasicProperty(unwrapped)
+  protected def wrapProperty(propertyId: Any, unwrapped: com.vaadin.data.Property[_]): Property[_] = {
+    val scalaType = p.getScalaType(propertyId)
+    new BasicProperty(unwrapped, Option(scalaType))
+  }
 
   protected def optionalWrapItem(item: com.vaadin.data.Item): Option[Item] = item match {
     case i: com.vaadin.data.Item => Some(wrapItem(i))
     case _ => None
   }
 
-  protected def optionalWrapProperty(property: com.vaadin.data.Property[_]): Option[Property[_]] = property match {
-    case p: com.vaadin.data.Property[_] => Some(wrapProperty(p))
+  protected def optionalWrapProperty(propertyId: Any, property: com.vaadin.data.Property[_]): Option[Property[_]] = property match {
+    case p: com.vaadin.data.Property[_] => Some(wrapProperty(propertyId, p))
     case _ => None
   }
 }
@@ -182,7 +185,8 @@ object Container {
 
     def addItemAfter(previousItemId: Any): Any = p.addItemAfter(previousItemId)
 
-    def addItemAfter(previousItemId: Any, newItemId: Any): Item = wrapItem(p.addItemAfter(previousItemId, newItemId))
+    def addItemAfter(previousItemId: Any, newItemId: Any): Item =
+      wrapItem(p.addItemAfter(previousItemId, newItemId))
   }
 
   trait Viewer extends Wrapper {

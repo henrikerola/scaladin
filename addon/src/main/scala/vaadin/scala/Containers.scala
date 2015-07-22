@@ -57,7 +57,7 @@ object EmptyFilterableItem extends FilterableItem {
 
   override def values: List[Any] = List()
 
-  override def wrapProperty(unwrapped: com.vaadin.data.Property[_]) = null
+  override def wrapProperty(propertyId: Any, unwrapped: com.vaadin.data.Property[_]) = null
 }
 
 class PropertyListWrap(wrapped: List[Property[_]]) {

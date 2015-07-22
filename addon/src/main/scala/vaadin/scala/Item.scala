@@ -43,10 +43,10 @@ trait Item extends Wrapper {
 
   def getProperty(id: Any): Property[_] = p.getItemProperty(id) match {
     case null => null
-    case p => wrapProperty(p)
+    case p => wrapProperty(id, p)
   }
 
-  def getPropertyOption(id: Any): Option[Property[_]] = optionalWrapProperty(p.getItemProperty(id))
+  def getPropertyOption(id: Any): Option[Property[_]] = optionalWrapProperty(id, p.getItemProperty(id))
 
   def propertyIds: Iterable[Any] = p.getItemPropertyIds().asScala
 
@@ -54,13 +54,13 @@ trait Item extends Wrapper {
 
   def removeItemProperty(id: Any): Boolean = p.removeItemProperty(id)
 
-  protected def optionalWrapProperty(property: com.vaadin.data.Property[_]): Option[Property[_]] = property match {
-    case p: com.vaadin.data.Property[_] => Some(wrapProperty(p))
+  protected def optionalWrapProperty(propertyId: Any, property: com.vaadin.data.Property[_]): Option[Property[_]] = property match {
+    case p: com.vaadin.data.Property[_] => Some(wrapProperty(propertyId, p))
     case _ => None
   }
 
   //override if needed
-  protected def wrapProperty(unwrapped: com.vaadin.data.Property[_]): Property[_] = new BasicProperty(unwrapped)
+  protected def wrapProperty(propertyId: Any, unwrapped: com.vaadin.data.Property[_]): Property[_] = new BasicProperty(unwrapped)
 }
 
 class PropertysetItem(override val p: com.vaadin.data.util.PropertysetItem = new com.vaadin.data.util.PropertysetItem) extends Item {

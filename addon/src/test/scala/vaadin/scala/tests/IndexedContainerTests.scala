@@ -1,7 +1,5 @@
 package vaadin.scala.tests
 
-import org.scalatest.FunSuite
-import vaadin.scala.Container
 import vaadin.scala.IndexedContainer
 import vaadin.scala.Item
 import org.junit.runner.RunWith
@@ -55,5 +53,14 @@ class IndexedContainerTests extends ContainerTestIndexed with BeforeAndAfter {
     container.addContainerProperty("prop", classOf[Long], None)
     assert(classOf[Long] === container.getType("prop"))
     assert(classOf[java.lang.Long] === container.p.getType("prop"))
+  }
+
+  test("property.getType") {
+    container.addContainerProperty("prop", classOf[Long], None)
+    container.addItem("itemId")
+
+    assert(classOf[Long] === container.getItem("itemId").getProperty("prop").getType)
+    assert(classOf[Long] === container.getProperty("itemId", "prop").getType)
+    assert(classOf[java.lang.Long] === container.p.getItem("itemId").getItemProperty("prop").getType)
   }
 }

@@ -18,7 +18,7 @@ trait Property[T] extends Wrapper {
   // TODO value argument is Any instead of T:
   def value_=(value: Option[Any]): Unit = value_=(value.getOrElse(null).asInstanceOf[T])
   def value_=(value: Any): Unit = p.setValue(value.asInstanceOf[T])
-  def getType: Class[_ <: T] = p.getType
+  def getType: Class[_] = p.getType
   def readOnly: Boolean = p.isReadOnly
   def readOnly_=(ro: Boolean): Unit = p.setReadOnly(ro)
   override def toString: String = p.toString
@@ -48,7 +48,10 @@ trait PropertyEditor extends PropertyViewer {
 /**
  * Basic property wrapper, wraps any instance of com.vaadin.data.Property
  */
-class BasicProperty[T](override val p: com.vaadin.data.Property[T]) extends Property[T]
+class BasicProperty[T](override val p: com.vaadin.data.Property[T], propertyType: Option[Class[_]] = None)
+    extends Property[T] {
+  override def getType: Class[_] = propertyType.getOrElse(p.getType)
+}
 
 class ObjectProperty[T](value: T) extends Property[T] {
   val p = new com.vaadin.data.util.ObjectProperty[T](value)
@@ -57,7 +60,7 @@ class ObjectProperty[T](value: T) extends Property[T] {
 class VaadinPropertyDelegator[T](scaladinProperty: Property[T]) extends com.vaadin.data.Property[T] {
   def getValue: T = scaladinProperty.value.get.asInstanceOf[T]
   def setValue(v: T) = scaladinProperty.value = v
-  def getType: Class[_ <: T] = scaladinProperty.getType
+  def getType: Class[_ <: T] = scaladinProperty.getType.asInstanceOf
   def isReadOnly = scaladinProperty.readOnly
   def setReadOnly(ro: Boolean) = scaladinProperty.readOnly = ro
 }
