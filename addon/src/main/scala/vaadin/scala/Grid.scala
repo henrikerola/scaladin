@@ -252,6 +252,7 @@ class Grid(override val p: VaadinGrid with GridMixin)
   def getColumn(propertyId: Any): Option[Column] = Option(p.getColumn(propertyId)).map(wrapColumn(_))
 
   def columns: Seq[Column] = p.getColumns.asScala.map(wrapColumn(_))
+  def columns_=(propertyIds: Seq[Any]): Unit = p.setColumns(propertyIds.asInstanceOf[Seq[Object]]: _*)
 
   def addColumn[TYPE](propertyId: Any)(implicit tag: ClassTag[TYPE]): Column =
     if (tag.runtimeClass == classOf[Nothing])

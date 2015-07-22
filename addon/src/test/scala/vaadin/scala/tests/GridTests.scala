@@ -99,8 +99,8 @@ class GridTests extends ScaladinTestSuite {
   test("columns") {
     assert(grid.columns.isEmpty)
 
-    grid.addColumn("col1")
-    grid.addColumn("col2")
+    grid.columns = Seq("propertyId1", "propertyId2")
+    Mockito.verify(spy).setColumnOrder("propertyId1", "propertyId2")
 
     assert(2 == grid.columns.size)
   }
