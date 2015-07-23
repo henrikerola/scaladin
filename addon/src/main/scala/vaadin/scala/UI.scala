@@ -1,15 +1,17 @@
 package vaadin.scala
 
-import vaadin.scala.event.{ ClickNotifier, ClickEvent }
+import vaadin.scala.UI.PollEvent
+import vaadin.scala.event.{ ComponentEvent, ClickNotifier }
 import scala.collection.mutable
-import vaadin.scala.internal.WrapperUtil
-import vaadin.scala.internal.WrappedVaadinUI
+import vaadin.scala.internal.{ PollListener, ListenersTrait, WrapperUtil, WrappedVaadinUI }
 import vaadin.scala.server.{ ScaladinSession, ScaladinRequest, Page }
 
 object UI {
   def current: UI = WrapperUtil.wrapperFor[UI](com.vaadin.ui.UI.getCurrent).orNull
   def current_=(ui: Option[UI]): Unit = com.vaadin.ui.UI.setCurrent(if (ui.isDefined) ui.get.p else null)
   def current_=(ui: UI): Unit = com.vaadin.ui.UI.setCurrent(ui.p)
+
+  case class PollEvent(ui: UI) extends ComponentEvent(ui)
 }
 
 /**
@@ -128,6 +130,13 @@ abstract class UI(override val p: WrappedVaadinUI)
 
   def pollInterval: Int = p.getPollInterval
   def pollInterval_=(intervalInMillis: Int): Unit = p.setPollInterval(intervalInMillis)
+
+  lazy val pollListeners: ListenersSet[PollEvent => Unit] =
+    new ListenersTrait[PollEvent, PollListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.event.UIEvents.PollEvent])
+      override def addListener(elem: PollEvent => Unit) = p.addPollListener(new PollListener(elem))
+      override def removeListener(elem: PollListener) = p.removePollListener(elem)
+    }
 
   def push(): Unit = p.push()
 
