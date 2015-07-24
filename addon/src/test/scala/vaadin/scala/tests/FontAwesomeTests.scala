@@ -10,9 +10,9 @@ class FontAwesomeTests extends ScaladinTestSuite {
 
   ignore("generate constants") {
     com.vaadin.server.FontAwesome.values.foreach { v =>
-        val scalaName = v.name().split("_").map(p =>  p.substring(0, 1).toUpperCase + p.substring(1).toLowerCase).mkString
-        println("val " + scalaName + " = FontAwesome(" + v.name() + ")")
-      }
+      val scalaName = v.name().split("_").map(p => p.substring(0, 1).toUpperCase + p.substring(1).toLowerCase).mkString
+      println("val " + scalaName + " = FontAwesome(" + v.name() + ")")
+    }
   }
 
   test("All FontAwesome constants are defined") {
