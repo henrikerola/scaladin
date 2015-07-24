@@ -19,12 +19,19 @@ resolvers in ThisBuild += "Vaadin snapshots" at "https://oss.sonatype.org/conten
 
 lazy val root = project.in(file(".")).aggregate(addon, demo)
 
-lazy val addon = project.settings(vaadinAddOnSettings :_*).settings(scalariformSettings :_*).settings(
-  name := "Scaladin",
-  libraryDependencies := Dependencies.addonDeps(scalaVersion.value)
-)
+lazy val addon = project
+  .settings(vaadinAddOnSettings :_*)
+  .settings(scalariformSettings :_*)
+  .settings(
+    name := "Scaladin",
+    libraryDependencies := Dependencies.addonDeps(scalaVersion.value)
+  )
 
-lazy val demo = project.settings(vaadinWebSettings :_*).settings(scalariformSettings :_*).settings(
-  name := "scaladin-demo",
-  libraryDependencies := Dependencies.demoDeps
-).dependsOn(addon)
+lazy val demo = project
+  .enablePlugins(JettyPlugin)
+  .settings(vaadinWebSettings :_*)
+  .settings(scalariformSettings :_*)
+  .settings(
+    name := "scaladin-demo",
+    libraryDependencies ++= Dependencies.demoDeps
+  ).dependsOn(addon)

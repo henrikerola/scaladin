@@ -13,7 +13,6 @@ object Dependencies {
   private val vaadinThemes = "com.vaadin" % "vaadin-themes" % vaadinVersion
   private val servletApi = "javax.servlet" % "servlet-api" % "2.4"
   private val portletApi = "javax.portlet" % "portlet-api" % "2.0"
-  private val jetty = "org.eclipse.jetty" % "jetty-webapp" % jettyVersion
   private val scalaTest = "org.scalatest" %% "scalatest" % scalaTestVersion
   private val junitInterface = "com.novocode" % "junit-interface" % "0.7"
   private val mockito = "org.mockito" % "mockito-all" % mockitoVersion
@@ -29,7 +28,6 @@ object Dependencies {
   )
 
   val demoDeps = Seq(
-    jetty % "container",
     vaadinClientCompiled,
     vaadinThemes
   )
