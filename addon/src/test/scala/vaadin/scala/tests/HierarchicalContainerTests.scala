@@ -46,4 +46,19 @@ class HierarchicalContainerTests extends ScaladinTestSuite with ContainerTestHie
     Mockito.verify(spy, Mockito.times(2)).isIncludeParentsWhenFiltering()
   }
 
+  test("getType") {
+    container.addContainerProperty("prop", classOf[Long], None)
+    assert(classOf[Long] === container.getType("prop"))
+    assert(classOf[java.lang.Long] === container.p.getType("prop"))
+  }
+
+  test("property.getType") {
+    container.addContainerProperty("prop", classOf[Long], None)
+    container.addItem("itemId")
+
+    assert(classOf[Long] === container.getItem("itemId").getProperty("prop").getType)
+    assert(classOf[Long] === container.getProperty("itemId", "prop").getType)
+    assert(classOf[java.lang.Long] === container.p.getItem("itemId").getItemProperty("prop").getType)
+  }
+
 }
