@@ -16,509 +16,509 @@ class FontAwesomeTests extends ScaladinTestSuite {
   }
 
   test("All FontAwesome constants are defined") {
-    FontAwesome.Adjust
-    FontAwesome.Adn
-    FontAwesome.AlignCenter
-    FontAwesome.AlignJustify
-    FontAwesome.AlignLeft
-    FontAwesome.AlignRight
-    FontAwesome.Ambulance
-    FontAwesome.Anchor
-    FontAwesome.Android
-    FontAwesome.AngleDoubleDown
-    FontAwesome.AngleDoubleLeft
-    FontAwesome.AngleDoubleRight
-    FontAwesome.AngleDoubleUp
-    FontAwesome.AngleDown
-    FontAwesome.AngleLeft
-    FontAwesome.AngleRight
-    FontAwesome.AngleUp
-    FontAwesome.Apple
-    FontAwesome.Archive
-    FontAwesome.ArrowCircleDown
-    FontAwesome.ArrowCircleLeft
-    FontAwesome.ArrowCircleODown
-    FontAwesome.ArrowCircleOLeft
-    FontAwesome.ArrowCircleORight
-    FontAwesome.ArrowCircleOUp
-    FontAwesome.ArrowCircleRight
-    FontAwesome.ArrowCircleUp
-    FontAwesome.ArrowDown
-    FontAwesome.ArrowLeft
-    FontAwesome.ArrowRight
-    FontAwesome.ArrowUp
-    FontAwesome.Arrows
-    FontAwesome.ArrowsAlt
-    FontAwesome.ArrowsH
-    FontAwesome.ArrowsV
-    FontAwesome.Asterisk
-    FontAwesome.Automobile
-    FontAwesome.Backward
-    FontAwesome.Ban
-    FontAwesome.Bank
-    FontAwesome.BarChartO
-    FontAwesome.Barcode
-    FontAwesome.Bars
-    FontAwesome.Beer
-    FontAwesome.Behance
-    FontAwesome.BehanceSquare
-    FontAwesome.Bell
-    FontAwesome.BellO
-    FontAwesome.Bitbucket
-    FontAwesome.BitbucketSquare
-    FontAwesome.Bitcoin
-    FontAwesome.Bold
-    FontAwesome.Bolt
-    FontAwesome.Bomb
-    FontAwesome.Book
-    FontAwesome.Bookmark
-    FontAwesome.BookmarkO
-    FontAwesome.Briefcase
-    FontAwesome.BTC
-    FontAwesome.Bug
-    FontAwesome.Building
-    FontAwesome.BuildingO
-    FontAwesome.Bullhorn
-    FontAwesome.Bullseye
-    FontAwesome.Cab
-    FontAwesome.Calendar
-    FontAwesome.CalendarO
-    FontAwesome.Camera
-    FontAwesome.CameraRetro
-    FontAwesome.Car
-    FontAwesome.CaretDown
-    FontAwesome.CaretLeft
-    FontAwesome.CaretRight
-    FontAwesome.CaretSquareODown
-    FontAwesome.CaretSquareOLeft
-    FontAwesome.CaretSquareORight
-    FontAwesome.CaretSquareOUp
-    FontAwesome.CaretUp
-    FontAwesome.Certificate
-    FontAwesome.Chain
-    FontAwesome.ChainBroken
-    FontAwesome.Check
-    FontAwesome.CheckCircle
-    FontAwesome.CheckCircleO
-    FontAwesome.CheckSquare
-    FontAwesome.CheckSquareO
-    FontAwesome.ChevronCircleDown
-    FontAwesome.ChevronCircleLeft
-    FontAwesome.ChevronCircleRight
-    FontAwesome.ChevronCircleUp
-    FontAwesome.ChevronDown
-    FontAwesome.ChevronLeft
-    FontAwesome.ChevronRight
-    FontAwesome.ChevronUp
-    FontAwesome.Child
-    FontAwesome.Circle
-    FontAwesome.CircleO
-    FontAwesome.CircleONotch
-    FontAwesome.CircleThin
-    FontAwesome.Clipboard
-    FontAwesome.ClockO
-    FontAwesome.Cloud
-    FontAwesome.CloudDownload
-    FontAwesome.CloudUpload
-    FontAwesome.Cny
-    FontAwesome.Code
-    FontAwesome.CodeFork
-    FontAwesome.Codepen
-    FontAwesome.Coffee
-    FontAwesome.Cog
-    FontAwesome.COGS
-    FontAwesome.Columns
-    FontAwesome.Comment
-    FontAwesome.CommentO
-    FontAwesome.Comments
-    FontAwesome.CommentsO
-    FontAwesome.Compass
-    FontAwesome.Compress
-    FontAwesome.Copy
-    FontAwesome.CreditCard
-    FontAwesome.Crop
-    FontAwesome.Crosshairs
-    FontAwesome.CSS3
-    FontAwesome.Cube
-    FontAwesome.Cubes
-    FontAwesome.Cut
-    FontAwesome.Cutlery
-    FontAwesome.Dashboard
-    FontAwesome.Database
-    FontAwesome.Dedent
-    FontAwesome.Delicious
-    FontAwesome.Desktop
-    FontAwesome.Deviantart
-    FontAwesome.Digg
-    FontAwesome.Dollar
-    FontAwesome.DotCircleO
-    FontAwesome.Download
-    FontAwesome.Dribbble
-    FontAwesome.Dropbox
-    FontAwesome.Drupal
-    FontAwesome.Edit
-    FontAwesome.Eject
-    FontAwesome.EllipsisH
-    FontAwesome.EllipsisV
-    FontAwesome.Empire
-    FontAwesome.Envelope
-    FontAwesome.EnvelopeO
-    FontAwesome.EnvelopeSquare
-    FontAwesome.Eraser
-    FontAwesome.EUR
-    FontAwesome.Euro
-    FontAwesome.Exchange
-    FontAwesome.Exclamation
-    FontAwesome.ExclamationCircle
-    FontAwesome.ExclamationTriangle
-    FontAwesome.Expand
-    FontAwesome.ExternalLink
-    FontAwesome.ExternalLinkSquare
-    FontAwesome.Eye
-    FontAwesome.EyeSlash
-    FontAwesome.Facebook
-    FontAwesome.FacebookSquare
-    FontAwesome.FastBackward
-    FontAwesome.FastForward
-    FontAwesome.Fax
-    FontAwesome.Female
-    FontAwesome.FighterJet
-    FontAwesome.File
-    FontAwesome.FileArchiveO
-    FontAwesome.FileAudioO
-    FontAwesome.FileCodeO
-    FontAwesome.FileExcelO
-    FontAwesome.FileImageO
-    FontAwesome.FileMovieO
-    FontAwesome.FileO
-    FontAwesome.FilePdfO
-    FontAwesome.FilePhotoO
-    FontAwesome.FilePictureO
-    FontAwesome.FilePowerpointO
-    FontAwesome.FileSoundO
-    FontAwesome.FileText
-    FontAwesome.FileTextO
-    FontAwesome.FileVideoO
-    FontAwesome.FileWordO
-    FontAwesome.FileZipO
-    FontAwesome.FilesO
-    FontAwesome.Film
-    FontAwesome.Filter
-    FontAwesome.Fire
-    FontAwesome.FireExtinguisher
-    FontAwesome.Flag
-    FontAwesome.FlagCheckered
-    FontAwesome.FlagO
-    FontAwesome.Flash
-    FontAwesome.Flask
-    FontAwesome.Flickr
-    FontAwesome.FloppyO
-    FontAwesome.Folder
-    FontAwesome.FolderO
-    FontAwesome.FolderOpen
-    FontAwesome.FolderOpenO
-    FontAwesome.Font
-    FontAwesome.Forward
-    FontAwesome.Foursquare
-    FontAwesome.FrownO
-    FontAwesome.Gamepad
-    FontAwesome.Gavel
-    FontAwesome.GBP
-    FontAwesome.Ge
-    FontAwesome.Gear
-    FontAwesome.Gears
-    FontAwesome.Gift
-    FontAwesome.Git
-    FontAwesome.GitSquare
-    FontAwesome.GitHub
-    FontAwesome.GitHubAlt
-    FontAwesome.GithubSquare
-    FontAwesome.Gittip
-    FontAwesome.Glass
-    FontAwesome.Globe
-    FontAwesome.Google
-    FontAwesome.GooglePlus
-    FontAwesome.GooglePlusSquare
-    FontAwesome.GraduationCap
-    FontAwesome.Group
-    FontAwesome.HSquare
-    FontAwesome.HackerNews
-    FontAwesome.HandODown
-    FontAwesome.HandOLeft
-    FontAwesome.HandORight
-    FontAwesome.HandOUp
-    FontAwesome.HddO
-    FontAwesome.Header
-    FontAwesome.Headphones
-    FontAwesome.Heart
-    FontAwesome.HeartO
-    FontAwesome.History
-    FontAwesome.Home
-    FontAwesome.HospitalO
-    FontAwesome.HTML5
-    FontAwesome.Image
-    FontAwesome.Inbox
-    FontAwesome.Indent
-    FontAwesome.Info
-    FontAwesome.InfoCircle
-    FontAwesome.INR
-    FontAwesome.Instagram
-    FontAwesome.Institution
-    FontAwesome.Italic
-    FontAwesome.Joomla
-    FontAwesome.JPY
-    FontAwesome.Jsfiddle
-    FontAwesome.Key
-    FontAwesome.KeyboardO
-    FontAwesome.KRW
-    FontAwesome.Language
-    FontAwesome.Laptop
-    FontAwesome.Leaf
-    FontAwesome.Legal
-    FontAwesome.LemonO
-    FontAwesome.LevelDown
-    FontAwesome.LevelUp
-    FontAwesome.LifeBouy
-    FontAwesome.LifeRing
-    FontAwesome.LifeSaver
-    FontAwesome.LightbulbO
-    FontAwesome.Link
-    FontAwesome.Linkedin
-    FontAwesome.LinkedInSquare
-    FontAwesome.Linux
-    FontAwesome.List
-    FontAwesome.ListAlt
-    FontAwesome.ListOl
-    FontAwesome.ListUl
-    FontAwesome.LocationArrow
-    FontAwesome.Lock
-    FontAwesome.LongArrowDown
-    FontAwesome.LongArrowLeft
-    FontAwesome.LongArrowRight
-    FontAwesome.LongArrowUp
-    FontAwesome.Magic
-    FontAwesome.Magnet
-    FontAwesome.MailForward
-    FontAwesome.MailReply
-    FontAwesome.MailReplyAll
-    FontAwesome.Male
-    FontAwesome.MapMarker
-    FontAwesome.Maxcdn
-    FontAwesome.Medkit
-    FontAwesome.MehO
-    FontAwesome.Microphone
-    FontAwesome.MicrophoneSlash
-    FontAwesome.Minus
-    FontAwesome.MinusCircle
-    FontAwesome.MinusSquare
-    FontAwesome.MinusSquareO
-    FontAwesome.Mobile
-    FontAwesome.MobilePhone
-    FontAwesome.Money
-    FontAwesome.MoonO
-    FontAwesome.MortarBoard
-    FontAwesome.Music
-    FontAwesome.Navicon
-    FontAwesome.Openid
-    FontAwesome.Outdent
-    FontAwesome.Pagelines
-    FontAwesome.PaperPlane
-    FontAwesome.PaperPlaneO
-    FontAwesome.Paperclip
-    FontAwesome.Paragraph
-    FontAwesome.Paste
-    FontAwesome.Pause
-    FontAwesome.Paw
-    FontAwesome.Pencil
-    FontAwesome.PencilSquare
-    FontAwesome.PencilSquareO
-    FontAwesome.Phone
-    FontAwesome.PhoneSquare
-    FontAwesome.Photo
-    FontAwesome.PictureO
-    FontAwesome.PiedPiper
-    FontAwesome.PiedPiperAlt
-    FontAwesome.PiedPiperSquare
-    FontAwesome.Pinterest
-    FontAwesome.PinterestSquare
-    FontAwesome.Plane
-    FontAwesome.Play
-    FontAwesome.PlayCircle
-    FontAwesome.PlayCircleO
-    FontAwesome.Plus
-    FontAwesome.PlusCircle
-    FontAwesome.PlusSquare
-    FontAwesome.PlusSquareO
-    FontAwesome.PowerOff
-    FontAwesome.Print
-    FontAwesome.PuzzlePiece
-    FontAwesome.Qq
-    FontAwesome.Qrcode
-    FontAwesome.Question
-    FontAwesome.QuestionCircle
-    FontAwesome.QuoteLeft
-    FontAwesome.QuoteRight
-    FontAwesome.Ra
-    FontAwesome.Random
-    FontAwesome.Rebel
-    FontAwesome.Recycle
-    FontAwesome.Reddit
-    FontAwesome.RedditSquare
-    FontAwesome.Refresh
-    FontAwesome.Renren
-    FontAwesome.Reorder
-    FontAwesome.Repeat
-    FontAwesome.Reply
-    FontAwesome.ReplyAll
-    FontAwesome.Retweet
-    FontAwesome.Rmb
-    FontAwesome.Road
-    FontAwesome.Rocket
-    FontAwesome.RotateLeft
-    FontAwesome.RotateRight
-    FontAwesome.Rouble
-    FontAwesome.RSS
-    FontAwesome.RssSquare
-    FontAwesome.RUB
-    FontAwesome.Ruble
-    FontAwesome.Rupee
-    FontAwesome.Save
-    FontAwesome.Scissors
-    FontAwesome.Search
-    FontAwesome.SearchMinus
-    FontAwesome.SearchPlus
-    FontAwesome.Send
-    FontAwesome.SendO
-    FontAwesome.Share
-    FontAwesome.ShareAlt
-    FontAwesome.ShareAltSquare
-    FontAwesome.ShareSquare
-    FontAwesome.ShareSquareO
-    FontAwesome.Shield
-    FontAwesome.ShoppingCart
-    FontAwesome.SignIn
-    FontAwesome.SignOut
-    FontAwesome.Signal
-    FontAwesome.Sitemap
-    FontAwesome.Skype
-    FontAwesome.Slack
-    FontAwesome.Sliders
-    FontAwesome.SmileO
-    FontAwesome.Sort
-    FontAwesome.SortAlphaAsc
-    FontAwesome.SortAlphaDesc
-    FontAwesome.SortAmountAsc
-    FontAwesome.SortAmountDesc
-    FontAwesome.SortAsc
-    FontAwesome.SortDesc
-    FontAwesome.SortDown
-    FontAwesome.SortNumericAsc
-    FontAwesome.SortNumericDesc
-    FontAwesome.SortUp
-    FontAwesome.Soundcloud
-    FontAwesome.SpaceShuttle
-    FontAwesome.Spinner
-    FontAwesome.Spoon
-    FontAwesome.Spotify
-    FontAwesome.Square
-    FontAwesome.SquareO
-    FontAwesome.StackExchange
-    FontAwesome.StackOverflow
-    FontAwesome.Star
-    FontAwesome.StarHalf
-    FontAwesome.StarHalfEmpty
-    FontAwesome.StarHalfFull
-    FontAwesome.StarHalfO
-    FontAwesome.StarO
-    FontAwesome.Steam
-    FontAwesome.SteamSquare
-    FontAwesome.StepBackward
-    FontAwesome.StepForward
-    FontAwesome.Stethoscope
-    FontAwesome.Stop
-    FontAwesome.Strikethrough
-    FontAwesome.Stumbleupon
-    FontAwesome.StumbleuponCircle
-    FontAwesome.Subscript
-    FontAwesome.Suitcase
-    FontAwesome.SunO
-    FontAwesome.Superscript
-    FontAwesome.Support
-    FontAwesome.Table
-    FontAwesome.Tablet
-    FontAwesome.Tachometer
-    FontAwesome.Tag
-    FontAwesome.Tags
-    FontAwesome.Tasks
-    FontAwesome.Taxi
-    FontAwesome.TencentWeibo
-    FontAwesome.Terminal
-    FontAwesome.TextHeight
-    FontAwesome.TextWidth
-    FontAwesome.Th
-    FontAwesome.ThLarge
-    FontAwesome.ThList
-    FontAwesome.ThumbTack
-    FontAwesome.ThumbsDown
-    FontAwesome.ThumbsODown
-    FontAwesome.ThumbsOUp
-    FontAwesome.ThumbsUp
-    FontAwesome.Ticket
-    FontAwesome.Times
-    FontAwesome.TimesCircle
-    FontAwesome.TimesCircleO
-    FontAwesome.Tint
-    FontAwesome.ToggleDown
-    FontAwesome.ToggleLeft
-    FontAwesome.ToggleRight
-    FontAwesome.ToggleUp
-    FontAwesome.TrashO
-    FontAwesome.Tree
-    FontAwesome.Trello
-    FontAwesome.Trophy
-    FontAwesome.Truck
-    FontAwesome.TRY
-    FontAwesome.Tumblr
-    FontAwesome.TumblrSquare
-    FontAwesome.TurkishLira
-    FontAwesome.Twitter
-    FontAwesome.TwitterSquare
-    FontAwesome.Umbrella
-    FontAwesome.Underline
-    FontAwesome.Undo
-    FontAwesome.University
-    FontAwesome.Unlink
-    FontAwesome.Unlock
-    FontAwesome.UnlockAlt
-    FontAwesome.Unsorted
-    FontAwesome.Upload
-    FontAwesome.USD
-    FontAwesome.User
-    FontAwesome.UserMd
-    FontAwesome.Users
-    FontAwesome.VideoCamera
-    FontAwesome.VimeoSquare
-    FontAwesome.Vine
-    FontAwesome.VK
-    FontAwesome.VolumeDown
-    FontAwesome.VolumeOff
-    FontAwesome.VolumeUp
-    FontAwesome.Warning
-    FontAwesome.Wechat
-    FontAwesome.Weibo
-    FontAwesome.Weixin
-    FontAwesome.Wheelchair
-    FontAwesome.Windows
-    FontAwesome.Won
-    FontAwesome.Wordpress
-    FontAwesome.Wrench
-    FontAwesome.Xing
-    FontAwesome.XingSquare
-    FontAwesome.Yahoo
-    FontAwesome.Yen
-    FontAwesome.Youtube
-    FontAwesome.YoutubePlay
-    FontAwesome.YoutubeSquare
+    var fontAwesome = FontAwesome.Adjust
+    fontAwesome = FontAwesome.Adn
+    fontAwesome = FontAwesome.AlignCenter
+    fontAwesome = FontAwesome.AlignJustify
+    fontAwesome = FontAwesome.AlignLeft
+    fontAwesome = FontAwesome.AlignRight
+    fontAwesome = FontAwesome.Ambulance
+    fontAwesome = FontAwesome.Anchor
+    fontAwesome = FontAwesome.Android
+    fontAwesome = FontAwesome.AngleDoubleDown
+    fontAwesome = FontAwesome.AngleDoubleLeft
+    fontAwesome = FontAwesome.AngleDoubleRight
+    fontAwesome = FontAwesome.AngleDoubleUp
+    fontAwesome = FontAwesome.AngleDown
+    fontAwesome = FontAwesome.AngleLeft
+    fontAwesome = FontAwesome.AngleRight
+    fontAwesome = FontAwesome.AngleUp
+    fontAwesome = FontAwesome.Apple
+    fontAwesome = FontAwesome.Archive
+    fontAwesome = FontAwesome.ArrowCircleDown
+    fontAwesome = FontAwesome.ArrowCircleLeft
+    fontAwesome = FontAwesome.ArrowCircleODown
+    fontAwesome = FontAwesome.ArrowCircleOLeft
+    fontAwesome = FontAwesome.ArrowCircleORight
+    fontAwesome = FontAwesome.ArrowCircleOUp
+    fontAwesome = FontAwesome.ArrowCircleRight
+    fontAwesome = FontAwesome.ArrowCircleUp
+    fontAwesome = FontAwesome.ArrowDown
+    fontAwesome = FontAwesome.ArrowLeft
+    fontAwesome = FontAwesome.ArrowRight
+    fontAwesome = FontAwesome.ArrowUp
+    fontAwesome = FontAwesome.Arrows
+    fontAwesome = FontAwesome.ArrowsAlt
+    fontAwesome = FontAwesome.ArrowsH
+    fontAwesome = FontAwesome.ArrowsV
+    fontAwesome = FontAwesome.Asterisk
+    fontAwesome = FontAwesome.Automobile
+    fontAwesome = FontAwesome.Backward
+    fontAwesome = FontAwesome.Ban
+    fontAwesome = FontAwesome.Bank
+    fontAwesome = FontAwesome.BarChartO
+    fontAwesome = FontAwesome.Barcode
+    fontAwesome = FontAwesome.Bars
+    fontAwesome = FontAwesome.Beer
+    fontAwesome = FontAwesome.Behance
+    fontAwesome = FontAwesome.BehanceSquare
+    fontAwesome = FontAwesome.Bell
+    fontAwesome = FontAwesome.BellO
+    fontAwesome = FontAwesome.Bitbucket
+    fontAwesome = FontAwesome.BitbucketSquare
+    fontAwesome = FontAwesome.Bitcoin
+    fontAwesome = FontAwesome.Bold
+    fontAwesome = FontAwesome.Bolt
+    fontAwesome = FontAwesome.Bomb
+    fontAwesome = FontAwesome.Book
+    fontAwesome = FontAwesome.Bookmark
+    fontAwesome = FontAwesome.BookmarkO
+    fontAwesome = FontAwesome.Briefcase
+    fontAwesome = FontAwesome.BTC
+    fontAwesome = FontAwesome.Bug
+    fontAwesome = FontAwesome.Building
+    fontAwesome = FontAwesome.BuildingO
+    fontAwesome = FontAwesome.Bullhorn
+    fontAwesome = FontAwesome.Bullseye
+    fontAwesome = FontAwesome.Cab
+    fontAwesome = FontAwesome.Calendar
+    fontAwesome = FontAwesome.CalendarO
+    fontAwesome = FontAwesome.Camera
+    fontAwesome = FontAwesome.CameraRetro
+    fontAwesome = FontAwesome.Car
+    fontAwesome = FontAwesome.CaretDown
+    fontAwesome = FontAwesome.CaretLeft
+    fontAwesome = FontAwesome.CaretRight
+    fontAwesome = FontAwesome.CaretSquareODown
+    fontAwesome = FontAwesome.CaretSquareOLeft
+    fontAwesome = FontAwesome.CaretSquareORight
+    fontAwesome = FontAwesome.CaretSquareOUp
+    fontAwesome = FontAwesome.CaretUp
+    fontAwesome = FontAwesome.Certificate
+    fontAwesome = FontAwesome.Chain
+    fontAwesome = FontAwesome.ChainBroken
+    fontAwesome = FontAwesome.Check
+    fontAwesome = FontAwesome.CheckCircle
+    fontAwesome = FontAwesome.CheckCircleO
+    fontAwesome = FontAwesome.CheckSquare
+    fontAwesome = FontAwesome.CheckSquareO
+    fontAwesome = FontAwesome.ChevronCircleDown
+    fontAwesome = FontAwesome.ChevronCircleLeft
+    fontAwesome = FontAwesome.ChevronCircleRight
+    fontAwesome = FontAwesome.ChevronCircleUp
+    fontAwesome = FontAwesome.ChevronDown
+    fontAwesome = FontAwesome.ChevronLeft
+    fontAwesome = FontAwesome.ChevronRight
+    fontAwesome = FontAwesome.ChevronUp
+    fontAwesome = FontAwesome.Child
+    fontAwesome = FontAwesome.Circle
+    fontAwesome = FontAwesome.CircleO
+    fontAwesome = FontAwesome.CircleONotch
+    fontAwesome = FontAwesome.CircleThin
+    fontAwesome = FontAwesome.Clipboard
+    fontAwesome = FontAwesome.ClockO
+    fontAwesome = FontAwesome.Cloud
+    fontAwesome = FontAwesome.CloudDownload
+    fontAwesome = FontAwesome.CloudUpload
+    fontAwesome = FontAwesome.Cny
+    fontAwesome = FontAwesome.Code
+    fontAwesome = FontAwesome.CodeFork
+    fontAwesome = FontAwesome.Codepen
+    fontAwesome = FontAwesome.Coffee
+    fontAwesome = FontAwesome.Cog
+    fontAwesome = FontAwesome.COGS
+    fontAwesome = FontAwesome.Columns
+    fontAwesome = FontAwesome.Comment
+    fontAwesome = FontAwesome.CommentO
+    fontAwesome = FontAwesome.Comments
+    fontAwesome = FontAwesome.CommentsO
+    fontAwesome = FontAwesome.Compass
+    fontAwesome = FontAwesome.Compress
+    fontAwesome = FontAwesome.Copy
+    fontAwesome = FontAwesome.CreditCard
+    fontAwesome = FontAwesome.Crop
+    fontAwesome = FontAwesome.Crosshairs
+    fontAwesome = FontAwesome.CSS3
+    fontAwesome = FontAwesome.Cube
+    fontAwesome = FontAwesome.Cubes
+    fontAwesome = FontAwesome.Cut
+    fontAwesome = FontAwesome.Cutlery
+    fontAwesome = FontAwesome.Dashboard
+    fontAwesome = FontAwesome.Database
+    fontAwesome = FontAwesome.Dedent
+    fontAwesome = FontAwesome.Delicious
+    fontAwesome = FontAwesome.Desktop
+    fontAwesome = FontAwesome.Deviantart
+    fontAwesome = FontAwesome.Digg
+    fontAwesome = FontAwesome.Dollar
+    fontAwesome = FontAwesome.DotCircleO
+    fontAwesome = FontAwesome.Download
+    fontAwesome = FontAwesome.Dribbble
+    fontAwesome = FontAwesome.Dropbox
+    fontAwesome = FontAwesome.Drupal
+    fontAwesome = FontAwesome.Edit
+    fontAwesome = FontAwesome.Eject
+    fontAwesome = FontAwesome.EllipsisH
+    fontAwesome = FontAwesome.EllipsisV
+    fontAwesome = FontAwesome.Empire
+    fontAwesome = FontAwesome.Envelope
+    fontAwesome = FontAwesome.EnvelopeO
+    fontAwesome = FontAwesome.EnvelopeSquare
+    fontAwesome = FontAwesome.Eraser
+    fontAwesome = FontAwesome.EUR
+    fontAwesome = FontAwesome.Euro
+    fontAwesome = FontAwesome.Exchange
+    fontAwesome = FontAwesome.Exclamation
+    fontAwesome = FontAwesome.ExclamationCircle
+    fontAwesome = FontAwesome.ExclamationTriangle
+    fontAwesome = FontAwesome.Expand
+    fontAwesome = FontAwesome.ExternalLink
+    fontAwesome = FontAwesome.ExternalLinkSquare
+    fontAwesome = FontAwesome.Eye
+    fontAwesome = FontAwesome.EyeSlash
+    fontAwesome = FontAwesome.Facebook
+    fontAwesome = FontAwesome.FacebookSquare
+    fontAwesome = FontAwesome.FastBackward
+    fontAwesome = FontAwesome.FastForward
+    fontAwesome = FontAwesome.Fax
+    fontAwesome = FontAwesome.Female
+    fontAwesome = FontAwesome.FighterJet
+    fontAwesome = FontAwesome.File
+    fontAwesome = FontAwesome.FileArchiveO
+    fontAwesome = FontAwesome.FileAudioO
+    fontAwesome = FontAwesome.FileCodeO
+    fontAwesome = FontAwesome.FileExcelO
+    fontAwesome = FontAwesome.FileImageO
+    fontAwesome = FontAwesome.FileMovieO
+    fontAwesome = FontAwesome.FileO
+    fontAwesome = FontAwesome.FilePdfO
+    fontAwesome = FontAwesome.FilePhotoO
+    fontAwesome = FontAwesome.FilePictureO
+    fontAwesome = FontAwesome.FilePowerpointO
+    fontAwesome = FontAwesome.FileSoundO
+    fontAwesome = FontAwesome.FileText
+    fontAwesome = FontAwesome.FileTextO
+    fontAwesome = FontAwesome.FileVideoO
+    fontAwesome = FontAwesome.FileWordO
+    fontAwesome = FontAwesome.FileZipO
+    fontAwesome = FontAwesome.FilesO
+    fontAwesome = FontAwesome.Film
+    fontAwesome = FontAwesome.Filter
+    fontAwesome = FontAwesome.Fire
+    fontAwesome = FontAwesome.FireExtinguisher
+    fontAwesome = FontAwesome.Flag
+    fontAwesome = FontAwesome.FlagCheckered
+    fontAwesome = FontAwesome.FlagO
+    fontAwesome = FontAwesome.Flash
+    fontAwesome = FontAwesome.Flask
+    fontAwesome = FontAwesome.Flickr
+    fontAwesome = FontAwesome.FloppyO
+    fontAwesome = FontAwesome.Folder
+    fontAwesome = FontAwesome.FolderO
+    fontAwesome = FontAwesome.FolderOpen
+    fontAwesome = FontAwesome.FolderOpenO
+    fontAwesome = FontAwesome.Font
+    fontAwesome = FontAwesome.Forward
+    fontAwesome = FontAwesome.Foursquare
+    fontAwesome = FontAwesome.FrownO
+    fontAwesome = FontAwesome.Gamepad
+    fontAwesome = FontAwesome.Gavel
+    fontAwesome = FontAwesome.GBP
+    fontAwesome = FontAwesome.Ge
+    fontAwesome = FontAwesome.Gear
+    fontAwesome = FontAwesome.Gears
+    fontAwesome = FontAwesome.Gift
+    fontAwesome = FontAwesome.Git
+    fontAwesome = FontAwesome.GitSquare
+    fontAwesome = FontAwesome.GitHub
+    fontAwesome = FontAwesome.GitHubAlt
+    fontAwesome = FontAwesome.GithubSquare
+    fontAwesome = FontAwesome.Gittip
+    fontAwesome = FontAwesome.Glass
+    fontAwesome = FontAwesome.Globe
+    fontAwesome = FontAwesome.Google
+    fontAwesome = FontAwesome.GooglePlus
+    fontAwesome = FontAwesome.GooglePlusSquare
+    fontAwesome = FontAwesome.GraduationCap
+    fontAwesome = FontAwesome.Group
+    fontAwesome = FontAwesome.HSquare
+    fontAwesome = FontAwesome.HackerNews
+    fontAwesome = FontAwesome.HandODown
+    fontAwesome = FontAwesome.HandOLeft
+    fontAwesome = FontAwesome.HandORight
+    fontAwesome = FontAwesome.HandOUp
+    fontAwesome = FontAwesome.HddO
+    fontAwesome = FontAwesome.Header
+    fontAwesome = FontAwesome.Headphones
+    fontAwesome = FontAwesome.Heart
+    fontAwesome = FontAwesome.HeartO
+    fontAwesome = FontAwesome.History
+    fontAwesome = FontAwesome.Home
+    fontAwesome = FontAwesome.HospitalO
+    fontAwesome = FontAwesome.HTML5
+    fontAwesome = FontAwesome.Image
+    fontAwesome = FontAwesome.Inbox
+    fontAwesome = FontAwesome.Indent
+    fontAwesome = FontAwesome.Info
+    fontAwesome = FontAwesome.InfoCircle
+    fontAwesome = FontAwesome.INR
+    fontAwesome = FontAwesome.Instagram
+    fontAwesome = FontAwesome.Institution
+    fontAwesome = FontAwesome.Italic
+    fontAwesome = FontAwesome.Joomla
+    fontAwesome = FontAwesome.JPY
+    fontAwesome = FontAwesome.Jsfiddle
+    fontAwesome = FontAwesome.Key
+    fontAwesome = FontAwesome.KeyboardO
+    fontAwesome = FontAwesome.KRW
+    fontAwesome = FontAwesome.Language
+    fontAwesome = FontAwesome.Laptop
+    fontAwesome = FontAwesome.Leaf
+    fontAwesome = FontAwesome.Legal
+    fontAwesome = FontAwesome.LemonO
+    fontAwesome = FontAwesome.LevelDown
+    fontAwesome = FontAwesome.LevelUp
+    fontAwesome = FontAwesome.LifeBouy
+    fontAwesome = FontAwesome.LifeRing
+    fontAwesome = FontAwesome.LifeSaver
+    fontAwesome = FontAwesome.LightbulbO
+    fontAwesome = FontAwesome.Link
+    fontAwesome = FontAwesome.Linkedin
+    fontAwesome = FontAwesome.LinkedInSquare
+    fontAwesome = FontAwesome.Linux
+    fontAwesome = FontAwesome.List
+    fontAwesome = FontAwesome.ListAlt
+    fontAwesome = FontAwesome.ListOl
+    fontAwesome = FontAwesome.ListUl
+    fontAwesome = FontAwesome.LocationArrow
+    fontAwesome = FontAwesome.Lock
+    fontAwesome = FontAwesome.LongArrowDown
+    fontAwesome = FontAwesome.LongArrowLeft
+    fontAwesome = FontAwesome.LongArrowRight
+    fontAwesome = FontAwesome.LongArrowUp
+    fontAwesome = FontAwesome.Magic
+    fontAwesome = FontAwesome.Magnet
+    fontAwesome = FontAwesome.MailForward
+    fontAwesome = FontAwesome.MailReply
+    fontAwesome = FontAwesome.MailReplyAll
+    fontAwesome = FontAwesome.Male
+    fontAwesome = FontAwesome.MapMarker
+    fontAwesome = FontAwesome.Maxcdn
+    fontAwesome = FontAwesome.Medkit
+    fontAwesome = FontAwesome.MehO
+    fontAwesome = FontAwesome.Microphone
+    fontAwesome = FontAwesome.MicrophoneSlash
+    fontAwesome = FontAwesome.Minus
+    fontAwesome = FontAwesome.MinusCircle
+    fontAwesome = FontAwesome.MinusSquare
+    fontAwesome = FontAwesome.MinusSquareO
+    fontAwesome = FontAwesome.Mobile
+    fontAwesome = FontAwesome.MobilePhone
+    fontAwesome = FontAwesome.Money
+    fontAwesome = FontAwesome.MoonO
+    fontAwesome = FontAwesome.MortarBoard
+    fontAwesome = FontAwesome.Music
+    fontAwesome = FontAwesome.Navicon
+    fontAwesome = FontAwesome.Openid
+    fontAwesome = FontAwesome.Outdent
+    fontAwesome = FontAwesome.Pagelines
+    fontAwesome = FontAwesome.PaperPlane
+    fontAwesome = FontAwesome.PaperPlaneO
+    fontAwesome = FontAwesome.Paperclip
+    fontAwesome = FontAwesome.Paragraph
+    fontAwesome = FontAwesome.Paste
+    fontAwesome = FontAwesome.Pause
+    fontAwesome = FontAwesome.Paw
+    fontAwesome = FontAwesome.Pencil
+    fontAwesome = FontAwesome.PencilSquare
+    fontAwesome = FontAwesome.PencilSquareO
+    fontAwesome = FontAwesome.Phone
+    fontAwesome = FontAwesome.PhoneSquare
+    fontAwesome = FontAwesome.Photo
+    fontAwesome = FontAwesome.PictureO
+    fontAwesome = FontAwesome.PiedPiper
+    fontAwesome = FontAwesome.PiedPiperAlt
+    fontAwesome = FontAwesome.PiedPiperSquare
+    fontAwesome = FontAwesome.Pinterest
+    fontAwesome = FontAwesome.PinterestSquare
+    fontAwesome = FontAwesome.Plane
+    fontAwesome = FontAwesome.Play
+    fontAwesome = FontAwesome.PlayCircle
+    fontAwesome = FontAwesome.PlayCircleO
+    fontAwesome = FontAwesome.Plus
+    fontAwesome = FontAwesome.PlusCircle
+    fontAwesome = FontAwesome.PlusSquare
+    fontAwesome = FontAwesome.PlusSquareO
+    fontAwesome = FontAwesome.PowerOff
+    fontAwesome = FontAwesome.Print
+    fontAwesome = FontAwesome.PuzzlePiece
+    fontAwesome = FontAwesome.Qq
+    fontAwesome = FontAwesome.Qrcode
+    fontAwesome = FontAwesome.Question
+    fontAwesome = FontAwesome.QuestionCircle
+    fontAwesome = FontAwesome.QuoteLeft
+    fontAwesome = FontAwesome.QuoteRight
+    fontAwesome = FontAwesome.Ra
+    fontAwesome = FontAwesome.Random
+    fontAwesome = FontAwesome.Rebel
+    fontAwesome = FontAwesome.Recycle
+    fontAwesome = FontAwesome.Reddit
+    fontAwesome = FontAwesome.RedditSquare
+    fontAwesome = FontAwesome.Refresh
+    fontAwesome = FontAwesome.Renren
+    fontAwesome = FontAwesome.Reorder
+    fontAwesome = FontAwesome.Repeat
+    fontAwesome = FontAwesome.Reply
+    fontAwesome = FontAwesome.ReplyAll
+    fontAwesome = FontAwesome.Retweet
+    fontAwesome = FontAwesome.Rmb
+    fontAwesome = FontAwesome.Road
+    fontAwesome = FontAwesome.Rocket
+    fontAwesome = FontAwesome.RotateLeft
+    fontAwesome = FontAwesome.RotateRight
+    fontAwesome = FontAwesome.Rouble
+    fontAwesome = FontAwesome.RSS
+    fontAwesome = FontAwesome.RssSquare
+    fontAwesome = FontAwesome.RUB
+    fontAwesome = FontAwesome.Ruble
+    fontAwesome = FontAwesome.Rupee
+    fontAwesome = FontAwesome.Save
+    fontAwesome = FontAwesome.Scissors
+    fontAwesome = FontAwesome.Search
+    fontAwesome = FontAwesome.SearchMinus
+    fontAwesome = FontAwesome.SearchPlus
+    fontAwesome = FontAwesome.Send
+    fontAwesome = FontAwesome.SendO
+    fontAwesome = FontAwesome.Share
+    fontAwesome = FontAwesome.ShareAlt
+    fontAwesome = FontAwesome.ShareAltSquare
+    fontAwesome = FontAwesome.ShareSquare
+    fontAwesome = FontAwesome.ShareSquareO
+    fontAwesome = FontAwesome.Shield
+    fontAwesome = FontAwesome.ShoppingCart
+    fontAwesome = FontAwesome.SignIn
+    fontAwesome = FontAwesome.SignOut
+    fontAwesome = FontAwesome.Signal
+    fontAwesome = FontAwesome.Sitemap
+    fontAwesome = FontAwesome.Skype
+    fontAwesome = FontAwesome.Slack
+    fontAwesome = FontAwesome.Sliders
+    fontAwesome = FontAwesome.SmileO
+    fontAwesome = FontAwesome.Sort
+    fontAwesome = FontAwesome.SortAlphaAsc
+    fontAwesome = FontAwesome.SortAlphaDesc
+    fontAwesome = FontAwesome.SortAmountAsc
+    fontAwesome = FontAwesome.SortAmountDesc
+    fontAwesome = FontAwesome.SortAsc
+    fontAwesome = FontAwesome.SortDesc
+    fontAwesome = FontAwesome.SortDown
+    fontAwesome = FontAwesome.SortNumericAsc
+    fontAwesome = FontAwesome.SortNumericDesc
+    fontAwesome = FontAwesome.SortUp
+    fontAwesome = FontAwesome.Soundcloud
+    fontAwesome = FontAwesome.SpaceShuttle
+    fontAwesome = FontAwesome.Spinner
+    fontAwesome = FontAwesome.Spoon
+    fontAwesome = FontAwesome.Spotify
+    fontAwesome = FontAwesome.Square
+    fontAwesome = FontAwesome.SquareO
+    fontAwesome = FontAwesome.StackExchange
+    fontAwesome = FontAwesome.StackOverflow
+    fontAwesome = FontAwesome.Star
+    fontAwesome = FontAwesome.StarHalf
+    fontAwesome = FontAwesome.StarHalfEmpty
+    fontAwesome = FontAwesome.StarHalfFull
+    fontAwesome = FontAwesome.StarHalfO
+    fontAwesome = FontAwesome.StarO
+    fontAwesome = FontAwesome.Steam
+    fontAwesome = FontAwesome.SteamSquare
+    fontAwesome = FontAwesome.StepBackward
+    fontAwesome = FontAwesome.StepForward
+    fontAwesome = FontAwesome.Stethoscope
+    fontAwesome = FontAwesome.Stop
+    fontAwesome = FontAwesome.Strikethrough
+    fontAwesome = FontAwesome.Stumbleupon
+    fontAwesome = FontAwesome.StumbleuponCircle
+    fontAwesome = FontAwesome.Subscript
+    fontAwesome = FontAwesome.Suitcase
+    fontAwesome = FontAwesome.SunO
+    fontAwesome = FontAwesome.Superscript
+    fontAwesome = FontAwesome.Support
+    fontAwesome = FontAwesome.Table
+    fontAwesome = FontAwesome.Tablet
+    fontAwesome = FontAwesome.Tachometer
+    fontAwesome = FontAwesome.Tag
+    fontAwesome = FontAwesome.Tags
+    fontAwesome = FontAwesome.Tasks
+    fontAwesome = FontAwesome.Taxi
+    fontAwesome = FontAwesome.TencentWeibo
+    fontAwesome = FontAwesome.Terminal
+    fontAwesome = FontAwesome.TextHeight
+    fontAwesome = FontAwesome.TextWidth
+    fontAwesome = FontAwesome.Th
+    fontAwesome = FontAwesome.ThLarge
+    fontAwesome = FontAwesome.ThList
+    fontAwesome = FontAwesome.ThumbTack
+    fontAwesome = FontAwesome.ThumbsDown
+    fontAwesome = FontAwesome.ThumbsODown
+    fontAwesome = FontAwesome.ThumbsOUp
+    fontAwesome = FontAwesome.ThumbsUp
+    fontAwesome = FontAwesome.Ticket
+    fontAwesome = FontAwesome.Times
+    fontAwesome = FontAwesome.TimesCircle
+    fontAwesome = FontAwesome.TimesCircleO
+    fontAwesome = FontAwesome.Tint
+    fontAwesome = FontAwesome.ToggleDown
+    fontAwesome = FontAwesome.ToggleLeft
+    fontAwesome = FontAwesome.ToggleRight
+    fontAwesome = FontAwesome.ToggleUp
+    fontAwesome = FontAwesome.TrashO
+    fontAwesome = FontAwesome.Tree
+    fontAwesome = FontAwesome.Trello
+    fontAwesome = FontAwesome.Trophy
+    fontAwesome = FontAwesome.Truck
+    fontAwesome = FontAwesome.TRY
+    fontAwesome = FontAwesome.Tumblr
+    fontAwesome = FontAwesome.TumblrSquare
+    fontAwesome = FontAwesome.TurkishLira
+    fontAwesome = FontAwesome.Twitter
+    fontAwesome = FontAwesome.TwitterSquare
+    fontAwesome = FontAwesome.Umbrella
+    fontAwesome = FontAwesome.Underline
+    fontAwesome = FontAwesome.Undo
+    fontAwesome = FontAwesome.University
+    fontAwesome = FontAwesome.Unlink
+    fontAwesome = FontAwesome.Unlock
+    fontAwesome = FontAwesome.UnlockAlt
+    fontAwesome = FontAwesome.Unsorted
+    fontAwesome = FontAwesome.Upload
+    fontAwesome = FontAwesome.USD
+    fontAwesome = FontAwesome.User
+    fontAwesome = FontAwesome.UserMd
+    fontAwesome = FontAwesome.Users
+    fontAwesome = FontAwesome.VideoCamera
+    fontAwesome = FontAwesome.VimeoSquare
+    fontAwesome = FontAwesome.Vine
+    fontAwesome = FontAwesome.VK
+    fontAwesome = FontAwesome.VolumeDown
+    fontAwesome = FontAwesome.VolumeOff
+    fontAwesome = FontAwesome.VolumeUp
+    fontAwesome = FontAwesome.Warning
+    fontAwesome = FontAwesome.Wechat
+    fontAwesome = FontAwesome.Weibo
+    fontAwesome = FontAwesome.Weixin
+    fontAwesome = FontAwesome.Wheelchair
+    fontAwesome = FontAwesome.Windows
+    fontAwesome = FontAwesome.Won
+    fontAwesome = FontAwesome.Wordpress
+    fontAwesome = FontAwesome.Wrench
+    fontAwesome = FontAwesome.Xing
+    fontAwesome = FontAwesome.XingSquare
+    fontAwesome = FontAwesome.Yahoo
+    fontAwesome = FontAwesome.Yen
+    fontAwesome = FontAwesome.Youtube
+    fontAwesome = FontAwesome.YoutubePlay
+    fontAwesome = FontAwesome.YoutubeSquare
   }
 
 }
