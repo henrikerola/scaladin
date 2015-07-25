@@ -1,13 +1,9 @@
 package vaadin.scala
 
-import vaadin.scala.mixins.ContainerMixin
-import vaadin.scala.mixins.ContainerIndexedMixin
-import vaadin.scala.mixins.ContainerHierarchicalMixin
-import vaadin.scala.mixins.ContainerOrderedMixin
-import vaadin.scala.mixins.ContainerViewerMixin
-import vaadin.scala.mixins.ContainerSortableMixin
+import vaadin.scala.mixins._
 import vaadin.scala.util.TypeMapper
 import scala.collection.mutable
+import vaadin.scala.Container.FilterEvent
 
 package mixins {
 
@@ -46,6 +42,19 @@ package mixins {
   trait ContainerViewerMixin extends ScaladinMixin
   trait ContainerSortableMixin extends ContainerOrderedMixin { self: com.vaadin.data.Container.Sortable => }
   trait ContainerIndexedMixin extends ContainerOrderedMixin { self: com.vaadin.data.Container.Indexed => }
+  trait ContainerFilterableMixin extends ContainerMixin { self: com.vaadin.data.Container.Filterable => }
+
+  trait ContainerFilterMixin extends ScaladinInterfaceMixin {
+    self: com.vaadin.data.Container.Filter =>
+
+    override def wrapper = super.wrapper.asInstanceOf[Container.Filter]
+
+    override def passesFilter(itemId: Any, item: com.vaadin.data.Item): Boolean =
+      wrapper.passesFilter(new FilterEvent(itemId, item))
+
+    override def appliesToProperty(propertyId: Any): Boolean =
+      wrapper.appliesToProperty(propertyId)
+  }
 }
 
 //Base Container trait is outside the companion object so extending classes can have nicer syntax
@@ -218,5 +227,51 @@ object Container {
     def addItemAt(index: Int): Any = p.addItemAt(index)
 
     def addItemAt(index: Int, newItemId: Any): Item = wrapItem(p.addItemAt(index, newItemId))
+  }
+
+  trait Filterable extends Container {
+
+    def p: com.vaadin.data.Container.Filterable with ContainerFilterableMixin
+
+    lazy val filters = new mutable.Set[Filter]() {
+
+      override def +=(filter: Filter): this.type = {
+        p.addContainerFilter(filter.pFilter)
+        this
+      }
+
+      override def -=(filter: Filter): this.type = {
+        p.removeContainerFilter(filter.pFilter)
+        this
+      }
+
+      override def contains(filter: Filter): Boolean =
+        p.getContainerFilters.contains(filter.pFilter)
+
+      override def iterator: Iterator[Filter] = {
+        import scala.collection.JavaConverters._
+        p.getContainerFilters.asScala.map(wrapperFor[Filter](_).get).iterator
+      }
+    }
+  }
+
+  class FilterEvent(val itemId: Any, vaadinItem: com.vaadin.data.Item) {
+    lazy val item: Item = new BasicItem(vaadinItem)
+  }
+
+  trait Filter extends InterfaceWrapper {
+    val pFilter = new com.vaadin.data.Container.Filter with ContainerFilterMixin
+    pFilter.wrapper = this
+
+    def passesFilter(event: FilterEvent): Boolean
+
+    def appliesToProperty(propertyId: Any): Boolean
+  }
+
+  object Filter {
+    def apply(filter: FilterEvent => Boolean, appliesToProp: Any => Boolean = Any => true): Filter = new Filter {
+      override def passesFilter(event: FilterEvent): Boolean = filter(event)
+      override def appliesToProperty(propertyId: Any): Boolean = appliesToProp(propertyId)
+    }
   }
 }

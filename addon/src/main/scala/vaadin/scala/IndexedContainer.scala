@@ -4,13 +4,13 @@ import com.vaadin.data.{ Property => VaadinProperty }
 import vaadin.scala.mixins.IndexedContainerMixin
 
 package mixins {
-  trait IndexedContainerMixin extends ContainerMixin with ContainerIndexedMixin with ContainerSortableMixin {
+  trait IndexedContainerMixin extends ContainerMixin with ContainerIndexedMixin with ContainerSortableMixin with ContainerFilterableMixin {
     self: com.vaadin.data.util.IndexedContainer =>
   }
 }
 
 class IndexedContainer(override val p: com.vaadin.data.util.IndexedContainer with IndexedContainerMixin = new com.vaadin.data.util.IndexedContainer with IndexedContainerMixin)
-    extends Container.Sortable with Container.Indexed {
+    extends Container.Sortable with Container.Indexed with Container.Filterable {
 
   p.wrapper = this
 
