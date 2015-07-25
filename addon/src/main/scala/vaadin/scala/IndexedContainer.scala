@@ -4,7 +4,8 @@ import com.vaadin.data.{ Property => VaadinProperty }
 import vaadin.scala.mixins.IndexedContainerMixin
 
 package mixins {
-  trait IndexedContainerMixin extends ContainerMixin with ContainerIndexedMixin with ContainerSortableMixin with ContainerFilterableMixin {
+  trait IndexedContainerMixin extends ContainerMixin with ContainerIndexedMixin
+      with ContainerSortableMixin with ContainerFilterableMixin {
     self: com.vaadin.data.util.IndexedContainer =>
   }
 }
