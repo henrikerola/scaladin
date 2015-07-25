@@ -5,11 +5,13 @@ import scala.collection.JavaConverters._
 import scala.reflect.ClassTag
 
 package mixins {
-  trait BeanItemContainerMixin extends ContainerIndexedMixin { self: com.vaadin.data.util.BeanItemContainer[_] => }
+  trait BeanItemContainerMixin extends ContainerIndexedMixin with ContainerFilterableMixin {
+    self: com.vaadin.data.util.BeanItemContainer[_] =>
+  }
 }
 
 class BeanItemContainer[BT](override val p: com.vaadin.data.util.BeanItemContainer[BT] with BeanItemContainerMixin)
-    extends Wrapper with Container.Indexed {
+    extends Wrapper with Container.Indexed with Container.Filterable {
 
   p.wrapper = this
 
