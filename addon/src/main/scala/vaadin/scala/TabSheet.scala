@@ -86,8 +86,8 @@ class TabSheet(override val p: VaadinTabSheet with TabSheetMixin = new VaadinTab
 
   override def add[C <: Component](component: C): C = addTab(component).component.asInstanceOf[C]
 
-  def tabsVisible: Boolean = !p.areTabsHidden
-  def tabsVisible_=(tabsVisible: Boolean) { p.hideTabs(!tabsVisible) }
+  def tabsVisible: Boolean = p.isTabsVisible
+  def tabsVisible_=(tabsVisible: Boolean): Unit = p.setTabsVisible(tabsVisible)
 
   def getTab(component: Component): Option[TabSheet.Tab] = tabs.get(p.getTab(component.p))
   def getTab(position: Int): Option[TabSheet.Tab] = tabs.get(p.getTab(position))
