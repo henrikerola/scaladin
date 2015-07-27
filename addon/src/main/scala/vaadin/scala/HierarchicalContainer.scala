@@ -25,6 +25,4 @@ class HierarchicalContainer(override val p: com.vaadin.data.util.HierarchicalCon
 
   def includeParentsWhenFiltering: Boolean = p.isIncludeParentsWhenFiltering
   def includeParentsWhenFiltering_=(includeParentsWhenFiltering: Boolean): Unit = p.setIncludeParentsWhenFiltering(includeParentsWhenFiltering)
-
-  // TODO: protected doSort(), doFilterContainer, passesFilters
 }
