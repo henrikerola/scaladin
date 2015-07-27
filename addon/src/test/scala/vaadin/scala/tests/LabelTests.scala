@@ -1,14 +1,10 @@
 package vaadin.scala.tests
 
-import org.scalatest.FunSuite
 import vaadin.scala._
 import vaadin.scala.converter.Converter
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import java.util.Locale
 
-@RunWith(classOf[JUnitRunner])
-class LabelTests extends FunSuite {
+class LabelTests extends ScaladinTestSuite {
 
   test("ContentModes") {
     assert(Label.ContentMode.Text.id === com.vaadin.shared.ui.label.ContentMode.TEXT.ordinal)
@@ -21,12 +17,12 @@ class LabelTests extends FunSuite {
     assert(label.value === Some(""))
     assert(label.width === (100 pct))
     assert(label.height === None)
-    //assert(label.property == None) // FIXME
+    assert(label.property == None)
     assert(label.contentMode === Label.ContentMode.Text)
     assert(label.p.getStyleName === "")
   }
 
-  ignore("value: None") { // FIXME
+  test("value: None") {
     val label = new Label
     label.value = None
     assert(label.value === None)
@@ -57,17 +53,17 @@ class LabelTests extends FunSuite {
     assert(label.contentMode === Label.ContentMode.Html)
   }
 
-  ignore("property: None") { // This setting propertyDataSource to null throws NPE in Vaadin 7?
+  test("property: None") {
     val label = new Label
     label.property = None
     assert(label.property === None)
   }
 
-  ignore("property: Property") {
+  test("property: Property") {
     val property = new ObjectProperty("test")
     val label = new Label
     label.property = property
-    assert(label.property === Some(property))
+    assert(label.property.get.p === property.p)
   }
 
   test("property: Some") {
