@@ -3,7 +3,7 @@ package vaadin.scala.tests
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import vaadin.scala.server.ExternalResource
+import vaadin.scala.server._
 
 @RunWith(classOf[JUnitRunner])
 class ResourceTests extends FunSuite {
@@ -28,4 +28,18 @@ class ResourceTests extends FunSuite {
     assert(resource.pResource.getMIMEType === "my mime type")
   }
 
+  test("ClassResource") {
+    val resource = ClassResource("hello")
+
+    assert("hello" == resource.fileName)
+    assert("application/octet-stream" == resource.mimeType)
+    assert(86400000 == resource.cacheTime)
+    assert(0 == resource.bufferSize)
+
+    resource.cacheTime = 1000
+    resource.bufferSize = 10
+
+    assert(1000 == resource.cacheTime)
+    assert(10 == resource.bufferSize)
+  }
 }
