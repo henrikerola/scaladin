@@ -13,4 +13,12 @@ class FileResource(override val pResource: com.vaadin.server.FileResource with R
   def this(sourceFile: File) {
     this(new com.vaadin.server.FileResource(sourceFile) with ResourceMixin)
   }
+
+  def sourceFile = pResource.getSourceFile
+
+  def bufferSize: Int = pResource.getBufferSize
+  def bufferSize_=(bufferSize: Int): Unit = pResource.setBufferSize(bufferSize)
+
+  def cacheTime: Long = pResource.getCacheTime
+  def cacheTime_=(cacheTime: Long): Unit = pResource.setCacheTime(cacheTime)
 }
