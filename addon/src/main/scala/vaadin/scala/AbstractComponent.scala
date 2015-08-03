@@ -34,5 +34,8 @@ abstract class AbstractComponent(val p: com.vaadin.ui.AbstractComponent with Abs
   def data_=(data: Any) { p.setData(data) }
 
   def markAsDirty() { p.markAsDirty() }
+
+  def responsive: Boolean = p.isResponsive
+  def responsive_=(responsive: Boolean): Unit = p.setResponsive(responsive)
 }
 

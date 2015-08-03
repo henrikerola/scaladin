@@ -49,4 +49,12 @@ class AbstractComponentTests extends ScaladinTestSuite {
     Mockito.verify(vaadinAbstractComponent).setLocale(Locale.US)
   }
 
+  test("responsive") {
+    assert(!abstractComponent.responsive)
+    Mockito.verify(vaadinAbstractComponent).isResponsive
+
+    abstractComponent.responsive = true
+    Mockito.verify(vaadinAbstractComponent).setResponsive(true)
+  }
+
 }
