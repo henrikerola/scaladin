@@ -20,7 +20,11 @@ abstract class ScaladinUIProvider extends DefaultUIProvider {
   protected def getUiClassName(e: UIProviderEvent) =
     e.getService.getDeploymentConfiguration.getInitParameters.getProperty("ScaladinUI")
 
-  protected def createScaladinUiInstance(e: UIProviderEvent): vaadin.scala.UI
+  protected def createScaladinUiInstance(e: UIProviderEvent): vaadin.scala.UI = {
+    getScaladinUIClass(e).newInstance.asInstanceOf[vaadin.scala.UI]
+  }
+
+  protected def getScaladinUIClass(e: UIProviderEvent): Class[_]
 
   private def getConfigurationUiInstance(e: UIProviderEvent) =
     uiMap.getOrElseUpdate(getUiClassName(e), createScaladinUiInstance(e))

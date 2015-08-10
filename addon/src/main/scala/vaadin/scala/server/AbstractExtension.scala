@@ -1,11 +1,16 @@
 package vaadin.scala.server
 
-import vaadin.scala.{ AbstractComponent, Wrapper }
+import vaadin.scala.{ ClientConnector, AbstractComponent, Wrapper }
 import vaadin.scala.mixins.ScaladinMixin
 import vaadin.scala.server.mixins.AbstractExtensionMixin
 
 package mixins {
-  trait AbstractExtensionMixin extends ScaladinMixin
+
+  import vaadin.scala.mixins.ClientConnectorMixin
+
+  trait AbstractExtensionMixin extends ClientConnectorMixin {
+    self: com.vaadin.server.AbstractExtension =>
+  }
 }
 
 /**
@@ -13,7 +18,9 @@ package mixins {
  * @author Henri Kerola / Vaadin
  */
 abstract class AbstractExtension(override val p: com.vaadin.server.AbstractExtension with AbstractExtensionMixin)
-    extends Wrapper {
+    extends ClientConnector {
+
+  p.wrapper = this
 
   def remove(): Unit = p.remove()
 
