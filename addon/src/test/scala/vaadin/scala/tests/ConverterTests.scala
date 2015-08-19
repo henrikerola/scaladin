@@ -1,7 +1,7 @@
 package vaadin.scala.tests
 
 import vaadin.scala._
-import converter.{ DateToLongConverter, Converter }
+import vaadin.scala.converter.{DateToSqlDateConverter, DefaultConverterFactory, DateToLongConverter, Converter}
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -55,4 +55,11 @@ class ConverterTests extends FunSuite {
     assert(converter.convertToPresentation(Some(1358627734477L), classOf[java.util.Date], locale) === Some(new Date(1358627734477L)))
   }
 
+  test("DateToSQLConverter") {
+    val converter = DefaultConverterFactory.createConverter[java.util.Date, java.sql.Date]
+    assert(converter.isDefined)
+    assert(converter.get.isInstanceOf[DateToSqlDateConverter])
+    assert(converter.get.presentationType === classOf[java.util.Date])
+    assert(converter.get.modelType === classOf[java.sql.Date])
+  }
 }
