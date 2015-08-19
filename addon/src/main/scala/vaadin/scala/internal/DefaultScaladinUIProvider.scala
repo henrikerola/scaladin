@@ -5,8 +5,8 @@ import com.vaadin.server.UIProviderEvent
 
 class DefaultScaladinUIProvider extends ScaladinUIProvider {
 
-  protected def createScaladinUiInstance(e: UIProviderEvent): vaadin.scala.UI = {
+  override protected def getScaladinUIClass(e: UIProviderEvent): Class[_] = {
     val classLoader = Some(e.getService.getClassLoader).getOrElse(getClass.getClassLoader)
-    Class.forName(getUiClassName(e), true, classLoader).newInstance.asInstanceOf[vaadin.scala.UI]
+    Class.forName(getUiClassName(e), true, classLoader)
   }
 }

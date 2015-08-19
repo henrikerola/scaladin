@@ -5,7 +5,9 @@ import com.vaadin.server.{ FileDownloader => VaadinFileDownloader }
 import vaadin.scala.AbstractComponent
 
 package mixins {
-  trait FileDownloaderMixin extends AbstractExtensionMixin
+  trait FileDownloaderMixin extends AbstractExtensionMixin {
+    self: VaadinFileDownloader =>
+  }
 }
 
 object FileDownloader {
