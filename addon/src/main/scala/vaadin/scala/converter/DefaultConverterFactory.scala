@@ -2,6 +2,8 @@ package vaadin.scala.converter
 
 import java.util.Date
 
+import vaadin.scala.Wrapper
+import vaadin.scala.converter.mixins.{ DelegatingConverterMixin, ConverterMixin }
 import vaadin.scala.server.Resource
 import com.vaadin.server.{ Resource => VaadinResource }
 
@@ -56,12 +58,16 @@ object DefaultConverterFactory extends ConverterFactory {
       Option(new StringToShortConverter)
     else if (classOf[Byte].isAssignableFrom(sourceType) || classOf[java.lang.Byte].isAssignableFrom(sourceType))
       Option(new StringToByteConverter)
-    else None
+    else
+      None
   }
 
   private[this] def createDateConverter(sourceType: Class[_]): Option[Converter[Date, _]] = {
     if (classOf[Long].isAssignableFrom(sourceType) || classOf[java.lang.Long].isAssignableFrom(sourceType))
       Option(new DateToLongConverter)
-    else None
+    else if (classOf[java.sql.Date].isAssignableFrom(sourceType))
+      Option(new DateToSqlDateConverter)
+    else
+      None
   }
 }
