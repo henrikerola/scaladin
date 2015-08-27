@@ -330,42 +330,32 @@ class TableTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(table.container.get.isInstanceOf[IndexedContainer])
   }
 
-  ignore("propertyValueFormatter") {
-    //    val formatter = { e: Table.FormatPropertyEvent =>
-    //      None
-    //    }
-    //
-    //    assert(table.propertyValueFormatter === None)
-    //
-    //    table.propertyValueFormatter = formatter
-    //    assert(table.propertyValueFormatter === Some(formatter))
-    //
-    //    table.propertyValueFormatter = None
-    //    assert(table.propertyValueFormatter === None)
-    //
-    //    table.propertyValueFormatter = Some(formatter)
-    //    assert(table.propertyValueFormatter === Some(formatter))
+  test("propertyValueFormatter") {
+    var eventTable: Table = null
+    var itemId: Any = null
+    var propertyId: Any = null
+    var property: Property[_] = null
+    var originalValue: Option[String] = null
 
-  }
+    val formatter = { e: Table.FormatPropertyEvent =>
+      eventTable = e.table
+      itemId = e.itemId
+      propertyId = e.propertyId
+      property = e.property
+      originalValue = e.originalValue
+      Some("test")
+    }
+    table.propertyValueFormatter = Some(formatter)
 
-  ignore("propertyValueFormatter2") {
-    //    var eventTable: Table = null
-    //    var itemId: Any = null
-    //    var propertyId: Any = null
-    //
-    //    val formatter = { e: Table.FormatPropertyEvent =>
-    //      eventTable = e.table
-    //      itemId = e.itemId
-    //      propertyId = e.propertyId
-    //      Some("test")
-    //    }
-    //    table.propertyValueFormatter = formatter
-    //
-    //    assert(table.p.asInstanceOf[VaadinTable].formatPropertyValue("itemId", "propId", null) === "test")
-    //    assert(itemId === "itemId")
-    //    assert(propertyId === "propId")
-    //    assert(eventTable === table)
+    val prop = mock[com.vaadin.data.Property[String]]
+    Mockito.when(prop.getValue).thenReturn("originalValue")
 
+    assert(table.p.asInstanceOf[VaadinTable].formatPropertyValue("itemId", "propId", prop) === "test")
+    assert(itemId === "itemId")
+    assert(propertyId === "propId")
+    assert(eventTable === table)
+    assert(property.value === Some("originalValue"))
+    assert(originalValue === Some("originalValue"))
   }
 
 }

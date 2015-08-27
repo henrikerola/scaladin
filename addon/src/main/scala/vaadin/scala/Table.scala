@@ -20,9 +20,9 @@ import vaadin.scala.server.Resource
 package mixins {
   trait TableMixin extends AbstractSelectMixin with ActionContainerMixin with ContainerOrderedMixin
       with ContainerSortableMixin with HasComponentsMixin { self: com.vaadin.ui.Table =>
-    override protected def formatPropertyValue(rowId: Any, colId: Any, property: com.vaadin.data.Property[_]): String =
+    override def formatPropertyValue(rowId: Any, colId: Any, property: com.vaadin.data.Property[_]): String =
       wrapper.asInstanceOf[Table].propertyValueFormatter match {
-        case Some(formatter) => formatter(Table.FormatPropertyEvent(wrapperFor[Table](this).get, rowId, colId)).orNull
+        case Some(formatter) => formatter(new Table.FormatPropertyEvent(wrapperFor[Table](this).get, rowId, colId, new BasicProperty(property), self.formatPropertyValue(rowId, colId, property))).orNull
         case None => self.formatPropertyValue(rowId, colId, property)
       }
   }
@@ -62,7 +62,10 @@ object Table {
   case class ColumnReorderEvent(component: Component) extends ComponentEvent(component)
   case class ColumnGenerationEvent(table: Table, itemId: Any, propertyId: Any) extends ComponentEvent(table)
   case class CellStyleGenerationEvent(table: Table, itemId: Any, propertyId: Any) extends ComponentEvent(table)
-  case class FormatPropertyEvent(table: Table, itemId: Any, propertyId: Any) extends ComponentEvent(table)
+  class FormatPropertyEvent(val table: Table, val itemId: Any, val propertyId: Any, val property: Property[_], _originalValue: => String) extends ComponentEvent(table) {
+
+    def originalValue: Option[String] = Option(_originalValue)
+  }
 
 }
 
