@@ -14,7 +14,7 @@ package mixins {
 
 object BrowserWindowOpener {
 
-  class BrowserWindowOpenerUIProvider(uiClass: Class[_ <: vaadin.scala.UI], path: String)
+  private class BrowserWindowOpenerUIProvider(uiClass: Class[_ <: vaadin.scala.UI], path: String)
       extends ScaladinUIProvider {
 
     private val pathWithInitialSlash = ensureInitialSlash(path)
