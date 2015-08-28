@@ -1,8 +1,6 @@
 package vaadin.scala.tests
 
 import vaadin.scala.ScaladinItem
-import scala.Some
-import scala.Some
 
 class ScaladinItemTests extends ScaladinTestSuite {
 

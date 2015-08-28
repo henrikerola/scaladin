@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import com.vaadin.data
 import vaadin.scala.mixins.DelegatingPropertyMixin
 import scala.reflect.runtime.universe.MethodMirror
 
