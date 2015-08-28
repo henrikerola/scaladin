@@ -1,7 +1,6 @@
 package vaadin.scala.tests
 
-import vaadin.scala._
-import vaadin.scala.converter.{DateToSqlDateConverter, DefaultConverterFactory, DateToLongConverter, Converter}
+import vaadin.scala.converter.{ DateToSqlDateConverter, DefaultConverterFactory, DateToLongConverter, Converter }
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner

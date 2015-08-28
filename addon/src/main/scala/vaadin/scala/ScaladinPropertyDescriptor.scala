@@ -17,6 +17,13 @@ package mixins {
   }
 }
 
+trait PropertyDescriptor[T] {
+
+  def name: String
+
+  def createProperty[T](bean: T): Property[_]
+}
+
 /**
  *
  * @author Henri Kerola / Vaadin
@@ -26,7 +33,7 @@ class ScaladinPropertyDescriptor[T](
   val propertyType: Class[_],
   val getterMirror: MethodMirror,
   val setterMirror: Option[MethodMirror])
-    extends Wrapper {
+    extends PropertyDescriptor[T] with Wrapper {
 
   val p = new VaadinPropertyDescriptor[T] with DelegatingVaadinPropertyDescriptor[T]
   p.wrapper = this
@@ -34,4 +41,12 @@ class ScaladinPropertyDescriptor[T](
   def createProperty[T](bean: T): Property[_] = {
     new ScaladinProperty[T](propertyType.asInstanceOf[Class[_ <: T]], bean, getterMirror, setterMirror)
   }
+}
+
+class ImmutableScaladinPropertyDescriptor[T](val name: String, val propertyType: Class[_], val initialValue: Any) extends PropertyDescriptor[T] with Wrapper {
+
+  val p = new VaadinPropertyDescriptor[T] with DelegatingVaadinPropertyDescriptor[T]
+  p.wrapper = this
+
+  override def createProperty[T](bean: T): Property[_] = new ObjectProperty(initialValue, propertyType.asInstanceOf[Class[Any]])
 }

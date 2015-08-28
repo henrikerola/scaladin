@@ -51,3 +51,13 @@ class ScaladinProperty[T](
 
   override def readOnly_=(ro: Boolean) { _readOnly = ro }
 }
+
+class ImmutableScaladinProperty[T](
+    val propertyType: Class[_ <: T],
+    val instance: T,
+    val getterMirror: MethodMirror) extends Property[T] {
+
+  val p = new com.vaadin.data.Property[T] with DelegatingPropertyMixin[T]
+  p.wrapper = this
+
+}
