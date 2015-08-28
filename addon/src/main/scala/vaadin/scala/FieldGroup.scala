@@ -102,7 +102,13 @@ class FieldGroup(override val p: VaadinFieldGroup with FieldGroupMixin = new Vaa
 
   def commit(): FieldGroup.CommitResult = catching(classOf[VaadinCommitException]) either (p.commit) fold (
     exception => Left(FieldGroup.CommitFailed(exception.asInstanceOf[VaadinCommitException])),
-    nothing => Right(FieldGroup.CommitSuccess()))
+    nothing => {
+      item foreach {
+        case item: ImmutableScaladinItem[_] => item.commit()
+        case _ => // do nothing
+      }
+      Right(FieldGroup.CommitSuccess())
+    })
 
   def discard() { p.discard() }
 
