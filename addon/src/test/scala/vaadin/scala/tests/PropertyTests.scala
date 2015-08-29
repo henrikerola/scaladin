@@ -38,4 +38,14 @@ class PropertyTests extends FunSuite {
     assert(1 === result.size)
     assert(Some(42) == result.head.value)
   }
+
+  test("implicit type") {
+    val property = Property(new java.sql.Date(0L))
+    assert(classOf[java.sql.Date] === property.getType)
+  }
+
+  test("explicit type") {
+    val property = Property[java.util.Date](new java.sql.Date(0L))
+    assert(classOf[java.util.Date] === property.getType)
+  }
 }

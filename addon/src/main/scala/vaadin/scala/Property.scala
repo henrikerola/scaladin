@@ -3,7 +3,12 @@ package vaadin.scala
 import scala.reflect.ClassTag
 
 object Property {
-  def apply[T](value: T): Property[T] = new ObjectProperty[T](value)
+  def apply[T](value: T)(implicit tag: ClassTag[T]): Property[T] = {
+    if (tag.runtimeClass == classOf[Object])
+      new ObjectProperty[T](value)
+    else
+      new ObjectProperty[T](value, tag.runtimeClass.asInstanceOf[Class[T]])
+  }
 
   def unapply(property: Property[_]): Option[Any] = {
     if (property != null) property.value
@@ -53,8 +58,16 @@ class BasicProperty[T](override val p: com.vaadin.data.Property[T], propertyType
   override def getType: Class[_] = propertyType.getOrElse(p.getType)
 }
 
-class ObjectProperty[T](value: T) extends Property[T] {
-  val p = new com.vaadin.data.util.ObjectProperty[T](value)
+class ObjectProperty[T](override val p: com.vaadin.data.util.ObjectProperty[T]) extends Property[T] {
+
+  def this(value: T, classOfT: Class[T]) {
+    this(new com.vaadin.data.util.ObjectProperty[T](value, classOfT))
+  }
+
+  def this(value: T) {
+    this(new com.vaadin.data.util.ObjectProperty[T](value))
+  }
+
 }
 
 class VaadinPropertyDelegator[T](scaladinProperty: Property[T]) extends com.vaadin.data.Property[T] {
