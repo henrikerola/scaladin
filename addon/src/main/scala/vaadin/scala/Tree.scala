@@ -3,12 +3,7 @@ package vaadin.scala
 import com.vaadin.shared.ui.MultiSelectMode._
 import event._
 import vaadin.scala.mixins.TreeMixin
-import vaadin.scala.mixins.AbstractSelectMixin
-import vaadin.scala.mixins.ContainerHierarchicalMixin
 import vaadin.scala.internal.ItemStyleGenerator
-import vaadin.scala.internal.ExpandListener
-import vaadin.scala.internal.CollapseListener
-import scala.Some
 
 package mixins {
   trait TreeMixin extends AbstractSelectMixin with ActionContainerMixin with ContainerHierarchicalMixin {

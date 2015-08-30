@@ -6,7 +6,6 @@ import scala.collection.JavaConversions._
 
 import internal._
 import vaadin.scala.mixins._
-import scala.Some
 import vaadin.scala.server.Page
 
 package mixins {

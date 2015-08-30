@@ -1,11 +1,6 @@
 package vaadin.scala.converter
 
-import java.util.Locale
-
-import vaadin.scala.Wrapper
-import vaadin.scala.converter.mixins.{ DelegatingConverterMixin, ConverterMixin }
-
-import scala.reflect.ClassTag
+import vaadin.scala.converter.mixins.ConverterMixin
 
 class DateToLongConverter extends DeletagePeerConverter[java.util.Date, java.lang.Long](
   new com.vaadin.data.util.converter.DateToLongConverter with ConverterMixin[java.util.Date, java.lang.Long])

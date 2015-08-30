@@ -2,8 +2,6 @@ package vaadin.scala.converter
 
 import java.util.Date
 
-import vaadin.scala.Wrapper
-import vaadin.scala.converter.mixins.{ DelegatingConverterMixin, ConverterMixin }
 import vaadin.scala.server.Resource
 import com.vaadin.server.{ Resource => VaadinResource }
 

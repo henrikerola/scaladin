@@ -1,7 +1,6 @@
 package vaadin.scala
 
-import vaadin.scala.event.{ ClickEvent, FocusNotifier, BlurNotifier, Event }
-import scala.collection.mutable
+import vaadin.scala.event.{ FocusNotifier, BlurNotifier, Event }
 import vaadin.scala.mixins.WindowMixin
 import vaadin.scala.internal.ListenersTrait
 import vaadin.scala.internal.WindowCloseListener

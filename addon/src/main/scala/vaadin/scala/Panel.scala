@@ -1,8 +1,6 @@
 package vaadin.scala
 
-import vaadin.scala.event.{ ClickNotifier, ClickEvent }
-import vaadin.scala.internal.ListenersTrait
-import vaadin.scala.internal.ClickListener
+import vaadin.scala.event.ClickNotifier
 import vaadin.scala.mixins.PanelMixin
 
 package mixins {
