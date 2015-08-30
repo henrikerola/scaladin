@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import vaadin.scala.util.ReflectUtil
 import scala.reflect.runtime._
 import scala.reflect.runtime.universe._
 import com.vaadin.data.util.{ PropertysetItem => VaadinPropertysetItem }
@@ -18,13 +19,18 @@ object ImmutableScaladinItem {
 
 class ImmutableScaladinItem[T: TypeTag](var bean: T, propertyDescriptors: Iterable[PropertyDescriptor[T]])
     extends PropertysetItem(new VaadinPropertysetItem) {
+  private implicit val classTag = ClassTag[T](bean.getClass)
+
+  // Only a case class has the `copy` method
+  if (!ReflectUtil.isCaseClass(bean)) {
+    throw new IllegalArgumentException("ImmutableScaladinItem only supports case classes")
+  }
 
   propertyDescriptors foreach { pd =>
     addItemProperty(pd.name, pd.createProperty(bean))
   }
 
   def commit(): T = {
-    implicit val classTag = ClassTag[T](bean.getClass)
 
     val newValues: Map[String, Any] = propertyDescriptors.map(pd => pd.name -> getProperty(pd.name).value.orNull).toMap
 
