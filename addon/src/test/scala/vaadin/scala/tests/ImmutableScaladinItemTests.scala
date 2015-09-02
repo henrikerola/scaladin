@@ -47,4 +47,17 @@ class ImmutableScaladinItemTests extends ScaladinTestSuite {
       ImmutableScaladinItem[MyNonCaseClass](new MyNonCaseClass)
     }
   }
+
+  test("commit() calls commitListener") {
+    var cnt = 0
+
+    item.commitListeners += { e =>
+      cnt = cnt + 1
+      assert(person === e.bean)
+    }
+
+    item.commit()
+
+    assert(1 == cnt)
+  }
 }

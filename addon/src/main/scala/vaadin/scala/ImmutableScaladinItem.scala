@@ -1,10 +1,12 @@
 package vaadin.scala
 
+import vaadin.scala.ImmutableScaladinItem.CommitEvent
 import vaadin.scala.util.ReflectUtil
 import scala.reflect.runtime._
 import scala.reflect.runtime.universe._
 import com.vaadin.data.util.{ PropertysetItem => VaadinPropertysetItem }
 import scala.reflect.ClassTag
+import scala.collection.mutable
 
 /**
  *
@@ -15,6 +17,8 @@ object ImmutableScaladinItem {
   def apply[T: TypeTag](bean: T): ImmutableScaladinItem[T] = {
     new ImmutableScaladinItem(bean, ScaladinItem.getPropertyDescriptors(bean, true))
   }
+
+  case class CommitEvent[T](bean: T)
 }
 
 class ImmutableScaladinItem[T: TypeTag](var bean: T, propertyDescriptors: Iterable[PropertyDescriptor[T]])
@@ -30,11 +34,15 @@ class ImmutableScaladinItem[T: TypeTag](var bean: T, propertyDescriptors: Iterab
     addItemProperty(pd.name, pd.createProperty(bean))
   }
 
+  val commitListeners: mutable.Set[CommitEvent[T] => Unit] = mutable.Set.empty[CommitEvent[T] => Unit]
+
   def commit(): T = {
 
     val newValues: Map[String, Any] = propertyDescriptors.map(pd => pd.name -> getProperty(pd.name).value.orNull).toMap
 
     bean = copy(bean, newValues)
+
+    commitListeners.foreach(_.apply(CommitEvent(bean)))
 
     bean
   }
