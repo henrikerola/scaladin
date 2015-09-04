@@ -135,7 +135,7 @@ class FieldGroupTests extends ScaladinTestSuite {
     assert(Some("Doe") === myFormLayout.last.value)
   }
 
-  test("commit() commits also ImmutableScaladinItem ") {
+  ignore("commit() commits also ImmutableScaladinItem ") {
 
     val item = ImmutableScaladinItem[Person](Person("John", "Doe"))
     fieldGroup.item = item
