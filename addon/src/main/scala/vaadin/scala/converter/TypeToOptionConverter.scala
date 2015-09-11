@@ -3,10 +3,10 @@ package vaadin.scala.converter
 import java.util.Locale
 import scala.reflect.ClassTag
 
-object OptionConverter {
+object TypeToOptionConverter {
 
-  def apply[P: ClassTag, M: ClassTag](converter: Converter[P, M]): OptionConverter[P, M] = {
-    new OptionConverter[P, M](converter)
+  def apply[P: ClassTag, M: ClassTag](converter: Converter[P, M]): TypeToOptionConverter[P, M] = {
+    new TypeToOptionConverter[P, M](converter)
   }
 }
 
@@ -14,7 +14,7 @@ object OptionConverter {
  *
  * @author Henri Kerola / Vaadin
  */
-class OptionConverter[P: ClassTag, M: ClassTag](converter: Converter[P, M]) extends Converter[P, Option[M]] {
+class TypeToOptionConverter[P: ClassTag, M: ClassTag](converter: Converter[P, M]) extends Converter[P, Option[M]] {
 
   override def convertToPresentation(value: Option[Option[M]], targetType: Class[_ <: P], locale: Locale): Option[P] = {
     converter.convertToPresentation(value.orNull, targetType, locale)

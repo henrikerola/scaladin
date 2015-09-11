@@ -63,7 +63,7 @@ class ConverterTests extends FunSuite {
   }
 
   test("OptionConverter") {
-    val optionConverter = new OptionConverter(new StringToIntegerConverter)
+    val optionConverter = new TypeToOptionConverter(new StringToIntegerConverter)
 
     assert(Some("2") === optionConverter.convertToPresentation(Some(Some(2)), null, Locale.US))
 
