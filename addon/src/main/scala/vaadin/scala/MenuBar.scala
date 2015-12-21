@@ -68,6 +68,9 @@ object MenuBar {
     def text = p.getText
     def text_=(text: String) = p.setText(text)
 
+    def description = p.getDescription
+    def description_=(desc: String) = p.setDescription(desc)
+
     def enabled = p.isEnabled
     def enabled_=(enabled: Boolean) = p.setEnabled(enabled)
 
