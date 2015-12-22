@@ -3,12 +3,15 @@ package vaadin.scala.server
 import vaadin.scala.server.mixins.ResourceMixin
 
 object StreamResource {
-  def apply(streamSource: com.vaadin.server.StreamResource.StreamSource, fileName: String): StreamResource = new StreamResource(streamSource, fileName)
+
+  type StreamSource = com.vaadin.server.StreamResource.StreamSource
+
+  def apply(streamSource: StreamSource, fileName: String): StreamResource = new StreamResource(streamSource, fileName)
 }
 
 class StreamResource(override val pResource: com.vaadin.server.StreamResource with ResourceMixin) extends Resource {
 
-  def this(streamSource: com.vaadin.server.StreamResource.StreamSource, fileName: String) {
+  def this(streamSource: StreamResource.StreamSource, fileName: String) {
     this(new com.vaadin.server.StreamResource(streamSource, fileName) with ResourceMixin)
   }
 
