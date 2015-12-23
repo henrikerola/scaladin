@@ -276,6 +276,11 @@ class MenuBarTests extends FunSuite with BeforeAndAfter {
     assert(item.text === "test test")
   }
 
+  test("MenuBar.MenuItem.description") {
+    item.description = "test test"
+    assert(item.description === "test test")
+  }
+
   test("MenuBar.MenuItem.styleName") {
     assert(item.styleName === None)
 
