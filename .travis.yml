@@ -2,6 +2,6 @@ language: scala
 scala:
   - 2.11.2
 jdk:
-  - openjdk7
+  - oraclejdk7
 notifications:
   email: false
