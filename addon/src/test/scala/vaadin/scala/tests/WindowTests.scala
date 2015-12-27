@@ -75,6 +75,14 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(!window.draggable)
   }
 
+  test("windowMode") {
+    assert(Window.WindowMode.Normal == window.windowMode)
+
+    window.windowMode = Window.WindowMode.Maximized
+
+    assert(Window.WindowMode.Maximized == window.windowMode)
+  }
+
   test("closeShortcut") {
     val window = new Window
 

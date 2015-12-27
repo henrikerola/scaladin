@@ -1,5 +1,6 @@
 package vaadin.scala
 
+import com.vaadin.shared.ui.window.WindowMode
 import vaadin.scala.event.{ FocusNotifier, BlurNotifier, Event }
 import vaadin.scala.mixins.WindowMixin
 import vaadin.scala.internal.ListenersTrait
@@ -16,6 +17,12 @@ object Window {
   val BORDER_MINIMAL: Int = 1
 
   val BORDER_DEFAULT: Int = 2
+
+  object WindowMode extends Enumeration {
+    import com.vaadin.shared.ui.window.WindowMode._
+    val Normal = Value(NORMAL.ordinal())
+    val Maximized = Value(MAXIMIZED.ordinal())
+  }
 
   case class CloseEvent(window: Window) extends Event
   case class ResizeEvent(window: Window) extends Event
@@ -58,6 +65,11 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
 
   def draggable_=(draggable: Boolean) = p.setDraggable(draggable)
   def draggable: Boolean = p.isDraggable
+
+  def windowMode: Window.WindowMode.Value = Window.WindowMode(p.getWindowMode.ordinal)
+  def windowMode_=(mode: Window.WindowMode.Value): Unit =
+    p.setWindowMode(WindowMode.values.apply(mode.id))
+
 
   lazy val closeListeners: ListenersSet[Window.CloseEvent => Unit] =
     new ListenersTrait[Window.CloseEvent, WindowCloseListener] {
