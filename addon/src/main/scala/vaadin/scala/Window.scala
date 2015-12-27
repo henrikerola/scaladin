@@ -70,7 +70,6 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
   def windowMode_=(mode: Window.WindowMode.Value): Unit =
     p.setWindowMode(WindowMode.values.apply(mode.id))
 
-
   lazy val closeListeners: ListenersSet[Window.CloseEvent => Unit] =
     new ListenersTrait[Window.CloseEvent, WindowCloseListener] {
       override def listeners = p.getListeners(classOf[com.vaadin.ui.Window.CloseListener])
