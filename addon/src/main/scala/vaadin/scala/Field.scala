@@ -22,4 +22,8 @@ trait Field[T] extends Component with BufferedValidatable with Property[T] with 
   def requiredError: Option[String] = Option(p.getRequiredError)
   def requiredError_=(requiredError: String) { p.setRequiredError(requiredError) }
   def requiredError_=(requiredError: Option[String]) { p.setRequiredError(requiredError.orNull) }
+
+  def isEmpty: Boolean = p.isEmpty
+
+  def clear(): Unit = p.clear()
 }
