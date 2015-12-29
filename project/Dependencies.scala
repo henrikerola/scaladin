@@ -10,7 +10,7 @@ object Dependencies {
   private val vaadin = "com.vaadin" % "vaadin-server" % vaadinVersion
   private val vaadinClientCompiled = "com.vaadin" % "vaadin-client-compiled" % vaadinVersion
   private val vaadinThemes = "com.vaadin" % "vaadin-themes" % vaadinVersion
-  private val servletApi = "javax.servlet" % "servlet-api" % "2.4"
+  private val servletApi = "javax.servlet" % "javax.servlet-api" % "3.1.0"
   private val portletApi = "javax.portlet" % "portlet-api" % "2.0"
   private val scalaTest = "org.scalatest" %% "scalatest" % scalaTestVersion
   private val junitInterface = "com.novocode" % "junit-interface" % "0.11"
