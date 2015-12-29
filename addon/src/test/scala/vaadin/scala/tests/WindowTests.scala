@@ -42,6 +42,17 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(window.positionY === 200)
   }
 
+  test("position") {
+    assert((-1, -1) === window.position)
+
+    window.position = (10, 20)
+
+    Mockito.verify(vaadinWindowSpy).setPositionX(10)
+    Mockito.verify(vaadinWindowSpy).setPositionY(20)
+
+    assert((10, 20) === window.position)
+  }
+
   test("resizable") {
     assert(window.resizable)
 
