@@ -65,6 +65,13 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     Mockito.verify(vaadinWindowSpy).center()
   }
 
+  test("bringToFront()") {
+    intercept[IllegalStateException] {
+      window.bringToFront()
+    }
+    Mockito.verify(vaadinWindowSpy).bringToFront()
+  }
+
   test("modal") {
     assert(!window.modal)
 

@@ -67,6 +67,8 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
 
   def center(): Unit = p.center()
 
+  def bringToFront(): Unit = p.bringToFront()
+
   def modal_=(modal: Boolean): Unit = p.setModal(modal)
   def modal: Boolean = p.isModal
 
