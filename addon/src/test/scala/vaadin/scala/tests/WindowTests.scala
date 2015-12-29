@@ -60,6 +60,14 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(!window.resizable)
   }
 
+  test("resizeLazy") {
+    assert(!window.resizeLazy)
+
+    window.resizeLazy = true
+    Mockito.verify(vaadinWindowSpy).setResizeLazy(true)
+    assert(window.resizeLazy)
+  }
+
   test("center()") {
     window.center()
     Mockito.verify(vaadinWindowSpy).center()

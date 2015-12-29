@@ -43,6 +43,9 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
   def resizable_=(resizable: Boolean): Unit = p.setResizable(resizable)
   def resizable: Boolean = p.isResizable
 
+  def resizeLazy: Boolean = p.isResizeLazy
+  def resizeLazy_=(resizeLazy: Boolean): Unit = p.setResizeLazy(resizeLazy)
+
   private var _closeShortcut: Option[KeyShortcut] = None
 
   def closeShortcut: Option[KeyShortcut] = _closeShortcut
@@ -55,13 +58,6 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
     }
   }
   def closeShortcut_=(cs: KeyShortcut): Unit = this.closeShortcut = Option(cs)
-
-  //  lazy val closeShortcuts: ListenersSet[Window.CloseEvent => Unit] =
-  //    new ListenersTrait[Window.CloseEvent, WindowCloseListener] {
-  //      override def listeners = p.getListeners(classOf[com.vaadin.ui.Window.CloseListener])
-  //      override def addListener(elem: Window.CloseEvent => Unit) = p.addCloseListener(new WindowCloseListener(elem))
-  //      override def removeListener(elem: WindowCloseListener) = p.removeCloseListener(elem)
-  //    }
 
   override def parent: Option[Window] = wrapperFor[Window](p.getParent)
 
