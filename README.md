@@ -39,19 +39,6 @@ After the above commands you have a working Scaladin application running on http
 
 That generates needed Eclipse configuration files into the project.
 
-## Credits
-
-The following people have contributed code or ideas to Scaladin:
-
- * Matti Heinola
- * Henri Kerola
- * Henri Muurimaa
- * Risto Yrjänä
-
 ## License
 
 Scaladin is licensed under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).
-
-## Developing the library
-
-Wiki has a page about [Developing the Library](https://github.com/henrikerola/scaladin/wiki/Developing-the-Library).
