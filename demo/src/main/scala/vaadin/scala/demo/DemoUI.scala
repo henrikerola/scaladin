@@ -5,11 +5,11 @@ import javax.servlet.annotation.{ WebInitParam, WebServlet }
 import vaadin.scala._
 import vaadin.scala.server.{ ScaladinServlet, ScaladinRequest }
 
-@WebServlet(
-  urlPatterns = Array("/*"),
-  initParams = Array(new WebInitParam(name = "ScaladinUI", value = "vaadin.scala.demo.DemoUI"))
+@WebServlet(urlPatterns = Array("/*"))
+class Servlet extends ScaladinServlet(
+  ui = classOf[DemoUI],
+  productionMode = false
 )
-class Servlet extends ScaladinServlet
 
 class DemoUI extends UI(title = "Hello World") {
 
