@@ -12,7 +12,7 @@ import vaadin.scala.internal.{ DefaultScaladinUIProvider, WrapperUtil }
 import vaadin.scala.server.mixins.ScaladinServletServiceMixin
 
 class ScaladinServlet(
-    ui: Class[_ <: UI] = null,
+    ui: Class[_] = null,
     productionMode: Boolean = false,
     widgetset: String = "com.vaadin.DefaultWidgetSet",
     resourceCacheTime: Int = DEFAULT_RESOURCE_CACHE_TIME,
@@ -47,10 +47,15 @@ class ScaladinServlet(
   }
 
   override def createDeploymentConfiguration(initParameters: Properties): server.DeploymentConfiguration = {
-
     applyPropertiesDefinedInConstructor(initParameters)
 
     super.createDeploymentConfiguration(initParameters)
+  }
+
+  private def hasEnclosingUIClass(clazz: Class[_]): Boolean = {
+    Option(clazz.getEnclosingClass)
+      .map(classOf[UI].isAssignableFrom)
+      .getOrElse(false)
   }
 
   private def applyPropertiesDefinedInConstructor(initParameters: Properties): Unit = {
@@ -60,7 +65,16 @@ class ScaladinServlet(
         initParameters.setProperty(property, value)
       }
 
-    setAbsentProperty("ScaladinUI", Option(ui).map(_.getName).orNull)
+    if (initParameters.getProperty("ScaladinUI") == null && ui == null) {
+      if (hasEnclosingUIClass(getClass)) {
+        setAbsentProperty("ScaladinUI", getClass.getEnclosingClass.getName)
+      } else {
+        throw new IllegalStateException("No ScaladinUI defined")
+      }
+    } else {
+      setAbsentProperty("ScaladinUI", ui.getName)
+    }
+
     setAbsentProperty(SERVLET_PARAMETER_PRODUCTION_MODE, productionMode.toString)
     setAbsentProperty(PARAMETER_WIDGETSET, widgetset)
     setAbsentProperty(SERVLET_PARAMETER_RESOURCE_CACHE_TIME, resourceCacheTime.toString)
