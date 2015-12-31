@@ -3,9 +3,7 @@ package vaadin.scala
 import com.vaadin.shared.ui.window.WindowMode
 import vaadin.scala.event.{ FocusNotifier, BlurNotifier, Event }
 import vaadin.scala.mixins.WindowMixin
-import vaadin.scala.internal.ListenersTrait
-import vaadin.scala.internal.WindowCloseListener
-import vaadin.scala.internal.WindowResizeListener
+import vaadin.scala.internal.{ WindowModeChangeListener, ListenersTrait, WindowCloseListener, WindowResizeListener }
 
 package mixins {
   trait WindowMixin extends PanelMixin { self: com.vaadin.ui.Window => }
@@ -26,6 +24,7 @@ object Window {
 
   case class CloseEvent(window: Window) extends Event
   case class ResizeEvent(window: Window) extends Event
+  case class WindowModeChangeEvent(window: Window, windowMode: WindowMode.Value) extends Event
 }
 
 class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaadin.ui.Window with WindowMixin)
@@ -90,5 +89,12 @@ class Window(override val p: com.vaadin.ui.Window with WindowMixin = new com.vaa
       override def listeners = p.getListeners(classOf[com.vaadin.ui.Window.CloseListener])
       override def addListener(elem: Window.ResizeEvent => Unit) = p.addResizeListener(new WindowResizeListener(elem))
       override def removeListener(elem: WindowResizeListener) = p.removeResizeListener(elem)
+    }
+
+  lazy val windowModeChangeListeners: ListenersSet[Window.WindowModeChangeEvent => Unit] =
+    new ListenersTrait[Window.WindowModeChangeEvent, WindowModeChangeListener] {
+      override def listeners = p.getListeners(classOf[com.vaadin.ui.Window.WindowModeChangeListener])
+      override def addListener(elem: Window.WindowModeChangeEvent => Unit) = p.addWindowModeChangeListener(new WindowModeChangeListener(elem))
+      override def removeListener(elem: WindowModeChangeListener) = p.removeWindowModeChangeListener(elem)
     }
 }
