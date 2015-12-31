@@ -12,7 +12,7 @@ Scaladin makes easier to use [Vaadin Framework](https://vaadin.com) with [Scala]
 
 Scaladin 3.2 requires Vaadin 7.5 and Scala 2.11.
 
-1. Add dependencies to Scaladin and Vaadin to your Scala project (using [sbt](http://www.scala-sbt.org/) here):
+1\. Add dependencies to Scaladin and Vaadin to your Scala project (using [sbt](http://www.scala-sbt.org/) here):
 
 ```sbt
 resolvers += "Scaladin Snapshots" at "http://henrikerola.github.io/repository/snapshots/"
@@ -25,9 +25,9 @@ libraryDependencies ++= Seq(
 )
 ```
 
-2. Scaladin applications are deployed as servlets, during the development time you could use [xsb-web-plugin](http://earldouglas.com/projects/xsbt-web-plugin/).
+2\. Scaladin applications are deployed as servlets, during the development time you could use [xsb-web-plugin](http://earldouglas.com/projects/xsbt-web-plugin/).
 
-3. Define a servlet and a Scaladin UI:
+3\. Define a servlet and a Scaladin UI:
 
 ```scala
 package com.example
@@ -59,7 +59,7 @@ class HelloWorldUI extends UI(theme = ValoTheme.ThemeName) {
 }
 ```
 
-4. If you use xsbt-web-plugin, start a web server by saying `sbt ~jetty:start` and your Scaladin application should be available at http://localhost:8080:
+4\. If you use xsbt-web-plugin, start a web server by saying `sbt ~jetty:start` and your Scaladin application should be available at http://localhost:8080:
 
 ![Screenshot](http://henrikerola.github.io/images/scaladin-helloworld.png)
 
