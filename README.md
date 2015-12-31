@@ -25,7 +25,7 @@ Scaladin 3.2 requires Vaadin 7.5 and Scala 2.11.
 
 2. Scaladin applications are deployed as servlets, during the development time you could use [xsb-web-plugin](http://earldouglas.com/projects/xsbt-web-plugin/).
 
-3. Define a servlet and a Scaladin UI
+3. Define a servlet and a Scaladin UI:
 
         package com.example
 
@@ -55,7 +55,9 @@ Scaladin 3.2 requires Vaadin 7.5 and Scala 2.11.
           }
         }
 
-4. If you use xsbt-web-plugin, start a web server by saying `sbt ~jetty:start` and your Scaladin application should be available at http://localhost:8080.
+4. If you use xsbt-web-plugin, start a web server by saying `sbt ~jetty:start` and your Scaladin application should be available at http://localhost:8080:
+
+![Screenshot](http://henrikerola.github.io/images/scaladin-helloworld.png)
 
 ## License
 
