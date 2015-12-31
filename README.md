@@ -14,46 +14,50 @@ Scaladin 3.2 requires Vaadin 7.5 and Scala 2.11.
 
 1. Add dependencies to Scaladin and Vaadin to your Scala project (using [sbt](http://www.scala-sbt.org/) here):
 
-        resolvers += "Scaladin Snapshots" at "http://henrikerola.github.io/repository/snapshots/"
+```sbt
+resolvers += "Scaladin Snapshots" at "http://henrikerola.github.io/repository/snapshots/"
 
-        libraryDependencies ++= Seq(
-          "org.vaadin.addons" %% "scaladin" % "3.2-SNAPSHOT",
-          "com.vaadin" % "vaadin-server" % "7.5.10",
-          "com.vaadin" % "vaadin-client-compiled" % "7.5.10",
-          "com.vaadin" % "vaadin-themes" % "7.5.10"
-        )
+libraryDependencies ++= Seq(
+  "org.vaadin.addons" %% "scaladin" % "3.2-SNAPSHOT",
+  "com.vaadin" % "vaadin-server" % "7.5.10",
+  "com.vaadin" % "vaadin-client-compiled" % "7.5.10",
+  "com.vaadin" % "vaadin-themes" % "7.5.10"
+)
+```
 
 2. Scaladin applications are deployed as servlets, during the development time you could use [xsb-web-plugin](http://earldouglas.com/projects/xsbt-web-plugin/).
 
 3. Define a servlet and a Scaladin UI:
 
-        package com.example
+```scala
+package com.example
 
-        import javax.servlet.annotation.WebServlet
-        import vaadin.scala._
-        import vaadin.scala.server.ScaladinServlet
+import javax.servlet.annotation.WebServlet
+import vaadin.scala._
+import vaadin.scala.server.ScaladinServlet
 
-        @WebServlet(urlPatterns = Array("/*"))
-        class Servlet extends ScaladinServlet(
-          ui = classOf[HelloWorldUI]
-        )
+@WebServlet(urlPatterns = Array("/*"))
+class Servlet extends ScaladinServlet(
+  ui = classOf[HelloWorldUI]
+)
 
-        class HelloWorldUI extends UI(theme = ValoTheme.ThemeName) {
+class HelloWorldUI extends UI(theme = ValoTheme.ThemeName) {
 
-          content = new VerticalLayout { layout =>
-            margin = true
-            spacing = true
+  content = new VerticalLayout { layout =>
+    margin = true
+    spacing = true
 
-            addComponent(new Label {
-              value = "Hello World!"
-              styleNames += ValoTheme.LabelH1
-            })
+    addComponent(new Label {
+      value = "Hello World!"
+      styleNames += ValoTheme.LabelH1
+    })
 
-            addComponent(Button("Click Me", { e =>
-              layout.addComponent(Label("Thanks for clicking!"))
-            }))
-          }
-        }
+    addComponent(Button("Click Me", { e =>
+      layout.addComponent(Label("Thanks for clicking!"))
+    }))
+  }
+}
+```
 
 4. If you use xsbt-web-plugin, start a web server by saying `sbt ~jetty:start` and your Scaladin application should be available at http://localhost:8080:
 
