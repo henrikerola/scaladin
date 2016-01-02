@@ -15,7 +15,7 @@ import scala.collection.mutable
 object ImmutableScaladinItem {
 
   def apply[T: TypeTag](bean: T): ImmutableScaladinItem[T] = {
-    new ImmutableScaladinItem(bean, ScaladinItem.getPropertyDescriptors(bean, true))
+    new ImmutableScaladinItem(bean)
   }
 
   case class CommitEvent[T](bean: T)
@@ -23,6 +23,11 @@ object ImmutableScaladinItem {
 
 class ImmutableScaladinItem[T: TypeTag](var bean: T, propertyDescriptors: Iterable[PropertyDescriptor[T]])
     extends PropertysetItem(new VaadinPropertysetItem) {
+
+  def this(bean: T) {
+    this(bean, ScaladinItem.getPropertyDescriptors(bean, true))
+  }
+
   private implicit val classTag = ClassTag[T](bean.getClass)
 
   // Only a case class has the `copy` method
