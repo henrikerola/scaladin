@@ -10,48 +10,59 @@ Scaladin makes easier to use [Vaadin Framework](https://vaadin.com) with [Scala]
 
 ## How to use it?
 
-Scaladin 2 is for Vaadin 6 and Scaladin 3 for Vaadin 7. Scaladin 3 requires Scala 2.10. The JAR files and a Maven dependencies for Scaladin can be found from the [Vaadin Directory](http://vaadin.com/addon/scaladin).
+Scaladin 3.2 requires Vaadin 7.5 and Scala 2.11.
 
-The following listing shows what Scaladin 3 code looks like:
+1\. Add dependencies to Scaladin and Vaadin to your Scala project (using [sbt](http://www.scala-sbt.org/) here):
 
-    package com.example
+```sbt
+resolvers += "Scaladin Snapshots" at "http://henrikerola.github.io/repository/snapshots/"
 
-    import vaadin.scala._
+libraryDependencies ++= Seq(
+  "org.vaadin.addons" %% "scaladin" % "3.2-SNAPSHOT",
+  "com.vaadin" % "vaadin-server" % "7.5.10",
+  "com.vaadin" % "vaadin-client-compiled" % "7.5.10",
+  "com.vaadin" % "vaadin-themes" % "7.5.10"
+)
+```
 
-    class ScaladinExampleUI extends UI {
-        content = new Button {
-            caption = "Click me!"
-            icon = ThemeResource("../runo/icons/16/globe.png")
-            clickListeners += Notification.show("Hello World!")
-        }
-    }
+2\. Scaladin applications are deployed as servlets, during the development time you could use [xsb-web-plugin](http://earldouglas.com/projects/xsbt-web-plugin/).
 
-The easiest way to test Scaladin 2 is to use Risto's [giter8 template](https://github.com/ripla/vaadin-scala.g8) that generates a sbt project:
+3\. Define a servlet and a Scaladin UI:
 
-    > g8 ripla/vaadin-scala
-    <answer questions, enter for defaults>
-    > cd <project dir>
-    > sbt container:start ~aux-compile
+```scala
+package com.example
 
-After the above commands you have a working Scaladin application running on http://localhost:8080. You can even edit the generated Application class and changes are affected to the browser. In order to import your project into Eclipse, you have to say:
+import javax.servlet.annotation.WebServlet
+import vaadin.scala._
+import vaadin.scala.server.ScaladinServlet
 
-    > sbt eclipse
+@WebServlet(urlPatterns = Array("/*"))
+class Servlet extends ScaladinServlet(
+  ui = classOf[HelloWorldUI]
+)
 
-That generates needed Eclipse configuration files into the project.
+class HelloWorldUI extends UI(theme = ValoTheme.ThemeName) {
 
-## Credits
+  content = new VerticalLayout { layout =>
+    margin = true
+    spacing = true
 
-The following people have contributed code or ideas to Scaladin:
+    addComponent(new Label {
+      value = "Hello World!"
+      styleNames += ValoTheme.LabelH1
+    })
 
- * Matti Heinola
- * Henri Kerola
- * Henri Muurimaa
- * Risto Yrjänä
+    addComponent(Button("Click Me", { e =>
+      layout.addComponent(Label("Thanks for clicking!"))
+    }))
+  }
+}
+```
+
+4\. If you use xsbt-web-plugin, start a web server by saying `sbt ~jetty:start` and your Scaladin application should be available at http://localhost:8080:
+
+![Screenshot](http://henrikerola.github.io/images/scaladin-helloworld.png)
 
 ## License
 
 Scaladin is licensed under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).
-
-## Developing the library
-
-Wiki has a page about [Developing the Library](https://github.com/henrikerola/scaladin/wiki/Developing-the-Library).

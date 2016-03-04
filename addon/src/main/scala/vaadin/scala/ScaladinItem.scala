@@ -56,6 +56,10 @@ object ScaladinItem {
 class ScaladinItem[T: TypeTag](bean: T, propertyDescriptors: Iterable[PropertyDescriptor[T]])
     extends PropertysetItem(new VaadinPropertysetItem) {
 
+  def this(bean: T) {
+    this(bean, ScaladinItem.getPropertyDescriptors(bean, true))
+  }
+
   propertyDescriptors foreach { pd =>
     addItemProperty(pd.name, pd.createProperty(bean))
   }

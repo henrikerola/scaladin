@@ -42,6 +42,17 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(window.positionY === 200)
   }
 
+  test("position") {
+    assert((-1, -1) === window.position)
+
+    window.position = (10, 20)
+
+    Mockito.verify(vaadinWindowSpy).setPositionX(10)
+    Mockito.verify(vaadinWindowSpy).setPositionY(20)
+
+    assert((10, 20) === window.position)
+  }
+
   test("resizable") {
     assert(window.resizable)
 
@@ -49,9 +60,24 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
     assert(!window.resizable)
   }
 
+  test("resizeLazy") {
+    assert(!window.resizeLazy)
+
+    window.resizeLazy = true
+    Mockito.verify(vaadinWindowSpy).setResizeLazy(true)
+    assert(window.resizeLazy)
+  }
+
   test("center()") {
     window.center()
     Mockito.verify(vaadinWindowSpy).center()
+  }
+
+  test("bringToFront()") {
+    intercept[IllegalStateException] {
+      window.bringToFront()
+    }
+    Mockito.verify(vaadinWindowSpy).bringToFront()
   }
 
   test("modal") {
@@ -73,6 +99,14 @@ class WindowTests extends FunSuite with BeforeAndAfter with MockitoSugar {
 
     window.draggable = false
     assert(!window.draggable)
+  }
+
+  test("windowMode") {
+    assert(Window.WindowMode.Normal == window.windowMode)
+
+    window.windowMode = Window.WindowMode.Maximized
+
+    assert(Window.WindowMode.Maximized == window.windowMode)
   }
 
   test("closeShortcut") {
