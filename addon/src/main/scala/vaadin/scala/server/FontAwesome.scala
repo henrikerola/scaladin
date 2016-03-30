@@ -327,7 +327,6 @@ object FontAwesome {
   val PictureO = FontAwesome(PICTURE_O)
   val PiedPiper = FontAwesome(PIED_PIPER)
   val PiedPiperAlt = FontAwesome(PIED_PIPER_ALT)
-  val PiedPiperSquare = FontAwesome(PIED_PIPER_SQUARE)
   val Pinterest = FontAwesome(PINTEREST)
   val PinterestSquare = FontAwesome(PINTEREST_SQUARE)
   val Plane = FontAwesome(PLANE)
