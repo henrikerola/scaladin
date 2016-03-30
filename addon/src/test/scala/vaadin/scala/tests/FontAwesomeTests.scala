@@ -338,7 +338,6 @@ class FontAwesomeTests extends ScaladinTestSuite {
     fontAwesome = FontAwesome.PictureO
     fontAwesome = FontAwesome.PiedPiper
     fontAwesome = FontAwesome.PiedPiperAlt
-    fontAwesome = FontAwesome.PiedPiperSquare
     fontAwesome = FontAwesome.Pinterest
     fontAwesome = FontAwesome.PinterestSquare
     fontAwesome = FontAwesome.Plane
