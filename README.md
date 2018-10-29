@@ -1,3 +1,6 @@
+[![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/scaladin)
+[![Stars on Vaadin Directory](https://img.shields.io/vaadin-directory/star/scaladin.svg)](https://vaadin.com/directory/component/scaladin)
+
 # Scaladin
 
 Scaladin makes easier to use [Vaadin Framework](https://vaadin.com) with [Scala](http://www.scala-lang.org/) programming language. It's a wrapper library that provides a pure Scala API for Vaadin Framework. 
